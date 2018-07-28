@@ -84,10 +84,18 @@ export default class Editor extends Component {
       })
       .join('\n');
 
+    if (this.props.onChange) {
+      this.props.onChange({
+        value: newValue
+      });
+    }
+
     this.setState({
       value: newValue
     }, () => {
-      this.textarea.setSelectionRange(cursor, cursor);
+      if (this.textarea) {
+        this.textarea.setSelectionRange(cursor, cursor);
+      }
     });
   }
 }
