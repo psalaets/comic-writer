@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Editor from './components/editor/Editor';
+import Writer from './components/writer/Writer';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Editor />
+        <Writer />
       </div>
     );
   }
