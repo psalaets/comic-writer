@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
+import SimpleMarkdown from 'simple-markdown';
 import './Writer.css';
 
 import Editor from '../editor/Editor';
-
-import SimpleMarkdown from 'simple-markdown';
+import Script from '../script/Script';
 
 export default class Writer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      value: ''
+      value: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,10 +19,8 @@ export default class Writer extends Component {
   handleChange(event) {
     const {value} = event;
 
-    const parsed = SimpleMarkdown.defaultBlockParse(value);
-
     this.setState({
-      value: JSON.stringify(parsed, null, 2)
+      value: SimpleMarkdown.defaultBlockParse(value)
     });
   }
 
@@ -30,9 +28,7 @@ export default class Writer extends Component {
     return (
       <div className="writer">
         <Editor onChange={this.handleChange} />
-        <pre>
-          {this.state.value}
-        </pre>
+        <Script blocks={this.state.value} />
       </div>
     );
   }
