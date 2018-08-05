@@ -1,0 +1,10 @@
+.Editor {
+  flex: 0 0 50%;
+  border: 0;
+  border-right: 1px solid #eeeeee;
+  resize: none;
+  padding-left: 1em;
+  padding-right: 1em;
+  outline: none;
+  background-color: #fafafa;
+}

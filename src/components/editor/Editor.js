@@ -16,9 +16,8 @@ export default class Editor extends Component {
   render() {
     return (
       <textarea
+        className="Editor"
         value={this.state.value}
-        rows={30}
-        cols={80}
         onChange={this.handleChange}
         ref={this.setTextarea}
       />
@@ -64,7 +63,7 @@ export default class Editor extends Component {
         if (line.text.match(/^## /)) {
           panelNumber = 1;
 
-          const newLine = '## Page ' + pageNumber++;
+          const newLine = `## Page ${pageNumber++}`;
 
           if (line.containsCursor) {
             cursor += newLine.length - line.length;
@@ -72,7 +71,7 @@ export default class Editor extends Component {
 
           return newLine;
         } else if (line.text.match(/^### /)) {
-          const newLine = '### Panel ' + panelNumber++;
+          const newLine = `### Panel ${panelNumber++}`;
 
           if (line.containsCursor) {
             cursor += newLine.length - line.length;
