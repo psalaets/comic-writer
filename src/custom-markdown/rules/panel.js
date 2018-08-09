@@ -1,6 +1,8 @@
 import React from 'react';
 import SimpleMarkdown from 'simple-markdown';
 
+import Panel from '../../components/panel/Panel';
+
 const matchRegex = /^### (Panel (\d{1,}))/;
 
 export default {
@@ -30,7 +32,7 @@ function parse(capture, recurseParse, state) {
 
 function react(node, recurseOutput, state) {
   return React.createElement(
-    'h3',
+    Panel,
     {
       key: state.key
     },
