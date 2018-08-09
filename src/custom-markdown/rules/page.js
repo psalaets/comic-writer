@@ -1,6 +1,8 @@
 import React from 'react';
 import SimpleMarkdown from 'simple-markdown';
 
+import Page from '../../components/page/Page';
+
 const matchRegex = /^## (Page (\d{1,}))/;
 
 export default {
@@ -32,7 +34,7 @@ function parse(capture, recurseParse, state) {
 
 function react(node, recurseOutput, state) {
   return React.createElement(
-    'h2',
+    Page,
     {
       key: state.key
     },
