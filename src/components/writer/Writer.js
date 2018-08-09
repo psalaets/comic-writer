@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import SimpleMarkdown from 'simple-markdown';
 import './Writer.css';
 
+import { parse } from '../../custom-markdown';
+
 import Editor from '../editor/Editor';
 import Script from '../script/Script';
 
@@ -20,7 +22,7 @@ export default class Writer extends Component {
     const {value} = event;
 
     this.setState({
-      value: SimpleMarkdown.defaultBlockParse(value)
+      value: parse(value)
     });
   }
 

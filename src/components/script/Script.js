@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import SimpleMarkdown from 'simple-markdown';
 import './Script.css';
-const mdOutput = SimpleMarkdown.defaultReactOutput;
+
+import { reactOutput } from '../../custom-markdown';
 
 export default class Script extends Component {
   render() {
-    const output = mdOutput(this.props.blocks);
+    const output = reactOutput(this.props.blocks);
     return (<div className="Script">{output}</div>);
   }
 }
