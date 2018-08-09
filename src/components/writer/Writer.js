@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SimpleMarkdown from 'simple-markdown';
 import './Writer.css';
 
 import { parse } from '../../custom-markdown';

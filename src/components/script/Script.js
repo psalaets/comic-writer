@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SimpleMarkdown from 'simple-markdown';
 import './Script.css';
 
 import { reactOutput } from '../../custom-markdown';

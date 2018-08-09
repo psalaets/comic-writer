@@ -1,6 +1,5 @@
 // The custom markdown parser/outputer that we use
 
-import React from 'react';
 import SimpleMarkdown from 'simple-markdown';
 
 import dialogueRule from './rules/dialogue';
