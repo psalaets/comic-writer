@@ -1,0 +1,13 @@
+.Dialogue {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Dialogue__meta {
+  flex: 0 0 35%;
+  text-transform: uppercase;
+}
+
+.Dialogue__content {
+  flex: 1 1 0%;
+}
