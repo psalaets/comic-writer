@@ -3,6 +3,6 @@ import './LetteringBold.css';
 
 export default class LetteringBold extends Component {
   render() {
-    return <span class="LetteringBold">{this.props.children}</span>;
+    return <span className="LetteringBold">{this.props.children}</span>;
   }
 }
