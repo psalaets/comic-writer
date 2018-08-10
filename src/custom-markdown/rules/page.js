@@ -36,7 +36,9 @@ function react(node, recurseOutput, state) {
   return React.createElement(
     Page,
     {
-      key: state.key
+      key: state.key,
+      // this should've been put here by post-parse code
+      panelCount: node.panelCount
     },
     node.content
   );

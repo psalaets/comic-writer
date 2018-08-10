@@ -6,6 +6,8 @@ import { parse } from '../../custom-markdown';
 import Editor from '../editor/Editor';
 import Script from '../script/Script';
 
+import postParse from '../../custom-markdown/post-parse';
+
 export default class Writer extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ export default class Writer extends Component {
     const {value} = event;
 
     this.setState({
-      value: parse(value)
+      value: postParse(parse(value))
     });
   }
 
