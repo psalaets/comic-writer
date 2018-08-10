@@ -27,12 +27,19 @@ function parse(capture, recurseParse, state) {
   const content = capture[3];
   const number = state.letteringNumber++;
 
-  return {
+  const parsed = {
     speaker,
     modifier,
-    content: recurseParse(content, Object.assign({}, state, {inline: true})),
+    content: recurseParse(content, Object.assign({}, state, {
+      inline: true,
+      inLettering: true
+    })),
     number
   };
+
+  state.inLettering = false;
+
+  return parsed;
 }
 
 function react(node, recurseOutput, state) {

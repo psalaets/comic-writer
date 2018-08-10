@@ -7,6 +7,7 @@ import pageRule from './rules/page';
 import panelRule from './rules/panel';
 import sfxRule from './rules/sfx';
 import captionRule from './rules/caption';
+import letteringBoldRule from './rules/lettering-bold';
 
 const rules = {
   ...SimpleMarkdown.defaultRules,
@@ -14,7 +15,8 @@ const rules = {
   panel: panelRule,
   dialogue: dialogueRule,
   sfx: sfxRule,
-  caption: captionRule
+  caption: captionRule,
+  letteringBold: letteringBoldRule
 };
 
 const rawBuiltParser = SimpleMarkdown.parserFor(rules);
