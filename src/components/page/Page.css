@@ -1,0 +1,13 @@
+.Page {
+  display: flex;
+  align-items: center;
+  padding-top: 1em;
+}
+
+.Page__count {
+  display: block;
+  flex: 1 1 0%;
+  text-align: right;
+  opacity: .5;
+
+}

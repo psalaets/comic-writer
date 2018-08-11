@@ -4,10 +4,14 @@
 }
 
 .Dialogue__meta {
-  flex: 0 0 35%;
+  flex: 0 0 45%;
   text-transform: uppercase;
+  white-space: nowrap;
+  padding-right: 1em;
+  max-width: 245px;
 }
 
 .Dialogue__content {
   flex: 1 1 0%;
+  min-width: 200px;
 }

@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
+import './Page.css'
 
 export default class Page extends Component {
   render() {
-    return <h2>{this.props.children}{this.panelCount()}</h2>;
+    return (
+      <h2 className="
+        Page
+      ">
+        <div className="
+          u-font-size--marcus
+        ">{this.props.children}</div>
+        <span className="
+          u-font-size--saya
+          Page__count
+        ">{this.panelCount()}</span>
+      </h2>
+    );
   }
 
   panelCount() {
@@ -11,6 +24,6 @@ export default class Page extends Component {
     }
 
     const label = this.props.panelCount === 1 ? 'panel' : 'panels';
-    return ` (${this.props.panelCount} ${label})`;
+    return `${this.props.panelCount} ${label}`;
   }
 }
