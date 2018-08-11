@@ -1,8 +1,8 @@
 .Script {
   overflow-x: scroll;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+  /* padding-top: 1em; */
   font-family: sans-serif;
   width: 100%;
 }
