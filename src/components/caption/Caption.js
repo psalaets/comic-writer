@@ -5,7 +5,7 @@ export default class Caption extends Component {
     return (
       <div className="Dialogue">
         <div className="Dialogue__meta">
-          {`${!isNaN(this.props.number) ? `${this.props.number}.` : ''}`} {this.props.speaker} {this.props.modifier ? `(${this.props.modifier})`:''}:
+          {`${!isNaN(this.props.number) ? `${this.props.number}.` : ''}`} CAPTION {this.props.modifier ? `(${this.props.modifier})`:''}:
         </div>
         <div className="Dialogue__content">
           {this.props.children}
