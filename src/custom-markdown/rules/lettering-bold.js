@@ -3,10 +3,10 @@ import SimpleMarkdown from 'simple-markdown';
 
 import LetteringBold from '../../components/lettering-bold/LetteringBold';
 
-const matchRegex = /^\*([^\n]+)\*/;
+const matchRegex = /^\*\*([^\n]+)\*\*/;
 
 export default {
-  order: SimpleMarkdown.defaultRules.em.order - 0.1,
+  order: SimpleMarkdown.defaultRules.strong.order - 0.1,
   match,
   parse,
   react
