@@ -59,7 +59,7 @@ export default class Editor extends Component {
     let panelNumber = 1;
 
     const newValue = lines
-      .map((line, index, array) => {
+      .map(line => {
         if (line.text.match(/^## /)) {
           panelNumber = 1;
 
