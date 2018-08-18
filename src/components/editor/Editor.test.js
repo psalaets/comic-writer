@@ -236,63 +236,120 @@ describe('Editor', () => {
     })
   })
 
-  describe('onChange prop', () => {
-    it('invoked with basic text', () => {
-      const onChange = jest.fn();
-      const component = renderer.create(<Editor onChange={onChange} />);
-      let tree = component.toJSON();
+  describe('onChange event', () => {
+    describe('value', () => {
+      it('when changed with basic text', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
 
-      const value = 'this is some basic text'
-      tree.props.onChange(onChangeEvent(value));
+        const value = 'this is some basic text'
+        tree.props.onChange(onChangeEvent(value));
 
-      expect(onChange.mock.calls.length).toBe(1);
-      expect(onChange.mock.calls[0][0]).toEqual({
-        value: 'this is some basic text',
-        cursorAtEnd: false
-      });
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].value).toBe('this is some basic text');
+      })
+
+      it('changed with markdown', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
+
+        const value = '## '
+        tree.props.onChange(onChangeEvent(value));
+
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].value).toBe('## Page 1');
+      })
+
+      it('cleared', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
+
+        tree.props.onChange(onChangeEvent(''));
+
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].value).toBe('');
+      })
     })
 
-    it('invoked with converted markdown', () => {
-      const onChange = jest.fn();
-      const component = renderer.create(<Editor onChange={onChange} />);
-      let tree = component.toJSON();
+    describe('cursorAtEnd', () => {
+      it('cursor at the end of value', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
 
-      const value = '## '
-      tree.props.onChange(onChangeEvent(value));
+        tree.props.onChange(onChangeEvent('abc', 3));
 
-      expect(onChange.mock.calls.length).toBe(1);
-      expect(onChange.mock.calls[0][0]).toEqual({
-        value: '## Page 1',
-        cursorAtEnd: false
-      });
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].cursorAtEnd).toBe(true);
+      })
+
+      it('cursor in middle of value', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
+
+        tree.props.onChange(onChangeEvent('abc', 1));
+
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].cursorAtEnd).toBe(false);
+      })
     })
 
-    it('invoked when cleared', () => {
-      const onChange = jest.fn();
-      const component = renderer.create(<Editor onChange={onChange} />);
-      let tree = component.toJSON();
+    describe('cursorPage and cursorPanel', () => {
+      it('cursor in a page and panel', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
 
-      tree.props.onChange(onChangeEvent(''));
+        const value = '## Page 1\n## Page 2\n### Panel 1\nadsf';
+        tree.props.onChange(onChangeEvent(value, value.length - 3));
 
-      expect(onChange.mock.calls.length).toBe(1);
-      expect(onChange.mock.calls[0][0]).toEqual({
-        value: '',
-        cursorAtEnd: true
-      });
-    })
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].cursorPage).toBe(2);
+        expect(onChange.mock.calls[0][0].cursorPanel).toBe(1);
+      })
 
-    it('when cursor is at the end of the value', () => {
-      const onChange = jest.fn();
-      const component = renderer.create(<Editor onChange={onChange} />);
-      let tree = component.toJSON();
+      it('cursor has no page nor panel', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
 
-      tree.props.onChange(onChangeEvent('abc', 3));
+        const value = 'asdf';
+        tree.props.onChange(onChangeEvent(value, value.length - 3));
 
-      expect(onChange.mock.calls.length).toBe(1);
-      expect(onChange.mock.calls[0][0]).toEqual({
-        value: 'abc',
-        cursorAtEnd: true
-      });
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].cursorPage).toBe(undefined);
+        expect(onChange.mock.calls[0][0].cursorPanel).toBe(undefined);
+      })
+
+      it('cursor has page only', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
+
+        const value = '## Page 1\n## Page 2\nasdf';
+        tree.props.onChange(onChangeEvent(value, value.length - 3));
+
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].cursorPage).toBe(2);
+        expect(onChange.mock.calls[0][0].cursorPanel).toBe(undefined);
+      })
+
+      it('cursor has panel only', () => {
+        const onChange = jest.fn();
+        const component = renderer.create(<Editor onChange={onChange} />);
+        let tree = component.toJSON();
+
+        const value = '### Panel 1\n### Panel 2\nasdf';
+        tree.props.onChange(onChangeEvent(value, value.length - 3));
+
+        expect(onChange.mock.calls.length).toBe(1);
+        expect(onChange.mock.calls[0][0].cursorPage).toBe(undefined);
+        expect(onChange.mock.calls[0][0].cursorPanel).toBe(2);
+      })
     })
   })
 })
