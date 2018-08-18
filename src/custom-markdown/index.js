@@ -22,7 +22,10 @@ const rules = {
 const rawBuiltParser = SimpleMarkdown.parserFor(rules);
 export function parse(source) {
   const blockSource = source + "\n\n";
-  return rawBuiltParser(blockSource, { inline: false });
+  return rawBuiltParser(blockSource, {
+    inline: false,
+    letteringNumber: 1
+  });
 };
 
 export const reactOutput = SimpleMarkdown.reactFor(SimpleMarkdown.ruleOutput(rules, 'react'));
