@@ -86,7 +86,8 @@ export default class Editor extends Component {
 
     if (this.props.onChange) {
       this.props.onChange({
-        value: newValue
+        value: newValue,
+        cursorAtEnd: newValue.length === cursor
       });
     }
 

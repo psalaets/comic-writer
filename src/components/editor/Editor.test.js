@@ -247,7 +247,8 @@ describe('Editor', () => {
 
       expect(onChange.mock.calls.length).toBe(1);
       expect(onChange.mock.calls[0][0]).toEqual({
-        value: 'this is some basic text'
+        value: 'this is some basic text',
+        cursorAtEnd: false
       });
     })
 
@@ -261,7 +262,8 @@ describe('Editor', () => {
 
       expect(onChange.mock.calls.length).toBe(1);
       expect(onChange.mock.calls[0][0]).toEqual({
-        value: '## Page 1'
+        value: '## Page 1',
+        cursorAtEnd: false
       });
     })
 
@@ -274,16 +276,32 @@ describe('Editor', () => {
 
       expect(onChange.mock.calls.length).toBe(1);
       expect(onChange.mock.calls[0][0]).toEqual({
-        value: ''
+        value: '',
+        cursorAtEnd: true
+      });
+    })
+
+    it('when cursor is at the end of the value', () => {
+      const onChange = jest.fn();
+      const component = renderer.create(<Editor onChange={onChange} />);
+      let tree = component.toJSON();
+
+      tree.props.onChange(onChangeEvent('abc', 3));
+
+      expect(onChange.mock.calls.length).toBe(1);
+      expect(onChange.mock.calls[0][0]).toEqual({
+        value: 'abc',
+        cursorAtEnd: true
       });
     })
   })
 })
 
-function onChangeEvent(text) {
+function onChangeEvent(text, selectionStart = 0) {
   return {
     target: {
-      value: text
+      value: text,
+      selectionStart
     }
   };
 }
