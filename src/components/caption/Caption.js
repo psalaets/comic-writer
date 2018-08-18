@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
+import Lettering from '../lettering/Lettering';
 
 export default class Caption extends Component {
   render() {
     return (
-      <div className="Dialogue">
-        <div className="Dialogue__meta">
-          {`${!isNaN(this.props.number) ? `${this.props.number}.` : ''}`} CAPTION {this.props.modifier ? `(${this.props.modifier})`:''}:
-        </div>
-        <div className="Dialogue__content">
-          {this.props.children}
-        </div>
-      </div>
+      <Lettering
+        number={this.props.number}
+        subject="CAPTION"
+        modifier={this.props.modifier}
+        content={this.props.children}
+      />
     );
   }
 }

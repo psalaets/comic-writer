@@ -1,9 +1,9 @@
-.Dialogue {
+.Lettering {
   display: flex;
   flex-wrap: wrap;
 }
 
-.Dialogue__meta {
+.Lettering__meta {
   flex: 0 0 45%;
   text-transform: uppercase;
   white-space: nowrap;
@@ -11,7 +11,7 @@
   max-width: 245px;
 }
 
-.Dialogue__content {
+.Lettering__content {
   flex: 1 1 0%;
   min-width: 200px;
 }

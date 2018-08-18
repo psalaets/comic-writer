@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import './Dialogue.css';
+import Lettering from '../lettering/Lettering';
 
 export default class Dialogue extends Component {
   render() {
     return (
-      <div className="Dialogue">
-        <div className="Dialogue__meta">
-          {`${!isNaN(this.props.number) ? `${this.props.number}.` : ''}`} {this.props.speaker} {this.props.modifier ? `(${this.props.modifier})`:''}:
-        </div>
-        <div className="Dialogue__content">
-          {this.props.children}
-        </div>
-      </div>
+      <Lettering
+        number={this.props.number}
+        subject={this.props.speaker}
+        modifier={this.props.modifier}
+        content={this.props.children}
+      />
     );
   }
 }
