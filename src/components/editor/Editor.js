@@ -55,23 +55,45 @@ export default class Editor extends Component {
         line.containsCursor = true;
       });
 
-    let pageNumber = 1;
-    let panelNumber = 1;
+    // The page that cursor is in
+    let cursorPage;
+    let cursorPanel;
+
+    let pageNumber = 0;
+    let panelNumber = 0;
 
     const newValue = lines
       .map(line => {
-        if (line.text.match(/^## /)) {
-          panelNumber = 1;
+        const isPage = line.text.match(/^## /);
+        const isPanel = line.text.match(/^### /);
 
-          const newLine = `## Page ${pageNumber++}`;
+        if (isPage) {
+          pageNumber += 1;
+          panelNumber = 0;
+        } else if (isPanel) {
+          panelNumber += 1;
+        }
+
+        if (line.containsCursor) {
+          if (pageNumber > 0) {
+            cursorPage = pageNumber;
+          }
+
+          if (panelNumber > 0) {
+            cursorPanel = panelNumber;
+          }
+        }
+
+        if (isPage) {
+          const newLine = `## Page ${pageNumber}`;
 
           if (line.containsCursor) {
             cursor += newLine.length - line.length;
           }
 
           return newLine;
-        } else if (line.text.match(/^### /)) {
-          const newLine = `### Panel ${panelNumber++}`;
+        } else if (isPanel) {
+          const newLine = `### Panel ${panelNumber}`;
 
           if (line.containsCursor) {
             cursor += newLine.length - line.length;
@@ -87,7 +109,9 @@ export default class Editor extends Component {
     if (this.props.onChange) {
       this.props.onChange({
         value: newValue,
-        cursorAtEnd: newValue.length === cursor
+        cursorAtEnd: newValue.length === cursor,
+        cursorPage,
+        cursorPanel
       });
     }
 
