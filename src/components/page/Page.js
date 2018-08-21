@@ -23,7 +23,7 @@ export default class Page extends Component {
       return '';
     }
 
-    const label = this.props.panelCount === 1 ? 'panel' : 'panels';
+    const label = this.props.panelCount === 1 ? 'Panel' : 'Panels';
     return `${this.props.panelCount} ${label}`;
   }
 }
