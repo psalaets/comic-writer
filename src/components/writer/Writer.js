@@ -13,10 +13,12 @@ export default class Writer extends Component {
     super(props);
 
     this.state = {
-      value: []
+      value: [],
+      scrollPercentage: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   handleChange(event) {
@@ -27,11 +29,26 @@ export default class Writer extends Component {
     });
   }
 
+  handleScroll(type) {
+    return (event) => {
+      const percentage = event.target.scrollTop / (event.target.scrollHeight - event.target.clientHeight);
+      this.setState({
+        scrollPercentage: percentage
+      });
+    }
+  }
+
   render() {
     return (
-      <div className="writer">
-        <Editor onChange={this.handleChange} />
-        <Script blocks={this.state.value} />
+      <div className="Writer">
+        <Editor
+          onChange={this.handleChange}
+          handelScroll={this.handleScroll('editor')}
+        />
+        <Script
+          blocks={this.state.value}
+          scrollPercentage={this.state.scrollPercentage}
+        />
       </div>
     );
   }

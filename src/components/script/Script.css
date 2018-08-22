@@ -2,10 +2,11 @@
   overflow-x: scroll;
   padding-left: 2em;
   padding-right: 2em;
-  /* padding-top: 1em; */
   font-family: sans-serif;
   width: 100%;
   color: #232323;
+  /* Provides margin at bottom. Maybe "scroll past" option later */
+  padding-bottom: 25vh;
 }
 
 .Script > * + * {

@@ -8,5 +8,7 @@
   background-color: #fafafa;
   font-family: monospace;
   font-size: 1em;
-  color: #232323
+  color: #232323;
+  /* Provides margin at bottom. Maybe "scroll past" option later */
+  padding-bottom: 25vh;
 }
