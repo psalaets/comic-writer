@@ -29,7 +29,7 @@ export default class Writer extends Component {
 
   render() {
     return (
-      <div className="writer">
+      <div className="Writer">
         <Editor onChange={this.handleChange} />
         <Script blocks={this.state.value} />
       </div>
