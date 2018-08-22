@@ -62,7 +62,7 @@ export default class Editor extends Component {
     let pageNumber = 0;
     let panelNumber = 0;
 
-    const transformedLines = lines
+    const newValue = lines
       .map(line => {
         const isPage = line.text.match(/^## /);
         const isPanel = line.text.match(/^### /);
@@ -103,17 +103,15 @@ export default class Editor extends Component {
         } else {
           return line.text;
         }
-      });
-
-    const newValue = transformedLines.join('\n');
+      })
+      .join('\n');
 
     if (this.props.onChange) {
       this.props.onChange({
         value: newValue,
         cursorAtEnd: newValue.length === cursor,
         cursorPage,
-        cursorPanel,
-        lineCount: transformedLines.length
+        cursorPanel
       });
     }
 
