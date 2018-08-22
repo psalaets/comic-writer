@@ -19,6 +19,7 @@ export default class Editor extends Component {
         className="Editor"
         value={this.state.value}
         onChange={this.handleChange}
+        onScroll={this.props.handelScroll}
         ref={this.setTextarea}
       />
     )
