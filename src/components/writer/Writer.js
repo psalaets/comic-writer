@@ -13,7 +13,10 @@ export default class Writer extends Component {
     super(props);
 
     this.state = {
-      value: []
+      value: [],
+      lineCount: 0,
+      cursorAtEnd: false,
+      length: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -23,7 +26,10 @@ export default class Writer extends Component {
     const {value} = event;
 
     this.setState({
-      value: postParse(parse(value))
+      value: postParse(parse(value)),
+      lineCount: event.lineCount,
+      cursorAtEnd: event.cursorAtEnd,
+      sourceLength: event.sourceLength
     });
   }
 
@@ -31,7 +37,12 @@ export default class Writer extends Component {
     return (
       <div className="writer">
         <Editor onChange={this.handleChange} />
-        <Script blocks={this.state.value} />
+        <Script
+          blocks={this.state.value}
+          lineCount={this.state.lineCount}
+          cursorAtEnd={this.state.cursorAtEnd}
+          sourceLength={this.state.sourceLength}
+        />
       </div>
     );
   }
