@@ -274,7 +274,7 @@ describe('Editor', () => {
       })
     })
 
-    describe('sourceLength', () => {
+    describe('lineCount', () => {
       it('empty value', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} />);
@@ -283,18 +283,18 @@ describe('Editor', () => {
         tree.props.onChange(onChangeEvent(''));
 
         expect(onChange.mock.calls.length).toBe(1);
-        expect(onChange.mock.calls[0][0].sourceLength).toBe(0);
+        expect(onChange.mock.calls[0][0].lineCount).toBe(1);
       })
 
-      it('single line', () => {
+      it('one line', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} />);
         let tree = component.toJSON();
 
-        tree.props.onChange(onChangeEvent('blah'));
+        tree.props.onChange(onChangeEvent('abc'));
 
         expect(onChange.mock.calls.length).toBe(1);
-        expect(onChange.mock.calls[0][0].sourceLength).toBe(4);
+        expect(onChange.mock.calls[0][0].lineCount).toBe(1);
       })
 
       it('multiple lines', () => {
@@ -302,10 +302,10 @@ describe('Editor', () => {
         const component = renderer.create(<Editor onChange={onChange} />);
         let tree = component.toJSON();
 
-        tree.props.onChange(onChangeEvent('## Page 1\n\nblah'));
+        tree.props.onChange(onChangeEvent('abc\ndef\nghi'));
 
         expect(onChange.mock.calls.length).toBe(1);
-        expect(onChange.mock.calls[0][0].sourceLength).toBe(15);
+        expect(onChange.mock.calls[0][0].lineCount).toBe(3);
       })
     })
 
