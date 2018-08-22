@@ -43,13 +43,11 @@ export default class Writer extends Component {
       <div className="Writer">
         <Editor
           onChange={this.handleChange}
-          scrollPercentage={this.state.scrollPercentage}
           handelScroll={this.handleScroll('editor')}
         />
         <Script
           blocks={this.state.value}
           scrollPercentage={this.state.scrollPercentage}
-          handelScroll={this.handleScroll('script')}
         />
       </div>
     );
