@@ -4,6 +4,7 @@ exports[`Editor page markers adding marker at end 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 1 info
 ## Page 2"
@@ -14,6 +15,7 @@ exports[`Editor page markers adding marker at start 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 ## Page 2
 page 1 info"
@@ -24,6 +26,7 @@ exports[`Editor page markers adding marker in the middle 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 1 info
 ## Page 2
@@ -36,6 +39,7 @@ exports[`Editor page markers first marker 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1"
 />
 `;
@@ -44,6 +48,7 @@ exports[`Editor page markers pasting page at end 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 2 info
 ## Page 2
@@ -55,6 +60,7 @@ exports[`Editor page markers pasting page at start 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 3 info
 ## Page 2
@@ -68,6 +74,7 @@ exports[`Editor page markers pasting page in middle 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 1 info
 ## Page 2
@@ -81,6 +88,7 @@ exports[`Editor page markers remove page from middle 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 1 info
 ## Page 2
@@ -92,6 +100,7 @@ exports[`Editor page markers remove page from start 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 2 info
 ## Page 2
@@ -103,6 +112,7 @@ exports[`Editor panel markers adding another panel to second page 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 ### Panel 1
 panel 1 info
@@ -116,6 +126,7 @@ exports[`Editor panel markers adding panel at start 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 1 info
 ### Panel 1
@@ -128,6 +139,7 @@ exports[`Editor panel markers adding panel in middle 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 ### Panel 1
 panel 1 info
@@ -141,6 +153,7 @@ exports[`Editor panel markers adding panel to page 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 1 info
 ### Panel 1"
@@ -151,6 +164,7 @@ exports[`Editor panel markers adding panel to second page 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 ### Panel 1
 panel 1 info
@@ -163,6 +177,7 @@ exports[`Editor panel markers adding second panel to page 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 1 info
 ### Panel 1
@@ -174,6 +189,7 @@ exports[`Editor panel markers pasting panel at start 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 page 1 info
 ### Panel 1
@@ -186,6 +202,7 @@ exports[`Editor panel markers pasting panel in middle 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 ### Panel 1
 panel 1 info
@@ -199,6 +216,7 @@ exports[`Editor panel markers removing panel from middle 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 ### Panel 1
 panel 1 info
@@ -211,6 +229,7 @@ exports[`Editor panel markers removing panel from start 1`] = `
 <textarea
   className="Editor"
   onChange={[Function]}
+  onScroll={[Function]}
   value="## Page 1
 ### Panel 1
 panel 2 info"
