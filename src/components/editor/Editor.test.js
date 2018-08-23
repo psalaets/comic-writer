@@ -6,7 +6,7 @@ import Editor from './Editor';
 describe('Editor', () => {
   describe('page markers', () => {
     it('first marker', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = `## `
@@ -18,7 +18,7 @@ describe('Editor', () => {
     })
 
     it('adding marker at start', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## \n## Page 1\npage 1 info'
@@ -30,7 +30,7 @@ describe('Editor', () => {
     })
 
     it('adding marker at end', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\npage 1 info\n## '
@@ -42,7 +42,7 @@ describe('Editor', () => {
     })
 
     it('adding marker in the middle', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\npage 1 info\n## \n## Page 2\npage 2 info'
@@ -54,7 +54,7 @@ describe('Editor', () => {
     })
 
     it('pasting page at start', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 3\npage 3 info\n## Page 1\npage 1 info\n## Page 2\npage 2 info'
@@ -66,7 +66,7 @@ describe('Editor', () => {
     })
 
     it('pasting page at end', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 2\npage 2 info\n## Page 1\npage 1 info'
@@ -78,7 +78,7 @@ describe('Editor', () => {
     })
 
     it('pasting page in middle', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\npage 1 info\n## Page 3\npage 3 info\n## Page 2\npage 2 info'
@@ -90,7 +90,7 @@ describe('Editor', () => {
     })
 
     it('remove page from start', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 2\npage 2 info\n## Page 3\npage 3 info'
@@ -102,7 +102,7 @@ describe('Editor', () => {
     })
 
     it('remove page from middle', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\npage 1 info\n## Page 3\npage 3 info'
@@ -116,7 +116,7 @@ describe('Editor', () => {
 
   describe('panel markers', () => {
     it('adding panel to page', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\npage 1 info\n### '
@@ -128,7 +128,7 @@ describe('Editor', () => {
     })
 
     it('adding second panel to page', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\npage 1 info\n### Panel 1\n### '
@@ -140,7 +140,7 @@ describe('Editor', () => {
     })
 
     it('adding panel at start', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\npage 1 info\n### \n### Panel 1\npanel 1 info'
@@ -152,7 +152,7 @@ describe('Editor', () => {
     })
 
     it('adding panel in middle', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n### \n### Panel 2\npanel 2 info'
@@ -164,7 +164,7 @@ describe('Editor', () => {
     })
 
     it('adding panel to second page', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n## Page 2\n### '
@@ -176,7 +176,7 @@ describe('Editor', () => {
     })
 
     it('adding another panel to second page', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n## Page 2\n### Panel 1\n### '
@@ -188,7 +188,7 @@ describe('Editor', () => {
     })
 
     it('pasting panel at start', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\npage 1 info\n### Panel 2\n### Panel 1\npanel 1 info'
@@ -200,7 +200,7 @@ describe('Editor', () => {
     })
 
     it('pasting panel in middle', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n### Panel 3\n### Panel 2\npanel 2 info'
@@ -212,7 +212,7 @@ describe('Editor', () => {
     })
 
     it('removing panel from start', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\n### Panel 2\npanel 2 info'
@@ -224,7 +224,7 @@ describe('Editor', () => {
     })
 
     it('removing panel from middle', () => {
-      const component = renderer.create(<Editor onChange={noOp} handelScroll={noOp} />);
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
       let tree = component.toJSON();
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n### Panel 3\npanel 3 info'
@@ -240,7 +240,7 @@ describe('Editor', () => {
     describe('value', () => {
       it('when changed with basic text', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         const value = 'this is some basic text'
@@ -252,7 +252,7 @@ describe('Editor', () => {
 
       it('changed with markdown', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         const value = '## '
@@ -264,7 +264,7 @@ describe('Editor', () => {
 
       it('cleared', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         tree.props.onChange(onChangeEvent(''));
@@ -277,7 +277,7 @@ describe('Editor', () => {
     describe('cursorAtEnd', () => {
       it('cursor at the end of value', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         tree.props.onChange(onChangeEvent('abc', 3));
@@ -288,7 +288,7 @@ describe('Editor', () => {
 
       it('cursor in middle of value', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         tree.props.onChange(onChangeEvent('abc', 1));
@@ -301,7 +301,7 @@ describe('Editor', () => {
     describe('cursorPage and cursorPanel', () => {
       it('cursor in a page and panel', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         const value = '## Page 1\n## Page 2\n### Panel 1\nadsf';
@@ -314,7 +314,7 @@ describe('Editor', () => {
 
       it('cursor has no page nor panel', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         const value = 'asdf';
@@ -327,7 +327,7 @@ describe('Editor', () => {
 
       it('cursor has page only', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         const value = '## Page 1\n## Page 2\nasdf';
@@ -340,7 +340,7 @@ describe('Editor', () => {
 
       it('cursor has panel only', () => {
         const onChange = jest.fn();
-        const component = renderer.create(<Editor onChange={onChange} handelScroll={noOp} />);
+        const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
         let tree = component.toJSON();
 
         const value = '### Panel 1\n### Panel 2\nasdf';
