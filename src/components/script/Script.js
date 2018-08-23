@@ -9,8 +9,10 @@ export default class Script extends Component {
     this.scrollRef = React.createRef();
   }
 
-  componentDidUpdate() {
-    this.scrollRef.current.scrollTop = this.props.scrollPercentage * (this.scrollRef.current.scrollHeight - this.scrollRef.current.clientHeight)
+  componentDidUpdate(previousProps) {
+    if (this.props.scrollPercentage !== previousProps.scrollPercentage) {
+      this.scrollRef.current.scrollTop = this.props.scrollPercentage * (this.scrollRef.current.scrollHeight - this.scrollRef.current.clientHeight)
+    }
   }
 
   render() {
