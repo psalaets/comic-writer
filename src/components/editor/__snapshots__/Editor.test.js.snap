@@ -44,6 +44,27 @@ exports[`Editor page markers first marker 1`] = `
 />
 `;
 
+exports[`Editor page markers pasting content with page count in double digits 1`] = `
+<textarea
+  className="Editor"
+  onChange={[Function]}
+  onScroll={[Function]}
+  value="## Page 1
+## Page 2
+## Page 3
+## Page 4
+## Page 5
+## Page 6
+## Page 7
+## Page 8
+## Page 9
+## Page 10
+## Page 11
+## Page 12
+## Page 13"
+/>
+`;
+
 exports[`Editor page markers pasting page at end 1`] = `
 <textarea
   className="Editor"

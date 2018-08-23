@@ -112,6 +112,19 @@ describe('Editor', () => {
 
       expect(tree).toMatchSnapshot();
     })
+
+    it('pasting content with page count in double digits', () => {
+      const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
+      let tree = component.toJSON();
+
+      const tenPages = Array.from(new Array(10), (p, i) => `## Page ${i + 1}`).join('\n');
+      const value = tenPages + '\n## \n## \n## ';
+      tree.props.onChange(onChangeEvent(value));
+
+      tree = component.toJSON();
+
+      expect(tree).toMatchSnapshot();
+    })
   })
 
   describe('panel markers', () => {

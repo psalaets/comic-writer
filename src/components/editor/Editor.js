@@ -87,18 +87,12 @@ export default class Editor extends Component {
 
         if (isPage) {
           const newLine = `## Page ${pageNumber}`;
-
-          if (line.containsCursor) {
-            cursor += newLine.length - line.length;
-          }
+          cursor += newLine.length - line.length;
 
           return newLine;
         } else if (isPanel) {
           const newLine = `### Panel ${panelNumber}`;
-
-          if (line.containsCursor) {
-            cursor += newLine.length - line.length;
-          }
+          cursor += newLine.length - line.length;
 
           return newLine;
         } else {
