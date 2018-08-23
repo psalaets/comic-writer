@@ -10,6 +10,7 @@ export default class Page extends Component {
         <div className="
           u-font-size--marcus
         ">{this.props.children}</div>
+        <span className="u-hide--visually">: </span>
         <span className="
           u-font-size--saya
           Page__count

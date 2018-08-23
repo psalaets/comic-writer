@@ -24,6 +24,10 @@ h6 {
   padding: 0;
 }
 
+blockquote {
+  margin: 0;
+}
+
 /* Font Types*/
 /* h1's, large Titles */
 .u-font-size--lin {}

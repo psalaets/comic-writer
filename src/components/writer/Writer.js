@@ -40,7 +40,7 @@ export default class Writer extends Component {
 
   render() {
     return (
-      <div className="Writer">
+      <main className="Writer">
         <Editor
           onChange={this.handleChange}
           onScroll={this.handleScroll('editor')}
@@ -49,7 +49,7 @@ export default class Writer extends Component {
           blocks={this.state.value}
           scrollPercentage={this.state.scrollPercentage}
         />
-      </div>
+      </main>
     );
   }
 }

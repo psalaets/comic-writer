@@ -7,14 +7,14 @@ export default class Lettering extends Component {
     const meta = `${this.props.number}. ${this.props.subject}${modifier}`;
 
     return (
-      <div className="Lettering">
-        <div className="Lettering__meta">
+      <section className="Lettering">
+        <h4 className="Lettering__meta">
           {meta}
-        </div>
-        <div className="Lettering__content">
+        </h4>
+        <blockquote className="Lettering__content">
           {this.props.content}
-        </div>
-      </div>
+        </blockquote>
+      </section>
     );
   }
 }

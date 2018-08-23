@@ -18,13 +18,13 @@ export default class Script extends Component {
   render() {
     const output = reactOutput(this.props.blocks);
     return (
-      <div
+      <article
         className="Script"
         onScroll={this.props.handelScroll}
         ref={this.scrollRef}
       >
         {output}
-      </div>
+      </article>
     );
   }
 }
