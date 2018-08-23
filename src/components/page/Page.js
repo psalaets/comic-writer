@@ -7,9 +7,9 @@ export default class Page extends Component {
       <h2 className="
         Page
       ">
-        <div className="
+        <span className="
           u-font-size--marcus
-        ">{this.props.children}</div>
+        ">{this.props.children}</span>
         <span className="u-hide--visually">: </span>
         <span className="
           u-font-size--saya
