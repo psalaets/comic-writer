@@ -42,7 +42,7 @@ function parse(capture, recurseParse, state) {
   state.letteringNumber = 1;
 
   return {
-    content,
+    content: recurseParse(content, state),
     number
   };
 }
@@ -53,8 +53,9 @@ function react(node, recurseOutput, state) {
     {
       key: state.key,
       // this should've been put here by post-parse code
-      panelCount: node.panelCount
+      panelCount: node.panelCount,
+      number: node.number
     },
-    node.content
+    recurseOutput(node.content, state)
   );
 }
