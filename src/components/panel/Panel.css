@@ -2,6 +2,10 @@
 
 }
 
+.Panel > * + * {
+  margin-top: 1em;
+}
+
 .Panel__title {
 
 }

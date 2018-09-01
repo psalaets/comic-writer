@@ -2,6 +2,10 @@
   padding-top: 1em;
 }
 
+.Page > * + * {
+  margin-top: 1em;
+}
+
 .Page__title {
   display: flex;
   align-items: center;
