@@ -14,18 +14,20 @@ export default class Editor extends Component {
   }
 
   render() {
-    return [
-      <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>,
-      <textarea
-        key="editor-area"
-        id="editor"
-        className="Editor"
-        value={this.state.value}
-        onChange={this.handleChange}
-        onScroll={this.props.onScroll}
-        ref={this.setTextarea}
-      />
-      ]
+    return (
+      <div className="Editor">
+        <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>
+        <textarea
+          key="editor-area"
+          id="editor"
+          className="Editor__textarea"
+          value={this.state.value}
+          onChange={this.handleChange}
+          onScroll={this.props.onScroll}
+          ref={this.setTextarea}
+        />
+      </div>
+    )
   }
 
   setTextarea(textarea) {
