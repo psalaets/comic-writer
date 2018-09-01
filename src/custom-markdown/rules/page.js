@@ -47,12 +47,15 @@ function parse(capture, recurseParse, state) {
 }
 
 function react(node, recurseOutput, state) {
+  const panelCount = node.content
+    .filter(chunk => chunk.type === 'panel')
+    .length;
+
   return React.createElement(
     Page,
     {
       key: state.key,
-      // this should've been put here by post-parse code
-      panelCount: node.panelCount,
+      panelCount,
       number: node.number
     },
     recurseOutput(node.content, state)
