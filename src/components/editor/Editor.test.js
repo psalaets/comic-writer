@@ -7,245 +7,245 @@ describe('Editor', () => {
   describe('page markers', () => {
     it('first marker', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = `## `
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('adding marker at start', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## \n## Page 1\npage 1 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('adding marker at end', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\npage 1 info\n## '
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('adding marker in the middle', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\npage 1 info\n## \n## Page 2\npage 2 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('pasting page at start', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 3\npage 3 info\n## Page 1\npage 1 info\n## Page 2\npage 2 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('pasting page at end', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 2\npage 2 info\n## Page 1\npage 1 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('pasting page in middle', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\npage 1 info\n## Page 3\npage 3 info\n## Page 2\npage 2 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('remove page from start', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 2\npage 2 info\n## Page 3\npage 3 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('remove page from middle', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\npage 1 info\n## Page 3\npage 3 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('pasting content with page count in double digits', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const tenPages = Array.from(new Array(10), (p, i) => `## Page ${i + 1}`).join('\n');
       const value = tenPages + '\n## \n## \n## ';
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
   })
 
   describe('panel markers', () => {
     it('adding panel to page', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\npage 1 info\n### '
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('adding second panel to page', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\npage 1 info\n### Panel 1\n### '
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('adding panel at start', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\npage 1 info\n### \n### Panel 1\npanel 1 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('adding panel in middle', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n### \n### Panel 2\npanel 2 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('adding panel to second page', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n## Page 2\n### '
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('adding another panel to second page', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n## Page 2\n### Panel 1\n### '
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('pasting panel at start', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\npage 1 info\n### Panel 2\n### Panel 1\npanel 1 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('pasting panel in middle', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n### Panel 3\n### Panel 2\npanel 2 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('removing panel from start', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\n### Panel 2\npanel 2 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
 
     it('removing panel from middle', () => {
       const component = renderer.create(<Editor onChange={noOp} onScroll={noOp} />);
-      let tree = component.toJSON();
+      let textarea = getTextarea(component);
 
       const value = '## Page 1\n### Panel 1\npanel 1 info\n### Panel 3\npanel 3 info'
-      tree.props.onChange(onChangeEvent(value));
+      textarea.props.onChange(onChangeEvent(value));
 
-      tree = component.toJSON();
+      textarea = getTextarea(component);
 
-      expect(tree).toMatchSnapshot();
+      expect(textarea).toMatchSnapshot();
     })
   })
 
@@ -254,10 +254,10 @@ describe('Editor', () => {
       it('when changed with basic text', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
         const value = 'this is some basic text'
-        tree.props.onChange(onChangeEvent(value));
+        textarea.props.onChange(onChangeEvent(value));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].value).toBe('this is some basic text');
@@ -266,10 +266,10 @@ describe('Editor', () => {
       it('changed with markdown', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
         const value = '## '
-        tree.props.onChange(onChangeEvent(value));
+        textarea.props.onChange(onChangeEvent(value));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].value).toBe('## Page 1');
@@ -278,9 +278,9 @@ describe('Editor', () => {
       it('cleared', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
-        tree.props.onChange(onChangeEvent(''));
+        textarea.props.onChange(onChangeEvent(''));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].value).toBe('');
@@ -291,9 +291,9 @@ describe('Editor', () => {
       it('cursor at the end of value', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
-        tree.props.onChange(onChangeEvent('abc', 3));
+        textarea.props.onChange(onChangeEvent('abc', 3));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].cursorAtEnd).toBe(true);
@@ -302,9 +302,9 @@ describe('Editor', () => {
       it('cursor in middle of value', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
-        tree.props.onChange(onChangeEvent('abc', 1));
+        textarea.props.onChange(onChangeEvent('abc', 1));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].cursorAtEnd).toBe(false);
@@ -315,10 +315,10 @@ describe('Editor', () => {
       it('cursor in a page and panel', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
         const value = '## Page 1\n## Page 2\n### Panel 1\nadsf';
-        tree.props.onChange(onChangeEvent(value, value.length - 3));
+        textarea.props.onChange(onChangeEvent(value, value.length - 3));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].cursorPage).toBe(2);
@@ -328,10 +328,10 @@ describe('Editor', () => {
       it('cursor has no page nor panel', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
         const value = 'asdf';
-        tree.props.onChange(onChangeEvent(value, value.length - 3));
+        textarea.props.onChange(onChangeEvent(value, value.length - 3));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].cursorPage).toBe(undefined);
@@ -341,10 +341,10 @@ describe('Editor', () => {
       it('cursor has page only', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
         const value = '## Page 1\n## Page 2\nasdf';
-        tree.props.onChange(onChangeEvent(value, value.length - 3));
+        textarea.props.onChange(onChangeEvent(value, value.length - 3));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].cursorPage).toBe(2);
@@ -354,10 +354,10 @@ describe('Editor', () => {
       it('cursor has panel only', () => {
         const onChange = jest.fn();
         const component = renderer.create(<Editor onChange={onChange} onScroll={noOp} />);
-        let tree = component.toJSON();
+        let textarea = getTextarea(component);
 
         const value = '### Panel 1\n### Panel 2\nasdf';
-        tree.props.onChange(onChangeEvent(value, value.length - 3));
+        textarea.props.onChange(onChangeEvent(value, value.length - 3));
 
         expect(onChange.mock.calls.length).toBe(1);
         expect(onChange.mock.calls[0][0].cursorPage).toBe(undefined);
@@ -376,4 +376,14 @@ function onChangeEvent(text, selectionStart = 0) {
       selectionStart
     }
   };
+}
+
+function getTextarea(testRenderedEditor) {
+  const json = testRenderedEditor.toJSON();
+
+  if (!Array.isArray(json) || json.length < 2) {
+    throw new Error('expected toJSON() to return array of 2, but was ', json);
+  }
+
+  return json[1];
 }
