@@ -3,7 +3,8 @@ import SimpleMarkdown from 'simple-markdown';
 
 import Page from '../../components/page/Page';
 
-const matchRegex = /^## (Page (\d{1,}))/;
+const pageRegex = /^## Page (\d{1,})([^]*)/;
+const PAGE_PREFIX = '## Page';
 
 export default {
   order: SimpleMarkdown.defaultRules.heading.order - 0.2,
@@ -16,13 +17,27 @@ function match(source, state, lookbehind) {
   if (state.inline) {
     return null
   } else {
-    return matchRegex.exec(source);
+    const index = source.indexOf(PAGE_PREFIX);
+
+    if (index === -1) {
+      return null;
+    }
+
+    const nextIndex = source.indexOf(PAGE_PREFIX, index + PAGE_PREFIX.length);
+    const page = nextIndex === -1 ? source : source.slice(0, nextIndex);
+    const [, number, content] = pageRegex.exec(page);
+
+    return {
+      '0': page,
+      '1': number,
+      '2': content
+    };
   }
 }
 
 function parse(capture, recurseParse, state) {
-  const content = capture[1];
-  const number = capture[2];
+  const number = capture[1];
+  const content = capture[2];
 
   state.letteringNumber = 1;
 
