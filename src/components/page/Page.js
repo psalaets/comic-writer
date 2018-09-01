@@ -4,9 +4,9 @@ import './Page.css'
 export default class Page extends Component {
   render() {
     return (
-      <div>
+      <section className="Page">
         <h2 className="
-          Page
+          Page__title
         ">
           <span className="
             u-font-size--marcus
@@ -14,11 +14,11 @@ export default class Page extends Component {
           <span className="u-hide--visually">: </span>
           <span className="
             u-font-size--saya
-            Page__count
+            Page__panel-count
           ">{this.panelCount()}</span>
         </h2>
         {this.props.children}
-      </div>
+      </section>
     );
   }
 
