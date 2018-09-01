@@ -21,7 +21,7 @@ const rules = {
 
 const rawBuiltParser = SimpleMarkdown.parserFor(rules);
 export function parse(source) {
-  const blockSource = source + "\n\n";
+  const blockSource = source;
   return rawBuiltParser(blockSource, {
     inline: false,
     letteringNumber: 1
