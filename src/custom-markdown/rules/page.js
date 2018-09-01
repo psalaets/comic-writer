@@ -30,11 +30,7 @@ function match(source, state, lookbehind) {
     const number = capture[1];
     const content = capture[2];
 
-    return {
-      '0': page,
-      '1': number,
-      '2': content
-    };
+    return [page, number, content];
   }
 }
 
