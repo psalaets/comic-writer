@@ -19,13 +19,16 @@ function match(source, state, lookbehind) {
   } else {
     const index = source.indexOf(PAGE_PREFIX);
 
-    if (index === -1) {
+    if (index !== 0) {
       return null;
     }
 
     const nextIndex = source.indexOf(PAGE_PREFIX, index + PAGE_PREFIX.length);
     const page = nextIndex === -1 ? source : source.slice(0, nextIndex);
-    const [, number, content] = pageRegex.exec(page);
+    const capture = pageRegex.exec(page);
+
+    const number = capture[1];
+    const content = capture[2];
 
     return {
       '0': page,

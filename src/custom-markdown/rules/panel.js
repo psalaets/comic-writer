@@ -3,7 +3,8 @@ import SimpleMarkdown from 'simple-markdown';
 
 import Panel from '../../components/panel/Panel';
 
-const matchRegex = /^### (Panel (\d{1,}))/;
+const panelRegex = /^### Panel (\d{1,})([^]*)/;
+const PANEL_PREFIX = '### Panel';
 
 export default {
   order: SimpleMarkdown.defaultRules.heading.order - 0.1,
@@ -16,16 +17,33 @@ function match(source, state, lookbehind) {
   if (state.inline) {
     return null
   } else {
-    return matchRegex.exec(source);
+    const index = source.indexOf(PANEL_PREFIX);
+
+    if (index !== 0) {
+      return null;
+    }
+
+    const nextIndex = source.indexOf(PANEL_PREFIX, index + PANEL_PREFIX.length);
+    const panel = nextIndex === -1 ? source : source.slice(0, nextIndex);
+    const capture = panelRegex.exec(panel);
+
+    const number = capture[1];
+    const content = capture[2];
+
+    return {
+      '0': panel,
+      '1': number,
+      '2': content
+    };
   }
 }
 
 function parse(capture, recurseParse, state) {
-  const content = capture[1];
-  const number = capture[2];
+  const number = capture[1];
+  const content = capture[2];
 
   return {
-    content,
+    content: recurseParse(content, state),
     number
   };
 }
@@ -34,8 +52,9 @@ function react(node, recurseOutput, state) {
   return React.createElement(
     Panel,
     {
-      key: state.key
+      key: state.key,
+      number: node.number
     },
-    node.content
+    recurseOutput(node.content, state)
   );
 }
