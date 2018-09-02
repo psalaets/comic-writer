@@ -35,6 +35,7 @@ export default class Editor extends Component {
         />
         <div
           className="Editor__scrollpast"
+          onClick={() => document.getElementById('editor').focus()}
         />
       </div>
     )
