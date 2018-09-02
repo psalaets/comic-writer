@@ -6,7 +6,9 @@ export default class Editor extends Component {
     super(props);
 
     this.state = {
-      value: ''
+      value: '',
+      textAreaScrollHeight: '100%' // Default to one-hundo, we don't know the
+                                   //  initial height.
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -14,18 +16,24 @@ export default class Editor extends Component {
   }
 
   render() {
+    const style = {
+      height: this.state.textAreaScrollHeight
+    }
     return (
-      <div className="Editor">
+      <div className="Editor"
+        onScroll={this.props.onScroll}
+       >
         <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>
         <textarea
+          style={style}
           key="editor-area"
           id="editor"
           className="Editor__textarea"
           value={this.state.value}
           onChange={this.handleChange}
-          onScroll={this.props.onScroll}
           ref={this.setTextarea}
         />
+        <div className="Editor__scrollpast"></div>
       </div>
     )
   }
@@ -35,6 +43,10 @@ export default class Editor extends Component {
   }
 
   handleChange(event) {
+    // Auto Grow Text area. uses this value to auto-resize text area.
+    this.setState({
+      textAreaScrollHeight: event.target.scrollHeight
+    })
     const value = event.target.value;
     let cursor = event.target.selectionStart;
 
