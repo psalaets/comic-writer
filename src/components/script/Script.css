@@ -6,9 +6,12 @@
   font-family: sans-serif;
   width: 100%;
   color: #232323;
-  padding-bottom: 25vh;
 }
 
 .Script > * + * {
   margin-top: 1em;
+}
+
+.Script__scrollpast {
+  padding-bottom: 25vh;
 }
