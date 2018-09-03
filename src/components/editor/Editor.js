@@ -17,7 +17,7 @@ export default class Editor extends Component {
 
   render() {
     const style = {
-      height: this.state.textAreaScrollHeight
+      // height: this.state.textAreaScrollHeight
     }
     return (
       <div className="Editor"
@@ -45,11 +45,36 @@ export default class Editor extends Component {
     this.textarea = textarea;
   }
 
+  autoSize() {
+    const el = this.textarea;
+
+    // compute the height difference which is caused by border and outline
+    var outerHeight = parseInt(window.getComputedStyle(el).height, 10);
+    var diff = outerHeight - el.clientHeight;
+
+    // set the height to 0 in case of it has to be shrinked
+    const parent = el.parentElement;
+    parent.style['min-height'] = parent.scrollHeight;
+    const parentScroll = parent.scrollTop;
+
+    el.style.height = 0;
+
+    // set the correct height
+    // el.scrollHeight is the full height of the content, not just the visible part
+    el.style.height = el.scrollHeight + diff + 'px';
+
+    parent.scrollTop = parentScroll;
+    parent.style['min-height'] = 'initial';
+  }
+
   handleChange(event) {
     // Auto Grow Text area. uses this value to auto-resize text area.
-    this.setState({
-      textAreaScrollHeight: event.target.scrollHeight
-    })
+    // this.setState({
+    //   textAreaScrollHeight: event.target.scrollHeight
+    // })
+
+    this.autoSize();
+
     const value = event.target.value;
     let cursor = event.target.selectionStart;
 
