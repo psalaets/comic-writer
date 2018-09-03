@@ -380,10 +380,11 @@ function onChangeEvent(text, selectionStart = 0) {
 
 function getTextarea(testRenderedEditor) {
   const json = testRenderedEditor.toJSON();
+  const children = json.children;
 
-  if (!Array.isArray(json) || json.length < 2) {
-    throw new Error('expected toJSON() to return array of 2, but was ', json);
+  if (!Array.isArray(children) || children.length < 2) {
+    throw new Error('expected toJSON() to return element with 2 children' + json);
   }
 
-  return json[1];
+  return children[1];
 }
