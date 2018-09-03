@@ -1,2 +1,10 @@
-test:
-  script: CI=true npm test
+image: node:10
+
+stages:
+  - test
+
+run_tests:
+  stage: test
+  script:
+    - npm ci
+    - CI=true npm test
