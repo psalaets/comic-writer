@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Script.css';
 
 import { reactOutput } from '../../custom-markdown';
@@ -28,3 +29,7 @@ export default class Script extends Component {
     );
   }
 }
+
+Script.propTypes = {
+  scrollPercentage: PropTypes.number.isRequired
+};

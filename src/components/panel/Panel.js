@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Panel.css';
 
 export default class Panel extends Component {
@@ -11,3 +12,7 @@ export default class Panel extends Component {
     );
   }
 }
+
+Panel.propTypes = {
+  number: PropTypes.number.isRequired
+};

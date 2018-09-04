@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Lettering from '../lettering/Lettering';
 
 export default class Caption extends Component {
@@ -13,3 +14,8 @@ export default class Caption extends Component {
     );
   }
 }
+
+Caption.propTypes = {
+  number: PropTypes.number.isRequired,
+  modifier: PropTypes.string
+};

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Editor.css';
 
 export default class Editor extends Component {
@@ -124,3 +125,8 @@ export default class Editor extends Component {
     });
   }
 }
+
+Editor.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  onScroll: PropTypes.func.isRequired
+};
