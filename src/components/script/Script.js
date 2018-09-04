@@ -21,7 +21,6 @@ export default class Script extends Component {
     return (
       <article
         className="Script"
-        onScroll={this.props.handelScroll}
         ref={this.scrollRef}
       >
         {output}
