@@ -9,6 +9,7 @@
   color: rgba(0, 0, 0, .5);
   flex: 0 0 1em;
   height: 100vh;
+  outline: none;
 }
 
 .Writer__view-control:hover {
