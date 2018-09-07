@@ -1,6 +1,7 @@
 .Editor {
-  flex: 0 0 50%;
-  border-right: 1px solid #eeeeee;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 50%;
   background-color: #fafafa;
   overflow-y: auto;
 }
@@ -21,7 +22,4 @@
 }
 .Editor__scrollpast {
   height: 25vh;
-
-  /* debug */
-  /* outline: 1px solid red; */
 }

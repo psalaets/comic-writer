@@ -15,9 +15,13 @@ export default class Editor extends Component {
   }
 
   render() {
+    const styles = {
+      flexBasis: `calc(${this.props.editorWidthPercent}% - 1.5em)` // 1.5 === magic.
+    }
     return (
       <div className="Editor"
         onScroll={this.props.onScroll}
+        style={styles}
        >
         <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>
         <textarea

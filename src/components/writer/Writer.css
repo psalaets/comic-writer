@@ -2,3 +2,36 @@
   display: flex;
   height: 100vh;
 }
+
+.Writer__view-control {
+  border: 0;
+  background-color: transparent;
+  color: rgba(0, 0, 0, .5);
+  flex: 0 0 1em;
+  height: 100vh;
+}
+
+.Writer__view-control:hover {
+  opacity: 1;
+  color: rgba(0, 0, 0, 1);
+  transform: scale(1.1);
+}
+
+.Writer__view-control:focus {
+  opacity: 1;
+  color: rgba(0, 0, 0, 1);
+  color: #2196f3;
+}
+
+.Writer__view-control:active {
+  transform: scale(.9);
+}
+
+.Writer__view-control-script {
+  border-right: 1px solid #eeeeee;
+  background-color: #fafafa;
+}
+
+.Writer__view-control-editor {
+  background-color: rgba(255, 255, 255, 1)
+}
