@@ -42,6 +42,8 @@ export default class Editor extends Component {
 
   // Semi hack: keeps the textarea big enough so it never needs a scrollbar
   autoSize() {
+    if (process.env.NODE_ENV === 'test') return;
+
     const el = this.textarea;
 
     // compute the height difference which is caused by border and outline
@@ -66,9 +68,7 @@ export default class Editor extends Component {
   }
 
   handleChange(event) {
-    if (process.env.NODE_ENV !== 'test') {
-      this.autoSize();
-    }
+    this.autoSize();
 
     const value = event.target.value;
     let cursor = event.target.selectionStart;
