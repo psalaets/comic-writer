@@ -5,9 +5,10 @@
 
 .Writer__view-control {
   border: 0;
+  font-size: 50%;
   background-color: transparent;
   color: rgba(0, 0, 0, .5);
-  flex: 0 0 1em;
+  flex: 0 0 2em;
   height: 100vh;
   outline: none;
 }
@@ -15,7 +16,6 @@
 .Writer__view-control:hover {
   opacity: 1;
   color: rgba(0, 0, 0, 1);
-  transform: scale(1.1);
 }
 
 .Writer__view-control:focus {
@@ -24,8 +24,16 @@
   color: #2196f3;
 }
 
-.Writer__view-control:active {
+.Writer__view-control:active {}
+
+.Writer__view-control:active .Writer__view-control-text {
+  display: block;
   transform: scale(.9);
+}
+
+.Writer__view-control:hover .Writer__view-control-text {
+  display: block;
+  transform: scale(1.1);
 }
 
 .Writer__view-control-script {

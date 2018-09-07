@@ -88,7 +88,7 @@ export default class Writer extends Component {
           className="Writer__view-control Writer__view-control-script"
           onClick={this.handleWidthControl('script')}
         >
-          ◀
+          <span className="Writer__view-control-text">◀</span>
           <span className="u-hide--visually">
             Expand Script View
           </span>
@@ -98,7 +98,7 @@ export default class Writer extends Component {
           className="Writer__view-control Writer__view-control-writer"
           onClick={this.handleWidthControl('writer')}
         >
-          ▶
+          <span className="Writer__view-control-text">▶</span>
           <span className="u-hide--visually">
             Expand Writer View
           </span>
