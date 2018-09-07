@@ -66,7 +66,9 @@ export default class Editor extends Component {
   }
 
   handleChange(event) {
-    this.autoSize();
+    if (process.env.NODE_ENV !== 'test') {
+      this.autoSize();
+    }
 
     const value = event.target.value;
     let cursor = event.target.selectionStart;
