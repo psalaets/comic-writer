@@ -7,6 +7,7 @@
   width: 100%;
   color: #232323;
   flex: 1 1 50%;
+  background-color: white;
 }
 
 .Script > * + * {
