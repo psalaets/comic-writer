@@ -24,5 +24,8 @@ Lettering.propTypes = {
   number: PropTypes.number.isRequired,
   subject: PropTypes.string.isRequired,
   modifier: PropTypes.string,
-  content: PropTypes.string.isRequired
+  content: PropTypes.oneOfType([
+    PropTypes.string.isRequired,
+    PropTypes.array.isRequired
+  ])
 };
