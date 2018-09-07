@@ -39,7 +39,7 @@ function react(node, recurseOutput, state) {
     {
       children: recurseOutput(node.content, state),
       key: state.key,
-      number: node.number,
+      number: parseInt(node.number, 10),
       modifier: node.modifier
     }
   );
