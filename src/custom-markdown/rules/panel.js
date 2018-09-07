@@ -49,7 +49,7 @@ function react(node, recurseOutput, state) {
     Panel,
     {
       key: state.key,
-      number: node.number
+      number: parseInt(node.number, 10)
     },
     recurseOutput(node.content, state)
   );
