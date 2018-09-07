@@ -44,6 +44,7 @@ export default class Writer extends Component {
   // This might be more complicated than it needs to be.
   handleWidthControl(type) {
     return () => {
+      // eslint-disable-next-line
       type === 'script' ? this.setState({
         editorWidthPercent: this.state.editorWidthPercent === 100 ? 50 :
                             this.state.editorWidthPercent >= 50 ? 0 :
