@@ -28,7 +28,9 @@ export default class Script extends Component {
         className="Script"
         ref={this.scrollRef}
       >
-        {output}
+        <div className="Script__content">
+          {output}
+        </div>
         <div className="Script__scrollpast"></div>
       </article>
     );

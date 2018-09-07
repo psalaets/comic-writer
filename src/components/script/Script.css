@@ -14,6 +14,12 @@
   margin-top: 1em;
 }
 
+.Script__content {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  max-width: 800px;
+}
 .Script__scrollpast {
   padding-bottom: 25vh;
 }
