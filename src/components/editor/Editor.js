@@ -51,6 +51,7 @@ export default class Editor extends Component {
   }
   // this forces an an actual update to the content of the text when loading
   manualChange(val){
+    if (process.env.NODE_ENV === 'test') return;
     var input = this.textarea;
     input.value = val;
     this.setState({value: val});
