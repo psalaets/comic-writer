@@ -6,7 +6,7 @@
   font-family: sans-serif;
   width: 100%;
   color: #232323;
-  flex: 1 1 0%;
+  flex: 1 1 50%;
 }
 
 .Script > * + * {

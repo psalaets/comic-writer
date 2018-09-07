@@ -1,7 +1,5 @@
 .Editor {
-  flex-grow: 0;
-  flex-shrink: 0;
-  flex-basis: 50%;
+  flex: 1 1 50%;
   background-color: #fafafa;
   overflow-y: auto;
 }

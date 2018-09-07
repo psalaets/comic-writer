@@ -68,11 +68,10 @@ export default class Writer extends Component {
   render() {
     return (
       <main className="Writer">
-        <Editor
+        {this.controlIsVisible('script') ? <Editor
           onChange={this.handleChange}
           onScroll={this.handleScroll('editor')}
-          editorWidthPercent={this.state.editorWidthPercent}
-        />
+        /> : false}
 
         {this.controlIsVisible('script') ? <button
           className="Writer__view-control Writer__view-control-script"
@@ -94,12 +93,11 @@ export default class Writer extends Component {
           </span>
         </button> : false}
 
-        <Script
-          tabIndexHide={!this.controlIsVisible('writer')}
+        {this.controlIsVisible('writer') ? <Script
           blocks={this.state.value}
           scrollPercentage={this.state.scrollPercentage}
           editorWidthPercent={this.state.editorWidthPercent}
-        />
+        /> : false}
       </main>
     );
   }
