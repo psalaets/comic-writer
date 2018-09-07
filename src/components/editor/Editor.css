@@ -17,6 +17,7 @@
   font-size: 1em;
   background-color: transparent;
   margin-top: 1em;
+  min-height: 75vh;
 }
 .Editor__scrollpast {
   height: 25vh;

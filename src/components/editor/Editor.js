@@ -14,6 +14,19 @@ export default class Editor extends Component {
     this.setTextarea = this.setTextarea.bind(this);
   }
 
+
+  componentDidMount() {
+    this.setState({
+      value: this.props.initialEditorValue
+    });
+    this.manualChange(this.props.initialEditorValue)
+    this.autoSize();
+  }
+
+  componentWillUnmount() {
+    this.props.onWillUnmount(this.state.value)
+  }
+
   render() {
     return (
       <div className="Editor"
@@ -28,10 +41,7 @@ export default class Editor extends Component {
           onChange={this.handleChange}
           ref={this.setTextarea}
         />
-        <div
-          className="Editor__scrollpast"
-          onClick={() => document.getElementById('editor').focus()}
-        />
+        <div className="Editor__scrollpast"/>
       </div>
     )
   }
@@ -39,11 +49,16 @@ export default class Editor extends Component {
   setTextarea(textarea) {
     this.textarea = textarea;
   }
+  // this forces an an actual update to the content of the text when loading
+  manualChange(val){
+    var input = this.textarea;
+    input.value = val;
+    this.setState({value: val});
+  }
 
   // Semi hack: keeps the textarea big enough so it never needs a scrollbar
   autoSize() {
     if (process.env.NODE_ENV === 'test') return;
-
     const el = this.textarea;
 
     // compute the height difference which is caused by border and outline

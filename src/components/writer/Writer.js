@@ -12,12 +12,14 @@ export default class Writer extends Component {
 
     this.state = {
       value: [],
+      initialEditorValue: '',
       scrollPercentage: 0,
       editorWidthPercent: 50,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
+    this.copyEditorContent = this.copyEditorContent.bind(this);
     this.handleWidthControl = this.handleWidthControl.bind(this);
     this.controlIsVisible = this.controlIsVisible.bind(this);
   }
@@ -56,7 +58,6 @@ export default class Writer extends Component {
 
   // This might be more complicated than it needs to be.
   controlIsVisible(type) {
-    console.log(this.state.editorWidthPercent);
     return this.state.editorWidthPercent === 50 ? true :
            type === 'script' ?
              this.state.editorWidthPercent <= 50 ? false : true :
@@ -65,12 +66,21 @@ export default class Writer extends Component {
            true
   }
 
+  copyEditorContent(value) {
+    this.setState({
+      initialEditorValue: value
+    });
+  }
+
   render() {
     return (
       <main className="Writer">
+
         {this.controlIsVisible('script') ? <Editor
           onChange={this.handleChange}
           onScroll={this.handleScroll('editor')}
+          initialEditorValue={this.state.initialEditorValue}
+          onWillUnmount={this.copyEditorContent}
         /> : false}
 
         {this.controlIsVisible('script') ? <button
@@ -98,6 +108,7 @@ export default class Writer extends Component {
           scrollPercentage={this.state.scrollPercentage}
           editorWidthPercent={this.state.editorWidthPercent}
         /> : false}
+
       </main>
     );
   }
