@@ -2,6 +2,7 @@
   overflow-x: scroll;
   padding-left: 2em;
   padding-right: 2em;
+  padding-top: 1em;
   font-family: sans-serif;
   width: 100%;
   color: #232323;
@@ -9,4 +10,8 @@
 
 .Script > * + * {
   margin-top: 1em;
+}
+
+.Script__scrollpast {
+  padding-bottom: 25vh;
 }

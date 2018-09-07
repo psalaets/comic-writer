@@ -16,7 +16,9 @@ export default class Editor extends Component {
 
   render() {
     return (
-      <div className="Editor">
+      <div className="Editor"
+        onScroll={this.props.onScroll}
+       >
         <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>
         <textarea
           key="editor-area"
@@ -24,8 +26,11 @@ export default class Editor extends Component {
           className="Editor__textarea"
           value={this.state.value}
           onChange={this.handleChange}
-          onScroll={this.props.onScroll}
           ref={this.setTextarea}
+        />
+        <div
+          className="Editor__scrollpast"
+          onClick={() => document.getElementById('editor').focus()}
         />
       </div>
     )
@@ -35,7 +40,36 @@ export default class Editor extends Component {
     this.textarea = textarea;
   }
 
+  // Semi hack: keeps the textarea big enough so it never needs a scrollbar
+  autoSize() {
+    const el = this.textarea;
+
+    // compute the height difference which is caused by border and outline
+    const outerHeight = parseInt(window.getComputedStyle(el).height, 10);
+    const diff = outerHeight - el.clientHeight;
+
+    // preserve parent height/scroll to prevent snap effect due to what comes next
+    const parent = el.parentElement;
+    parent.style['min-height'] = parent.scrollHeight;
+    const parentScroll = parent.scrollTop;
+
+    // This trick means when we set height later it will be minimal size.
+    el.style.height = 0;
+
+    // set the correct height
+    // el.scrollHeight is the full height of the content, not just the visible part
+    el.style.height = el.scrollHeight + diff + 'px';
+
+    // restore parent since its children are taking up space again
+    parent.style['min-height'] = 'initial';
+    parent.scrollTop = parentScroll;
+  }
+
   handleChange(event) {
+    if (process.env.NODE_ENV !== 'test') {
+      this.autoSize();
+    }
+
     const value = event.target.value;
     let cursor = event.target.selectionStart;
 

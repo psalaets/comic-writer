@@ -2,6 +2,7 @@
   flex: 0 0 50%;
   border-right: 1px solid #eeeeee;
   background-color: #fafafa;
+  overflow-y: auto;
 }
 
 .Editor__textarea {
@@ -16,4 +17,11 @@
   height: 100%;
   font-size: 1em;
   background-color: transparent;
+  margin-top: 1em;
+}
+.Editor__scrollpast {
+  height: 25vh;
+
+  /* debug */
+  /* outline: 1px solid red; */
 }
