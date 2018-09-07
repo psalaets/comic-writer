@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Lettering from '../lettering/Lettering';
 
 export default class Dialogue extends Component {
@@ -13,3 +14,9 @@ export default class Dialogue extends Component {
     );
   }
 }
+
+Dialogue.propTypes = {
+  number: PropTypes.number.isRequired,
+  speaker: PropTypes.string.isRequired,
+  modifier: PropTypes.string
+};

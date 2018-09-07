@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Page.css'
 
 export default class Page extends Component {
@@ -31,3 +32,8 @@ export default class Page extends Component {
     return `${this.props.panelCount} ${label}`;
   }
 }
+
+Page.propTypes = {
+  number: PropTypes.number.isRequired,
+  panelCount: PropTypes.number.isRequired
+};

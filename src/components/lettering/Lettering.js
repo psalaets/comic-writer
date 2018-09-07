@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Lettering.css';
 
 export default class Lettering extends Component {
@@ -18,3 +19,10 @@ export default class Lettering extends Component {
     );
   }
 }
+
+Lettering.propTypes = {
+  number: PropTypes.number.isRequired,
+  subject: PropTypes.string.isRequired,
+  modifier: PropTypes.string,
+  content: PropTypes.string.isRequired
+};
