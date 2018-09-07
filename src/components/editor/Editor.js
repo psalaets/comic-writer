@@ -6,9 +6,7 @@ export default class Editor extends Component {
     super(props);
 
     this.state = {
-      value: '',
-      textAreaScrollHeight: '100%' // Default to one-hundo, we don't know the
-                                   //  initial height.
+      value: ''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -16,16 +14,12 @@ export default class Editor extends Component {
   }
 
   render() {
-    const style = {
-      // height: this.state.textAreaScrollHeight
-    }
     return (
       <div className="Editor"
         onScroll={this.props.onScroll}
        >
         <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>
         <textarea
-          style={style}
           key="editor-area"
           id="editor"
           className="Editor__textarea"
@@ -45,34 +39,32 @@ export default class Editor extends Component {
     this.textarea = textarea;
   }
 
+  // Semi hack: keeps the textarea big enough so it never needs a scrollbar
   autoSize() {
     const el = this.textarea;
 
     // compute the height difference which is caused by border and outline
-    var outerHeight = parseInt(window.getComputedStyle(el).height, 10);
-    var diff = outerHeight - el.clientHeight;
+    const outerHeight = parseInt(window.getComputedStyle(el).height, 10);
+    const diff = outerHeight - el.clientHeight;
 
-    // set the height to 0 in case of it has to be shrinked
+    // preserve parent height/scroll to prevent snap effect due to what comes next
     const parent = el.parentElement;
     parent.style['min-height'] = parent.scrollHeight;
     const parentScroll = parent.scrollTop;
 
+    // This trick means when we set height later it will be minimal size.
     el.style.height = 0;
 
     // set the correct height
     // el.scrollHeight is the full height of the content, not just the visible part
     el.style.height = el.scrollHeight + diff + 'px';
 
-    parent.scrollTop = parentScroll;
+    // restore parent since its children are taking up space again
     parent.style['min-height'] = 'initial';
+    parent.scrollTop = parentScroll;
   }
 
   handleChange(event) {
-    // Auto Grow Text area. uses this value to auto-resize text area.
-    // this.setState({
-    //   textAreaScrollHeight: event.target.scrollHeight
-    // })
-
     this.autoSize();
 
     const value = event.target.value;
