@@ -82,6 +82,7 @@ export default class Writer extends Component {
           onScroll={this.handleScroll('editor')}
           initialEditorValue={this.state.initialEditorValue}
           onWillUnmount={this.copyEditorContent}
+          editorWidthPercent={this.state.editorWidthPercent}
         /> : false}
 
         {this.controlIsVisible('script') ? <button

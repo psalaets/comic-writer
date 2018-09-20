@@ -22,8 +22,11 @@ export default class Editor extends Component {
     this.autoSize();
   }
 
-  componentDidUpdate() {
-    this.autoSize();
+  componentDidUpdate(prevProps) {
+    // Use editorWidthPercent as a indicator to when resize buttons have been
+    // pressed in order to run autosize on the textarea.
+    // eslint-disable-next-line
+    this.props.editorWidthPercent !== prevProps.editorWidthPercent ? this.autoSize() : false
   }
 
   componentWillUnmount() {
@@ -53,6 +56,7 @@ export default class Editor extends Component {
     this.textarea = textarea;
   }
   // this forces an an actual update to the content of the text when loading
+  // value data into the component from props.
   manualChange(val){
     if (process.env.NODE_ENV === 'test') return;
     var input = this.textarea;
@@ -181,5 +185,9 @@ export default class Editor extends Component {
 
 Editor.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onScroll: PropTypes.func.isRequired
+  onScroll: PropTypes.func.isRequired,
+  onWillUnmount: PropTypes.func,
+  editorWidthPercent: PropTypes.number,
+  initialEditorValue: PropTypes.string,
+
 };
