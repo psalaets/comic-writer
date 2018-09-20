@@ -14,12 +14,15 @@ export default class Editor extends Component {
     this.setTextarea = this.setTextarea.bind(this);
   }
 
-
   componentDidMount() {
     this.setState({
       value: this.props.initialEditorValue
     });
     this.manualChange(this.props.initialEditorValue)
+    this.autoSize();
+  }
+
+  componentDidUpdate() {
     this.autoSize();
   }
 
