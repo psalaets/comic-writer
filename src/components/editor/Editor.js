@@ -47,6 +47,7 @@ export default class Editor extends Component {
           onChange={this.handleChange}
           ref={this.setTextarea}
           tabIndex="0"
+          placeholder="Adventure starts here..."
         />
         <div className="Editor__scrollpast"/>
       </div>

@@ -33,6 +33,22 @@ blockquote {
   outline: 1px dotted lightgray !important;
 }
 
+
+textarea::-webkit-input-placeholder {
+color: rgba(0, 0, 0, .5);
+}
+
+textarea:-moz-placeholder { /* Firefox 18- */
+color: rgba(0, 0, 0, .5);
+}
+
+textarea::-moz-placeholder {  /* Firefox 19+ */
+color: rgba(0, 0, 0, .5);
+}
+
+textarea:-ms-input-placeholder {
+color: rgba(0, 0, 0, .5);
+}
 /* Font Types*/
 /* h1's, large Titles */
 .u-font-size--lin {}
