@@ -29,11 +29,6 @@ blockquote {
 }
 
 
-[tabindex]:focus {
-  outline: 1px dotted lightgray !important;
-}
-
-
 textarea::-webkit-input-placeholder {
 color: rgba(0, 0, 0, .5);
 }
