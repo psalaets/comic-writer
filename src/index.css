@@ -28,6 +28,11 @@ blockquote {
   margin: 0;
 }
 
+
+[tabindex]:focus {
+  outline: 1px dotted lightgray !important;
+}
+
 /* Font Types*/
 /* h1's, large Titles */
 .u-font-size--lin {}

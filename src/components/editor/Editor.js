@@ -46,6 +46,7 @@ export default class Editor extends Component {
           value={this.state.value}
           onChange={this.handleChange}
           ref={this.setTextarea}
+          tabIndex="0"
         />
         <div className="Editor__scrollpast"/>
       </div>
