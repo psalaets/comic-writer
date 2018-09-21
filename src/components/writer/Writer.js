@@ -58,7 +58,7 @@ export default class Writer extends Component {
                             this.state.editorWidthPercent >= 50 ? 0 :
                             50
       }):
-      type === 'writer' ? this.setState({
+      type === 'editor' ? this.setState({
         editorWidthPercent: this.state.editorWidthPercent >= 50 ? 100 : 50,
       }):
       false
@@ -70,7 +70,7 @@ export default class Writer extends Component {
     return this.state.editorWidthPercent === 50 ? true :
            type === 'script' ?
              this.state.editorWidthPercent <= 50 ? false : true :
-           type === 'writer' ?
+           type === 'editor' ?
              this.state.editorWidthPercent <= 50 ? true : false :
            true
   }
@@ -85,41 +85,53 @@ export default class Writer extends Component {
     return (
       <main className="Writer">
 
-        {this.controlIsVisible('script') ? <Editor
-          onChange={this.handleChange}
-          onScroll={this.handleScroll('editor')}
-          initialEditorValue={this.state.initialEditorValue}
-          onWillUnmount={this.copyEditorContent}
-          editorWidthPercent={this.state.editorWidthPercent}
-        /> : false}
+        {
+          this.controlIsVisible('script') ?
+            [
+              <Editor
+                key="editor"
+                onChange={this.handleChange}
+                onScroll={this.handleScroll('editor')}
+                initialEditorValue={this.state.initialEditorValue}
+                onWillUnmount={this.copyEditorContent}
+                editorWidthPercent={this.state.editorWidthPercent}
+              />,
+              <button
+                key="scriptControl"
+                className="Writer__view-control Writer__view-control-script"
+                onClick={this.handleWidthControl('script')}
+                tabIndex="0"
+              >
+                <span className="Writer__view-control-text">◀</span>
+                <span className="u-hide--visually">
+                  Expand Script View
+                </span>
+              </button>
+            ] : false
+        }
 
-        {this.controlIsVisible('script') ? <button
-          className="Writer__view-control Writer__view-control-script"
-          onClick={this.handleWidthControl('script')}
-          tabIndex="0"
-        >
-          <span className="Writer__view-control-text">◀</span>
-          <span className="u-hide--visually">
-            Expand Script View
-          </span>
-        </button> : false}
-
-        {this.controlIsVisible('writer') ? <button
-          className="Writer__view-control Writer__view-control-writer"
-          onClick={this.handleWidthControl('writer')}
-          tabIndex="0"
-        >
-          <span className="Writer__view-control-text">▶</span>
-          <span className="u-hide--visually">
-            Expand Writer View
-          </span>
-        </button> : false}
-
-        {this.controlIsVisible('writer') ? <Script
-          blocks={this.state.value}
-          scrollPercentage={this.state.scrollPercentage}
-          editorWidthPercent={this.state.editorWidthPercent}
-        /> : false}
+        {
+          this.controlIsVisible('editor') ?
+            [
+              <button
+                key="editorControl"
+                className="Writer__view-control Writer__view-control-writer"
+                onClick={this.handleWidthControl('editor')}
+                tabIndex="0"
+              >
+                <span className="Writer__view-control-text">▶</span>
+                <span className="u-hide--visually">
+                  Expand Writer View
+                </span>
+              </button>,
+              <Script
+                key="script"
+                blocks={this.state.value}
+                scrollPercentage={this.state.scrollPercentage}
+                editorWidthPercent={this.state.editorWidthPercent}
+              />
+            ] : false
+      }
 
       </main>
     );
