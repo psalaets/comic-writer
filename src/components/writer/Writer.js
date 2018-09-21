@@ -13,7 +13,10 @@ export default class Writer extends Component {
     this.state = {
       value: [],
       initialEditorValue: '',
+      // This is the value that the editor uses relay scroll position to the
+      // script view.
       scrollPercentage: 0,
+      // The number that represents the editor/50-50/script view state.
       editorWidthPercent: 50,
     };
 
@@ -34,7 +37,12 @@ export default class Writer extends Component {
 
   handleScroll(type) {
     return (event) => {
+      // Should this be debounced? Or ceil'd?
+      // We want to know where to scroll the top of the editor view relative to
+      // to the script view.
+      // editors scroll position (from the top) / (the height of the content - visible content in the overflow'd div)
       const percentage = event.target.scrollTop / (event.target.scrollHeight - event.target.clientHeight);
+      // Relaying this value to state, so we can communicate it to script view.
       this.setState({
         scrollPercentage: percentage
       });
