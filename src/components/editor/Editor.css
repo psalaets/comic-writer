@@ -1,12 +1,13 @@
 .Editor {
   flex: 1 1 47%;
-  background-color: #fafafa;
   overflow-y: auto;
 }
+
 
 .Editor__textarea {
   padding-left: 1em;
   padding-right: 1em;
+  padding-top: 1em;
   border: 0;
   outline: none;
   font-family: monospace;
@@ -16,9 +17,12 @@
   height: 100%;
   font-size: 1em;
   background-color: transparent;
-  margin-top: 1em;
   min-height: 75vh;
+  position: relative;
+  margin: 0;
+  margin-bottom: -4px;
 }
+
 .Editor__scrollpast {
   height: 25vh;
 }
