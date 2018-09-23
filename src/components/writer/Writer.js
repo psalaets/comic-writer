@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Writer.css';
-
-import { parse } from '../../custom-markdown';
 
 import Editor from '../editor/Editor';
 import Script from '../script/Script';
@@ -11,7 +10,6 @@ export default class Writer extends Component {
     super(props);
 
     this.state = {
-      value: [],
       scrollPercentage: 0
     };
 
@@ -20,11 +18,7 @@ export default class Writer extends Component {
   }
 
   handleChange(event) {
-    const {value} = event;
-
-    this.setState({
-      value: parse(value)
-    });
+    this.props.onSourceChange(event.value);
   }
 
   handleScroll(type) {
@@ -44,10 +38,15 @@ export default class Writer extends Component {
           onScroll={this.handleScroll('editor')}
         />
         <Script
-          blocks={this.state.value}
+          blocks={this.props.parseTree}
           scrollPercentage={this.state.scrollPercentage}
         />
       </main>
     );
   }
 }
+
+Writer.propTypes = {
+  parseTree: PropTypes.array.isRequired,
+  onSourceChange: PropTypes.func.isRequired
+};

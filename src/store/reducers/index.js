@@ -3,7 +3,12 @@ import {
   CHANGE_SOURCE
 } from '../action-types';
 
-export default function rootReducer(state = {}, action) {
+export default function rootReducer(state, action) {
+  state = state || {
+    source: '',
+    parseTree: []
+  };
+
   switch (action.type) {
     case CHANGE_SOURCE:
       return {
