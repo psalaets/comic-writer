@@ -3,7 +3,7 @@ import SimpleMarkdown from 'simple-markdown';
 
 import Page from '../../components/page/Page';
 
-const pageRegex = /^## Page (\d{1,})([^]*)/;
+const pageRegex = /^## Page (\d{1,})\n*([^]*)\n*/;
 const PAGE_PREFIX = '## Page';
 
 export default {

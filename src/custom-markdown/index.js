@@ -20,6 +20,7 @@ const rules = {
 };
 
 const rawBuiltParser = SimpleMarkdown.parserFor(rules);
+
 export function parse(source) {
   const blockSource = source;
   return rawBuiltParser(blockSource, {

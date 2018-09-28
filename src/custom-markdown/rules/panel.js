@@ -3,7 +3,7 @@ import SimpleMarkdown from 'simple-markdown';
 
 import Panel from '../../components/panel/Panel';
 
-const panelRegex = /^### Panel (\d{1,})([^]*)/;
+const panelRegex = /^### Panel (\d{1,})\n*([^]*)\n*/;
 const PANEL_PREFIX = '### Panel';
 
 export default {
