@@ -121,7 +121,7 @@ export default class Writer extends Component {
               </button>,
               <Script
                 key="script"
-                blocks={this.state.value}
+                blocks={this.props.parseTree}
                 scrollPercentage={this.state.scrollPercentage}
                 editorWidthPercent={this.state.editorWidthPercent}
               />
