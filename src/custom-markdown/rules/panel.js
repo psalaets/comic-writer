@@ -35,10 +35,13 @@ function match(source, state, lookbehind) {
 }
 
 function parse(capture, recurseParse, state) {
-  const number = capture[1];
+  state.startNewPanel();
+
+  const number = Number(capture[1]);
   const content = capture[2];
 
   return {
+    id: state.getPanelId(),
     content: recurseParse(content, state),
     number
   };

@@ -35,12 +35,13 @@ function match(source, state, lookbehind) {
 }
 
 function parse(capture, recurseParse, state) {
-  const number = capture[1];
+  const number = Number(capture[1]);
   const content = capture[2];
 
-  state.letteringNumber = 1;
+  state.startNewPage();
 
   return {
+    id: state.getPageId(),
     content: recurseParse(content, state),
     number
   };

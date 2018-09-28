@@ -21,13 +21,16 @@ function match(source, state, lookbehind) {
 }
 
 function parse(capture, recurseParse, state) {
+  state.startNewLettering();
+
   const speaker = capture[1];
   // strip parens if modifier is there
   const modifier = capture[2] ? capture[2].slice(1, -1) : undefined;
   const content = capture[3];
-  const number = state.letteringNumber++;
+  const number = state.letteringNumber;
 
   const parsed = {
+    id: state.getLetteringId(),
     speaker,
     modifier,
     content: recurseParse(content, Object.assign({}, state, {
