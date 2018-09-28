@@ -1,17 +1,26 @@
 .Script {
-  overflow-x: scroll;
+  overflow-x: hidden;
   padding-left: 2em;
   padding-right: 2em;
   padding-top: 1em;
   font-family: sans-serif;
   width: 100%;
   color: #232323;
+  flex: 1 1 50%;
+  background-color: white;
+  outline: none;
 }
 
 .Script > * + * {
   margin-top: 1em;
 }
 
+.Script__content {
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  max-width: 800px;
+}
 .Script__scrollpast {
   padding-bottom: 25vh;
 }

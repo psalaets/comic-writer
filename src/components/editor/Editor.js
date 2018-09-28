@@ -14,6 +14,25 @@ export default class Editor extends Component {
     this.setTextarea = this.setTextarea.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      value: this.props.initialEditorValue
+    });
+    this.manualChange(this.props.initialEditorValue)
+    this.autoSize();
+  }
+
+  componentDidUpdate(prevProps) {
+    // Use editorWidthPercent as a indicator to when resize buttons have been
+    // pressed in order to run autosize on the textarea.
+    // eslint-disable-next-line
+    this.props.editorWidthPercent !== prevProps.editorWidthPercent ? this.autoSize() : false
+  }
+
+  componentWillUnmount() {
+    this.props.onWillUnmount(this.state.value)
+  }
+
   render() {
     return (
       <div className="Editor"
@@ -27,11 +46,10 @@ export default class Editor extends Component {
           value={this.state.value}
           onChange={this.handleChange}
           ref={this.setTextarea}
+          tabIndex="0"
+          placeholder="Adventure starts here..."
         />
-        <div
-          className="Editor__scrollpast"
-          onClick={() => document.getElementById('editor').focus()}
-        />
+        <div className="Editor__scrollpast"/>
       </div>
     )
   }
@@ -39,11 +57,18 @@ export default class Editor extends Component {
   setTextarea(textarea) {
     this.textarea = textarea;
   }
+  // this forces an an actual update to the content of the text when loading
+  // value data into the component from props.
+  manualChange(val){
+    if (process.env.NODE_ENV === 'test') return;
+    var input = this.textarea;
+    input.value = val;
+    this.setState({value: val});
+  }
 
   // Semi hack: keeps the textarea big enough so it never needs a scrollbar
   autoSize() {
     if (process.env.NODE_ENV === 'test') return;
-
     const el = this.textarea;
 
     // compute the height difference which is caused by border and outline
@@ -162,5 +187,9 @@ export default class Editor extends Component {
 
 Editor.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onScroll: PropTypes.func.isRequired
+  onScroll: PropTypes.func.isRequired,
+  onWillUnmount: PropTypes.func,
+  editorWidthPercent: PropTypes.number,
+  initialEditorValue: PropTypes.string,
+
 };
