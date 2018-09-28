@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Writer from './components/writer/Writer';
+import ConnectedWriter from './components/writer/ConnectedWriter';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Writer />
+        <ConnectedWriter />
       </div>
     );
   }

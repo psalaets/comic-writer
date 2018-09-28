@@ -21,12 +21,15 @@ function match(source, state, lookbehind) {
 }
 
 function parse(capture, recurseParse, state) {
+  state.startNewLettering();
+
   // strip parens if modifier is there
   const modifier = capture[1] ? capture[1].slice(1, -1) : undefined;
   const content = capture[2];
-  const number = state.letteringNumber++;
+  const number = state.letteringNumber;
 
   return {
+    id: state.getLetteringId(),
     modifier,
     content: recurseParse(content, Object.assign({}, state, {inline: true})),
     number

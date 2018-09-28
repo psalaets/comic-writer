@@ -20,11 +20,34 @@ const rules = {
 };
 
 const rawBuiltParser = SimpleMarkdown.parserFor(rules);
+
 export function parse(source) {
   const blockSource = source;
   return rawBuiltParser(blockSource, {
     inline: false,
-    letteringNumber: 1
+    letteringNumber: 0,
+    pageNumber: 0,
+    panelNumber: 0,
+    startNewPage() {
+      this.pageNumber += 1;
+      this.panelNumber = 0;
+      this.letteringNumber = 0;
+    },
+    startNewPanel() {
+      this.panelNumber += 1;
+    },
+    startNewLettering() {
+      this.letteringNumber += 1;
+    },
+    getPageId() {
+      return String(this.pageNumber);
+    },
+    getPanelId() {
+      return `${this.getPageId()}.${this.panelNumber}`;
+    },
+    getLetteringId() {
+      return `${this.getPanelId()}.${this.letteringNumber}`;
+    }
   });
 };
 

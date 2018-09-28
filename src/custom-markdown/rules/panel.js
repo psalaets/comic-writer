@@ -3,7 +3,7 @@ import SimpleMarkdown from 'simple-markdown';
 
 import Panel from '../../components/panel/Panel';
 
-const panelRegex = /^### Panel (\d{1,})([^]*)/;
+const panelRegex = /^### Panel (\d{1,})\n*([^]*)\n*/;
 const PANEL_PREFIX = '### Panel';
 
 export default {
@@ -35,10 +35,13 @@ function match(source, state, lookbehind) {
 }
 
 function parse(capture, recurseParse, state) {
-  const number = capture[1];
+  state.startNewPanel();
+
+  const number = Number(capture[1]);
   const content = capture[2];
 
   return {
+    id: state.getPanelId(),
     content: recurseParse(content, state),
     number
   };

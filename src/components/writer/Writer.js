@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './Writer.css';
-
-import { parse } from '../../custom-markdown';
 
 import Editor from '../editor/Editor';
 import Script from '../script/Script';
@@ -28,11 +27,7 @@ export default class Writer extends Component {
   }
 
   handleChange(event) {
-    const {value} = event;
-
-    this.setState({
-      value: parse(value)
-    });
+    this.props.onSourceChange(event.value);
   }
 
   handleScroll(type) {
@@ -137,3 +132,8 @@ export default class Writer extends Component {
     );
   }
 }
+
+Writer.propTypes = {
+  parseTree: PropTypes.array.isRequired,
+  onSourceChange: PropTypes.func.isRequired
+};

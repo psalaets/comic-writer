@@ -1,0 +1,187 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`custom markdown parse() pages with panels 1`] = `
+Array [
+  Object {
+    "type": "newline",
+  },
+  Object {
+    "content": Array [],
+    "id": "1",
+    "number": 1,
+    "type": "page",
+  },
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [],
+        "id": "2.1",
+        "number": 1,
+        "type": "panel",
+      },
+      Object {
+        "content": Array [],
+        "id": "2.2",
+        "number": 2,
+        "type": "panel",
+      },
+    ],
+    "id": "2",
+    "number": 2,
+    "type": "page",
+  },
+]
+`;
+
+exports[`custom markdown parse() pages with panels and lettering 1`] = `
+Array [
+  Object {
+    "type": "newline",
+  },
+  Object {
+    "content": Array [],
+    "id": "1",
+    "number": 1,
+    "type": "page",
+  },
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "ok",
+                "type": "text",
+              },
+            ],
+            "id": "2.1.1",
+            "modifier": undefined,
+            "number": 1,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+          Object {
+            "type": "newline",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "try it ",
+                "type": "text",
+              },
+              Object {
+                "content": Array [
+                  Object {
+                    "content": "again",
+                    "type": "text",
+                  },
+                ],
+                "type": "em",
+              },
+            ],
+            "id": "2.1.2",
+            "modifier": undefined,
+            "number": 2,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+          Object {
+            "type": "newline",
+          },
+        ],
+        "id": "2.1",
+        "number": 1,
+        "type": "panel",
+      },
+      Object {
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "This is panel description",
+                "type": "text",
+              },
+              Object {
+                "content": ".",
+                "type": "text",
+              },
+            ],
+            "type": "paragraph",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "boom",
+                "type": "text",
+              },
+            ],
+            "id": "2.2.3",
+            "modifier": undefined,
+            "number": 3,
+            "type": "sfx",
+          },
+          Object {
+            "type": "newline",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "yep",
+                "type": "text",
+              },
+            ],
+            "id": "2.2.4",
+            "modifier": undefined,
+            "number": 4,
+            "type": "caption",
+          },
+          Object {
+            "type": "newline",
+          },
+        ],
+        "id": "2.2",
+        "number": 2,
+        "type": "panel",
+      },
+    ],
+    "id": "2",
+    "number": 2,
+    "type": "page",
+  },
+]
+`;
+
+exports[`custom markdown parse() single page 1`] = `
+Array [
+  Object {
+    "type": "newline",
+  },
+  Object {
+    "content": Array [],
+    "id": "1",
+    "number": 1,
+    "type": "page",
+  },
+]
+`;
+
+exports[`custom markdown parse() two pages 1`] = `
+Array [
+  Object {
+    "type": "newline",
+  },
+  Object {
+    "content": Array [],
+    "id": "1",
+    "number": 1,
+    "type": "page",
+  },
+  Object {
+    "content": Array [],
+    "id": "2",
+    "number": 2,
+    "type": "page",
+  },
+]
+`;
