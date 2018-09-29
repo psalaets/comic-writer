@@ -1,6 +1,7 @@
 import React from 'react';
 import SimpleMarkdown from 'simple-markdown';
 
+import countWords from '../count-words';
 import Dialogue from '../../components/dialogue/Dialogue';
 
 const matchRegex = /^> ?([^\n]+?) ?(\([^\n]+\))?: ([^\n]+)\n*/;
@@ -29,20 +30,21 @@ function parse(capture, recurseParse, state) {
   const content = capture[3];
   const number = state.letteringNumber;
 
-  const parsed = {
-    id: state.getLetteringId(),
-    speaker,
-    modifier,
-    content: recurseParse(content, Object.assign({}, state, {
-      inline: true,
-      inLettering: true
-    })),
-    number
-  };
+  const parseTree = recurseParse(content, Object.assign({}, state, {
+    inline: true,
+    inLettering: true
+  }));
 
   state.inLettering = false;
 
-  return parsed;
+  return {
+    id: state.getLetteringId(),
+    speaker,
+    modifier,
+    content: parseTree,
+    number,
+    wordCount: countWords(parseTree)
+  };
 }
 
 function react(node, recurseOutput, state) {
