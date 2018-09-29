@@ -62,9 +62,6 @@ Array [
             "type": "dialogue",
           },
           Object {
-            "type": "newline",
-          },
-          Object {
             "content": Array [
               Object {
                 "content": "try it ",
@@ -85,9 +82,6 @@ Array [
             "number": 2,
             "speaker": "bob",
             "type": "dialogue",
-          },
-          Object {
-            "type": "newline",
           },
         ],
         "id": "2.1",
@@ -135,9 +129,6 @@ Array [
             "modifier": undefined,
             "number": 4,
             "type": "caption",
-          },
-          Object {
-            "type": "newline",
           },
         ],
         "id": "2.2",
