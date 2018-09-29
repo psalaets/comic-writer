@@ -46,28 +46,57 @@ export default class Writer extends Component {
 
   // This might be more complicated than it needs to be.
   handleWidthControl(type) {
+    const scriptCalculateWidth = widthPercent => {
+      if (widthPercent === 100) {
+        return 50
+      } else if (widthPercent >= 50) {
+        return 0
+      } else {
+        return 50
+      }
+    }
+
+    const editorCalculateWidth = widthPercent => {
+      if (widthPercent >= 50) {
+        return 100
+      } else {
+        return 50
+      }
+    }
+
     return () => {
-      // eslint-disable-next-line
-      type === 'script' ? this.setState({
-        editorWidthPercent: this.state.editorWidthPercent === 100 ? 50 :
-                            this.state.editorWidthPercent >= 50 ? 0 :
-                            50
-      }):
-      type === 'editor' ? this.setState({
-        editorWidthPercent: this.state.editorWidthPercent >= 50 ? 100 : 50,
-      }):
-      false
+      if (type === 'script') {
+        this.setState({
+          editorWidthPercent: scriptCalculateWidth(this.state.editorWidthPercent)
+        });
+      } else if (type === 'editor') {
+        this.setState({
+          editorWidthPercent: editorCalculateWidth(this.state.editorWidthPercent)
+        });
+      } else {
+        false
+      }
     }
   }
 
-  // This might be more complicated than it needs to be.
   controlIsVisible(type) {
-    return this.state.editorWidthPercent === 50 ? true :
-           type === 'script' ?
-             this.state.editorWidthPercent <= 50 ? false : true :
-           type === 'editor' ?
-             this.state.editorWidthPercent <= 50 ? true : false :
-           true
+    if (this.state.editorWidthPercent === 50) {
+      return true;
+    } else if (type === 'script') {
+      if (this.state.editorWidthPercent <= 50) {
+        return false;
+      } else {
+        return true;
+      }
+    } else if (type === 'editor') {
+      if (this.state.editorWidthPercent <= 50) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
   }
 
   copyEditorContent(value) {
@@ -79,9 +108,7 @@ export default class Writer extends Component {
   render() {
     return (
       <main className="Writer">
-
-        {
-          this.controlIsVisible('script') ?
+        { this.controlIsVisible('script') ?
             [
               <Editor
                 key="editor"
@@ -102,11 +129,9 @@ export default class Writer extends Component {
                   Expand Script View
                 </span>
               </button>
-            ] : false
-        }
+            ] : false }
 
-        {
-          this.controlIsVisible('editor') ?
+        { this.controlIsVisible('editor') ?
             [
               <button
                 key="editorControl"
@@ -125,8 +150,7 @@ export default class Writer extends Component {
                 scrollPercentage={this.state.scrollPercentage}
                 editorWidthPercent={this.state.editorWidthPercent}
               />
-            ] : false
-      }
+            ] : false }
 
       </main>
     );

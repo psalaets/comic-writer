@@ -25,8 +25,9 @@ export default class Editor extends Component {
   componentDidUpdate(prevProps) {
     // Use editorWidthPercent as a indicator to when resize buttons have been
     // pressed in order to run autosize on the textarea.
-    // eslint-disable-next-line
-    this.props.editorWidthPercent !== prevProps.editorWidthPercent ? this.autoSize() : false
+    if (this.props.editorWidthPercent !== prevProps.editorWidthPercent) {
+      this.autoSize()
+    }
   }
 
   componentWillUnmount() {
