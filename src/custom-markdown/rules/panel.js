@@ -40,10 +40,20 @@ function parse(capture, recurseParse, state) {
   const number = Number(capture[1]);
   const content = capture[2];
 
+  const contentParseTree = recurseParse(content, state);
+  const dialogues = contentParseTree.filter(node => node.type === 'dialogue');
+  const captions = contentParseTree.filter(node => node.type === 'caption');
+  const sfxs = contentParseTree.filter(node => node.type === 'sfx');
+
   return {
     id: state.getPanelId(),
-    content: recurseParse(content, state),
-    number
+    number,
+    content: contentParseTree,
+    dialogueCount: dialogues.length,
+    captionCount: captions.length,
+    sfxCount: sfxs.length,
+    dialogueWords: dialogues.reduce((total, d) => total + d.wordCount, 0),
+    captionWords: captions.reduce((total, c) => total + c.wordCount, 0)
   };
 }
 

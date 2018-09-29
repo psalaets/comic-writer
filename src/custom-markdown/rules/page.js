@@ -40,24 +40,29 @@ function parse(capture, recurseParse, state) {
 
   state.startNewPage();
 
+  const contentParseTree = recurseParse(content, state);
+  const panels = contentParseTree.filter(node => node.type === 'panel');
+
   return {
     id: state.getPageId(),
-    content: recurseParse(content, state),
-    number
+    number,
+    content: contentParseTree,
+    panelCount: panels.length,
+    dialogueCount: panels.reduce((total, p) => p.dialogueCount, 0),
+    captionCount: panels.reduce((total, p) => p.captionCount, 0),
+    sfxCount: panels.reduce((total, p) => p.sfxCount, 0),
+    dialogueWords: panels.reduce((total, p) => p.dialogueWords, 0),
+    captionWords: panels.reduce((total, p) => p.captionWords, 0)
   };
 }
 
 function react(node, recurseOutput, state) {
-  const panelCount = node.content
-    .filter(chunk => chunk.type === 'panel')
-    .length;
-
   return React.createElement(
     Page,
     {
       key: state.key,
-      panelCount,
-      number: parseInt(node.number, 10)
+      panelCount: node.panelCount,
+      number: node.number
     },
     recurseOutput(node.content, state)
   );
