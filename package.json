@@ -9,7 +9,8 @@
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
     "redux": "^4.0.0",
-    "simple-markdown": "^0.4.1"
+    "simple-markdown": "^0.4.1",
+    "wordcount": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
