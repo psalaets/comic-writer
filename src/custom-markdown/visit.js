@@ -35,16 +35,28 @@ function visitPanel(panel, visitor) {
 }
 
 function visitDialogue(dialogue, visitor) {
+  if (visitor.enterLettering) visitor.enterLettering(dialogue);
+
   if (visitor.enterDialogue) visitor.enterDialogue(dialogue);
   if (visitor.exitDialogue) visitor.exitDialogue(dialogue);
+
+  if (visitor.exitLettering) visitor.exitLettering(dialogue);
 }
 
 function visitCaption(caption, visitor) {
+  if (visitor.enterLettering) visitor.enterLettering(caption);
+
   if (visitor.enterCaption) visitor.enterCaption(caption);
   if (visitor.exitCaption) visitor.exitCaption(caption);
+
+  if (visitor.exitLettering) visitor.exitLettering(caption);
 }
 
 function visitSfx(sfx, visitor) {
+  if (visitor.enterLettering) visitor.enterLettering(sfx);
+
   if (visitor.enterSfx) visitor.enterSfx(sfx);
   if (visitor.exitSfx) visitor.exitSfx(sfx);
+
+  if (visitor.exitLettering) visitor.exitLettering(sfx);
 }
