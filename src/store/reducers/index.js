@@ -19,7 +19,7 @@ export default function rootReducer(state, action) {
         ...state,
         source: action.payload.source,
         parseTree,
-        stats,
+        statsById: stats,
       };
     default:
       return state;
