@@ -41,28 +41,28 @@ export default class Writer extends Component {
       this.setState({
         scrollPercentage: percentage
       });
-    }
+    };
   }
 
   // This might be more complicated than it needs to be.
   handleWidthControl(type) {
     const scriptCalculateWidth = widthPercent => {
       if (widthPercent === 100) {
-        return 50
+        return 50;
       } else if (widthPercent >= 50) {
-        return 0
+        return 0;
       } else {
-        return 50
+        return 50;
       }
-    }
+    };
 
     const editorCalculateWidth = widthPercent => {
       if (widthPercent >= 50) {
-        return 100
+        return 100;
       } else {
-        return 50
+        return 50;
       }
-    }
+    };
 
     return () => {
       if (type === 'script') {
@@ -74,9 +74,9 @@ export default class Writer extends Component {
           editorWidthPercent: editorCalculateWidth(this.state.editorWidthPercent)
         });
       } else {
-        false
+        console.log('You done goofed');
       }
-    }
+    };
   }
 
   controlIsVisible(type) {
