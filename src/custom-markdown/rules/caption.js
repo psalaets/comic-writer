@@ -4,7 +4,7 @@ import SimpleMarkdown from 'simple-markdown';
 import countWords from '../count-words';
 import Caption from '../../components/caption/Caption';
 
-const matchRegex = /^> ?caption ?(\([^\n]+\))?: ([^\n]+)/;
+const matchRegex = /^> ?caption ?(\([^\n]+\))?: ([^\n]+)\n*/;
 
 export default {
   order: SimpleMarkdown.defaultRules.blockQuote.order - 0.3,

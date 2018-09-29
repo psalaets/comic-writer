@@ -4,7 +4,7 @@ import SimpleMarkdown from 'simple-markdown';
 import countWords from '../count-words';
 import Dialogue from '../../components/dialogue/Dialogue';
 
-const matchRegex = /^> ?([^\n]+?) ?(\([^\n]+\))?: ([^\n]+)/;
+const matchRegex = /^> ?([^\n]+?) ?(\([^\n]+\))?: ([^\n]+)\n*/;
 
 export default {
   order: SimpleMarkdown.defaultRules.blockQuote.order - 0.1,
