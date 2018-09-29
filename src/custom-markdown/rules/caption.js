@@ -1,6 +1,7 @@
 import React from 'react';
 import SimpleMarkdown from 'simple-markdown';
 
+import countWords from '../count-words';
 import Caption from '../../components/caption/Caption';
 
 const matchRegex = /^> ?caption ?(\([^\n]+\))?: ([^\n]+)/;
@@ -28,11 +29,19 @@ function parse(capture, recurseParse, state) {
   const content = capture[2];
   const number = state.letteringNumber;
 
+  const parseTree = recurseParse(content, Object.assign({}, state, {
+    inline: true,
+    inLettering: true
+  }));
+
+  state.inLettering = false;
+
   return {
     id: state.getLetteringId(),
     modifier,
-    content: recurseParse(content, Object.assign({}, state, {inline: true})),
-    number
+    content: parseTree,
+    number,
+    wordCount: countWords(parseTree)
   };
 }
 
