@@ -7,7 +7,8 @@ import {
 export default function rootReducer(state, action) {
   state = state || {
     source: '',
-    parseTree: []
+    parseTree: [],
+    statsById: {}
   };
 
   switch (action.type) {
