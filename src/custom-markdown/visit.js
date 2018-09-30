@@ -3,16 +3,20 @@
 export default function visit(nodes, visitor) {
   nodes.forEach(node => visitNode(node, visitor));
 }
-
 function visitNode(node, visitor) {
+  // eslint-disable-next-line
   if (node.type == 'page') {
     visitPage(node, visitor);
+  // eslint-disable-next-line
   } else if (node.type == 'panel') {
     visitPanel(node, visitor);
+  // eslint-disable-next-line
   } else if (node.type == 'dialogue') {
     visitDialogue(node, visitor);
+  // eslint-disable-next-line
   } else if (node.type == 'caption') {
     visitCaption(node, visitor);
+  // eslint-disable-next-line
   } else if (node.type == 'sfx') {
     visitSfx(node, visitor);
   }
