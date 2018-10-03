@@ -5,16 +5,16 @@
 /* Block */
 /******************************************************************************/
 .c-script {
+  background-color: white;
+  color: #232323;
+  flex: 1 1 50%;
+  font-family: sans-serif;
+  outline: none;
   overflow-x: hidden;
   padding-left: 2em;
   padding-right: 2em;
   padding-top: 1em;
-  font-family: sans-serif;
   width: 100%;
-  color: #232323;
-  flex: 1 1 50%;
-  background-color: white;
-  outline: none;
 }
 
 .c-script > * + * {

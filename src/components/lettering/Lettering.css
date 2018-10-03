@@ -13,13 +13,13 @@
 /******************************************************************************/
 .c-lettering__meta {
   flex: 0 0 45%;
+  max-width: 245px;
+  padding-right: 1em;
   text-transform: uppercase;
   white-space: nowrap;
-  padding-right: 1em;
-  max-width: 245px;
 }
 
 .c-lettering__content {
-  flex: 1 1 0%;
+  flex: 1 1 0;
   min-width: 200px;
 }
