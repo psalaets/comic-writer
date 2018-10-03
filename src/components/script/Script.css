@@ -9,7 +9,6 @@
   color: #232323;
   flex: 1 1 50%;
   font-family: sans-serif;
-  outline: none;
   overflow-x: hidden;
   padding-left: 2em;
   padding-right: 2em;
@@ -17,6 +16,9 @@
   width: 100%;
 }
 
+.c-script:focus {
+  outline: none;
+}
 .c-script > * + * {
   margin-top: 1em;
 }

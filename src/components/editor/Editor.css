@@ -22,13 +22,16 @@
   margin-bottom: -4px;
   margin: 0;
   min-height: 75vh;
-  outline: none;
   padding-left: 1em;
   padding-right: 1em;
   padding-top: 1em;
   position: relative;
   resize: none;
   width: 100%;
+}
+
+.c-editor__textarea:focus {
+  outline: none;
 }
 
 .c-editor__scrollpast {
