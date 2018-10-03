@@ -25,13 +25,13 @@ export default class Script extends Component {
       <article
         tabIndex={this.props.tabIndexHide ? '-1' : 0}
         style={styles}
-        className="Script"
+        className="c-script"
         ref={this.scrollRef}
       >
-        <div className="Script__content">
+        <div className="c-script__content">
           {output}
         </div>
-        <div className="Script__scrollpast"></div>
+        <div className="c-script__scrollpast"></div>
       </article>
     );
   }

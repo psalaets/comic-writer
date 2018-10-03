@@ -3,6 +3,6 @@ import './LetteringBold.css';
 
 export default class LetteringBold extends Component {
   render() {
-    return <strong className="LetteringBold">{this.props.children}</strong>;
+    return <strong className="c-lettering-bold">{this.props.children}</strong>;
   }
 }

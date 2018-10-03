@@ -8,11 +8,11 @@ export default class Lettering extends Component {
     const meta = `${this.props.number}. ${this.props.subject}${modifier}`;
 
     return (
-      <section className="Lettering">
-        <h4 className="Lettering__meta">
+      <section className="c-lettering">
+        <h4 className="c-lettering__meta">
           {meta}
         </h4>
-        <blockquote className="Lettering__content">
+        <blockquote className="c-lettering__content">
           {this.props.content}
         </blockquote>
       </section>

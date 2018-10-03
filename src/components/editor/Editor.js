@@ -36,21 +36,21 @@ export default class Editor extends Component {
 
   render() {
     return (
-      <div className="Editor"
+      <div className="c-editor"
         onScroll={this.props.onScroll}
        >
         <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>
         <textarea
           key="editor-area"
           id="editor"
-          className="Editor__textarea"
+          className="c-editor__textarea"
           value={this.state.value}
           onChange={this.handleChange}
           ref={this.setTextarea}
           tabIndex="0"
           placeholder="Adventure starts here..."
         />
-        <div className="Editor__scrollpast"/>
+        <div className="c-editor__scrollpast"/>
       </div>
     )
   }

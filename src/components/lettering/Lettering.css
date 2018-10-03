@@ -1,9 +1,17 @@
-.Lettering {
+/******************************************************************************/
+/* Lettering                                                                  */
+/******************************************************************************/
+
+/* Block */
+/******************************************************************************/
+.c-lettering {
   display: flex;
   flex-wrap: wrap;
 }
 
-.Lettering__meta {
+/* Elements */
+/******************************************************************************/
+.c-lettering__meta {
   flex: 0 0 45%;
   text-transform: uppercase;
   white-space: nowrap;
@@ -11,7 +19,7 @@
   max-width: 245px;
 }
 
-.Lettering__content {
+.c-lettering__content {
   flex: 1 1 0%;
   min-width: 200px;
 }

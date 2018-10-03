@@ -107,7 +107,7 @@ export default class Writer extends Component {
 
   render() {
     return (
-      <main className="Writer">
+      <main className="c-writer">
         { this.controlIsVisible('script') ?
             [
               <Editor
@@ -120,11 +120,11 @@ export default class Writer extends Component {
               />,
               <button
                 key="scriptControl"
-                className="Writer__view-control Writer__view-control-script"
+                className="c-writer__view-control c-writer__view-control-script"
                 onClick={this.handleWidthControl('script')}
                 tabIndex="0"
               >
-                <span className="Writer__view-control-text">◀</span>
+                <span className="c-writer__view-control-text">◀</span>
                 <span className="u-hide--visually">
                   Expand Script View
                 </span>
@@ -135,11 +135,11 @@ export default class Writer extends Component {
             [
               <button
                 key="editorControl"
-                className="Writer__view-control Writer__view-control-writer"
+                className="c-writer__view-control c-writer__view-control-writer"
                 onClick={this.handleWidthControl('editor')}
                 tabIndex="0"
               >
-                <span className="Writer__view-control-text">▶</span>
+                <span className="c-writer__view-control-text">▶</span>
                 <span className="u-hide--visually">
                   Expand Writer View
                 </span>

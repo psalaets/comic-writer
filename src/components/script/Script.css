@@ -1,4 +1,10 @@
-.Script {
+/******************************************************************************/
+/* Script                                                                     */
+/******************************************************************************/
+
+/* Block */
+/******************************************************************************/
+.c-script {
   overflow-x: hidden;
   padding-left: 2em;
   padding-right: 2em;
@@ -11,16 +17,18 @@
   outline: none;
 }
 
-.Script > * + * {
+.c-script > * + * {
   margin-top: 1em;
 }
 
-.Script__content {
+/* Elements */
+/******************************************************************************/
+.c-script__content {
   margin-right: auto;
   margin-left: auto;
   width: 100%;
   max-width: 800px;
 }
-.Script__scrollpast {
+.c-script__scrollpast {
   padding-bottom: 25vh;
 }

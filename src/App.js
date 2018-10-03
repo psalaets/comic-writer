@@ -6,7 +6,7 @@ import ConnectedWriter from './components/writer/ConnectedWriter';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="c-app">
         <ConnectedWriter />
       </div>
     );
