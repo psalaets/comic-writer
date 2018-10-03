@@ -7,6 +7,7 @@
 .c-editor {
   flex: 1 1 47%;
   overflow-y: auto;
+  will-change: scroll-position;
 }
 
 /* Elements */
