@@ -17,14 +17,10 @@ export default class Script extends Component {
   }
 
   render() {
-    const styles = {
-      // flexBasis: `calc(${100 / this.props.editorWidthPercent}%)`
-    }
     const output = reactOutput(this.props.blocks);
     return (
       <article
         tabIndex={this.props.tabIndexHide ? '-1' : 0}
-        style={styles}
         className="c-script"
         ref={this.scrollRef}
       >
