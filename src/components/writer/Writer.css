@@ -34,8 +34,8 @@
   border: 0;
   color: rgba(0, 0, 0, .6);
   flex: 0 0 2em;
-  font-size: 50%;
   height: 100vh;
+  font-size: .6em;
 }
 
 .c-writer__view-control:hover {

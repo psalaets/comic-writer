@@ -31,6 +31,12 @@ blockquote {
   margin: 0;
 }
 
+input,
+textarea,
+select,
+button {
+  font-size: inherit;
+}
 
 textarea::-webkit-input-placeholder {
 color: rgba(0, 0, 0, .5);
