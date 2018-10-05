@@ -21,6 +21,10 @@ export default class Editor extends Component {
     this.autoSize();
   }
 
+  componentWillUnmount() {
+    autosize.destroy(this.textarea);
+  }
+
   componentDidUpdate(prevProps) {
     // Use editorWidthPercent as a indicator to when resize buttons have been
     // pressed in order to run autosize on the textarea.
