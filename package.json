@@ -19,6 +19,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "autosize": "^4.0.2",
     "react-test-renderer": "^16.4.1"
   },
   "browserslist": [
