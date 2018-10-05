@@ -10,8 +10,6 @@ export default class Writer extends Component {
     super(props);
 
     this.state = {
-      value: [],
-      initialEditorValue: '',
       // This is the value that the editor uses relay scroll position to the
       // script view.
       scrollPercentage: 0,
@@ -21,7 +19,6 @@ export default class Writer extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
-    this.copyEditorContent = this.copyEditorContent.bind(this);
     this.handleWidthControl = this.handleWidthControl.bind(this);
     this.controlIsVisible = this.controlIsVisible.bind(this);
   }
@@ -99,12 +96,6 @@ export default class Writer extends Component {
     }
   }
 
-  copyEditorContent(value) {
-    this.setState({
-      initialEditorValue: value
-    });
-  }
-
   render() {
     return (
       <main className="c-writer">
@@ -112,10 +103,9 @@ export default class Writer extends Component {
             [
               <Editor
                 key="editor"
+                initialValue={this.props.source}
                 onChange={this.handleChange}
                 onScroll={this.handleScroll('editor')}
-                initialEditorValue={this.state.initialEditorValue}
-                onWillUnmount={this.copyEditorContent}
                 editorWidthPercent={this.state.editorWidthPercent}
               />,
               <button
@@ -159,5 +149,6 @@ export default class Writer extends Component {
 
 Writer.propTypes = {
   parseTree: PropTypes.array.isRequired,
+  source: PropTypes.string.isRequired,
   onSourceChange: PropTypes.func.isRequired
 };

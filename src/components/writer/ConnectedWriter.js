@@ -5,6 +5,7 @@ import Writer from './Writer';
 
 function mapStateToProps(state) {
   return {
+    source: state.source,
     parseTree: state.parseTree
   };
 }

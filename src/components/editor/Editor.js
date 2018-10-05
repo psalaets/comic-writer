@@ -6,19 +6,15 @@ export default class Editor extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      value: ''
-    };
-
     this.handleChange = this.handleChange.bind(this);
     this.setTextarea = this.setTextarea.bind(this);
+
+    this.state = {
+      value: this.props.initialValue
+    };
   }
 
   componentDidMount() {
-    this.setState({
-      value: this.props.initialEditorValue
-    });
-    this.manualChange(this.props.initialEditorValue)
     this.autoSize();
   }
 
@@ -28,10 +24,6 @@ export default class Editor extends Component {
     if (this.props.editorWidthPercent !== prevProps.editorWidthPercent) {
       this.autoSize()
     }
-  }
-
-  componentWillUnmount() {
-    this.props.onWillUnmount(this.state.value)
   }
 
   render() {
@@ -57,14 +49,6 @@ export default class Editor extends Component {
 
   setTextarea(textarea) {
     this.textarea = textarea;
-  }
-  // this forces an an actual update to the content of the text when loading
-  // value data into the component from props.
-  manualChange(val){
-    if (process.env.NODE_ENV === 'test') return;
-    var input = this.textarea;
-    input.value = val;
-    this.setState({value: val});
   }
 
   // Semi hack: keeps the textarea big enough so it never needs a scrollbar
@@ -187,10 +171,8 @@ export default class Editor extends Component {
 }
 
 Editor.propTypes = {
+  initialValue: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onScroll: PropTypes.func.isRequired,
-  onWillUnmount: PropTypes.func,
   editorWidthPercent: PropTypes.number,
-  initialEditorValue: PropTypes.string,
-
 };
