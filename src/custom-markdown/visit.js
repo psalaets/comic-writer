@@ -4,20 +4,15 @@ export default function visit(nodes, visitor) {
   nodes.forEach(node => visitNode(node, visitor));
 }
 function visitNode(node, visitor) {
-  // eslint-disable-next-line
-  if (node.type == 'page') {
+  if (node.type === 'page') {
     visitPage(node, visitor);
-  // eslint-disable-next-line
-  } else if (node.type == 'panel') {
+  } else if (node.type === 'panel') {
     visitPanel(node, visitor);
-  // eslint-disable-next-line
-  } else if (node.type == 'dialogue') {
+  } else if (node.type === 'dialogue') {
     visitDialogue(node, visitor);
-  // eslint-disable-next-line
-  } else if (node.type == 'caption') {
+  } else if (node.type === 'caption') {
     visitCaption(node, visitor);
-  // eslint-disable-next-line
-  } else if (node.type == 'sfx') {
+  } else if (node.type === 'sfx') {
     visitSfx(node, visitor);
   }
 }
