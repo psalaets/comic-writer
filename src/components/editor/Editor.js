@@ -48,6 +48,7 @@ export default class Editor extends Component {
           ref={this.setTextarea}
           tabIndex="0"
           placeholder="Adventure starts here..."
+          rows="1"
         />
         <div className="c-editor__scrollpast"/>
       </div>
