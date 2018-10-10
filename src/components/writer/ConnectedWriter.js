@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 
-import { changeSource } from '../../store/actions';
+import {
+  changeSource,
+  saveScript
+} from '../../store/actions';
 import Writer from './Writer';
 
 function mapStateToProps(state) {
@@ -12,7 +15,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSourceChange: source => dispatch(changeSource(source))
+    onSourceChange: source => {
+      dispatch(changeSource(source));
+      dispatch(saveScript(source));
+    }
   };
 }
 
