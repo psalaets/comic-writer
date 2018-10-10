@@ -6,12 +6,13 @@ import {
   saveScript
 } from '../../store/actions';
 import Writer from './Writer';
+import { parse } from '../../custom-markdown';
 
 function mapStateToProps(state) {
   return {
     cursor: state.editor.cursor,
     source: state.editor.source,
-    parseTree: state.parseTree
+    parseTree: parse(state.editor.source)
   };
 }
 
@@ -21,6 +22,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onSourceChange(event) {
       const {source, cursor} = event;
+
       dispatch(changeSource(source, cursor));
       debouncedSaveScript(source);
     }
