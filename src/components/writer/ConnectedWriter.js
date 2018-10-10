@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import debounce from 'lodash.debounce';
 
 import {
   changeSource,
@@ -14,10 +15,12 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
+  const debouncedSaveScript = debounce(source => dispatch(saveScript(source)), 1000);
+
   return {
     onSourceChange: source => {
       dispatch(changeSource(source));
-      dispatch(saveScript(source));
+      debouncedSaveScript(source);
     }
   };
 }
