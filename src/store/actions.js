@@ -4,6 +4,8 @@ import {
   SAVE_SCRIPT_COMPLETED,
 } from './action-types';
 
+import localstorage from '../localstorage';
+
 export function changeSource(source) {
   return {
     type: CHANGE_SOURCE,
@@ -17,11 +19,8 @@ export function saveScript(source) {
   return function saveScriptThunk(dispatch) {
     dispatch(saveScriptStarted());
 
-    setTimeout(() => {
-      console.log('saved');
-
-      dispatch(saveScriptCompleted());
-    }, 500);
+    localstorage.set('comic-writer.script', source)
+      .then(() => dispatch(saveScriptCompleted()));
   };
 }
 
