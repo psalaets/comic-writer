@@ -10,10 +10,6 @@ export default class Editor extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.setTextarea = this.setTextarea.bind(this);
-
-    this.state = {
-      value: this.props.initialValue
-    };
   }
 
   componentDidMount() {
@@ -31,6 +27,10 @@ export default class Editor extends Component {
     if (this.props.editorWidthPercent !== prevProps.editorWidthPercent) {
       this.autoSize()
     }
+
+    if (this.props.cursor !== prevProps.cursor) {
+      this.textarea.setSelectionRange(this.props.cursor, this.props.cursor);
+    }
   }
 
   render() {
@@ -43,7 +43,7 @@ export default class Editor extends Component {
           key="editor-area"
           id="editor"
           className="c-editor__textarea"
-          value={this.state.value}
+          value={this.props.value}
           onChange={this.handleChange}
           ref={this.setTextarea}
           tabIndex="0"
@@ -140,27 +140,19 @@ export default class Editor extends Component {
       })
       .join('\n');
 
-    if (this.props.onChange) {
-      this.props.onChange({
-        value: newValue,
-        cursorAtEnd: newValue.length === cursor,
-        cursorPage,
-        cursorPanel
-      });
-    }
-
-    this.setState({
-      value: newValue
-    }, () => {
-      if (this.textarea) {
-        this.textarea.setSelectionRange(cursor, cursor);
-      }
+    this.props.onChange({
+      value: newValue,
+      cursorAtEnd: newValue.length === cursor,
+      cursorPage,
+      cursorPanel,
+      cursor
     });
   }
 }
 
 Editor.propTypes = {
-  initialValue: PropTypes.string.isRequired,
+  cursor: PropTypes.number.isRequired,
+  value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onScroll: PropTypes.func.isRequired,
   editorWidthPercent: PropTypes.number,

@@ -24,7 +24,10 @@ export default class Writer extends Component {
   }
 
   handleChange(event) {
-    this.props.onSourceChange(event.value);
+    this.props.onSourceChange({
+      source: event.value,
+      cursor: event.cursor
+    });
   }
 
   handleScroll(type) {
@@ -103,7 +106,8 @@ export default class Writer extends Component {
             [
               <Editor
                 key="editor"
-                initialValue={this.props.source}
+                value={this.props.source}
+                cursor={this.props.cursor}
                 onChange={this.handleChange}
                 onScroll={this.handleScroll('editor')}
                 editorWidthPercent={this.state.editorWidthPercent}
@@ -150,5 +154,6 @@ export default class Writer extends Component {
 Writer.propTypes = {
   parseTree: PropTypes.array.isRequired,
   source: PropTypes.string.isRequired,
+  cursor: PropTypes.number.isRequired,
   onSourceChange: PropTypes.func.isRequired
 };

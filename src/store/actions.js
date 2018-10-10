@@ -6,8 +6,11 @@ import {
 
 import localstorage from '../localstorage';
 
-export function changeSource(source) {
-  return action(CHANGE_SOURCE, {source});
+export function changeSource(source, cursor) {
+  return action(CHANGE_SOURCE, {
+    source,
+    cursor
+  });
 }
 
 export function saveScript(source) {

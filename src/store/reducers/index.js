@@ -6,6 +6,7 @@ import {
 
 export default function rootReducer(state, action) {
   state = state || {
+    cursor: 0,
     source: '',
     parseTree: [],
     statsById: {}
@@ -18,6 +19,7 @@ export default function rootReducer(state, action) {
 
       return {
         ...state,
+        cursor: action.payload.cursor,
         source: action.payload.source,
         parseTree,
         statsById: stats,

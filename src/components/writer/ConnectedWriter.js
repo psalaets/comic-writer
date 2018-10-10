@@ -9,6 +9,7 @@ import Writer from './Writer';
 
 function mapStateToProps(state) {
   return {
+    cursor: state.cursor,
     source: state.source,
     parseTree: state.parseTree
   };
@@ -18,8 +19,9 @@ function mapDispatchToProps(dispatch) {
   const debouncedSaveScript = debounce(source => dispatch(saveScript(source)), 1000);
 
   return {
-    onSourceChange: source => {
-      dispatch(changeSource(source));
+    onSourceChange(event) {
+      const {source, cursor} = event;
+      dispatch(changeSource(source, cursor));
       debouncedSaveScript(source);
     }
   };
