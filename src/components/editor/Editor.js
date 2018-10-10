@@ -22,10 +22,11 @@ export default class Editor extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Use editorWidthPercent as a indicator to when resize buttons have been
-    // pressed in order to run autosize on the textarea.
-    if (this.props.editorWidthPercent !== prevProps.editorWidthPercent) {
-      this.autoSize()
+    const widthChanged = this.props.editorWidthPercent !== prevProps.editorWidthPercent;
+    const valueChanged = this.props.value !== prevProps.value;
+
+    if (widthChanged || valueChanged) {
+      this.autoSize();
     }
 
     if (this.props.cursor !== prevProps.cursor) {
@@ -67,8 +68,6 @@ export default class Editor extends Component {
   }
 
   handleChange(event) {
-    this.autoSize();
-
     const value = event.target.value;
     let cursor = event.target.selectionStart;
 
