@@ -1,30 +1,28 @@
 import { parse } from '../../custom-markdown';
 import extractStats from './extract-stats';
+
 import {
   CHANGE_SOURCE
 } from '../action-types';
+import editorReducer from './editor';
 
 export default function rootReducer(state, action) {
   state = state || {
-    cursor: 0,
-    source: '',
     parseTree: [],
     statsById: {}
   };
 
-  switch (action.type) {
-    case CHANGE_SOURCE:
-      const parseTree = parse(action.payload.source);
-      const stats = extractStats(parseTree);
+  let parseTree = state.parseTree;
+  let statsById = state.statsById;
 
-      return {
-        ...state,
-        cursor: action.payload.cursor,
-        source: action.payload.source,
-        parseTree,
-        statsById: stats,
-      };
-    default:
-      return state;
+  if (action.type === CHANGE_SOURCE) {
+    parseTree = parse(action.payload.source);
+    statsById = extractStats(parseTree);
   }
-};
+
+  return {
+    editor: editorReducer(state.editor, action),
+    parseTree,
+    statsById
+  };
+}

@@ -9,8 +9,8 @@ import Writer from './Writer';
 
 function mapStateToProps(state) {
   return {
-    cursor: state.cursor,
-    source: state.source,
+    cursor: state.editor.cursor,
+    source: state.editor.source,
     parseTree: state.parseTree
   };
 }
