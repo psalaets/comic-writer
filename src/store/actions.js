@@ -7,12 +7,7 @@ import {
 import localstorage from '../localstorage';
 
 export function changeSource(source) {
-  return {
-    type: CHANGE_SOURCE,
-    payload: {
-      source
-    }
-  };
+  return action(CHANGE_SOURCE, {source});
 }
 
 export function saveScript(source) {
@@ -25,15 +20,16 @@ export function saveScript(source) {
 }
 
 function saveScriptStarted() {
-  return {
-    type: SAVE_SCRIPT_STARTED,
-    payload: {}
-  };
+  return action(SAVE_SCRIPT_STARTED);
 }
 
 function saveScriptCompleted() {
+  return action(SAVE_SCRIPT_COMPLETED);
+}
+
+function action(type, payload = {}) {
   return {
-    type: SAVE_SCRIPT_COMPLETED,
-    payload: {}
+    type,
+    payload
   };
 }
