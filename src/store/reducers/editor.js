@@ -103,6 +103,9 @@ export function transformMarkdown(value, cursor) {
 
   return {
     value: newValue,
-    cursor
+    cursor,
+    cursorAtEnd: newValue.length === cursor,
+    cursorPage,
+    cursorPanel
   };
 }

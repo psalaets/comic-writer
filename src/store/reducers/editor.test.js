@@ -166,5 +166,61 @@ describe('editor reducer', () => {
         expect(result.value).toMatchSnapshot();
       });
     });
+
+    describe('detecting cursorAtEnd', () => {
+      it('cursor at the end of input', () => {
+        const input = 'abc';
+
+        const result = transformMarkdown(input, 3);
+
+        expect(result.cursorAtEnd).toBe(true);
+      });
+
+      it('cursor in middle of value', () => {
+        const input = 'abc';
+
+        const result = transformMarkdown(input, 1);
+
+        expect(result.cursorAtEnd).toBe(false);
+      });
+    });
+
+    describe('cursorPage and cursorPanel', () => {
+      it('cursor in a page and panel', () => {
+        const input = '## Page 1\n## Page 2\n### Panel 1\nadsf';
+
+        const result = transformMarkdown(input, input.length - 3);
+
+        expect(result.cursorPage).toBe(2);
+        expect(result.cursorPanel).toBe(1);
+      });
+
+      it('cursor has no page nor panel', () => {
+        const input = 'asdf';
+
+        const result = transformMarkdown(input, input.length - 3);
+
+        expect(result.cursorPage).toBe(undefined);
+        expect(result.cursorPanel).toBe(undefined);
+      });
+
+      it('cursor has page only', () => {
+        const input = '## Page 1\n## Page 2\nasdf';
+
+        const result = transformMarkdown(input, input.length - 3);
+
+        expect(result.cursorPage).toBe(2);
+        expect(result.cursorPanel).toBe(undefined);
+      });
+
+      it('cursor has panel only', () => {
+        const input = '### Panel 1\n### Panel 2\nasdf';
+
+        const result = transformMarkdown(input, input.length - 3);
+
+        expect(result.cursorPage).toBe(undefined);
+        expect(result.cursorPanel).toBe(2);
+      });
+    });
   });
 });
