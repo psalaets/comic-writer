@@ -134,7 +134,7 @@ describe('editor reducer', () => {
         expect(result.value).toMatchSnapshot();
       });
 
-      it('pasting panel at start', () => {
+      it('inserting panel at start', () => {
         const input = '## Page 1\npage 1 info\n### Panel 2\n### Panel 1\npanel 1 info';
 
         const result = transformMarkdown(input, 0);
@@ -142,7 +142,7 @@ describe('editor reducer', () => {
         expect(result.value).toMatchSnapshot();
       });
 
-      it('pasting panel in middle', () => {
+      it('inserting panel in middle', () => {
         const input = '## Page 1\n### Panel 1\npanel 1 info\n### Panel 3\n### Panel 2\npanel 2 info';
 
         const result = transformMarkdown(input, 0);

@@ -124,7 +124,7 @@ page 1 info
 ### Panel 2"
 `;
 
-exports[`editor reducer transformMarkdown panels pasting panel at start 1`] = `
+exports[`editor reducer transformMarkdown panels inserting panel at start 1`] = `
 "## Page 1
 page 1 info
 ### Panel 1
@@ -132,7 +132,7 @@ page 1 info
 panel 1 info"
 `;
 
-exports[`editor reducer transformMarkdown panels pasting panel in middle 1`] = `
+exports[`editor reducer transformMarkdown panels inserting panel in middle 1`] = `
 "## Page 1
 ### Panel 1
 panel 1 info
