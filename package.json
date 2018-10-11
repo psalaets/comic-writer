@@ -24,6 +24,7 @@
     "autosize": "^4.0.2",
     "react-test-renderer": "^16.4.1"
   },
+  "homepage": "https://psalaets.gitlab.io/comic-writer",
   "browserslist": [
     ">0.2%",
     "not dead",
