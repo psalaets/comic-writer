@@ -9,6 +9,7 @@ before_script:
 
 stages:
   - test
+  - deploy
 
 run_tests:
   stage: test
