@@ -37,7 +37,10 @@ export function loadScript() {
     dispatch(loadScriptStarted());
 
     localstorage.get('comic-writer.script')
-      .then(source => dispatch(loadScriptCompleted(source)));
+      // If local storage is null/empty on given key, then do nothing. Otherwise
+      // dispatch loadScriptCompleted. I expect this check to be removed once we
+      // have n number of scripts. Perhaps a dispatch of an error state?
+      .then(source => source === null ? false : dispatch(loadScriptCompleted(source)));
   };
 }
 
