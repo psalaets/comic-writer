@@ -31,7 +31,8 @@ export default function editorReducer(state, action) {
   }
 }
 
-function transformMarkdown(value, cursor) {
+// exported for testing purposes
+export function transformMarkdown(value, cursor) {
   let runningLength = 0;
   const lines = value.split(/\n/)
     .map((text, index) => {
