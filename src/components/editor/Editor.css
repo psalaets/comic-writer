@@ -27,6 +27,7 @@
 }
 
 .c-editor__textarea:focus {
+  /*csslint outline-none: false*/
   outline: none;
 }
 

@@ -18,10 +18,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "lint": "npx csslint ./src/ --format=junit-xml",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "autosize": "^4.0.2",
+    "css-lint": "^1.0.1",
     "react-test-renderer": "^16.4.1"
   },
   "browserslist": [
