@@ -1,5 +1,6 @@
 import {
-  CHANGE_SOURCE
+  CHANGE_SOURCE,
+  LOAD_SCRIPT_COMPLETED
 } from '../action-types';
 
 export default function editorReducer(state, action) {
@@ -9,13 +10,22 @@ export default function editorReducer(state, action) {
   };
 
   switch (action.type) {
-    case CHANGE_SOURCE:
+    case LOAD_SCRIPT_COMPLETED: {
+      const { value } = transformMarkdown(action.payload.source, state.cursor);
+
+      return {
+        ...state,
+        source: value
+      };
+    }
+    case CHANGE_SOURCE: {
       const { value, cursor } = transformMarkdown(action.payload.source, action.payload.cursor);
 
       return {
         source: value,
         cursor: cursor
       };
+    }
     default:
       return state;
   }

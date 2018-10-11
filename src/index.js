@@ -7,6 +7,9 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import store from './store';
+import { loadScript } from './store/actions';
+
+store.dispatch(loadScript());
 
 ReactDOM.render(
   <Provider store={store}>
