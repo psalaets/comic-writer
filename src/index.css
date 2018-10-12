@@ -39,17 +39,16 @@ button {
 }
 
 textarea::-webkit-input-placeholder {
-color: rgba(0, 0, 0, .5);
+  color: rgba(0, 0, 0, .5);
 }
 
 textarea::-moz-placeholder {  /* Firefox 19+ */
-color: rgba(0, 0, 0, .5);
+  color: rgba(0, 0, 0, .5);
 }
 
 textarea:-ms-input-placeholder {
-color: rgba(0, 0, 0, .5);
+  color: rgba(0, 0, 0, .5);
 }
-
 
 /******************************************************************************/
 /* Utility                                                                    */
@@ -82,7 +81,6 @@ color: rgba(0, 0, 0, .5);
 /******************************************************************************/
 
 .u-hide--visually {
-  /*csslint important: false*/
   border: 0 !important;
   clip: rect(0 0 0 0) !important;
   clip-path: inset(50%) !important;

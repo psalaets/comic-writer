@@ -18,13 +18,15 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "lintcss": "npx csslint ./src/ --format=junit-xml",
+    "lintcss": "node ./stylelint-ci.js",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
     "autosize": "^4.0.2",
-    "css-lint": "^1.0.1",
-    "react-test-renderer": "^16.4.1"
+    "react-test-renderer": "^16.4.1",
+    "stylelint": "^9.6.0",
+    "stylelint-config-standard": "^18.2.0",
+    "stylelint-junit-formatter": "^0.2.1"
   },
   "homepage": "https://psalaets.gitlab.io/comic-writer",
   "browserslist": [
