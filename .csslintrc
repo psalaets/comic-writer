@@ -1,0 +1,13 @@
+{
+  "ignore": [
+    "box-model",
+    "universal-selector",
+    "empty-rules",
+    "box-sizing",
+    "fallback-colors"
+  ],
+  "warnings": [
+  ],
+  "errors": [
+  ]
+}
