@@ -1,0 +1,9 @@
+{
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "comment-whitespace-inside": null,
+    "number-leading-zero": null,
+    "comment-empty-line-before": null,
+    "block-no-empty": null,
+  }
+}
