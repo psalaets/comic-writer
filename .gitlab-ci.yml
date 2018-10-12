@@ -21,7 +21,7 @@ lint_css:
   stage: test
   script:
     - npm ci
-    - npm run lintcss
+    - npm run lintcss > cssreport.xml
   artifacts:
     reports:
       junit: cssreport.xml

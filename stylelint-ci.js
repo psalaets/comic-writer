@@ -9,5 +9,6 @@ const stylelintOptions = {
 
 stylelint.lint(stylelintOptions)
   .then((resultObject) => {
-  fs.writeFile('cssreport.xml', resultObject.output, (error) => console.error(error));
+    // Do something with the result, e.g. write a report.xml to disk:
+  console.log(resultObject.output);
 });
