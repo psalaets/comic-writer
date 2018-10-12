@@ -11,7 +11,7 @@ stages:
   - test
   - deploy
 
-run_tests:
+javascript_tests:
   stage: test
   script:
     - npm ci
