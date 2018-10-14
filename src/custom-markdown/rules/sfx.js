@@ -3,7 +3,7 @@ import SimpleMarkdown from 'simple-markdown';
 
 import Sfx from '../../components/sfx/Sfx';
 
-const matchRegex = /^> ?sfx ?(\([^\n]+\))?: ([^\n]+)\n*/;
+const matchRegex = /^> ?sfx ?(\([^\n]+\))?: ?([^\n]+)\n*/;
 
 export default {
   order: SimpleMarkdown.defaultRules.blockQuote.order - 0.2,
