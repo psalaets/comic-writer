@@ -1,10 +1,11 @@
 import React from 'react';
-import SimpleMarkdown from 'simple-markdown';
+
+import { METADATA } from '../rule-ordering';
 
 const matchRegex = /^([^\n]*): ?([^\n]+)\n*/;
 
 export default {
-  order: SimpleMarkdown.defaultRules.paragraph.order - 0.1,
+  order: METADATA,
   match,
   parse,
   react

@@ -1,12 +1,12 @@
 import React from 'react';
-import SimpleMarkdown from 'simple-markdown';
 
 import Sfx from '../../components/sfx/Sfx';
+import { SFX } from '../rule-ordering';
 
 const matchRegex = /^> ?sfx ?(\([^\n]+\))?: ?([^\n]+)\n*/;
 
 export default {
-  order: SimpleMarkdown.defaultRules.blockQuote.order - 0.2,
+  order: SFX,
   match,
   parse,
   react

@@ -1,13 +1,13 @@
 import React from 'react';
-import SimpleMarkdown from 'simple-markdown';
 
 import Panel from '../../components/panel/Panel';
+import { PANEL } from '../rule-ordering';
 
 const panelRegex = /^### Panel (\d{1,})\n*([^]*)\n*/;
 const PANEL_PREFIX = '### Panel';
 
 export default {
-  order: SimpleMarkdown.defaultRules.heading.order - 0.1,
+  order: PANEL,
   match,
   parse,
   react

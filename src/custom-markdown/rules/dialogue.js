@@ -1,13 +1,13 @@
 import React from 'react';
-import SimpleMarkdown from 'simple-markdown';
 
 import countWords from '../count-words';
 import Dialogue from '../../components/dialogue/Dialogue';
+import { DIALOGUE } from '../rule-ordering';
 
 const matchRegex = /^> ?([^\n]+?) ?(\([^\n]+\))?: ?([^\n]+)\n*/;
 
 export default {
-  order: SimpleMarkdown.defaultRules.blockQuote.order - 0.1,
+  order: DIALOGUE,
   match,
   parse,
   react

@@ -1,13 +1,13 @@
 import React from 'react';
-import SimpleMarkdown from 'simple-markdown';
 
 import countWords from '../count-words';
 import Caption from '../../components/caption/Caption';
+import { CAPTION } from '../rule-ordering';
 
 const matchRegex = /^> ?caption ?(\([^\n]+\))?: ?([^\n]+)\n*/;
 
 export default {
-  order: SimpleMarkdown.defaultRules.blockQuote.order - 0.3,
+  order: CAPTION,
   match,
   parse,
   react

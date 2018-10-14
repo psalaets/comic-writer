@@ -1,13 +1,13 @@
 import React from 'react';
-import SimpleMarkdown from 'simple-markdown';
 
 import Page from '../../components/page/Page';
+import { PAGE } from '../rule-ordering';
 
 const pageRegex = /^## Page (\d{1,})\n*([^]*)\n*/;
 const PAGE_PREFIX = '## Page';
 
 export default {
-  order: SimpleMarkdown.defaultRules.heading.order - 0.2,
+  order: PAGE,
   match,
   parse,
   react
