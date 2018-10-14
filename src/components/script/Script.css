@@ -17,8 +17,10 @@
 }
 
 .c-script:focus {
+  /*csslint outline-none: false*/
   outline: none;
 }
+
 .c-script > * + * {
   margin-top: 1em;
 }
@@ -26,10 +28,10 @@
 /* Elements */
 /******************************************************************************/
 .c-script__content {
-  margin-right: auto;
   margin-left: auto;
-  width: 100%;
+  margin-right: auto;
   max-width: 800px;
+  width: 100%;
 }
 
 .c-script__scrollpast {

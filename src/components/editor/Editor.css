@@ -18,19 +18,16 @@
   color: #232323;
   font-family: monospace;
   font-size: 1em;
-  line-height: 1em;
-  margin-bottom: -4px;
+  line-height: 2em;
   margin: 0;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding: 1em;
   position: relative;
   resize: none;
   width: 100%;
 }
 
 .c-editor__textarea:focus {
+  /*csslint outline-none: false*/
   outline: none;
 }
 

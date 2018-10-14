@@ -6,17 +6,17 @@
 /******************************************************************************/
 @keyframes hint-right {
   0% { transform: translateX(0); }
-  25%   { transform: translateX(-.25em); }
+  25% { transform: translateX(-.25em); }
   50% { transform: translateX(0); }
-  75%   { transform: translateX(-.25em); }
+  75% { transform: translateX(-.25em); }
   100% { transform: translateX(0); }
 }
 
 @keyframes hint-left {
   0% { transform: translateX(0); }
-  25%   { transform: translateX(.25em); }
+  25% { transform: translateX(.25em); }
   50% { transform: translateX(0); }
-  75%   { transform: translateX(.25em); }
+  75% { transform: translateX(.25em); }
   100% { transform: translateX(0); }
 }
 
@@ -34,8 +34,8 @@
   border: 0;
   color: rgba(0, 0, 0, .6);
   flex: 0 0 2em;
-  height: 100vh;
   font-size: .6em;
+  height: 100vh;
 }
 
 .c-writer__view-control:hover {
@@ -73,9 +73,9 @@
 }
 
 .c-writer__view-control-script {
-  border-right: 1px solid #eeeeee;
+  border-right: 1px solid #eee;
 }
 
 .c-writer__view-control-writer {
-  background-color: rgba(255, 255, 255, 1)
+  background-color: rgba(255, 255, 255, 1);
 }
