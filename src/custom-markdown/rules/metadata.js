@@ -32,7 +32,7 @@ function react(node, recurseOutput, state) {
   return React.createElement(
     'div',
     {
-      children: `key: ${node.key}, value: ${node.value}`,
+      children: `${node.key}: ${node.value}`,
       key: state.key,
       className: 'metadata'
     }
