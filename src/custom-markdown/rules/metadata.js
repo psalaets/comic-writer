@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import { METADATA } from '../rule-ordering';
+import Metadata from "../../components/metadata/Metadata";
+import { METADATA } from "../rule-ordering";
 
 const matchRegex = /^([^\n]*): ?([^\n]+)\n*/;
 
@@ -29,12 +30,10 @@ function parse(capture, recurseParse, state) {
 }
 
 function react(node, recurseOutput, state) {
-  return React.createElement(
-    'div',
-    {
-      children: `${node.key}: ${node.value}`,
-      key: state.key,
-      className: 'metadata'
-    }
-  );
+  return React.createElement(Metadata, {
+    key: state.key,
+    type: node.key,
+    children: node.value,
+    className: "metadata"
+  });
 }
