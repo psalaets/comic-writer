@@ -9,6 +9,7 @@ import sfxRule from './rules/sfx';
 import captionRule from './rules/caption';
 import letteringBoldRule from './rules/lettering-bold';
 import metadataRule from './rules/metadata';
+import paragraphRule from './rules/paragraph';
 
 const rules = {
   ...SimpleMarkdown.defaultRules,
@@ -18,7 +19,8 @@ const rules = {
   dialogue: dialogueRule,
   sfx: sfxRule,
   caption: captionRule,
-  letteringBold: letteringBoldRule
+  letteringBold: letteringBoldRule,
+  paragraph: paragraphRule
 };
 
 const rawBuiltParser = SimpleMarkdown.parserFor(rules);
