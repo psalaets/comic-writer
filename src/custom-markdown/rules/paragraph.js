@@ -2,9 +2,9 @@ import React from 'react';
 
 import { PARAGRAPH } from '../rule-ordering';
 
-const prefixes = `\n### P|\n## P|\n>`;
+const prefixes = `### P|## P|> `;
 // paragraph ends with 2 newlines or page or panel or lettering
-const regex = RegExp(`^((?:[^\n]|\n(?!( *\n|${prefixes})))+)(?:\n *)+\n`);
+const regex = RegExp(`^([^]+?)(?=\n\n|${prefixes})`);
 
 export default {
   order: PARAGRAPH,
