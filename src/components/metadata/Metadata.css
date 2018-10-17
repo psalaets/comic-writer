@@ -1,17 +1,21 @@
 /******************************************************************************/
-/* Panel                                                                      */
+/* Metadata                                                                   */
 /******************************************************************************/
+/*
+ * 1. This makes sure that when two metat data items are next to each-other they
+ *    they look as one unit.
+*/
 
 /* Block */
 /******************************************************************************/
-.c-panel {
-  margin-top: 2em;
+.c-metadata {
+  padding: .5em .8em;
+  background-color: #eee;
 }
 
-.c-panel > * + * {
-  margin-top: .5em;
+.c-metadata + .c-metadata {
+  padding-top: 0; /* 1 */
 }
-
 /* Elements */
 /******************************************************************************/
-.c-panel__title {}
+.c-metadata__content {}
