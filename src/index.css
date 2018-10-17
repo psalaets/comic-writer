@@ -27,7 +27,8 @@ h6 {
   padding: 0;
 }
 
-blockquote {
+blockquote,
+pre {
   margin: 0;
 }
 
