@@ -4,13 +4,15 @@
 /*
  * 1. This makes sure that when two metat data items are next to each-other they
  *    they look as one unit.
+ * 2. pushing the back to line up the box model.
 */
-
 /* Block */
 /******************************************************************************/
 .c-metadata {
   padding: .5em .8em;
   background-color: #eee;
+  margin-left: -.8em; /* 2 */
+  margin-right: -.8em; /* 2 */
 }
 
 .c-metadata + .c-metadata {
