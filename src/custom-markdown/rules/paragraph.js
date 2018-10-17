@@ -23,7 +23,7 @@ function match(source, state, lookbehind) {
 
 function parse(capture, recurseParse, state) {
   const content = capture[1];
-  const contentParseTree = recurseParse(content, state);
+  const contentParseTree = content.trim() ? recurseParse(content, state) : [];
 
   return {
     content: contentParseTree
@@ -31,6 +31,11 @@ function parse(capture, recurseParse, state) {
 }
 
 function react(node, recurseOutput, state) {
+  // don't render if paragraph will be empty
+  if (node.content.length === 0) {
+    return null;
+  }
+
   return React.createElement(
     'div',
     {
