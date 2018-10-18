@@ -10,7 +10,7 @@
 /******************************************************************************/
 .c-metadata {
   padding: .5em .8em;
-  background-color: #eee;
+  background-color: var(--color-utility-milk);
   margin-left: -.8em; /* 2 */
   margin-right: -.8em; /* 2 */
 }
