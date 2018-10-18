@@ -30,21 +30,21 @@
 /* Elements */
 /******************************************************************************/
 .c-writer__view-control {
-  background-color: transparent;
+  background-color: var(--color-utility-pure);
   border: 0;
-  color: rgba(0, 0, 0, .6);
+  color: var(--color-effect-ghost);
   flex: 0 0 2em;
   font-size: .6em;
   height: 100vh;
 }
 
 .c-writer__view-control:hover {
-  color: rgba(0, 0, 0, 1);
+  color: var(--color-utility-black);
   opacity: 1;
 }
 
 .c-writer__view-control:focus {
-  color: #2196f3;
+  color: var(--color-primary-cool);
   opacity: 1;
   outline: none;
   z-index: 1;
@@ -73,9 +73,9 @@
 }
 
 .c-writer__view-control-script {
-  border-right: 1px solid #eee;
+  border-right: 3px double var(--color-utility-milk);
 }
 
 .c-writer__view-control-writer {
-  background-color: rgba(255, 255, 255, 1);
+  background-color: var(--color-utility-pure);
 }
