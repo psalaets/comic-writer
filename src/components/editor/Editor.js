@@ -10,6 +10,7 @@ export default class Editor extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.setTextarea = this.setTextarea.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -38,6 +39,7 @@ export default class Editor extends Component {
     return (
       <div className="c-editor"
         onScroll={this.props.onScroll}
+        onClick={this.handleClick}
        >
         <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>
         <textarea
@@ -51,13 +53,22 @@ export default class Editor extends Component {
           placeholder="Adventure starts here..."
           rows="1"
         />
-        <div className="c-editor__scrollpast"/>
+        <div className="c-editor__scrollpast" />
       </div>
     )
   }
 
   setTextarea(textarea) {
     this.textarea = textarea;
+  }
+
+  handleClick(event) {
+    if (event.target !== this.textarea) {
+      const cursor = this.textarea.value.length;
+
+      this.textarea.focus();
+      this.textarea.setSelectionRange(cursor, cursor);
+    }
   }
 
   // Semi hack: keeps the textarea big enough so it never needs a scrollbar
