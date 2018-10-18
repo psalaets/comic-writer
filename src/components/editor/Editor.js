@@ -9,16 +9,18 @@ export default class Editor extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.setTextarea = this.setTextarea.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
+    this.textareaRef = React.createRef();
   }
 
   componentDidMount() {
-    autosize(this.textarea);
+    autosize(this.textareaRef.current);
     this.autoSize();
   }
 
   componentWillUnmount() {
-    autosize.destroy(this.textarea);
+    autosize.destroy(this.textareaRef.current);
   }
 
   componentDidUpdate(prevProps) {
@@ -30,7 +32,7 @@ export default class Editor extends Component {
     }
 
     if (this.props.cursor !== prevProps.cursor) {
-      this.textarea.setSelectionRange(this.props.cursor, this.props.cursor);
+      this.textareaRef.current.setSelectionRange(this.props.cursor, this.props.cursor);
     }
   }
 
@@ -38,6 +40,7 @@ export default class Editor extends Component {
     return (
       <div className="c-editor"
         onScroll={this.props.onScroll}
+        onClick={this.handleClick}
        >
         <label key="editor-label" htmlFor="editor" className="u-hide--visually">Script Editor</label>
         <textarea
@@ -46,25 +49,30 @@ export default class Editor extends Component {
           className="c-editor__textarea"
           value={this.props.value}
           onChange={this.handleChange}
-          ref={this.setTextarea}
+          ref={this.textareaRef}
           tabIndex="0"
           placeholder="Adventure starts here..."
           rows="1"
         />
-        <div className="c-editor__scrollpast"/>
+        <div className="c-editor__scrollpast" />
       </div>
     )
   }
 
-  setTextarea(textarea) {
-    this.textarea = textarea;
+  handleClick(event) {
+    if (event.target !== this.textareaRef.current) {
+      const cursor = this.textareaRef.current.value.length;
+
+      this.textareaRef.current.focus();
+      this.textareaRef.current.setSelectionRange(cursor, cursor);
+    }
   }
 
   // Semi hack: keeps the textarea big enough so it never needs a scrollbar
   autoSize() {
     if (process.env.NODE_ENV === 'test') return;
 
-    autosize.update(this.textarea);
+    autosize.update(this.textareaRef.current);
   }
 
   handleChange(event) {
