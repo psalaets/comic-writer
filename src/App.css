@@ -7,4 +7,22 @@
 .c-app {
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Element */
+/******************************************************************************/
+.c-app__writer {
+  flex: 1 1 calc(100vh - 1.8em);
+  position: relative;
+}
+
+.c-app__status-line {
+  flex: 0 0 auto;
+  z-index: 1;
+  /* position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0; */
 }
