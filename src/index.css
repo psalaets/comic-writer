@@ -1,4 +1,20 @@
 /******************************************************************************/
+/* Variables                                                                  */
+/******************************************************************************/
+:root {
+  /* Callout Colors */
+  --color-primary-cool: rgb(33, 150, 243);
+  /* Utility Colors */
+  --color-utility-pure: rgb(255, 255, 255);
+  --color-utility-milk: rgb(238, 238, 238);
+  --color-utility-dove: rgb(118, 118, 118);
+  --color-utility-charcol: rgb(35, 35, 35);
+  --color-utility-black: rgb(0, 0, 0);
+  /* Effects */
+  --color-effect-ghost: rgba(0, 0, 0, .6);
+}
+
+/******************************************************************************/
 /* Resets                                                                     */
 /******************************************************************************/
 *,
@@ -27,7 +43,8 @@ h6 {
   padding: 0;
 }
 
-blockquote {
+blockquote,
+pre {
   margin: 0;
 }
 

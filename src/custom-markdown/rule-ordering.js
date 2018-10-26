@@ -10,7 +10,10 @@ export const DIALOGUE = -8;
 // metadata should be after all types of lettering
 export const METADATA = -7;
 
-export const LETTERING_BOLD = -6;
 
-export const PAGE = -5;
-export const PANEL = -4;
+export const LETTERING_BOLD = -5;
+
+export const PAGE = -4;
+export const PANEL = -3;
+
+export const PARAGRAPH = -2;

@@ -13,12 +13,12 @@
 /* Elements */
 /******************************************************************************/
 .c-editor__textarea {
-  background-color: transparent;
+  background-color: var(--color-utility-pure);
   border: 0;
-  color: #232323;
+  color: var(--color-utility-charcol);
   font-family: monospace;
   font-size: 1em;
-  line-height: 2em;
+  line-height: 1.4em;
   margin: 0;
   padding: 1em;
   position: relative;
