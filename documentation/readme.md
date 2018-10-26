@@ -3,16 +3,16 @@
 This document provides a brief, nearly-not-so-perfect, honest attempt, at giving an overview of using `comic-writer`.
 
 ## Table of Contents
-- [Why would anyone write this way?](#)
-- [How do format my document?](#)
-- [A Concise Example](#)
-- [Metadata: Titles, Author Name, Etc.](#)
-- [Pages](#)
-- [Panels](#)
-- [Captions](#)
-- [Dialogue](#)
-- [Sound Effects](#)
-- [Other](#)
+- [Why would anyone write this way?](#why-would-anyone-write-this-way)
+- [How do I format my document?](#how-do-i-format-my-document)
+- [A Concise Example](#a-concise-example)
+- [Metadata: Titles, Author Name, Etc.](#metadata-titles-author-name-etc)
+- [Pages](#pages)
+- [Panels](#panels)
+- [Captions](#captions)
+- [Dialogue](#dialogue)
+- [Sound Effects](#sound-effects)
+<!-- - [Other](#other) -->
 
 ## Why would anyone write this way?
 
@@ -32,34 +32,48 @@ Or to put it a longer way; the most frustration free to write *and* format a doc
 
 ...the format that you'll be writing in, you may have seen it before. It's a standard called `Markdown`. The `comic-writer` provides a comic specific processing for it. We want you to focus on writing, instead of formatting.
 
-## How do format my document?
+## How do I format my document?
 
 ### A Concise Example
 
 ### Metadata: Titles, Author Name, Etc.
 
+Metadata is addtional information you can provide to the editor. Some of the metadata, like `title`, will render in special ways.
+
+```markdown
+Title: East of West
+Book: 20
+Author: Mao Xiaolian
+Email: mao@myotherarmisarobot.com
+```
+
 ### Pages
+
 Type `##`, hit space. It should auto-complete to something like:
+
 ```markdown
 ## Page 1
 ```
-We figure out page numbering for you, to save you time.
+We figure out page numbering for you, to save you time. If you inject a new page, or move it, it will auto-update-automagically™.
 
 ### Panels
 Type `###`, hit space. It should, again, auto-complete to something like:
 ```markdown
 ### Panel 1
 ```
-We figure out the panel numbering for you, to save you time and hassle.
+It will auto-update-automagically™ to the correct number, should you move things around.
 
 ### Captions
 Captions follow a `>` + `word` + `: ` + `content` pattern. If you wanted to...
 
 #### Dialogue
+
 ... write a dialogue, you would write:
+
 ```
 > Character Name: How wonderful! It's formatting for me!
 ```
+
 The preview should format everything for you. What about off screen?
 
 ```
@@ -88,4 +102,4 @@ or you can simply paste the link itself!
 https://imagecomics.com/
 ```
 
-### Other
+<!-- ### Other -->
