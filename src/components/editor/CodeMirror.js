@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import codemirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
+import './CodeMirror.css';
 
 export default class CodeMirror extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class CodeMirror extends Component {
   }
 
   render() {
-    return <div ref={this.el} />;
+    return <div className="c-codemirror" ref={this.el} />;
   }
 
   componentDidUpdate(prevProps) {
@@ -42,20 +43,10 @@ export default class CodeMirror extends Component {
 
   componentDidMount() {
     this.cm = codemirror(this.el.current, {
-      value: 'test'
+      value: this.props.value
     });
 
-    this.cm.on('beforeChange', (cm, change) => {
-      // console.log('cm.beforeChange:', change);
-      // console.log('cm.getValue()', cm.getValue())
-
-      // this.props.onChange({
-      //   target: {
-      //     value: change
-      //   }
-      // })
-    });
-
+    this.cm.setSize('100%', '100%');
     this.cm.on('change', (cm, change) => {
       if (change.origin === 'setValue') {
         return;
