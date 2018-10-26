@@ -43,7 +43,8 @@ export default class CodeMirror extends Component {
 
   componentDidMount() {
     this.cm = codemirror(this.el.current, {
-      value: this.props.value
+      value: this.props.value,
+      lineWrapping: true
     });
 
     this.cm.setSize('100%', '100%');
