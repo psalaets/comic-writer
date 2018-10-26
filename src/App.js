@@ -11,7 +11,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      formattingModalActive: false
+      modalActive: false
     };
 
     this.activateModal = this.activateModal.bind(this);
@@ -45,7 +45,16 @@ class App extends Component {
           closeButtonOnClick={this.deactivateModal}
           title="Formatting Documentation"
         >
-          Documentation Content here.
+          <dl>
+            <dt>Title</dt>
+            <dd><pre>Title: East of West</pre></dd>
+            <dt>Page</dt>
+            <dd><pre>## </pre></dd>
+            <dt>Panel</dt>
+            <dd><pre>### </pre></dd>
+            <dt>Dialouge</dt>
+            <dd><pre>> Mao: I have robot parts.</pre></dd>
+          </dl>
         </Modal>
       </>
     );
