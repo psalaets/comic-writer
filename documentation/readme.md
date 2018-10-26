@@ -1,4 +1,4 @@
-## Documentation
+# Comic Writer Editor Documentation
 
 This document provides a brief, nearly-not-so-perfect, honest attempt, at giving an overview of using `comic-writer`.
 
