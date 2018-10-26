@@ -4,6 +4,7 @@ import './App.css';
 import ConnectedWriter from './components/writer/ConnectedWriter';
 import StatusLine from './components/status-line/StatusLine';
 import Button from './components/button/Button';
+import ModalBody from './components/modal-body/ModalBody';
 import Modal from 'react-aria-modal';
 
 class App extends Component {
@@ -37,9 +38,16 @@ class App extends Component {
       onExit={this.deactivateModal}
       initialFocus="#close-formatting-modal"
       getApplicationNode={this.getApplicationNode}
+      dialogClass="c-modal__dialouge"
+      underlayClass="c-modal"
     >
-      <h2 id="formatting-guide">Formatting Guide</h2>
-      <Button id="close-formatting-modal" onClick={this.deactivateModal}>Close X</Button>
+      <ModalBody
+        title="Formatting Guide"
+        closeButtonOnClick={this.deactivateModal}
+        closeButtonId="close-formatting-modal"
+      >
+        
+      </ModalBody>
     </Modal> : false;
 
     return (
