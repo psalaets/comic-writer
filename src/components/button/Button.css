@@ -1,0 +1,38 @@
+/******************************************************************************/
+/* Button                                                                     */
+/******************************************************************************/
+
+/* Block */
+/******************************************************************************/
+.c-button {
+  display: inline-block;
+  vertical-align: middle;
+  font: inherit;
+  text-align: center;
+  margin: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+  padding: .25em 1em;
+  border-radius: 3px;
+  color: var(--color-utility-dove);
+  transition: color .2s;
+}
+
+.c-button:hover {
+  color: var(--color-utility-black);
+}
+
+.c-button:focus {
+  color: var(--color-primary-cool);
+  outline: none;
+}
+/* Elements */
+/******************************************************************************/
+
+/* Modifiers */
+/******************************************************************************/
+.c-button--block {
+  display: block;
+  text-align: center;
+}

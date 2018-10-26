@@ -8,6 +8,7 @@
   flex: 1 1 47%;
   overflow-y: auto;
   will-change: scroll-position;
+  position: relative;
 }
 
 /* Elements */
@@ -21,13 +22,11 @@
   line-height: 1.4em;
   margin: 0;
   padding: 1em;
-  position: relative;
   resize: none;
   width: 100%;
 }
 
 .c-editor__textarea:focus {
-  /*csslint outline-none: false*/
   outline: none;
 }
 
