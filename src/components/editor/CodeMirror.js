@@ -48,6 +48,16 @@ export default class CodeMirror extends Component {
     });
 
     this.cm.setSize('100%', '100%');
+
+    this.cm.on('scroll', cm => {
+      const {top, height, clientHeight} = cm.getScrollInfo();
+      const percent = Math.min(1, top / (height - clientHeight));
+
+      this.props.onScroll({
+        percent
+      });
+    });
+
     this.cm.on('change', (cm, change) => {
       if (change.origin === 'setValue') {
         return;
@@ -84,5 +94,6 @@ export default class CodeMirror extends Component {
 CodeMirror.propTypes = {
   value: PropTypes.string.isRequired,
   cursor: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onScroll: PropTypes.func.isRequired,
 };

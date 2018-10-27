@@ -13,14 +13,12 @@ export default class Editor extends Component {
 
   render() {
     return (
-      <div className="c-editor"
-        onScroll={this.props.onScroll}
-        onClick={this.handleClick}
-      >
+      <div className="c-editor">
         <CodeMirror
           value={this.props.value}
           cursor={this.props.cursor}
           onChange={this.handleChange}
+          onScroll={this.props.onScroll}
         />
       </div>
     )
