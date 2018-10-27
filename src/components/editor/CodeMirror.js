@@ -44,7 +44,9 @@ export default class CodeMirror extends Component {
   componentDidMount() {
     this.cm = codemirror(this.el.current, {
       value: this.props.value,
-      lineWrapping: true
+      lineWrapping: true,
+      cursorScrollMargin: 200, // Not *exactly* sure why this value works.
+      scrollbarStyle: null
     });
 
     this.cm.setSize('100%', '100%');
