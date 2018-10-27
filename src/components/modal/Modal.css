@@ -4,6 +4,8 @@
 /*
  * 1. Funky units here to ensure that the "X" aligned correctly.
  * 2. Resetting the margin top, to overide the Lobotomized owl selector *+*
+ * 3. Overiding child button. It' might be worth making a direct style to the
+ *    Button component later. --close?
 */
 
 /* Block */
@@ -45,8 +47,17 @@
 
 .c-modal__close {
   position: absolute;
-  right: -0.3em; /* 1 */
-  top: -0.1em; /* 1 */
+  right: .55em; /* 1 */
+  top: 0; /* 1 */
   margin-top: 0; /* 2 */
   font-size: 1.7em; /* 1 */
+}
+
+.c-modal__close > * {
+  padding: 0; /* 3 */
+  background-color: transparent; /* 3 */
+}
+
+.c-modal__close > *:hover {
+  background-color: transparent; /* 3 */
 }

@@ -11,24 +11,23 @@
   text-align: center;
   margin: 0;
   cursor: pointer;
-  background-color: transparent;
+  background-color: var(--color-utility-pure);
   border: 0;
   padding: .25em 1em;
   border-radius: 3px;
   color: var(--color-utility-dove);
-  transition: color .2s;
+  transition: color .2s, background-color .2s;
 }
 
 .c-button:hover {
   color: var(--color-utility-black);
+  background-color: var(--color-utility-milk);
 }
 
 .c-button:focus {
   color: var(--color-primary-cool);
   outline: none;
 }
-/* Elements */
-/******************************************************************************/
 
 /* Modifiers */
 /******************************************************************************/
