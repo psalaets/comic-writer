@@ -51,7 +51,7 @@ export default class CodeMirror extends Component {
 
     this.cm.on('scroll', cm => {
       const {top, height, clientHeight} = cm.getScrollInfo();
-      const percent = Math.min(1, top / (height - clientHeight));
+      const percent = Math.min(100, top / (height - clientHeight) * 100);
 
       this.props.onScroll({
         percent

@@ -12,7 +12,7 @@ export default class Script extends Component {
 
   componentDidUpdate(previousProps) {
     if (this.props.scrollPercentage !== previousProps.scrollPercentage) {
-      this.scrollRef.current.scrollTop = this.props.scrollPercentage * (this.scrollRef.current.scrollHeight - this.scrollRef.current.clientHeight)
+      this.scrollRef.current.scrollTop = this.props.scrollPercentage * (this.scrollRef.current.scrollHeight - this.scrollRef.current.clientHeight) / 100;
     }
   }
 
