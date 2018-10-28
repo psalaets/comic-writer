@@ -3,6 +3,21 @@
 exports[`parse() kitchen sink 1`] = `
 Array [
   Object {
+    "key": "title",
+    "type": "metadata",
+    "value": "test",
+  },
+  Object {
+    "key": "issue",
+    "type": "metadata",
+    "value": "1",
+  },
+  Object {
+    "key": "by",
+    "type": "metadata",
+    "value": "the author",
+  },
+  Object {
     "content": Array [
       Object {
         "content": Array [
@@ -127,7 +142,7 @@ Array [
             "type": "dialogue",
           },
           Object {
-            "content": "try it *again*",
+            "content": "try it again",
             "modifier": null,
             "speaker": "bob",
             "type": "dialogue",
