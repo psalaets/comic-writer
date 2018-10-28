@@ -1,0 +1,189 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parse() kitchen sink 1`] = `
+Array [
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [
+          Object {
+            "content": "Some characters stand around. And do stuff.",
+            "type": "paragraph",
+          },
+          Object {
+            "content": "ok",
+            "modifier": null,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+          Object {
+            "content": "try it *again*",
+            "modifier": null,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+        ],
+        "number": 1,
+        "type": "panel",
+      },
+      Object {
+        "content": Array [
+          Object {
+            "content": "This is panel description.",
+            "type": "paragraph",
+          },
+          Object {
+            "content": "boom",
+            "modifier": null,
+            "type": "sfx",
+          },
+          Object {
+            "content": "yep",
+            "modifier": null,
+            "type": "caption",
+          },
+        ],
+        "number": 2,
+        "type": "panel",
+      },
+    ],
+    "number": 1,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() many blank lines 1`] = `
+Array [
+  Object {
+    "content": Array [],
+    "number": 1,
+    "type": "page",
+  },
+  Object {
+    "content": Array [],
+    "number": 2,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() no blank lines 1`] = `
+Array [
+  Object {
+    "content": Array [],
+    "number": 1,
+    "type": "page",
+  },
+  Object {
+    "content": Array [],
+    "number": 2,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() pages with panels 1`] = `
+Array [
+  Object {
+    "content": Array [],
+    "number": 1,
+    "type": "page",
+  },
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [],
+        "number": 1,
+        "type": "panel",
+      },
+      Object {
+        "content": Array [],
+        "number": 2,
+        "type": "panel",
+      },
+    ],
+    "number": 2,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() pages with panels and lettering 1`] = `
+Array [
+  Object {
+    "content": Array [],
+    "number": 1,
+    "type": "page",
+  },
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [
+          Object {
+            "content": "ok",
+            "modifier": null,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+          Object {
+            "content": "try it *again*",
+            "modifier": null,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+        ],
+        "number": 1,
+        "type": "panel",
+      },
+      Object {
+        "content": Array [
+          Object {
+            "content": "This is panel description.",
+            "type": "paragraph",
+          },
+          Object {
+            "content": "boom",
+            "modifier": null,
+            "type": "sfx",
+          },
+          Object {
+            "content": "yep",
+            "modifier": null,
+            "type": "caption",
+          },
+        ],
+        "number": 2,
+        "type": "panel",
+      },
+    ],
+    "number": 2,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() single page 1`] = `
+Array [
+  Object {
+    "content": Array [],
+    "number": 1,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() two pages 1`] = `
+Array [
+  Object {
+    "content": Array [],
+    "number": 1,
+    "type": "page",
+  },
+  Object {
+    "content": Array [],
+    "number": 2,
+    "type": "page",
+  },
+]
+`;
