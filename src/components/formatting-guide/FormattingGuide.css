@@ -13,6 +13,7 @@
 /* Elements */
 /******************************************************************************/
 .c-formatting-guide__title {
+  display: inline-block;
 }
 
 .c-formatting-guide__title:nth-of-type(n+2) { /* 1 */
