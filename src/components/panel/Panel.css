@@ -14,4 +14,13 @@
 
 /* Elements */
 /******************************************************************************/
-.c-panel__title {}
+.c-panel__title {
+  position: relative;
+}
+
+.c-panel__dialouge-count {
+  color: var(--color-utility-dove);
+  position: absolute;
+  right: calc(100% + 1em);
+  top: .5em;
+}

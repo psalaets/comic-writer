@@ -16,12 +16,12 @@
 /******************************************************************************/
 .c-page__title {
   align-items: center;
-  display: flex;
+  position: relative;
 }
 
 .c-page__panel-count {
   color: var(--color-utility-dove);
-  display: block;
-  flex: 1 1 0;
-  text-align: right;
+  position: absolute;
+  right: calc(100% + 1em);
+  top: .9em;
 }
