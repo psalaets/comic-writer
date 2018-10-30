@@ -12,8 +12,7 @@ export default class Lettering extends Component {
         <h4 className="c-lettering__meta">
           <span className="">{meta}</span>
           <span className="u-font-size--saya c-lettering__lettering-count">
-            <span className="u-hide--visually">Word Count: </span>
-            99{this.props.wordCount}
+            <abbr title="Word Count">99</abbr>
           </span>
         </h4>
         <blockquote className="c-lettering__content">

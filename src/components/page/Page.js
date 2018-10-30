@@ -9,8 +9,7 @@ export default class Page extends Component {
         <h2 className="c-page__title">
           <span className="u-font-size--marcus">Page {this.props.number}</span>
           <span className=" u-font-size--saya c-page__panel-count">
-            <span className="u-hide--visually">Panel Count: </span>
-            {this.props.panelCount}
+            <abbr title="Panel Count">{this.props.panelCount}</abbr>
           </span>
         </h2>
         {this.props.children}

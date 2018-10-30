@@ -9,8 +9,7 @@ export default class Panel extends Component {
         <h3 className="c-panel__title">
           <span className="u-font-size--maria"> Panel {this.props.number}</span>
           <span className=" u-font-size--saya c-panel__dialouge-count">
-            <span className="u-hide--visually">Dialoug Count: </span>
-            99
+            <abbr title="Dialoug Count">99</abbr>
           </span>
         </h3>
         {this.props.children}
