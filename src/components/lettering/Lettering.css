@@ -17,6 +17,14 @@
   padding-right: 1em;
   text-transform: uppercase;
   white-space: nowrap;
+  position: relative;
+}
+
+.c-lettering__lettering-count {
+  color: var(--color-utility-dove);
+  position: absolute;
+  right: calc(100% + 1em);
+  top: .3em;
 }
 
 .c-lettering__content {
