@@ -15,12 +15,12 @@
   border: 0;
   padding: .25em 1em;
   border-radius: 3px;
-  color: var(--color-utility-dove);
+  color: var(--color-utility-black);
   transition: color .2s, background-color .2s;
+  box-shadow: 0 0 0 1px var(--color-utility-milk);
 }
 
 .c-button:hover {
-  color: var(--color-utility-black);
   background-color: var(--color-utility-milk);
 }
 

@@ -37,7 +37,7 @@ class App extends Component {
           </div>
           <div className="c-app__status-line">
             <StatusLine>
-              <Button onClick={this.activateModal}>Formatting Help</Button>
+              <Button onClick={this.activateModal}>Formatting Guide</Button>
             </StatusLine>
           </div>
         </div>

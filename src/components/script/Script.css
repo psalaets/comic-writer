@@ -20,10 +20,6 @@
   outline: none;
 }
 
-.c-script > * + * {
-  margin-top: 1em;
-}
-
 /* Elements */
 /******************************************************************************/
 .c-script__content {
@@ -31,6 +27,10 @@
   margin-right: auto;
   max-width: 50em;
   width: 100%;
+}
+
+.c-script__content > * + * {
+  margin-top: 1em;
 }
 
 .c-script__scrollpast {
