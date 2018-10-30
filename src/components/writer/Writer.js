@@ -4,6 +4,7 @@ import './Writer.css';
 
 import Editor from '../editor/Editor';
 import Script from '../script/Script';
+import Button from '../button/Button';
 
 export default class Writer extends Component {
   constructor(props) {
@@ -111,24 +112,22 @@ export default class Writer extends Component {
                 onScroll={this.handleScroll('editor')}
                 editorWidthPercent={this.state.editorWidthPercent}
               />,
-              <button
+              <Button
                 key="scriptControl"
-                className="c-writer__view-control c-writer__view-control-script"
                 onClick={this.handleWidthControl('script')}
                 tabIndex="0"
               >
-                <span className="c-writer__view-control-text">◀</span>
+                <span className="c-writer__view-control-text c-writer__view-control-text--flip">▶</span>
                 <span className="u-hide--visually">
                   Expand Script View
                 </span>
-              </button>
+              </Button>
             ] : false }
 
         { this.controlIsVisible('editor') ?
             [
-              <button
+              <Button
                 key="editorControl"
-                className="c-writer__view-control c-writer__view-control-writer"
                 onClick={this.handleWidthControl('editor')}
                 tabIndex="0"
               >
@@ -136,7 +135,7 @@ export default class Writer extends Component {
                 <span className="u-hide--visually">
                   Expand Writer View
                 </span>
-              </button>,
+              </Button>,
               <Script
                 key="script"
                 blocks={this.props.parseTree}
