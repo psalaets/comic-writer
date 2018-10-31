@@ -1,4 +1,5 @@
-![Comic Writer](./ComicWriter-IntroImage.gif)
+<center>![Comic Writer](./ComicWriter-IntroImage.png)</center>
+
 ---
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
