@@ -1,5 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`parse() dialogue with bold 1`] = `
+Array [
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "eat ",
+                "type": "text",
+              },
+              Object {
+                "content": "this",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": " not ",
+                "type": "text",
+              },
+              Object {
+                "content": "that",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": "!",
+                "type": "text",
+              },
+            ],
+            "modifier": null,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+        ],
+        "number": 1,
+        "type": "panel",
+      },
+    ],
+    "number": 1,
+    "type": "page",
+  },
+]
+`;
+
 exports[`parse() kitchen sink 1`] = `
 Array [
   Object {

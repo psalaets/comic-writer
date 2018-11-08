@@ -68,6 +68,15 @@ This is panel description.
     expect(result).toMatchSnapshot();
   });
 
+  it('dialogue with bold', () => {
+    const result = parse(`Page 1
+Panel 1
+
+> bob: eat **this** not **that**!`);
+
+    expect(result).toMatchSnapshot();
+  });
+
   it('kitchen sink', () => {
     const result = parse(`title: test
 issue: 1
@@ -81,7 +90,7 @@ Some characters stand around. And do stuff.
 
 > bob: ok
 
-> bob: try it *again*
+> bob: try it **again**
 
 Panel 2
 

@@ -114,7 +114,7 @@ function parseDialogue(lines) {
     type: 'dialogue',
     speaker,
     modifier: modifier ? modifier.slice(1, -1) : null,
-    content
+    content: parseLetteringContent(content)
   };
 }
 
@@ -138,6 +138,49 @@ function parseCaption(lines) {
     modifier: modifier ? modifier.slice(1, -1) : null,
     content
   };
+}
+
+function parseLetteringContent(content) {
+  const boldRegex = /\*\*([^]+?)\*\*(?!\*)/;
+  const parts = [];
+
+  let index = 0;
+  let result = null;
+
+  while (result = boldRegex.exec(content.slice(index))) {
+    const before = content.slice(index, index + result.index)
+
+    parts.push({
+      type: 'text',
+      content: before
+    });
+
+    parts.push({
+      type: 'lettering-bold',
+      content: result[1]
+    })
+
+    index += result.index + result[0].length;
+  }
+
+  if (content.slice(index)) {
+    parts.push({
+      type: 'text',
+      content: content.slice(index)
+    });
+  }
+
+  return parts;
+}
+
+function indexOfRegex(regex, str, startIndex = 0) {
+  const result = regex.exec(str.slice(startIndex));
+
+  if (result) {
+    return result.index + startIndex;
+  } else {
+    return -1;
+  }
 }
 
 function lineStream(source) {
