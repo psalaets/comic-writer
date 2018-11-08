@@ -9,10 +9,6 @@ Array [
           Object {
             "content": Array [
               Object {
-                "content": "",
-                "type": "text",
-              },
-              Object {
                 "content": "I",
                 "type": "lettering-bold",
               },
@@ -41,6 +37,49 @@ Array [
             ],
             "modifier": null,
             "type": "caption",
+          },
+        ],
+        "number": 1,
+        "type": "panel",
+      },
+    ],
+    "number": 1,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() dialogue starts with bold 1`] = `
+Array [
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "only bold",
+                "type": "lettering-bold",
+              },
+            ],
+            "modifier": null,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "starts bold",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": " and then",
+                "type": "text",
+              },
+            ],
+            "modifier": null,
+            "speaker": "bob",
+            "type": "dialogue",
           },
         ],
         "number": 1,

@@ -79,6 +79,18 @@ Panel 1
     expect(result).toMatchSnapshot();
   });
 
+  it('dialogue starts with bold', () => {
+    const result = parse(`Page 1
+Panel 1
+
+> bob: **only bold**
+
+> bob: **starts bold** and then
+`);
+
+    expect(result).toMatchSnapshot();
+  });
+
   it('caption with bold', () => {
     const result = parse(`Page 1
 Panel 1

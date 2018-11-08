@@ -150,10 +150,12 @@ function parseLetteringContent(content) {
   while (result = boldRegex.exec(content.slice(index))) {
     const before = content.slice(index, index + result.index)
 
-    parts.push({
-      type: 'text',
-      content: before
-    });
+    if (before) {
+      parts.push({
+        type: 'text',
+        content: before
+      });
+    }
 
     parts.push({
       type: 'lettering-bold',
