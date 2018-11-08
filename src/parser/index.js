@@ -165,10 +165,11 @@ function parseLetteringContent(content) {
     index += result.index + result[0].length;
   }
 
-  if (content.slice(index)) {
+  const after = content.slice(index);
+  if (after) {
     parts.push({
       type: 'text',
-      content: content.slice(index)
+      content: after
     });
   }
 
