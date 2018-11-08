@@ -72,7 +72,20 @@ This is panel description.
     const result = parse(`Page 1
 Panel 1
 
-> bob: eat **this** not **that**!`);
+> bob: eat **this** not **that**!
+
+> bob: this is *not*`);
+
+    expect(result).toMatchSnapshot();
+  });
+
+  it('caption with bold', () => {
+    const result = parse(`Page 1
+Panel 1
+
+> caption: **I** didn't mean **that**!
+
+> caption: this is *not*`);
 
     expect(result).toMatchSnapshot();
   });

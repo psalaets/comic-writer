@@ -136,7 +136,7 @@ function parseCaption(lines) {
   return {
     type: 'caption',
     modifier: modifier ? modifier.slice(1, -1) : null,
-    content
+    content: parseLetteringContent(content)
   };
 }
 

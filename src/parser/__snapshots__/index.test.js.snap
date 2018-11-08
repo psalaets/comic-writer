@@ -1,5 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`parse() caption with bold 1`] = `
+Array [
+  Object {
+    "content": Array [
+      Object {
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "",
+                "type": "text",
+              },
+              Object {
+                "content": "I",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": " didn't mean ",
+                "type": "text",
+              },
+              Object {
+                "content": "that",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": "!",
+                "type": "text",
+              },
+            ],
+            "modifier": null,
+            "type": "caption",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "this is *not*",
+                "type": "text",
+              },
+            ],
+            "modifier": null,
+            "type": "caption",
+          },
+        ],
+        "number": 1,
+        "type": "panel",
+      },
+    ],
+    "number": 1,
+    "type": "page",
+  },
+]
+`;
+
 exports[`parse() dialogue with bold 1`] = `
 Array [
   Object {
@@ -26,6 +79,17 @@ Array [
               },
               Object {
                 "content": "!",
+                "type": "text",
+              },
+            ],
+            "modifier": null,
+            "speaker": "bob",
+            "type": "dialogue",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "this is *not*",
                 "type": "text",
               },
             ],
@@ -70,13 +134,27 @@ Array [
             "type": "paragraph",
           },
           Object {
-            "content": "ok",
+            "content": Array [
+              Object {
+                "content": "ok",
+                "type": "text",
+              },
+            ],
             "modifier": null,
             "speaker": "bob",
             "type": "dialogue",
           },
           Object {
-            "content": "try it *again*",
+            "content": Array [
+              Object {
+                "content": "try it ",
+                "type": "text",
+              },
+              Object {
+                "content": "again",
+                "type": "lettering-bold",
+              },
+            ],
             "modifier": null,
             "speaker": "bob",
             "type": "dialogue",
@@ -97,7 +175,12 @@ Array [
             "type": "sfx",
           },
           Object {
-            "content": "yep",
+            "content": Array [
+              Object {
+                "content": "yep",
+                "type": "text",
+              },
+            ],
             "modifier": null,
             "type": "caption",
           },
@@ -180,13 +263,23 @@ Array [
       Object {
         "content": Array [
           Object {
-            "content": "ok",
+            "content": Array [
+              Object {
+                "content": "ok",
+                "type": "text",
+              },
+            ],
             "modifier": null,
             "speaker": "bob",
             "type": "dialogue",
           },
           Object {
-            "content": "try it again",
+            "content": Array [
+              Object {
+                "content": "try it again",
+                "type": "text",
+              },
+            ],
             "modifier": null,
             "speaker": "bob",
             "type": "dialogue",
@@ -207,7 +300,12 @@ Array [
             "type": "sfx",
           },
           Object {
-            "content": "yep",
+            "content": Array [
+              Object {
+                "content": "yep",
+                "type": "text",
+              },
+            ],
             "modifier": null,
             "type": "caption",
           },
