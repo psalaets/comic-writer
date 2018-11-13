@@ -43,7 +43,7 @@ function parsePage(lines, state) {
   const pageStart = lines.consume();
   const [match, number] = PAGE_REGEX.exec(pageStart);
 
-  while (lines.hasMore() && !lines.nextIsPageStart()) {
+  while (!lines.nextIsPageEnd()) {
     if (lines.nextIsPanelStart()) {
       content.push(parsePanel(lines, state));
     } else if (lines.nextIsCaption()) {
@@ -82,7 +82,7 @@ function parsePanel(lines, state) {
   const panelStart = lines.consume();
   const [match, number] = PANEL_REGEX.exec(panelStart);
 
-  while (lines.hasMore() && !lines.nextIsPageStart() && !lines.nextIsPanelStart()) {
+  while (!lines.nextIsPanelEnd()) {
     if (lines.nextIsCaption()) {
       content.push(parseCaption(lines, state));
     } else if (lines.nextIsSfx()) {
@@ -251,6 +251,12 @@ function lineStream(source) {
     },
     nextIsPageStart() {
       return this.hasMore() && PAGE_REGEX.test(this.peek());
+    },
+    nextIsPageEnd() {
+      return !this.hasMore() || this.nextIsPageStart();
+    },
+    nextIsPanelEnd() {
+      return !this.hasMore() || this.nextIsPageStart() || this.nextIsPanelStart();
     },
     consume() {
       const line = this.peek();
