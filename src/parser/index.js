@@ -24,6 +24,8 @@ function parseScript(lines, state) {
   while (lines.hasMore()) {
     if (lines.nextIsPageStart()) {
       script.push(parsePage(lines, state));
+    } else if (lines.nextIsPanelStart()) {
+      script.push(parsePanel(lines, state));
     } else if (lines.nextIsMetadata()) {
       script.push(parseMetadata(lines, state));
     } else if (lines.nextIsParagraph()) {
