@@ -43,7 +43,7 @@ function parsePage(lines, state) {
 
   const content = [];
   const pageStart = lines.consume();
-  const [match, number] = PAGE_REGEX.exec(pageStart);
+  const [, number] = PAGE_REGEX.exec(pageStart);
 
   while (!lines.nextIsPageEnd()) {
     if (lines.nextIsPanelStart()) {
@@ -82,7 +82,7 @@ function parsePanel(lines, state) {
 
   const content = [];
   const panelStart = lines.consume();
-  const [match, number] = PANEL_REGEX.exec(panelStart);
+  const [, number] = PANEL_REGEX.exec(panelStart);
 
   while (!lines.nextIsPanelEnd()) {
     if (lines.nextIsCaption()) {
@@ -127,7 +127,7 @@ function parseParagraph(lines, state) {
 
 function parseMetadata(lines, state) {
   const line = lines.consume();
-  const [match, name, value] = METADATA_REGEX.exec(line);
+  const [, name, value] = METADATA_REGEX.exec(line);
 
   state.startNewMetadata();
 
@@ -143,7 +143,7 @@ function parseDialogue(lines, state) {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [match, speaker, modifier, content] = DIALOGUE_REGEX.exec(line);
+  const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line);
   const parseTree = parseLetteringContent(content);
 
   return {
@@ -161,7 +161,7 @@ function parseSfx(lines, state) {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [match, modifier, content] = SFX_REGEX.exec(line);
+  const [, modifier, content] = SFX_REGEX.exec(line);
 
   return {
     id: state.currentLetteringId,
@@ -176,7 +176,7 @@ function parseCaption(lines, state) {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [match, modifier, content] = CAPTION_REGEX.exec(line);
+  const [, modifier, content] = CAPTION_REGEX.exec(line);
   const parseTree = parseLetteringContent(content);
 
   return {
@@ -196,6 +196,7 @@ function parseLetteringContent(content, state) {
   let index = 0;
   let result = null;
 
+  // eslint-disable-next-line no-cond-assign
   while (result = boldRegex.exec(content.slice(index))) {
     const before = content.slice(index, index + result.index)
 
