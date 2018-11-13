@@ -65,8 +65,8 @@ export function transformMarkdown(value, cursor) {
 
   const newValue = lines
     .map(line => {
-      const isPage = line.text.match(/^## /);
-      const isPanel = line.text.match(/^### /);
+      const isPage = line.text.match(/^page /i);
+      const isPanel = line.text.match(/^panel /i);
 
       if (isPage) {
         pageNumber += 1;
@@ -86,12 +86,12 @@ export function transformMarkdown(value, cursor) {
       }
 
       if (isPage) {
-        const newLine = `## Page ${pageNumber}`;
+        const newLine = `Page ${pageNumber}`;
         cursor += newLine.length - line.length;
 
         return newLine;
       } else if (isPanel) {
-        const newLine = `### Panel ${panelNumber}`;
+        const newLine = `Panel ${panelNumber}`;
         cursor += newLine.length - line.length;
 
         return newLine;

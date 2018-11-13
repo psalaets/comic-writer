@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Lettering.css';
 
+import { LETTERING_BOLD } from '../../parser/types';
+import LetteringBold from '../lettering-bold/LetteringBold';
+
 export default class Lettering extends Component {
   render() {
     const modifier = this.props.modifier ? ` (${this.props.modifier})` : '';
@@ -13,11 +16,22 @@ export default class Lettering extends Component {
           {meta}
         </h4>
         <blockquote className="c-lettering__content">
-          {this.props.content}
+          {renderContent(this.props.content)}
         </blockquote>
       </section>
     );
   }
+}
+
+function renderContent(content) {
+  if (!Array.isArray(content)) return content;
+
+  return content
+    .map(part => {
+      return part.type === LETTERING_BOLD
+        ? <LetteringBold>{part.content}</LetteringBold>
+        : part.content;
+    });
 }
 
 Lettering.propTypes = {

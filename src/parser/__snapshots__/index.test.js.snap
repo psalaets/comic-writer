@@ -1,0 +1,590 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parse() caption with bold 1`] = `
+Array [
+  Object {
+    "captionCount": 2,
+    "captionWords": 7,
+    "content": Array [
+      Object {
+        "captionCount": 2,
+        "captionWords": 7,
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "I",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": " didn't mean ",
+                "type": "text",
+              },
+              Object {
+                "content": "that",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": "!",
+                "type": "text",
+              },
+            ],
+            "id": "1.1.1",
+            "modifier": null,
+            "number": 1,
+            "type": "caption",
+            "wordCount": 4,
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "this is *not*",
+                "type": "text",
+              },
+            ],
+            "id": "1.1.2",
+            "modifier": null,
+            "number": 2,
+            "type": "caption",
+            "wordCount": 3,
+          },
+        ],
+        "dialogueCount": 0,
+        "dialogueWords": 0,
+        "id": "1.1",
+        "number": 1,
+        "sfxCount": 0,
+        "type": "panel",
+      },
+    ],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "1",
+    "number": 1,
+    "panelCount": 1,
+    "sfxCount": 0,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() dialogue starts with bold 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [
+      Object {
+        "captionCount": 0,
+        "captionWords": 0,
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "only bold",
+                "type": "lettering-bold",
+              },
+            ],
+            "id": "1.1.1",
+            "modifier": null,
+            "number": 1,
+            "speaker": "bob",
+            "type": "dialogue",
+            "wordCount": 2,
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "starts bold",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": " and then",
+                "type": "text",
+              },
+            ],
+            "id": "1.1.2",
+            "modifier": null,
+            "number": 2,
+            "speaker": "bob",
+            "type": "dialogue",
+            "wordCount": 4,
+          },
+        ],
+        "dialogueCount": 2,
+        "dialogueWords": 6,
+        "id": "1.1",
+        "number": 1,
+        "sfxCount": 0,
+        "type": "panel",
+      },
+    ],
+    "dialogueCount": 2,
+    "dialogueWords": 6,
+    "id": "1",
+    "number": 1,
+    "panelCount": 1,
+    "sfxCount": 0,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() dialogue with bold 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [
+      Object {
+        "captionCount": 0,
+        "captionWords": 0,
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "eat ",
+                "type": "text",
+              },
+              Object {
+                "content": "this",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": " not ",
+                "type": "text",
+              },
+              Object {
+                "content": "that",
+                "type": "lettering-bold",
+              },
+              Object {
+                "content": "!",
+                "type": "text",
+              },
+            ],
+            "id": "1.1.1",
+            "modifier": null,
+            "number": 1,
+            "speaker": "bob",
+            "type": "dialogue",
+            "wordCount": 4,
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "this is *not*",
+                "type": "text",
+              },
+            ],
+            "id": "1.1.2",
+            "modifier": null,
+            "number": 2,
+            "speaker": "bob",
+            "type": "dialogue",
+            "wordCount": 3,
+          },
+        ],
+        "dialogueCount": 2,
+        "dialogueWords": 7,
+        "id": "1.1",
+        "number": 1,
+        "sfxCount": 0,
+        "type": "panel",
+      },
+    ],
+    "dialogueCount": 2,
+    "dialogueWords": 7,
+    "id": "1",
+    "number": 1,
+    "panelCount": 1,
+    "sfxCount": 0,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() kitchen sink 1`] = `
+Array [
+  Object {
+    "id": "metadata-1",
+    "name": "title",
+    "type": "metadata",
+    "value": "test",
+  },
+  Object {
+    "id": "metadata-2",
+    "name": "issue",
+    "type": "metadata",
+    "value": "1",
+  },
+  Object {
+    "id": "metadata-3",
+    "name": "by",
+    "type": "metadata",
+    "value": "the author",
+  },
+  Object {
+    "captionCount": 1,
+    "captionWords": 1,
+    "content": Array [
+      Object {
+        "captionCount": 0,
+        "captionWords": 0,
+        "content": Array [
+          Object {
+            "content": "Some characters stand around. And do stuff.",
+            "id": "paragraph-1",
+            "type": "paragraph",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "ok",
+                "type": "text",
+              },
+            ],
+            "id": "1.1.1",
+            "modifier": null,
+            "number": 1,
+            "speaker": "bob",
+            "type": "dialogue",
+            "wordCount": 1,
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "try it ",
+                "type": "text",
+              },
+              Object {
+                "content": "again",
+                "type": "lettering-bold",
+              },
+            ],
+            "id": "1.1.2",
+            "modifier": null,
+            "number": 2,
+            "speaker": "bob",
+            "type": "dialogue",
+            "wordCount": 3,
+          },
+        ],
+        "dialogueCount": 2,
+        "dialogueWords": 4,
+        "id": "1.1",
+        "number": 1,
+        "sfxCount": 0,
+        "type": "panel",
+      },
+      Object {
+        "captionCount": 1,
+        "captionWords": 1,
+        "content": Array [
+          Object {
+            "content": "This is panel description.",
+            "id": "paragraph-2",
+            "type": "paragraph",
+          },
+          Object {
+            "content": "boom",
+            "id": "1.2.3",
+            "modifier": null,
+            "number": 3,
+            "type": "sfx",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "yep",
+                "type": "text",
+              },
+            ],
+            "id": "1.2.4",
+            "modifier": null,
+            "number": 4,
+            "type": "caption",
+            "wordCount": 1,
+          },
+        ],
+        "dialogueCount": 0,
+        "dialogueWords": 0,
+        "id": "1.2",
+        "number": 2,
+        "sfxCount": 1,
+        "type": "panel",
+      },
+    ],
+    "dialogueCount": 2,
+    "dialogueWords": 4,
+    "id": "1",
+    "number": 1,
+    "panelCount": 2,
+    "sfxCount": 1,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() many blank lines 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "1",
+    "number": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "2",
+    "number": 2,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() no blank lines 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "1",
+    "number": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "2",
+    "number": 2,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() pages with panels 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "1",
+    "number": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [
+      Object {
+        "captionCount": 0,
+        "captionWords": 0,
+        "content": Array [],
+        "dialogueCount": 0,
+        "dialogueWords": 0,
+        "id": "2.1",
+        "number": 1,
+        "sfxCount": 0,
+        "type": "panel",
+      },
+      Object {
+        "captionCount": 0,
+        "captionWords": 0,
+        "content": Array [],
+        "dialogueCount": 0,
+        "dialogueWords": 0,
+        "id": "2.2",
+        "number": 2,
+        "sfxCount": 0,
+        "type": "panel",
+      },
+    ],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "2",
+    "number": 2,
+    "panelCount": 2,
+    "sfxCount": 0,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() pages with panels and lettering 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "1",
+    "number": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+  Object {
+    "captionCount": 1,
+    "captionWords": 1,
+    "content": Array [
+      Object {
+        "captionCount": 0,
+        "captionWords": 0,
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "ok",
+                "type": "text",
+              },
+            ],
+            "id": "2.1.1",
+            "modifier": null,
+            "number": 1,
+            "speaker": "bob",
+            "type": "dialogue",
+            "wordCount": 1,
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "try it again",
+                "type": "text",
+              },
+            ],
+            "id": "2.1.2",
+            "modifier": null,
+            "number": 2,
+            "speaker": "bob",
+            "type": "dialogue",
+            "wordCount": 3,
+          },
+        ],
+        "dialogueCount": 2,
+        "dialogueWords": 4,
+        "id": "2.1",
+        "number": 1,
+        "sfxCount": 0,
+        "type": "panel",
+      },
+      Object {
+        "captionCount": 1,
+        "captionWords": 1,
+        "content": Array [
+          Object {
+            "content": "This is panel description.",
+            "id": "paragraph-1",
+            "type": "paragraph",
+          },
+          Object {
+            "content": "boom",
+            "id": "2.2.3",
+            "modifier": null,
+            "number": 3,
+            "type": "sfx",
+          },
+          Object {
+            "content": Array [
+              Object {
+                "content": "yep",
+                "type": "text",
+              },
+            ],
+            "id": "2.2.4",
+            "modifier": null,
+            "number": 4,
+            "type": "caption",
+            "wordCount": 1,
+          },
+        ],
+        "dialogueCount": 0,
+        "dialogueWords": 0,
+        "id": "2.2",
+        "number": 2,
+        "sfxCount": 1,
+        "type": "panel",
+      },
+    ],
+    "dialogueCount": 2,
+    "dialogueWords": 4,
+    "id": "2",
+    "number": 2,
+    "panelCount": 2,
+    "sfxCount": 1,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() single page 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "1",
+    "number": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+]
+`;
+
+exports[`parse() two pages 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "1",
+    "number": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+  Object {
+    "captionCount": 0,
+    "captionWords": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWords": 0,
+    "id": "2",
+    "number": 2,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "type": "page",
+  },
+]
+`;

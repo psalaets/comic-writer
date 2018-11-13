@@ -9,7 +9,7 @@ export default class Caption extends Component {
         number={this.props.number}
         subject="CAPTION"
         modifier={this.props.modifier}
-        content={this.props.children}
+        content={this.props.content}
       />
     );
   }

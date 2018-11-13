@@ -9,7 +9,7 @@ export default class Sfx extends Component {
         number={this.props.number}
         subject="SFX"
         modifier={this.props.modifier}
-        content={this.props.children}
+        content={this.props.content}
       />
     );
   }
