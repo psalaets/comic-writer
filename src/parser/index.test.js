@@ -1,4 +1,4 @@
-import { parse } from './index';
+import parse from './index';
 
 describe('parse()', () => {
   it('single page', () => {

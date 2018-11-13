@@ -1,18 +1,19 @@
 import { connect } from 'react-redux';
 import debounce from 'lodash.debounce';
 
+import customParser from '../../parser';
+
 import {
   changeSource,
   saveScript
 } from '../../store/actions';
 import Writer from './Writer';
-import { parse } from '../../custom-markdown';
 
 function mapStateToProps(state) {
   return {
     cursor: state.editor.cursor,
     source: state.editor.source,
-    parseTree: parse(state.editor.source)
+    parseTree: customParser(state.editor.source)
   };
 }
 
