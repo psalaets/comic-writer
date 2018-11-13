@@ -55,6 +55,12 @@ button {
   font-size: inherit;
 }
 
+hr {
+  border: 0;
+  border-bottom: 1px solid var(--color-utility-milk);
+  margin-bottom: 1em;
+}
+
 textarea::-webkit-input-placeholder {
   color: rgba(0, 0, 0, .5);
 }

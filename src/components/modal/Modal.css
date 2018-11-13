@@ -48,7 +48,7 @@
 .c-modal__close {
   position: absolute;
   right: .55em; /* 1 */
-  top: 0; /* 1 */
+  top: .15em; /* 1 */
   margin-top: 0; /* 2 */
   font-size: 1.7em; /* 1 */
 }
@@ -56,6 +56,7 @@
 .c-modal__close > * {
   padding: 0; /* 3 */
   background-color: transparent; /* 3 */
+  box-shadow: none; /* 3 */
 }
 
 .c-modal__close > *:hover {

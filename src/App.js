@@ -3,6 +3,7 @@ import './App.css';
 
 import ConnectedWriter from './components/writer/ConnectedWriter';
 import StatusLine from './components/status-line/StatusLine';
+import FormattingGuide from './components/formatting-guide/FormattingGuide';
 import Button from './components/button/Button';
 import Modal from './components/modal/Modal';
 
@@ -36,25 +37,16 @@ class App extends Component {
           </div>
           <div className="c-app__status-line">
             <StatusLine>
-              <Button onClick={this.activateModal}>Formatting Help</Button>
+              <Button onClick={this.activateModal}>Formatting Guide</Button>
             </StatusLine>
           </div>
         </div>
         <Modal
           modalActive={this.state.modalActive}
           closeButtonOnClick={this.deactivateModal}
-          title="Formatting Documentation"
+          title="Formatting Guide"
         >
-          <dl>
-            <dt>Title</dt>
-            <dd><pre>Title: East of West</pre></dd>
-            <dt>Page</dt>
-            <dd><pre>## </pre></dd>
-            <dt>Panel</dt>
-            <dd><pre>### </pre></dd>
-            <dt>Dialouge</dt>
-            <dd><pre>> Mao: I have robot parts.</pre></dd>
-          </dl>
+          <FormattingGuide/>
         </Modal>
       </>
     );
