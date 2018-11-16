@@ -29,7 +29,7 @@ lint_css:
 audit_js:
   stage: test
   script:
-    - npx auditjs --prod --report
+    - npx auditjs --prod --report --suppressExitError
   artifacts:
     reports:
       junit: reports/scan_node_modules.xml
