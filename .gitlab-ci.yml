@@ -8,7 +8,6 @@ before_script:
   - npm install
 
 stages:
-  - security
   - test
   - deploy
 
@@ -28,7 +27,7 @@ lint_css:
       junit: cssreport.xml
 
 lint_css:
-  stage: security
+  stage: test
   script:
     - npx auditjs --prod --report
   artifacts:
