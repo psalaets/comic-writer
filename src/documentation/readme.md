@@ -24,9 +24,9 @@ Or to put it a longer way; the most frustration free to write *and* format a doc
 
 **It's faster:** You're saving yourself a significant amount of time re-numbering, re-formatting, copying, pasting, changing heading sizes, the list goes on. You're no longer required to hunt and click to format your document. You *imply* it. The editor does the rest of the work that machines should do. You're not a professional typesetter; why should you do all that work?
 
-**It's easy to learn:** The price of entry required to learn the syntax of the `comic-writer`'s editor is amazingly low. You can learn it in minutes, and memorize it in an hour. 
+**It's easy to learn:** The price of entry required to learn the syntax of the `comic-writer`'s editor is amazingly low. You can learn it in minutes, and memorize it in an hour.
 
-**It's raw text:** The formatting your doing lives in raw text. It's not locked up in some sort of proprietary format. If you ever needed to, you could easily copy and paste our your script into a different tool. 
+**It's raw text:** The formatting your doing lives in raw text. It's not locked up in some sort of proprietary format. If you ever needed to, you could easily copy and paste our your script into a different tool.
 
 ### In truth...
 
@@ -42,29 +42,29 @@ Book: 20
 Author: Mao Xiaolian
 Email: mao@myotherarmisarobot.com
 
-## Page 1
+Page 1
 
-### Panel 1
+Panel 1
 
-### Panel 2
+Panel 2
 
-### Panel 3
+Panel 3
 
-### Panel 4
+Panel 4
 
-## Page 2
+Page 2
 
-### Panel 1
+Panel 1
 
-### Panel 2
+Panel 2
 
-### Panel 3
+Panel 3
 
-### Panel 4
+Panel 4
 
-### Panel 5
+Panel 5
 
-### Panel 6
+Panel 6
 
 ...
 ```
@@ -81,19 +81,19 @@ Email: mao@myotherarmisarobot.com
 
 ### Pages
 
-Type `##`, hit space. It should auto-complete to something like:
+Type `Page`, hit space. It should auto-complete to something like:
 
 ```markdown
-## Page 1
+Page
 ```
 We figure out page numbering for you, to save you time. If you inject a new page, or move it, it will auto-update-automagically™.
 
 ### Panels
-Type `###`, hit space. It should, again, auto-complete to something like:
+Type `Panel`, hit space. It should, again, auto-complete to something like:
 ```markdown
-### Panel 1
+Panel 1
 ```
-It will auto-update-automagically™ to the correct number, should you move things around.
+It will auto-update-automagically™ to the correct number, should you move content around.
 
 ### Captions
 Captions follow a `>` + `word` + `: ` + `content` pattern. If you wanted to...
@@ -113,25 +113,3 @@ The preview should format everything for you. What about off screen?
 ```
 
 #### Sound Effects
-
-### Images
-
-To insert an image into the document, you can link to it via a URL.
-
-```
-![East of West Cover #39](https://imagecomics.com/uploads/releases/EastOfWest_39-1.png)
-```
-It should load in the preview.
-
-### Links
-
-Similar to an image, you can create links in two ways:
-```
-[Image Comics Website](https://imagecomics.com/)
-```
-or you can simply paste the link itself!
-```
-https://imagecomics.com/
-```
-
-<!-- ### Other -->
