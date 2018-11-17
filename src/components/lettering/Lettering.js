@@ -40,9 +40,9 @@ function renderContent(content) {
   if (!Array.isArray(content)) return content;
 
   return content
-    .map(part => {
+    .map((part, index) => {
       return part.type === LETTERING_BOLD
-        ? <LetteringBold>{part.content}</LetteringBold>
+        ? <LetteringBold key={index}>{part.content}</LetteringBold>
         : part.content;
     });
 }
