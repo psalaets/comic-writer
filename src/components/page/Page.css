@@ -6,6 +6,7 @@
 /******************************************************************************/
 .c-page {
   padding-top: 3em;
+  position: relative;
 }
 
 .c-page > * + * {
@@ -16,12 +17,11 @@
 /******************************************************************************/
 .c-page__title {
   align-items: center;
-  position: relative;
 }
 
-.c-page__panel-count {
+.c-page__gutter {
   color: var(--color-utility-dove);
   position: absolute;
   right: calc(100% + 1em);
-  top: .9em;
+  top: 4.1em;
 }

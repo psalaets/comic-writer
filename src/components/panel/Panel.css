@@ -6,6 +6,7 @@
 /******************************************************************************/
 .c-panel {
   margin-top: 2em;
+  position: relative;
 }
 
 .c-panel > * + * {
@@ -14,13 +15,9 @@
 
 /* Elements */
 /******************************************************************************/
-.c-panel__title {
-  position: relative;
-}
-
-.c-panel__dialouge-count {
+.c-panel__gutter {
   color: var(--color-utility-dove);
   position: absolute;
   right: calc(100% + 1em);
-  top: .5em;
+  top: .1em;
 }

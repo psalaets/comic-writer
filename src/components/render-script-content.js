@@ -22,6 +22,11 @@ function renderNode(node) {
           number={node.number}
           panelCount={node.panelCount}
           content={node.content}
+          dialogueCount={node.dialogueCount}
+          captionCount={node.captionCount}
+          sfxCount={node.sfxCount}
+          dialogueWordCount={node.dialogueWordCount}
+          captionWordCount={node.captionWordCount}
         />
       );
     case types.PANEL:
@@ -30,6 +35,11 @@ function renderNode(node) {
           key={node.id}
           number={node.number}
           content={node.content}
+          dialogueCount={node.dialogueCount}
+          captionCount={node.captionCount}
+          sfxCount={node.sfxCount}
+          dialogueWordCount={node.dialogueWordCount}
+          captionWordCount={node.captionWordCount}
         />
       );
     case types.DIALOGUE:

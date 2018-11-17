@@ -70,8 +70,8 @@ function parsePage(lines, state) {
     dialogueCount: panels.reduce((total, p) => total + p.dialogueCount, 0),
     captionCount: panels.reduce((total, p) => total + p.captionCount, 0),
     sfxCount: panels.reduce((total, p) => total + p.sfxCount, 0),
-    dialogueWords: panels.reduce((total, p) => total + p.dialogueWords, 0),
-    captionWords: panels.reduce((total, p) => total + p.captionWords, 0)
+    dialogueWordCount: panels.reduce((total, p) => total + p.dialogueWordCount, 0),
+    captionWordCount: panels.reduce((total, p) => total + p.captionWordCount, 0)
   };
 }
 
@@ -110,8 +110,8 @@ function parsePanel(lines, state) {
     dialogueCount: dialogues.length,
     captionCount: captions.length,
     sfxCount: sfxs.length,
-    dialogueWords: dialogues.reduce((total, d) => total + d.wordCount, 0),
-    captionWords: captions.reduce((total, c) => total + c.wordCount, 0)
+    dialogueWordCount: dialogues.reduce((total, d) => total + d.wordCount, 0),
+    captionWordCount: captions.reduce((total, c) => total + c.wordCount, 0)
   };
 }
 
