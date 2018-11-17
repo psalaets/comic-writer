@@ -1,156 +1,156 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`editor reducer transformMarkdown pages adding page at end 1`] = `
-"## Page 1
-page 1 info
-## Page 2"
+"Page 1
+Page 2
+Page 3"
 `;
 
 exports[`editor reducer transformMarkdown pages adding page at start 1`] = `
-"## Page 1
-## Page 2
-page 1 info"
+"Page 1
+Page 2
+Page 3"
 `;
 
 exports[`editor reducer transformMarkdown pages adding page in the middle 1`] = `
-"## Page 1
-page 1 info
-## Page 2
-## Page 3
-page 2 info"
+"Page 1
+Page 2
+Page 3
+Page 4
+Page 5"
 `;
 
-exports[`editor reducer transformMarkdown pages first page 1`] = `"## Page 1"`;
+exports[`editor reducer transformMarkdown pages first page 1`] = `"Page 1"`;
 
 exports[`editor reducer transformMarkdown pages inserting content with page count in double digits 1`] = `
-"## Page 1
-## Page 2
-## Page 3
-## Page 4
-## Page 5
-## Page 6
-## Page 7
-## Page 8
-## Page 9
-## Page 10
-## Page 11
-## Page 12
-## Page 13"
+"Page 1
+Page 2
+Page 3
+Page 4
+Page 5
+Page 6
+Page 7
+Page 8
+Page 9
+Page 10
+Page 11
+Page 12
+Page 13"
 `;
 
 exports[`editor reducer transformMarkdown pages inserting page at end 1`] = `
-"## Page 1
-page 2 info
-## Page 2
-page 1 info"
+"Page 1
+Page 2
+Page 3
+Page 4"
 `;
 
 exports[`editor reducer transformMarkdown pages inserting page at start 1`] = `
-"## Page 1
-page 3 info
-## Page 2
-page 1 info
-## Page 3
-page 2 info"
+"Page 1
+Page 2
+Page 3
+Page 4
+Page 5
+Page 6"
 `;
 
 exports[`editor reducer transformMarkdown pages inserting page in middle 1`] = `
-"## Page 1
-page 1 info
-## Page 2
-page 3 info
-## Page 3
-page 2 info"
+"Page 1
+Page 2
+Page 3
+Page 4
+Page 5
+Page 6"
 `;
 
 exports[`editor reducer transformMarkdown pages remove page from middle 1`] = `
-"## Page 1
-page 1 info
-## Page 2
-page 3 info"
+"Page 1
+Page 2
+Page 3
+Page 4"
 `;
 
 exports[`editor reducer transformMarkdown pages remove page from start 1`] = `
-"## Page 1
-page 2 info
-## Page 2
-page 3 info"
+"Page 1
+Page 2
+Page 3
+Page 4"
 `;
 
 exports[`editor reducer transformMarkdown panels adding another panel to second page 1`] = `
-"## Page 1
-### Panel 1
-panel 1 info
-## Page 2
-### Panel 1
-### Panel 2"
+"Page 1
+Panel 1
+Panel 2
+Page 2
+Panel 1
+Panel 2"
 `;
 
 exports[`editor reducer transformMarkdown panels adding panel at start 1`] = `
-"## Page 1
-page 1 info
-### Panel 1
-### Panel 2
-panel 1 info"
+"Page 1
+Page 2
+Panel 1
+Panel 2
+Panel 3"
 `;
 
 exports[`editor reducer transformMarkdown panels adding panel in middle 1`] = `
-"## Page 1
-### Panel 1
-panel 1 info
-### Panel 2
-### Panel 3
-panel 2 info"
+"Page 1
+Panel 1
+Panel 2
+Panel 3
+Panel 4
+Panel 5"
 `;
 
 exports[`editor reducer transformMarkdown panels adding panel to page 1`] = `
-"## Page 1
-page 1 info
-### Panel 1"
+"Page 1
+Page 2
+Panel 1"
 `;
 
 exports[`editor reducer transformMarkdown panels adding panel to second page 1`] = `
-"## Page 1
-### Panel 1
-panel 1 info
-## Page 2
-### Panel 1"
+"Page 1
+Panel 1
+Panel 2
+Page 2
+Panel 1"
 `;
 
 exports[`editor reducer transformMarkdown panels adding second panel to page 1`] = `
-"## Page 1
-page 1 info
-### Panel 1
-### Panel 2"
+"Page 1
+Page 2
+Panel 1
+Panel 2"
 `;
 
 exports[`editor reducer transformMarkdown panels inserting panel at start 1`] = `
-"## Page 1
-page 1 info
-### Panel 1
-### Panel 2
-panel 1 info"
+"Page 1
+Page 2
+Panel 1
+Panel 2
+Panel 3"
 `;
 
 exports[`editor reducer transformMarkdown panels inserting panel in middle 1`] = `
-"## Page 1
-### Panel 1
-panel 1 info
-### Panel 2
-### Panel 3
-panel 2 info"
+"Page 1
+Panel 1
+Panel 2
+Panel 3
+Panel 4
+Panel 5"
 `;
 
 exports[`editor reducer transformMarkdown panels removing panel from middle 1`] = `
-"## Page 1
-### Panel 1
-panel 1 info
-### Panel 2
-panel 3 info"
+"Page 1
+Panel 1
+Panel 2
+Panel 3
+Panel 4"
 `;
 
 exports[`editor reducer transformMarkdown panels removing panel from start 1`] = `
-"## Page 1
-### Panel 1
-panel 2 info"
+"Page 1
+Panel 1
+Panel 2"
 `;

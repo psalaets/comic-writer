@@ -9,7 +9,7 @@ export default class Dialogue extends Component {
         number={this.props.number}
         subject={this.props.speaker}
         modifier={this.props.modifier}
-        content={this.props.children}
+        content={this.props.content}
       />
     );
   }
@@ -18,5 +18,6 @@ export default class Dialogue extends Component {
 Dialogue.propTypes = {
   number: PropTypes.number.isRequired,
   speaker: PropTypes.string.isRequired,
-  modifier: PropTypes.string
+  modifier: PropTypes.string,
+  content: PropTypes.array.isRequired
 };

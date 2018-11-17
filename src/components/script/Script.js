@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Script.css';
 
-import { reactOutput } from '../../custom-markdown';
+import { renderNodes } from '../render-script-content';
 
 export default class Script extends Component {
   constructor(props) {
@@ -17,7 +17,6 @@ export default class Script extends Component {
   }
 
   render() {
-    const output = reactOutput(this.props.blocks);
     return (
       <article
         tabIndex={this.props.tabIndexHide ? '-1' : 0}
@@ -25,7 +24,7 @@ export default class Script extends Component {
         ref={this.scrollRef}
       >
         <div className="c-script__content">
-          {output}
+          {renderNodes(this.props.blocks)}
         </div>
         <div className="c-script__scrollpast"></div>
       </article>
@@ -34,5 +33,6 @@ export default class Script extends Component {
 }
 
 Script.propTypes = {
-  scrollPercentage: PropTypes.number.isRequired
+  scrollPercentage: PropTypes.number.isRequired,
+  blocks: PropTypes.array.isRequired
 };

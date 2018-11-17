@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Panel.css';
 
+import { renderNodes } from '../render-script-content';
+
 export default class Panel extends Component {
   render() {
     return (
@@ -12,12 +14,13 @@ export default class Panel extends Component {
             <abbr title="Lettering Count">99</abbr>
           </span>
         </h3>
-        {this.props.children}
+        {renderNodes(this.props.content)}
       </section>
     );
   }
 }
 
 Panel.propTypes = {
-  number: PropTypes.number.isRequired
+  number: PropTypes.number.isRequired,
+  content: PropTypes.array.isRequired
 };

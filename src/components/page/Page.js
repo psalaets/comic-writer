@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './Page.css'
 
+import { renderNodes } from '../render-script-content';
+
 export default class Page extends Component {
   render() {
     return (
@@ -12,7 +14,7 @@ export default class Page extends Component {
             <abbr title="Panel Count">{this.props.panelCount}</abbr>
           </span>
         </h2>
-        {this.props.children}
+        {renderNodes(this.props.content)}
       </section>
     );
   }
@@ -20,5 +22,6 @@ export default class Page extends Component {
 
 Page.propTypes = {
   number: PropTypes.number.isRequired,
-  panelCount: PropTypes.number.isRequired
+  panelCount: PropTypes.number.isRequired,
+  content: PropTypes.array.isRequired
 };
