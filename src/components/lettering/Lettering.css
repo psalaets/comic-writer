@@ -7,6 +7,7 @@
 .c-lettering {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 /* Elements */
@@ -17,10 +18,9 @@
   padding-right: 1em;
   text-transform: uppercase;
   white-space: nowrap;
-  position: relative;
 }
 
-.c-lettering__lettering-count {
+.c-lettering__gutter {
   color: var(--color-utility-dove);
   position: absolute;
   right: calc(100% + 1em);

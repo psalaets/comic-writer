@@ -40,6 +40,7 @@ function renderNode(node) {
           speaker={node.speaker}
           modifier={node.modifier}
           content={node.content}
+          wordCount={node.wordCount}
         />
       );
     case types.CAPTION:
@@ -49,6 +50,7 @@ function renderNode(node) {
           number={node.number}
           modifier={node.modifier}
           content={node.content}
+          wordCount={node.wordCount}
         />
       );
     case types.SFX:

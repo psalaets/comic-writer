@@ -14,15 +14,25 @@ export default class Lettering extends Component {
       <section className="c-lettering">
         <h4 className="c-lettering__meta">
           <span className="">{meta}</span>
-          <span className="u-font-size--saya c-lettering__lettering-count">
-            <abbr title="Word Count">99</abbr>
-          </span>
         </h4>
         <blockquote className="c-lettering__content">
           {renderContent(this.props.content)}
         </blockquote>
+        {this.renderGutter()}
       </section>
     );
+  }
+
+  renderGutter() {
+    if (this.props.renderGutterContent) {
+      return (
+        <aside className="u-font-size--saya c-lettering__gutter">
+          {this.props.renderGutterContent()}
+        </aside>
+      );
+    } else {
+      return null;
+    }
   }
 }
 
@@ -44,5 +54,6 @@ Lettering.propTypes = {
   content: PropTypes.oneOfType([
     PropTypes.string.isRequired,
     PropTypes.array.isRequired
-  ])
+  ]),
+  renderGutterContent: PropTypes.func
 };
