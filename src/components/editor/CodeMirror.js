@@ -16,12 +16,7 @@ export default class CodeMirror extends Component {
     const styles = {
       maxWidth: `${this.props.editorWidth + 2}ex`
     }
-    return (
-      <>
-        <label className="u-hide--visually" htmlFor="code-mirror-textarea">Editor</label>
-        <div className="c-codemirror" style={styles} ref={this.el} />
-      </>
-    );
+    return <div className="c-codemirror" style={styles} ref={this.el} />;
   }
 
   componentDidUpdate(prevProps) {
@@ -57,10 +52,6 @@ export default class CodeMirror extends Component {
       scrollbarStyle: null,
     });
 
-    // Doing this for A11y, textarea's (even though hidden) need an ID and a
-    // Label
-    const cmTextarea = document.querySelector('.'+this.el.current.className + ' textarea');
-    cmTextarea.id = "code-mirror-textarea"
     this.cm.setSize('100%', '100%');
 
     this.cm.on('change', (cm, change) => {
