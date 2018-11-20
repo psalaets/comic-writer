@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import debounce from 'lodash';
+import { debounce } from 'lodash';
 
 import customParser from '../../parser';
 
