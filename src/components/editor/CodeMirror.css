@@ -6,5 +6,8 @@
 /******************************************************************************/
 .c-codemirror {
   height: 100%;
-  padding-left: 1em;
+  padding-left: 1ex;
+  padding-right: 1ex;
+  margin-right: auto;
+  margin-left: auto;
 }

@@ -15,6 +15,7 @@ export default class Editor extends Component {
     return (
       <div className="c-editor">
         <CodeMirror
+          editorWidth={80}
           value={this.props.value}
           cursor={this.props.cursor}
           onChange={this.handleChange}
@@ -36,6 +37,6 @@ Editor.propTypes = {
   cursor: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onScroll: PropTypes.func.isRequired,
+  onScroll: PropTypes.func,
   editorWidthPercent: PropTypes.number,
 };

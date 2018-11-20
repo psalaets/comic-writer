@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import './Writer.css';
 
 import Editor from '../editor/Editor';
-import Script from '../script/Script';
-import Button from '../button/Button';
 
 export default class Writer extends Component {
   constructor(props) {
@@ -19,9 +17,6 @@ export default class Writer extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleScroll = this.handleScroll.bind(this);
-    this.handleWidthControl = this.handleWidthControl.bind(this);
-    this.controlIsVisible = this.controlIsVisible.bind(this);
   }
 
   handleChange(event) {
@@ -31,119 +26,15 @@ export default class Writer extends Component {
     });
   }
 
-  handleScroll(type) {
-    return (event) => {
-      // Should this be debounced? Or ceil'd?
-      // We want to know where to scroll the top of the editor view relative to
-      // to the script view.
-
-      // Relaying this value to state, so we can communicate it to script view.
-      this.setState({
-        scrollPercentage: event.percent
-      });
-    };
-  }
-
-  // This might be more complicated than it needs to be.
-  handleWidthControl(type) {
-    const scriptCalculateWidth = widthPercent => {
-      if (widthPercent === 100) {
-        return 50;
-      } else if (widthPercent >= 50) {
-        return 0;
-      } else {
-        return 50;
-      }
-    };
-
-    const editorCalculateWidth = widthPercent => {
-      if (widthPercent >= 50) {
-        return 100;
-      } else {
-        return 50;
-      }
-    };
-
-    return () => {
-      if (type === 'script') {
-        this.setState({
-          editorWidthPercent: scriptCalculateWidth(this.state.editorWidthPercent)
-        });
-      } else if (type === 'editor') {
-        this.setState({
-          editorWidthPercent: editorCalculateWidth(this.state.editorWidthPercent)
-        });
-      } else {
-        console.log('You done goofed');
-      }
-    };
-  }
-
-  controlIsVisible(type) {
-    if (this.state.editorWidthPercent === 50) {
-      return true;
-    } else if (type === 'script') {
-      if (this.state.editorWidthPercent <= 50) {
-        return false;
-      } else {
-        return true;
-      }
-    } else if (type === 'editor') {
-      if (this.state.editorWidthPercent <= 50) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return true;
-    }
-  }
-
   render() {
     return (
       <main className="c-writer">
-        { this.controlIsVisible('script') ?
-            [
-              <Editor
-                key="editor"
-                value={this.props.source}
-                cursor={this.props.cursor}
-                onChange={this.handleChange}
-                onScroll={this.handleScroll('editor')}
-                editorWidthPercent={this.state.editorWidthPercent}
-              />,
-              <Button
-                key="scriptControl"
-                onClick={this.handleWidthControl('script')}
-                tabIndex="0"
-              >
-                <span className="c-writer__view-control-text c-writer__view-control-text--flip">▶</span>
-                <span className="u-hide--visually">
-                  Expand Script View
-                </span>
-              </Button>
-            ] : false }
-
-        { this.controlIsVisible('editor') ?
-            [
-              <Button
-                key="editorControl"
-                onClick={this.handleWidthControl('editor')}
-                tabIndex="0"
-              >
-                <span className="c-writer__view-control-text">▶</span>
-                <span className="u-hide--visually">
-                  Expand Writer View
-                </span>
-              </Button>,
-              <Script
-                key="script"
-                blocks={this.props.parseTree}
-                scrollPercentage={this.state.scrollPercentage}
-                editorWidthPercent={this.state.editorWidthPercent}
-              />
-            ] : false }
-
+        <Editor
+          key="editor"
+          value={this.props.source}
+          cursor={this.props.cursor}
+          onChange={this.handleChange}
+        />
       </main>
     );
   }
