@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './Editor.css';
 
 import CodeMirror from './CodeMirror';
 
@@ -13,15 +12,13 @@ export default class Editor extends Component {
 
   render() {
     return (
-      <div className="c-editor">
-        <CodeMirror
+      <CodeMirror
           editorWidth={80}
           value={this.props.value}
           cursor={this.props.cursor}
           onChange={this.handleChange}
           onScroll={this.props.onScroll}
         />
-      </div>
     )
   }
 
