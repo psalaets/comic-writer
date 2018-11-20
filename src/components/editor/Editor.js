@@ -36,6 +36,6 @@ Editor.propTypes = {
   cursor: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onScroll: PropTypes.func.isRequired,
+  onScroll: PropTypes.func,
   editorWidthPercent: PropTypes.number,
 };
