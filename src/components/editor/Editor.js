@@ -15,6 +15,7 @@ export default class Editor extends Component {
     return (
       <div className="c-editor">
         <CodeMirror
+          editorWidth={80}
           value={this.props.value}
           cursor={this.props.cursor}
           onChange={this.handleChange}

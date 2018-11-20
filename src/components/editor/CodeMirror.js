@@ -13,7 +13,10 @@ export default class CodeMirror extends Component {
   }
 
   render() {
-    return <div className="c-codemirror" ref={this.el} />;
+    const styles = {
+      maxWidth: `${this.props.editorWidth + 2}ex`
+    }
+    return <div className="c-codemirror" style={styles} ref={this.el} />;
   }
 
   componentDidUpdate(prevProps) {
