@@ -6,32 +6,32 @@ export default {
     {
       regex: /^page \d+/i,
       sol: true,
-      token: 'page'
+      token: 'cw-page'
     },
     {
       regex: /^panel \d+/i,
       sol: true,
-      token: 'panel'
+      token: 'cw-panel'
     },
     {
       regex: /^> [^]+ ?\([^]+\)?: ?[^]+/,
       sol: true,
-      token: 'dialogue'
+      token: 'cw-dialogue'
     },
     {
       regex: /^> sfx ?\([^]+\)?: ?[^]+/i,
       sol: true,
-      token: 'sfx'
+      token: 'cw-sfx'
     },
     {
       regex: /^> caption ?\([^]+\)?: ?[^]+/i,
       sol: true,
-      token: 'caption'
+      token: 'cw-caption'
     },
     {
       regex: /^[^]+: ?[^]+/,
       sol: true,
-      token: 'meta'
+      token: 'cw-meta'
     }
   ],
 };
