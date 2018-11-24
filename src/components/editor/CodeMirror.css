@@ -12,3 +12,12 @@
 
   background-color: #ffffff;
 }
+
+/*
+The superflurous attribute selector is here to out-specify a codemirror selector.
+
+The codemirror selector is `.CodeMirror-wrap pre` (011) and this is 020
+*/
+.CodeMirror-placeholder[class] {
+  color: #777777;
+}

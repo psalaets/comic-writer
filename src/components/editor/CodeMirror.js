@@ -8,6 +8,8 @@ import './CodeMirror.css';
 import { MODE, THEME } from '../../codemirror/comic-writer-mode';
 import '../../codemirror/theme.css';
 
+import 'codemirror/addon/display/placeholder';
+
 export default class CodeMirror extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +55,7 @@ export default class CodeMirror extends Component {
       mode: MODE,
       theme: THEME,
       value: this.props.value,
+      placeholder: 'Adventure starts here...',
       lineWrapping: true,
       cursorScrollMargin: 200, // Not *exactly* sure why this value works.
       scrollbarStyle: null,
