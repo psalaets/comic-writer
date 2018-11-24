@@ -5,6 +5,8 @@ import codemirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
 import './CodeMirror.css';
 
+import '../../codemirror/comic-writer-mode';
+
 export default class CodeMirror extends Component {
   constructor(props) {
     super(props);
@@ -46,6 +48,7 @@ export default class CodeMirror extends Component {
 
   componentDidMount() {
     this.cm = codemirror(this.el.current, {
+      mode: 'comic-writer',
       value: this.props.value,
       lineWrapping: true,
       cursorScrollMargin: 200, // Not *exactly* sure why this value works.
