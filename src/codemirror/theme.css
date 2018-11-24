@@ -1,0 +1,21 @@
+.cm-s-comic-writer-light .cm-page {
+  color: blue;
+  font-weight: 600;
+}
+
+.cm-s-comic-writer-light .cm-panel {
+  color: #222222;
+  font-weight: 600;
+}
+
+.cm-s-comic-writer-light .cm-dialogue {
+  color: green;
+}
+
+.cm-s-comic-writer-light .cm-caption {
+  color: green;
+}
+
+.cm-s-comic-writer-light .cm-sfx {
+  color: green;
+}
