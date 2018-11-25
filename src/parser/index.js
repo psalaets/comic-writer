@@ -43,7 +43,7 @@ function parsePage(lines, state) {
 
   const content = [];
   const pageStart = lines.consume();
-  const [, number] = PAGE_REGEX.exec(pageStart);
+  const number = PAGE_REGEX.exec(pageStart)[1];
 
   while (!lines.nextIsPageEnd()) {
     if (lines.nextIsPanelStart()) {
@@ -82,7 +82,7 @@ function parsePanel(lines, state) {
 
   const content = [];
   const panelStart = lines.consume();
-  const [, number] = PANEL_REGEX.exec(panelStart);
+  const number = PANEL_REGEX.exec(panelStart)[1];
 
   while (!lines.nextIsPanelEnd()) {
     if (lines.nextIsCaption()) {
