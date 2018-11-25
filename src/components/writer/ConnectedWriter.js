@@ -12,8 +12,7 @@ import Writer from './Writer';
 function mapStateToProps(state) {
   return {
     cursor: state.editor.cursor,
-    source: state.editor.source,
-    parseTree: customParser(state.editor.source)
+    source: state.editor.source
   };
 }
 

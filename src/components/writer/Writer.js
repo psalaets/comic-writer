@@ -41,7 +41,6 @@ export default class Writer extends Component {
 }
 
 Writer.propTypes = {
-  parseTree: PropTypes.array.isRequired,
   source: PropTypes.string.isRequired,
   cursor: PropTypes.number.isRequired,
   onSourceChange: PropTypes.func.isRequired
