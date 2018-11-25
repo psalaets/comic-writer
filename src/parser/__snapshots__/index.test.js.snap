@@ -32,6 +32,7 @@ Array [
             "id": "1.1.1",
             "modifier": null,
             "number": 1,
+            "startingLine": 4,
             "type": "caption",
             "wordCount": 4,
           },
@@ -45,6 +46,7 @@ Array [
             "id": "1.1.2",
             "modifier": null,
             "number": 2,
+            "startingLine": 6,
             "type": "caption",
             "wordCount": 3,
           },
@@ -54,6 +56,7 @@ Array [
         "id": "1.1",
         "number": 1,
         "sfxCount": 0,
+        "startingLine": 2,
         "type": "panel",
       },
     ],
@@ -63,6 +66,7 @@ Array [
     "number": 1,
     "panelCount": 1,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
 ]
@@ -89,6 +93,7 @@ Array [
             "modifier": null,
             "number": 1,
             "speaker": "bob",
+            "startingLine": 4,
             "type": "dialogue",
             "wordCount": 2,
           },
@@ -107,6 +112,7 @@ Array [
             "modifier": null,
             "number": 2,
             "speaker": "bob",
+            "startingLine": 6,
             "type": "dialogue",
             "wordCount": 4,
           },
@@ -116,6 +122,7 @@ Array [
         "id": "1.1",
         "number": 1,
         "sfxCount": 0,
+        "startingLine": 2,
         "type": "panel",
       },
     ],
@@ -125,6 +132,7 @@ Array [
     "number": 1,
     "panelCount": 1,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
 ]
@@ -167,6 +175,7 @@ Array [
             "modifier": null,
             "number": 1,
             "speaker": "bob",
+            "startingLine": 4,
             "type": "dialogue",
             "wordCount": 4,
           },
@@ -181,6 +190,7 @@ Array [
             "modifier": null,
             "number": 2,
             "speaker": "bob",
+            "startingLine": 6,
             "type": "dialogue",
             "wordCount": 3,
           },
@@ -190,6 +200,7 @@ Array [
         "id": "1.1",
         "number": 1,
         "sfxCount": 0,
+        "startingLine": 2,
         "type": "panel",
       },
     ],
@@ -199,6 +210,7 @@ Array [
     "number": 1,
     "panelCount": 1,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
 ]
@@ -209,18 +221,21 @@ Array [
   Object {
     "id": "metadata-1",
     "name": "title",
+    "startingLine": 1,
     "type": "metadata",
     "value": "test",
   },
   Object {
     "id": "metadata-2",
     "name": "issue",
+    "startingLine": 2,
     "type": "metadata",
     "value": "1",
   },
   Object {
     "id": "metadata-3",
     "name": "by",
+    "startingLine": 3,
     "type": "metadata",
     "value": "the author",
   },
@@ -235,6 +250,7 @@ Array [
           Object {
             "content": "Some characters stand around. And do stuff.",
             "id": "paragraph-1",
+            "startingLine": 9,
             "type": "paragraph",
           },
           Object {
@@ -248,6 +264,7 @@ Array [
             "modifier": null,
             "number": 1,
             "speaker": "bob",
+            "startingLine": 11,
             "type": "dialogue",
             "wordCount": 1,
           },
@@ -266,6 +283,7 @@ Array [
             "modifier": null,
             "number": 2,
             "speaker": "bob",
+            "startingLine": 13,
             "type": "dialogue",
             "wordCount": 3,
           },
@@ -275,6 +293,7 @@ Array [
         "id": "1.1",
         "number": 1,
         "sfxCount": 0,
+        "startingLine": 7,
         "type": "panel",
       },
       Object {
@@ -284,6 +303,7 @@ Array [
           Object {
             "content": "This is panel description.",
             "id": "paragraph-2",
+            "startingLine": 17,
             "type": "paragraph",
           },
           Object {
@@ -291,6 +311,7 @@ Array [
             "id": "1.2.3",
             "modifier": null,
             "number": 3,
+            "startingLine": 19,
             "type": "sfx",
           },
           Object {
@@ -303,6 +324,7 @@ Array [
             "id": "1.2.4",
             "modifier": null,
             "number": 4,
+            "startingLine": 21,
             "type": "caption",
             "wordCount": 1,
           },
@@ -312,6 +334,7 @@ Array [
         "id": "1.2",
         "number": 2,
         "sfxCount": 1,
+        "startingLine": 15,
         "type": "panel",
       },
     ],
@@ -321,6 +344,7 @@ Array [
     "number": 1,
     "panelCount": 2,
     "sfxCount": 1,
+    "startingLine": 5,
     "type": "page",
   },
 ]
@@ -338,6 +362,7 @@ Array [
     "number": 1,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
   Object {
@@ -350,6 +375,7 @@ Array [
     "number": 2,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 7,
     "type": "page",
   },
 ]
@@ -367,6 +393,7 @@ Array [
     "number": 1,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
   Object {
@@ -379,6 +406,7 @@ Array [
     "number": 2,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 2,
     "type": "page",
   },
 ]
@@ -396,6 +424,7 @@ Array [
     "number": 1,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
   Object {
@@ -411,6 +440,7 @@ Array [
         "id": "2.1",
         "number": 1,
         "sfxCount": 0,
+        "startingLine": 5,
         "type": "panel",
       },
       Object {
@@ -422,6 +452,7 @@ Array [
         "id": "2.2",
         "number": 2,
         "sfxCount": 0,
+        "startingLine": 7,
         "type": "panel",
       },
     ],
@@ -431,6 +462,7 @@ Array [
     "number": 2,
     "panelCount": 2,
     "sfxCount": 0,
+    "startingLine": 3,
     "type": "page",
   },
 ]
@@ -448,6 +480,7 @@ Array [
     "number": 1,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
   Object {
@@ -469,6 +502,7 @@ Array [
             "modifier": null,
             "number": 1,
             "speaker": "bob",
+            "startingLine": 7,
             "type": "dialogue",
             "wordCount": 1,
           },
@@ -483,6 +517,7 @@ Array [
             "modifier": null,
             "number": 2,
             "speaker": "bob",
+            "startingLine": 9,
             "type": "dialogue",
             "wordCount": 3,
           },
@@ -492,6 +527,7 @@ Array [
         "id": "2.1",
         "number": 1,
         "sfxCount": 0,
+        "startingLine": 5,
         "type": "panel",
       },
       Object {
@@ -501,6 +537,7 @@ Array [
           Object {
             "content": "This is panel description.",
             "id": "paragraph-1",
+            "startingLine": 13,
             "type": "paragraph",
           },
           Object {
@@ -508,6 +545,7 @@ Array [
             "id": "2.2.3",
             "modifier": null,
             "number": 3,
+            "startingLine": 15,
             "type": "sfx",
           },
           Object {
@@ -520,6 +558,7 @@ Array [
             "id": "2.2.4",
             "modifier": null,
             "number": 4,
+            "startingLine": 17,
             "type": "caption",
             "wordCount": 1,
           },
@@ -529,6 +568,7 @@ Array [
         "id": "2.2",
         "number": 2,
         "sfxCount": 1,
+        "startingLine": 11,
         "type": "panel",
       },
     ],
@@ -538,6 +578,7 @@ Array [
     "number": 2,
     "panelCount": 2,
     "sfxCount": 1,
+    "startingLine": 3,
     "type": "page",
   },
 ]
@@ -555,6 +596,7 @@ Array [
     "number": 1,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
 ]
@@ -572,6 +614,7 @@ Array [
     "number": 1,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 1,
     "type": "page",
   },
   Object {
@@ -584,6 +627,7 @@ Array [
     "number": 2,
     "panelCount": 0,
     "sfxCount": 0,
+    "startingLine": 3,
     "type": "page",
   },
 ]
