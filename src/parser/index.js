@@ -30,6 +30,8 @@ function parseScript(lines, state) {
       script.push(parseMetadata(lines, state));
     } else if (lines.nextIsParagraph()) {
       script.push(parseParagraph(lines, state));
+    } else if (lines.nextIsEmpty()) {
+      lines.consume();
     }
   }
 
@@ -56,6 +58,8 @@ function parsePage(lines, state) {
       content.push(parseDialogue(lines, state));
     } else if (lines.nextIsParagraph()) {
       content.push(parseParagraph(lines, state));
+    } else if (lines.nextIsEmpty()) {
+      lines.consume();
     }
   }
 
@@ -95,6 +99,8 @@ function parsePanel(lines, state) {
       content.push(parseMetadata(lines, state));
     } else if (lines.nextIsParagraph()) {
       content.push(parseParagraph(lines, state));
+    } else if (lines.nextIsEmpty()) {
+      lines.consume();
     }
   }
 
@@ -228,8 +234,7 @@ function parseLetteringContent(content, state) {
 
 function lineStream(source) {
   const lines = (source || '')
-    .split('\n')
-    .filter(line => !!line.trim());
+    .split('\n');
 
   let currentLine = 0;
 
@@ -260,6 +265,9 @@ function lineStream(source) {
     },
     nextIsPanelEnd() {
       return !this.hasMore() || this.nextIsPageStart() || this.nextIsPanelStart();
+    },
+    nextIsEmpty() {
+      return this.hasMore() && this.peek().trim() === '';
     },
     consume() {
       const line = this.peek();
