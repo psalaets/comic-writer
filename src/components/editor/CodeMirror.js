@@ -48,6 +48,19 @@ export default class CodeMirror extends Component {
         line, ch
       });
     }
+
+    if (prevProps.value !== this.props.value) {
+      this.cm.getDoc().clearGutter('word-counts')
+      this.props.wordCounts.forEach(pair => {
+        this.cm.getDoc().setGutterMarker(pair.lineNumber - 1, 'word-counts', this.wordCountElement(pair.count));
+      });
+    }
+  }
+
+  wordCountElement(count) {
+    const span = document.createElement('span');
+    span.textContent = count;
+    return span;
   }
 
   componentDidMount() {
@@ -59,6 +72,7 @@ export default class CodeMirror extends Component {
       lineWrapping: true,
       cursorScrollMargin: 200, // Not *exactly* sure why this value works.
       scrollbarStyle: null,
+      gutters: ['word-counts']
     });
 
     this.cm.setSize('100%', '100%');
@@ -100,4 +114,5 @@ CodeMirror.propTypes = {
   value: PropTypes.string.isRequired,
   cursor: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
+  wordCounts: PropTypes.array.isRequired
 };
