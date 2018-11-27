@@ -1,25 +1,23 @@
-/* Syntax highlighting */
+/* @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700'); */
+
+.cm-s-comic-writer-light {
+  /* font-family: 'IBM Plex Mono', monospace; */
+}
 
 .cm-s-comic-writer-light .cm-page {
-  color: blue;
-  font-weight: 600;
+  color: var(--color-primary-cool);
+  font-weight: bold;
 }
 
 .cm-s-comic-writer-light .cm-panel {
-  color: #222222;
-  font-weight: 600;
+  color: var(--color-utility-charcol);
+  font-weight: bold;
 }
 
-.cm-s-comic-writer-light .cm-dialogue {
-  color: green;
-}
-
-.cm-s-comic-writer-light .cm-caption {
-  color: green;
-}
-
+.cm-s-comic-writer-light .cm-dialogue,
+.cm-s-comic-writer-light .cm-caption,
 .cm-s-comic-writer-light .cm-sfx {
-  color: green;
+  color: var(--color-primary-cactus);
 }
 
 /* Gutters */

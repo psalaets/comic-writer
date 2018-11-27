@@ -1,23 +1,29 @@
 /******************************************************************************/
 /* CodeMirror Wrapper                                                         */
 /******************************************************************************/
+/*
+ * 1. The superflurous attribute selector is here to out-specify a codemirror
+ *    selector.The codemirror selector is `.CodeMirror-wrap pre` (011) and this
+ *    is 020
+ * 2. the width of 3 "X's" on each side.
+*/
 
 /* Block */
 /******************************************************************************/
 .c-codemirror {
   height: 100%;
-  padding: 1em;
+  padding-left: 3ex; /* 2 */
+  padding-right: 3ex; /* 2 */
   margin-right: auto;
   margin-left: auto;
-
-  background-color: #ffffff;
+  width: 100%;
+  background-color: var(--color-utility-pure);
+  border-left: 1px solid var(--color-utility-milk);
+  border-right: 1px solid var(--color-utility-milk);
 }
 
-/*
-The superflurous attribute selector is here to out-specify a codemirror selector.
-
-The codemirror selector is `.CodeMirror-wrap pre` (011) and this is 020
-*/
-.CodeMirror-placeholder[class] {
-  color: #777777;
+/* Misc */
+/******************************************************************************/
+.CodeMirror-placeholder[class] { /* 1 */
+  color: var(--color-utility-dove);
 }

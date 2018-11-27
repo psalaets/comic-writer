@@ -5,32 +5,37 @@
 /* Block */
 /******************************************************************************/
 .c-button {
+  user-select: none;
   display: inline-block;
   vertical-align: middle;
   font: inherit;
   text-align: center;
   margin: 0;
   cursor: pointer;
-  background-color: var(--color-utility-pure);
   border: 0;
   padding: .25em 1em;
-  border-radius: 3px;
   color: var(--color-utility-black);
+  background-color: var(--color-utility-milk);
   transition: color .2s, background-color .2s;
-  box-shadow: 0 0 0 1px var(--color-utility-milk);
 }
 
 .c-button:hover {
-  background-color: var(--color-utility-milk);
+  box-shadow: inset 200px 0 0 0 rgba(255, 255, 255, .4);
 }
 
-.c-button:focus {
-  color: var(--color-primary-cool);
-  outline: none;
+.c-button:active {
+  box-shadow: inset 200px 0 0 0 rgba(0, 0, 0, .2);
 }
 
 /* Modifiers */
 /******************************************************************************/
+/* Types*/
+.c-button--primary {
+  background-color: var(--color-primary-cool);
+  color: var(--color-utility-pure);
+}
+
+/* Shapes */
 .c-button--block {
   display: block;
   text-align: center;

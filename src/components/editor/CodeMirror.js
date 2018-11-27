@@ -20,7 +20,6 @@ export default class CodeMirror extends Component {
   render() {
     const styles = {
       maxWidth: `${this.props.editorWidth + 2}ex`,
-      width: `${this.props.editorWidth + 2}ex`
     }
     return <div className="c-codemirror" style={styles} ref={this.el} />;
   }
