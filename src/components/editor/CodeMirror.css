@@ -27,3 +27,13 @@
 .CodeMirror-placeholder[class] { /* 1 */
   color: var(--color-utility-dove);
 }
+
+/* each line of code */
+.CodeMirror-line[class] {
+
+}
+
+/* wraps the text in each line's gutter value */
+.CodeMirror-gutter-elt {
+
+}
