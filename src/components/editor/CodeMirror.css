@@ -32,4 +32,12 @@
 
 .CodeMirror-line[class] {} /* 3 */
 
-.CodeMirror-gutter-elt {} /* 4 */
+.CodeMirror-gutter-elt { /* 4 */
+  top: 0;
+  bottom: 0;
+}
+
+.CodeMirror-gutter-wrapper {
+  top: 0;
+  bottom: 0;
+}
