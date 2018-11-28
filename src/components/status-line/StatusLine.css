@@ -1,11 +1,25 @@
 /******************************************************************************/
 /* Button                                                                     */
 /******************************************************************************/
+/*
+ * 1. This "pushes" objects in the flex apart.
+*/
 
 /* Block */
 /******************************************************************************/
 .c-status-line {
   background-color: var(--color-utility-pure);
   border-top: 1px solid var(--color-utility-milk);
+  display: flex;
   padding: .25em;
+}
+
+.c-status-line > * + * {
+  margin-left: .5em;
+}
+
+/* Elements */
+/******************************************************************************/
+.c-status-line__spacer {
+  flex: 1 1 0%; /* 1 */
 }

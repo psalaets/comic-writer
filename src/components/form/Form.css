@@ -1,0 +1,29 @@
+/******************************************************************************/
+/* Form                                                                       */
+/******************************************************************************/
+
+/* Block */
+/******************************************************************************/
+.c-form {
+  /* No content yet */
+}
+
+/* Elements */
+/******************************************************************************/
+.c-form__fieldset {
+  border: 1px solid var(--color-utility-milk);
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0;
+  padding-bottom: 1em;
+}
+
+.c-form__fieldset > * + * {
+  margin-top: 1em;
+}
+
+.c-form__legend {
+  color: var(--color-utility-charcol);
+}
