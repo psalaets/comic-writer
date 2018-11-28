@@ -1,18 +1,20 @@
 /******************************************************************************/
-/* CodeMirror Wrapper                                                         */
+/* CodeMirror                                                                 */
 /******************************************************************************/
 /*
  * 1. The superflurous attribute selector is here to out-specify a codemirror
  *    selector.The codemirror selector is `.CodeMirror-wrap pre` (011) and this
  *    is 020
- * 2. the width of 3 "X's" on each side.
+ * 2. the width in "X's" on each side.
+ * 3. Each Line of code.
+ * 4. Wraps the text in each line's gutter value.
 */
 
 /* Block */
 /******************************************************************************/
 .c-codemirror {
   height: 100%;
-  padding-left: 3ex; /* 2 */
+  padding-left: 1.5ex; /* 2 */
   padding-right: 3ex; /* 2 */
   margin-right: auto;
   margin-left: auto;
@@ -27,3 +29,7 @@
 .CodeMirror-placeholder[class] { /* 1 */
   color: var(--color-utility-dove);
 }
+
+.CodeMirror-line[class] {} /* 3 */
+
+.CodeMirror-gutter-elt {} /* 4 */

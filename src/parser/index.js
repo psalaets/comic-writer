@@ -30,6 +30,8 @@ function parseScript(lines, state) {
       script.push(parseMetadata(lines, state));
     } else if (lines.nextIsParagraph()) {
       script.push(parseParagraph(lines, state));
+    } else if (lines.nextIsEmpty()) {
+      lines.consume();
     }
   }
 
@@ -43,7 +45,8 @@ function parsePage(lines, state) {
 
   const content = [];
   const pageStart = lines.consume();
-  const [, number] = PAGE_REGEX.exec(pageStart);
+  const number = PAGE_REGEX.exec(pageStart)[1];
+  const startingLine = lines.lineNumber;
 
   while (!lines.nextIsPageEnd()) {
     if (lines.nextIsPanelStart()) {
@@ -56,6 +59,8 @@ function parsePage(lines, state) {
       content.push(parseDialogue(lines, state));
     } else if (lines.nextIsParagraph()) {
       content.push(parseParagraph(lines, state));
+    } else if (lines.nextIsEmpty()) {
+      lines.consume();
     }
   }
 
@@ -71,7 +76,8 @@ function parsePage(lines, state) {
     captionCount: panels.reduce((total, p) => total + p.captionCount, 0),
     sfxCount: panels.reduce((total, p) => total + p.sfxCount, 0),
     dialogueWordCount: panels.reduce((total, p) => total + p.dialogueWordCount, 0),
-    captionWordCount: panels.reduce((total, p) => total + p.captionWordCount, 0)
+    captionWordCount: panels.reduce((total, p) => total + p.captionWordCount, 0),
+    startingLine
   };
 }
 
@@ -82,7 +88,8 @@ function parsePanel(lines, state) {
 
   const content = [];
   const panelStart = lines.consume();
-  const [, number] = PANEL_REGEX.exec(panelStart);
+  const number = PANEL_REGEX.exec(panelStart)[1];
+  const startingLine = lines.lineNumber;
 
   while (!lines.nextIsPanelEnd()) {
     if (lines.nextIsCaption()) {
@@ -95,6 +102,8 @@ function parsePanel(lines, state) {
       content.push(parseMetadata(lines, state));
     } else if (lines.nextIsParagraph()) {
       content.push(parseParagraph(lines, state));
+    } else if (lines.nextIsEmpty()) {
+      lines.consume();
     }
   }
 
@@ -111,7 +120,8 @@ function parsePanel(lines, state) {
     captionCount: captions.length,
     sfxCount: sfxs.length,
     dialogueWordCount: dialogues.reduce((total, d) => total + d.wordCount, 0),
-    captionWordCount: captions.reduce((total, c) => total + c.wordCount, 0)
+    captionWordCount: captions.reduce((total, c) => total + c.wordCount, 0),
+    startingLine
   };
 }
 
@@ -121,7 +131,8 @@ function parseParagraph(lines, state) {
   return {
     id: state.currentParagraphId,
     type: types.PARAGRAPH,
-    content: lines.consume()
+    content: lines.consume(),
+    startingLine: lines.lineNumber,
   };
 }
 
@@ -135,7 +146,8 @@ function parseMetadata(lines, state) {
     id: state.currentMetadataId,
     type: types.METADATA,
     name,
-    value
+    value,
+    startingLine: lines.lineNumber,
   };
 }
 
@@ -144,6 +156,8 @@ function parseDialogue(lines, state) {
 
   const line = lines.consume();
   const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line);
+  const startingLine = lines.lineNumber;
+
   const parseTree = parseLetteringContent(content);
 
   return {
@@ -153,7 +167,8 @@ function parseDialogue(lines, state) {
     speaker,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content: parseTree,
-    wordCount: countWords(parseTree)
+    wordCount: countWords(parseTree),
+    startingLine,
   };
 }
 
@@ -168,7 +183,8 @@ function parseSfx(lines, state) {
     type: types.SFX,
     number: state.currentLetteringNumber,
     modifier: modifier ? modifier.slice(1, -1) : null,
-    content
+    content,
+    startingLine: lines.lineNumber,
   };
 }
 
@@ -185,7 +201,8 @@ function parseCaption(lines, state) {
     number: state.currentLetteringNumber,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content: parseTree,
-    wordCount: countWords(parseTree)
+    wordCount: countWords(parseTree),
+    startingLine: lines.lineNumber,
   };
 }
 
@@ -228,8 +245,7 @@ function parseLetteringContent(content, state) {
 
 function lineStream(source) {
   const lines = (source || '')
-    .split('\n')
-    .filter(line => !!line.trim());
+    .split('\n');
 
   let currentLine = 0;
 
@@ -261,6 +277,9 @@ function lineStream(source) {
     nextIsPanelEnd() {
       return !this.hasMore() || this.nextIsPageStart() || this.nextIsPanelStart();
     },
+    nextIsEmpty() {
+      return this.hasMore() && this.peek().trim() === '';
+    },
     consume() {
       const line = this.peek();
       currentLine += 1;
@@ -271,6 +290,9 @@ function lineStream(source) {
     },
     hasMore() {
       return currentLine < lines.length;
+    },
+    get lineNumber() {
+      return currentLine;
     }
   };
 }

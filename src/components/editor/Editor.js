@@ -16,6 +16,7 @@ export default class Editor extends Component {
           editorWidth={80}
           value={this.props.value}
           cursor={this.props.cursor}
+          wordCounts={this.props.wordCounts}
           onChange={this.handleChange}
           onScroll={this.props.onScroll}
         />
@@ -36,4 +37,5 @@ Editor.propTypes = {
   onChange: PropTypes.func.isRequired,
   onScroll: PropTypes.func,
   editorWidthPercent: PropTypes.number,
+  wordCounts: PropTypes.array.isRequired
 };

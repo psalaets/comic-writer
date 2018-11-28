@@ -3,16 +3,17 @@
 /******************************************************************************/
 :root {
   /* Callout Colors */
-  --color-primary-cool: rgb(33, 150, 243);
+  --color-primary-cool: rgb(11, 117, 203);
   --color-primary-cactus: rgb(46, 125, 50);
   /* Utility Colors */
   --color-utility-pure: rgb(255, 255, 255);
+  --color-utility-alabaster: rgb(251, 251, 251);
   --color-utility-milk: rgb(238, 238, 238);
   --color-utility-dove: rgb(118, 118, 118);
   --color-utility-charcol: rgb(35, 35, 35);
   --color-utility-black: rgb(0, 0, 0);
   /* Effects */
-  --color-effect-ghost: rgba(0, 0, 0, .6);
+  --color-effect-ghost: rgba(0, 0, 0, .1);
 }
 
 /******************************************************************************/
