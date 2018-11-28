@@ -11,6 +11,7 @@
 .cm-s-comic-writer-light .cm-page {
   color: var(--color-primary-cool);
   font-weight: bold;
+  font-size: 1.5em;
 }
 
 .cm-s-comic-writer-light .cm-panel {
