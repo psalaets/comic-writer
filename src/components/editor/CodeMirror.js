@@ -67,9 +67,10 @@ export default class CodeMirror extends Component {
       mode: MODE,
       theme: THEME,
       value: this.props.value,
+      inputStyle: 'contenteditable',
       placeholder: 'Adventure starts here...',
       lineWrapping: true,
-      cursorScrollMargin: 200, // Not *exactly* sure why this value works.
+      cursorScrollMargin: 100, // Not *exactly* sure why this value works.
       scrollbarStyle: null,
       gutters: ['word-counts']
     });
