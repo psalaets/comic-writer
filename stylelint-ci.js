@@ -1,4 +1,3 @@
-const fs = require('fs');
 const stylelint = require('stylelint');
 const junitFormatter = require('stylelint-junit-formatter');
 
