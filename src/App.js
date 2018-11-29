@@ -4,6 +4,7 @@ import './App.css';
 import ConnectedWriter from './components/writer/ConnectedWriter';
 import StatusLine from './components/status-line/StatusLine';
 import FormattingGuide from './components/formatting-guide/FormattingGuide';
+import Settings from './components/settings/Settings';
 import Button from './components/button/Button';
 import Modal from './components/modal/Modal';
 
@@ -12,41 +13,63 @@ class App extends Component {
     super(props);
 
     this.state = {
-      modalActive: false
+      modalActive: false,
+      modalContent: false,
+      modalTitle: false
     };
 
     this.activateModal = this.activateModal.bind(this);
     this.deactivateModal = this.deactivateModal.bind(this);
   }
 
-  activateModal = () => {
-    this.setState({ modalActive: true });
+  activateModal = ({modalTitle, modalContent}) => () => {
+    this.setState({
+      modalActive: true,
+      modalContent: modalContent,
+      modalTitle: modalTitle
+     });
   };
 
   deactivateModal = () => {
-    this.setState({ modalActive: false });
+    this.setState({
+      modalActive: false,
+      modalContent: false,
+      modalTitle: false
+     });
   };
 
 
   render() {
+    // Hopefully this isn't stupid.
+    const formattingModal = {
+      modalTitle: 'Formatting Guide',
+      modalContent: <FormattingGuide/>
+    }
+    const settingsModal = {
+      modalTitle: 'Settings',
+      modalContent: <Settings/>
+    }
+
     return (
       <>
         <div className="c-app">
           <div className="c-app__writer">
-            <ConnectedWriter />
+            <ConnectedWriter/>
           </div>
           <div className="c-app__status-line">
-            <StatusLine>
-              <Button onClick={this.activateModal}>Formatting Guide</Button>
-            </StatusLine>
+            <StatusLine.Container>
+              <Button onClick={this.activateModal(formattingModal)}>Formatting Guide</Button>
+              <StatusLine.Spacer/>
+              <Button onClick={this.activateModal(settingsModal)}>Settings</Button>
+            </StatusLine.Container>
           </div>
         </div>
         <Modal
           modalActive={this.state.modalActive}
           closeButtonOnClick={this.deactivateModal}
-          title="Formatting Guide"
+          title={this.state.modalTitle}
         >
-          <FormattingGuide/>
+          {this.state.modalContent}
         </Modal>
       </>
     );
