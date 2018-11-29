@@ -1,0 +1,34 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+// CSS Imports
+import './{{properCase componentName}}.css';
+
+// Third Party Imports
+
+////////////////////////////////////////////////////////////////////////////////
+// {{titleCase componentName}}
+////////////////////////////////////////////////////////////////////////////////
+export default class {{properCase componentName}} extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="c-{{dashCase componentName}}">
+        {this.props.children}
+      </div>
+    );
+  }
+}
+
+// Default Props
+////////////////////////////////////////////////////////////////////////////////
+{{properCase componentName}}.defaultProps = {};
+
+// Type Checking
+////////////////////////////////////////////////////////////////////////////////
+{{properCase componentName}}.PropTypes = {};

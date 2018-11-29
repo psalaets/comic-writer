@@ -20,9 +20,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lintcss": "node ./stylelint-ci.js",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "plop": "npx plop"
   },
   "devDependencies": {
+    "plop": "^2.1.0",
     "react-test-renderer": "^16.4.1",
     "stylelint": "^9.6.0",
     "stylelint-config-standard": "^18.2.0",
