@@ -42,9 +42,11 @@ export default class CodeMirror extends Component {
         }
       }
 
-      this.cm.setValue(this.props.value);
-      this.cm.setCursor({
-        line, ch
+      withScrollPreserved(this.cm, cm => {
+        cm.setValue(this.props.value);
+        cm.setCursor({
+          line, ch
+        });
       });
     }
 
@@ -108,6 +110,12 @@ export default class CodeMirror extends Component {
   componentWillUnmount() {
 
   }
+}
+
+function withScrollPreserved(cmInstance, fn) {
+  const scrollInfo = cmInstance.getScrollInfo();
+  fn(cmInstance);
+  cmInstance.scrollTo(scrollInfo.left, scrollInfo.top);
 }
 
 CodeMirror.propTypes = {
