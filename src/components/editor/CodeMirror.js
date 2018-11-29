@@ -9,6 +9,7 @@ import { MODE, THEME } from '../../codemirror/comic-writer-mode';
 import '../../codemirror/theme.css';
 
 import 'codemirror/addon/display/placeholder';
+import 'codemirror/addon/scroll/scrollpastend';
 
 export default class CodeMirror extends Component {
   constructor(props) {
@@ -74,6 +75,7 @@ export default class CodeMirror extends Component {
       lineWrapping: true,
       cursorScrollMargin: 100, // Not *exactly* sure why this value works.
       scrollbarStyle: null,
+      scrollPastEnd: true,
       gutters: ['word-counts']
     });
 
