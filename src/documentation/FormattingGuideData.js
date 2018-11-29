@@ -13,15 +13,15 @@ const FormattingGuideData = [
   },
   {
     title: 'Dialouge',
-    code: '> Mao: I have robot parts.'
+    code: '<tab>Mao: I have robot parts.'
   },
   {
     title: 'Sound Effects',
-    code: '> sfx Mao: Oof!'
+    code: '<tab>sfx Mao: Oof!'
   },
   {
     title: 'Caption',
-    code: '> caption: Once upon a wasteland...'
+    code: '<tab>caption: Once upon a wasteland...'
   }
 ]
 

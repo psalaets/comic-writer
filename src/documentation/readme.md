@@ -28,10 +28,6 @@ Or to put it a longer way; the most frustration free to write *and* format a doc
 
 **It's raw text:** The formatting your doing lives in raw text. It's not locked up in some sort of proprietary format. If you ever needed to, you could easily copy and paste our your script into a different tool.
 
-### In truth...
-
-...the format that you'll be writing in, you may have seen it before. It's a standard called `Markdown`. The `comic-writer` provides a comic specific processing for it. We want you to focus on writing, instead of formatting.
-
 ## How do I format my document?
 
 ### A Concise Example
@@ -96,20 +92,20 @@ Panel 1
 It will auto-update-automagically™ to the correct number, should you move content around.
 
 ### Captions
-Captions follow a `>` + `word` + `: ` + `content` pattern. If you wanted to...
+Captions follow a `<tab>` + `word` + `: ` + `content` pattern. If you wanted to...
 
 #### Dialogue
 
 ... write a dialogue, you would write:
 
 ```
-> Character Name: How wonderful! It's formatting for me!
+<tab>Character Name: How wonderful! It's formatting for me!
 ```
 
 The preview should format everything for you. What about off screen?
 
 ```
-> Character Name (off): You can hear me, but you can't see me...
+<tab>Character Name (off): You can hear me, but you can't see me...
 ```
 
 #### Sound Effects
