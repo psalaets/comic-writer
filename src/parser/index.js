@@ -4,9 +4,9 @@ import { create as createParserState } from './state';
 
 const PAGE_REGEX      = /^page (\d+)/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
-const CAPTION_REGEX   = /^> caption ?(\([^]+\))?: ?([^]+)/i;
-const SFX_REGEX       = /^> sfx ?(\([^]+\))?: ?([^]+)/i;
-const DIALOGUE_REGEX  = /^> ([^]+) ?(\([^]+\))?: ?([^]+)/;
+const CAPTION_REGEX   = /^\tcaption ?(\([^]+\))?: ?([^]+)/i;
+const SFX_REGEX       = /^\tsfx ?(\([^]+\))?: ?([^]+)/i;
+const DIALOGUE_REGEX  = /^\t([^]+) ?(\([^]+\))?: ?([^]+)/;
 const METADATA_REGEX  = /^([^]+): ?([^]+)/;
 const PARAGRAPH_REGEX = /^[^]+/;
 
@@ -14,8 +14,7 @@ export default function parse(source) {
   const lines = lineStream(source);
   const state = createParserState();
 
-  const script = parseScript(lines, state);
-  return script;
+  return parseScript(lines, state);
 }
 
 function parseScript(lines, state) {
