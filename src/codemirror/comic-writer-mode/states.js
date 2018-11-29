@@ -16,17 +16,20 @@ export default {
     {
       regex: /^\t[^]+ ?(\([^]+\))?: ?[^]+/,
       sol: true,
-      token: 'dialogue'
+      token: 'dialogue',
+      dedent: true
     },
     {
       regex: /^\tsfx ?(\([^]+\))?: ?[^]+/i,
       sol: true,
-      token: 'sfx'
+      token: 'sfx',
+      dedent: true
     },
     {
       regex: /^\tcaption ?(\([^]+\))?: ?[^]+/i,
       sol: true,
-      token: 'caption'
+      token: 'caption',
+      dedent: true
     },
     {
       regex: /^[^]+: ?[^]+/,
