@@ -13,7 +13,6 @@
     "react-scripts": "^2.1.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "simple-markdown": "^0.4.1",
     "wordcount": "^1.1.1"
   },
   "scripts": {
