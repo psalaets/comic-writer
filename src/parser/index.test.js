@@ -53,17 +53,17 @@ Page 2
 
 Panel 1
 
-> bob: ok
+\tbob: ok
 
-> bob: try it again
+\tbob: try it again
 
 Panel 2
 
 This is panel description.
 
-> sfx: boom
+\tsfx: boom
 
-> caption: yep`);
+\tcaption: yep`);
 
     expect(result).toMatchSnapshot();
   });
@@ -72,9 +72,9 @@ This is panel description.
     const result = parse(`Page 1
 Panel 1
 
-> bob: eat **this** not **that**!
+\tbob: eat **this** not **that**!
 
-> bob: this is *not*`);
+\tbob: this is *not*`);
 
     expect(result).toMatchSnapshot();
   });
@@ -83,9 +83,9 @@ Panel 1
     const result = parse(`Page 1
 Panel 1
 
-> bob: **only bold**
+\tbob: **only bold**
 
-> bob: **starts bold** and then
+\tbob: **starts bold** and then
 `);
 
     expect(result).toMatchSnapshot();
@@ -95,9 +95,9 @@ Panel 1
     const result = parse(`Page 1
 Panel 1
 
-> caption: **I** didn't mean **that**!
+\tcaption: **I** didn't mean **that**!
 
-> caption: this is *not*`);
+\tcaption: this is *not*`);
 
     expect(result).toMatchSnapshot();
   });
@@ -113,17 +113,17 @@ Panel 1
 
 Some characters stand around. And do stuff.
 
-> bob: ok
+\tbob: ok
 
-> bob: try it **again**
+\tbob: try it **again**
 
 Panel 2
 
 This is panel description.
 
-> sfx: boom
+\tsfx: boom
 
-> caption: yep`);
+\tcaption: yep`);
 
     expect(result).toMatchSnapshot();
   });

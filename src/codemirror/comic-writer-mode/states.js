@@ -14,17 +14,17 @@ export default {
       token: 'panel'
     },
     {
-      regex: /^> [^]+ ?(\([^]+\))?: ?[^]+/,
+      regex: /^\t[^]+ ?(\([^]+\))?: ?[^]+/,
       sol: true,
       token: 'dialogue'
     },
     {
-      regex: /^> sfx ?(\([^]+\))?: ?[^]+/i,
+      regex: /^\tsfx ?(\([^]+\))?: ?[^]+/i,
       sol: true,
       token: 'sfx'
     },
     {
-      regex: /^> caption ?(\([^]+\))?: ?[^]+/i,
+      regex: /^\tcaption ?(\([^]+\))?: ?[^]+/i,
       sol: true,
       token: 'caption'
     },
