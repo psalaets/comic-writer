@@ -14,12 +14,6 @@ export default {
       token: 'panel'
     },
     {
-      regex: /^\t[^]+ ?(\([^]+\))?: ?[^]+/,
-      sol: true,
-      token: 'dialogue',
-      dedent: true
-    },
-    {
       regex: /^\tsfx ?(\([^]+\))?: ?[^]+/i,
       sol: true,
       token: 'sfx',
@@ -29,6 +23,12 @@ export default {
       regex: /^\tcaption ?(\([^]+\))?: ?[^]+/i,
       sol: true,
       token: 'caption',
+      dedent: true
+    },
+    {
+      regex: /^\t[^]+ ?(\([^]+\))?: ?[^]+/,
+      sol: true,
+      token: 'dialogue',
       dedent: true
     },
     {
