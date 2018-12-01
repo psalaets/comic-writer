@@ -25,6 +25,11 @@
   color: var(--color-primary-cactus);
 }
 
+.cm-lettering-bold {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 /* Gutters */
 .word-counts { /* 1 */
   width: 2em;
