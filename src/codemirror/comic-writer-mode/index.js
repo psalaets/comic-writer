@@ -7,7 +7,8 @@ CodeMirror.defineMode(MODE, cmConfig => {
   return {
     startState() {
       return {
-        isInCaptionText: false
+        isInCaptionText: false,
+        isInDialogueText: false
       };
     },
     token(stream, state) {
