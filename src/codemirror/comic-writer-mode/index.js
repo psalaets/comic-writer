@@ -11,17 +11,28 @@ CodeMirror.defineMode(MODE, cmConfig => {
       };
     },
     token(stream, state) {
+      // match the first part of a caption
       if (stream.match(/^\tcaption ?(\(.+\))?: ?/i)) {
         state.isInCaptionText = !stream.eol();
         return 'caption';
       }
 
+      // handle caption text
       if (state.isInCaptionText) {
-        return tokenCaptionText(stream, state);
+        return tokenLetteringText(stream, state, 'isInCaptionText', 'caption');
       }
 
-      if (stream.match(/^\t([^]+) ?(\([^]+\))?: ?([^]+)$/)) return 'dialogue';
+      // match the first part of dialogue
+      if (stream.match(/^\t([^]+) ?(\([^]+\))?: ?/)) {
+        state.isInDialogueText = !stream.eol();
+        return 'dialogue';
+      }
 
+      if (state.isInDialogueText) {
+        return tokenLetteringText(stream, state, 'isInDialogueText', 'dialogue');
+      }
+
+      // easy matches
       if (stream.match(/^page \d+$/i)) return 'page';
       if (stream.match(/^panel \d+$/i)) return 'panel';
       if (stream.match(/^\tsfx ?(\(.+\))?: ?([^]+)$/i)) return 'sfx';
@@ -34,8 +45,18 @@ CodeMirror.defineMode(MODE, cmConfig => {
   };
 });
 
-function tokenCaptionText(stream, state) {
-  const tokens = ['caption'];
+/**
+ * Special token handler for lettering that can contain bold.
+ *
+ * @param {Object} stream - Stream from codemirror
+ * @param {Object} state - State from codemirror
+ * @param {String} stateFlagName - Name of state property that determines if
+ *                                 tokener is still in the lettering text.
+ * @param {String} defaultToken - Default token to return on every call
+ * @returns {String} tokens
+ */
+function tokenLetteringText(stream, state, stateFlagName, defaultToken) {
+  const tokens = [defaultToken];
 
   // stream is currently at double star
   if (stream.match(/\*\*/)) {
@@ -61,6 +82,6 @@ function tokenCaptionText(stream, state) {
     }
   }
 
-  state.isInCaptionText = !stream.eol();
+  state[stateFlagName] = !stream.eol();
   return tokens.join(' ');
 }
