@@ -22,6 +22,8 @@ CodeMirror.defineMode(MODE, cmConfig => {
     },
     indent: () => 0,
     token(stream, state) {
+      if (stream.match(/^\tsfx ?(\(.+\))?: ?([^]+)$/i)) return SFX_TOKEN;
+
       // match the first part of a caption
       if (stream.match(/^\tcaption ?(\(.+\))?: ?/i)) {
         state.isInCaptionText = !stream.eol();
@@ -33,7 +35,8 @@ CodeMirror.defineMode(MODE, cmConfig => {
         return tokenLetteringText(stream, state, 'isInCaptionText', CAPTION_TOKEN);
       }
 
-      // match the first part of dialogue
+      // dialogue matching must be after sfx and caption to prevent characters
+      // named "sfx" and "caption"
       if (stream.match(/^\t([^]+) ?(\([^]+\))?: ?/)) {
         state.isInDialogueText = !stream.eol();
         return DIALOGUE_TOKEN;
@@ -43,10 +46,8 @@ CodeMirror.defineMode(MODE, cmConfig => {
         return tokenLetteringText(stream, state, 'isInDialogueText', DIALOGUE_TOKEN);
       }
 
-      // easy matches
       if (stream.match(/^page \d+$/i)) return PAGE_TOKEN;
       if (stream.match(/^panel \d+$/i)) return PANEL_TOKEN;
-      if (stream.match(/^\tsfx ?(\(.+\))?: ?([^]+)$/i)) return SFX_TOKEN;
       if (stream.match(/^([^]+): ?([^]+)/)) return METADATA_TOKEN;
 
       // advance stream past stuff that isn't styled, like plain paragraphs
