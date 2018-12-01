@@ -11,6 +11,7 @@ CodeMirror.defineMode(MODE, cmConfig => {
         isInDialogueText: false
       };
     },
+    indent: () => 0,
     token(stream, state) {
       // match the first part of a caption
       if (stream.match(/^\tcaption ?(\(.+\))?: ?/i)) {
