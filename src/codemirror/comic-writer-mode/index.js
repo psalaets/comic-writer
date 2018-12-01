@@ -3,6 +3,15 @@ import CodeMirror from 'codemirror';
 export const MODE = 'comic-writer';
 export const THEME = 'comic-writer-light';
 
+// these values become css classes so keep them synced with theme file
+const PAGE_TOKEN = 'page';
+const PANEL_TOKEN = 'panel';
+const SFX_TOKEN = 'sfx';
+const CAPTION_TOKEN = 'caption';
+const DIALOGUE_TOKEN = 'dialogue';
+const LETTERING_BOLD_TOKEN = 'lettering-bold';
+const METADATA_TOKEN = 'metadata';
+
 CodeMirror.defineMode(MODE, cmConfig => {
   return {
     startState() {
@@ -16,29 +25,29 @@ CodeMirror.defineMode(MODE, cmConfig => {
       // match the first part of a caption
       if (stream.match(/^\tcaption ?(\(.+\))?: ?/i)) {
         state.isInCaptionText = !stream.eol();
-        return 'caption';
+        return CAPTION_TOKEN;
       }
 
       // handle caption text
       if (state.isInCaptionText) {
-        return tokenLetteringText(stream, state, 'isInCaptionText', 'caption');
+        return tokenLetteringText(stream, state, 'isInCaptionText', CAPTION_TOKEN);
       }
 
       // match the first part of dialogue
       if (stream.match(/^\t([^]+) ?(\([^]+\))?: ?/)) {
         state.isInDialogueText = !stream.eol();
-        return 'dialogue';
+        return DIALOGUE_TOKEN;
       }
 
       if (state.isInDialogueText) {
-        return tokenLetteringText(stream, state, 'isInDialogueText', 'dialogue');
+        return tokenLetteringText(stream, state, 'isInDialogueText', DIALOGUE_TOKEN);
       }
 
       // easy matches
-      if (stream.match(/^page \d+$/i)) return 'page';
-      if (stream.match(/^panel \d+$/i)) return 'panel';
-      if (stream.match(/^\tsfx ?(\(.+\))?: ?([^]+)$/i)) return 'sfx';
-      if (stream.match(/^([^]+): ?([^]+)/)) return 'metadata';
+      if (stream.match(/^page \d+$/i)) return PAGE_TOKEN;
+      if (stream.match(/^panel \d+$/i)) return PANEL_TOKEN;
+      if (stream.match(/^\tsfx ?(\(.+\))?: ?([^]+)$/i)) return SFX_TOKEN;
+      if (stream.match(/^([^]+): ?([^]+)/)) return METADATA_TOKEN;
 
       // advance stream past stuff that isn't styled, like plain paragraphs
       stream.skipToEnd();
@@ -65,7 +74,7 @@ function tokenLetteringText(stream, state, stateFlagName, defaultToken) {
     // and there is another double star somewhere
     if (stream.match(/.*?\*\*/)) {
       // that was a run of lettering-bold
-      tokens.push('lettering-bold');
+      tokens.push(LETTERING_BOLD_TOKEN);
     }
     // stream is at an unpaired double star
     else {
