@@ -4,11 +4,11 @@ import { create as createParserState } from './state';
 
 const PAGE_REGEX      = /^page (\d+)/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
-const CAPTION_REGEX   = /^\tcaption ?(\([^]+\))?: ?([^]+)/i;
-const SFX_REGEX       = /^\tsfx ?(\([^]+\))?: ?([^]+)/i;
-const DIALOGUE_REGEX  = /^\t([^]+) ?(\([^]+\))?: ?([^]+)/;
-const METADATA_REGEX  = /^([^]+): ?([^]+)/;
-const PARAGRAPH_REGEX = /^[^]+/;
+const CAPTION_REGEX   = /^\tcaption ?(\(.+\))?: ?(.+)/i;
+const SFX_REGEX       = /^\tsfx ?(\(.+\))?: ?(.+)/i;
+const DIALOGUE_REGEX  = /^\t(.+) ?(\(.+\))?: ?(.+)/;
+const METADATA_REGEX  = /^(.+): ?(.+)/;
+const PARAGRAPH_REGEX = /^.+/;
 
 export default function parse(source) {
   const lines = lineStream(source);
@@ -206,7 +206,7 @@ function parseCaption(lines, state) {
 }
 
 function parseLetteringContent(content, state) {
-  const boldRegex = /\*\*([^]+?)\*\*(?!\*)/;
+  const boldRegex = /\*\*(.+?)\*\*(?!\*)/;
   const parts = [];
 
   let index = 0;
