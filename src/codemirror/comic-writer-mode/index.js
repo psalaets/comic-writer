@@ -7,51 +7,17 @@ CodeMirror.defineMode(MODE, cmConfig => {
   return {
     startState() {
       return {
-        isInCaption: false
+        isInCaptionText: false
       };
     },
     token(stream, state) {
       if (stream.match(/^\tcaption ?(\(.+\))?: ?/i)) {
-        state.isInCaption = !stream.eol();
+        state.isInCaptionText = !stream.eol();
         return 'caption';
       }
 
-      // currently in caption
-      if (state.isInCaption) {
-        // but at the end of the line
-        if (stream.eol()) {
-          // this is the end of the caption
-          state.isInCaption = false;
-          return 'caption';
-        }
-        // stream is currently at double star
-        else if (stream.match(/\*\*/)) {
-          // and there is another double star somewhere
-          if (stream.match(/.*?\*\*/)) {
-            // that was a lettering-bold
-            state.isInCaption = !stream.eol();
-            return 'caption lettering-bold'
-          }
-          // it was actually an unpaired double star
-          else {
-            // the rest of the line is regular caption
-            stream.skipToEnd();
-            state.isInCaption = false;
-            return 'caption';
-          }
-        }
-        // stream isn't at double star but there is a double star on the line
-        else if (stream.skipTo('**')) {
-          // we skipped past some regular caption
-          return 'caption';
-        }
-        // no double star anywhere
-        else {
-          // the rest of the line is regular caption
-          stream.skipToEnd();
-          state.isInCaption = false;
-          return 'caption';
-        }
+      if (state.isInCaptionText) {
+        return tokenCaptionText(stream, state);
       }
 
       if (stream.match(/^\t([^]+) ?(\([^]+\))?: ?([^]+)$/)) return 'dialogue';
@@ -67,3 +33,34 @@ CodeMirror.defineMode(MODE, cmConfig => {
     }
   };
 });
+
+function tokenCaptionText(stream, state) {
+  const tokens = ['caption'];
+
+  // stream is currently at double star
+  if (stream.match(/\*\*/)) {
+    // and there is another double star somewhere
+    if (stream.match(/.*?\*\*/)) {
+      // that was a run of lettering-bold
+      tokens.push('lettering-bold');
+    }
+    // stream is at an unpaired double star
+    else {
+      // the rest of the line is regular lettering
+      stream.skipToEnd();
+    }
+  }
+  // stream isn't at double star right now
+  else {
+    // skip to next double star, if any
+    const lineContainsDoubleStar = stream.skipTo('**');
+    // found no double star on the line
+    if (!lineContainsDoubleStar) {
+      // everything else is regular lettering
+      stream.skipToEnd();
+    }
+  }
+
+  state.isInCaptionText = !stream.eol();
+  return tokens.join(' ');
+}
