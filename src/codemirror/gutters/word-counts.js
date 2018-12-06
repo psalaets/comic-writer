@@ -1,3 +1,4 @@
+import { DIALOGUE, CAPTION } from '../../parser/types';
 export const ID = 'word-counts';
 
 export function create(cm) {
@@ -7,16 +8,21 @@ export function create(cm) {
       cm.getDoc().clearGutter(ID);
 
       // set new counts
-      wordCounts.forEach(pair => {
-        const line = pair.lineNumber - 1;
-        cm.getDoc().setGutterMarker(line, ID, element(pair.count));
+      wordCounts.forEach(tuple => {
+        const line = tuple.lineNumber - 1;
+        cm.getDoc().setGutterMarker(line, ID, element(tuple));
       });
     }
   };
 }
 
-function element(count) {
+function element(tuple) {
   const span = document.createElement('span');
-  span.textContent = count;
+
+  if (tuple.type === DIALOGUE || tuple.type === CAPTION) {
+    span.classList.add('word-count--lettering');
+  }
+
+  span.textContent = tuple.count;
   return span;
 }
