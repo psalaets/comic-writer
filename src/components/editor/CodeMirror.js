@@ -121,5 +121,11 @@ CodeMirror.propTypes = {
   value: PropTypes.string.isRequired,
   cursor: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  wordCounts: PropTypes.array.isRequired
+  wordCounts: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      lineNumber: PropTypes.number,
+      count: PropTypes.number
+    })
+  ).isRequired
 };

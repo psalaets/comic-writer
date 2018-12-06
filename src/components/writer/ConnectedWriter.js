@@ -3,6 +3,7 @@ import { debounce } from 'lodash';
 
 import parse from '../../parser';
 import visit from '../../parser/visit';
+import * as types from '../../parser/types';
 
 import {
   changeSource,
@@ -20,20 +21,20 @@ function mapStateToProps(state) {
 
 function wordCounts(source) {
   const counts = [];
-  const addCount = (lineNumber, count) => counts.push({lineNumber, count});
+  const addCount = (type, lineNumber, count) => counts.push({type, lineNumber, count});
 
   visit(parse(source), {
     enterPage(page) {
-      addCount(page.startingLine, page.dialogueWordCount + page.captionWordCount);
+      addCount(types.PAGE, page.startingLine, page.dialogueWordCount + page.captionWordCount);
     },
     enterPanel(panel) {
-      addCount(panel.startingLine, panel.dialogueWordCount + panel.captionWordCount);
+      addCount(types.PANEL, panel.startingLine, panel.dialogueWordCount + panel.captionWordCount);
     },
     enterDialogue(dialogue) {
-      addCount(dialogue.startingLine, dialogue.wordCount);
+      addCount(types.DIALOGUE, dialogue.startingLine, dialogue.wordCount);
     },
     enterCaption(caption) {
-      addCount(caption.startingLine, caption.wordCount);
+      addCount(types.CAPTION, caption.startingLine, caption.wordCount);
     }
   });
 

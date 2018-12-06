@@ -37,5 +37,11 @@ Editor.propTypes = {
   onChange: PropTypes.func.isRequired,
   onScroll: PropTypes.func,
   editorWidthPercent: PropTypes.number,
-  wordCounts: PropTypes.array.isRequired
+  wordCounts: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+      lineNumber: PropTypes.number,
+      count: PropTypes.number
+    })
+  ).isRequired
 };
