@@ -8,14 +8,6 @@ export default class Writer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      // This is the value that the editor uses relay scroll position to the
-      // script view.
-      scrollPercentage: 0,
-      // The number that represents the editor/50-50/script view state.
-      editorWidthPercent: 50,
-    };
-
     this.handleChange = this.handleChange.bind(this);
   }
 
