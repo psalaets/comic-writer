@@ -6,6 +6,10 @@ import 'codemirror/lib/codemirror.css';
 import './CodeMirror.css';
 
 import { MODE, THEME } from '../../codemirror/comic-writer-mode';
+import {
+  ID as WORD_COUNTS,
+  create as createWordCounts
+} from '../../codemirror/gutters/word-counts';
 import '../../codemirror/theme.css';
 
 import 'codemirror/addon/display/placeholder';
@@ -51,18 +55,9 @@ export default class CodeMirror extends Component {
       });
     }
 
-    if (prevProps.value !== this.props.value) {
-      this.cm.getDoc().clearGutter('word-counts')
-      this.props.wordCounts.forEach(pair => {
-        this.cm.getDoc().setGutterMarker(pair.lineNumber - 1, 'word-counts', this.wordCountElement(pair.count));
-      });
+    if (prevProps.wordCounts !== this.props.wordCounts) {
+      this.wordCountsGutter.update(this.props.wordCounts);
     }
-  }
-
-  wordCountElement(count) {
-    const span = document.createElement('span');
-    span.textContent = count;
-    return span;
   }
 
   componentDidMount() {
@@ -76,7 +71,7 @@ export default class CodeMirror extends Component {
       cursorScrollMargin: 100, // Not *exactly* sure why this value works.
       scrollbarStyle: null,
       scrollPastEnd: true,
-      gutters: ['word-counts']
+      gutters: [WORD_COUNTS]
     });
 
     this.cm.setSize('100%', '100%');
@@ -107,6 +102,8 @@ export default class CodeMirror extends Component {
         }
       })
     });
+
+    this.wordCountsGutter = createWordCounts(this.cm);
   }
 
   componentWillUnmount() {
