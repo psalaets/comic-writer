@@ -19,10 +19,16 @@
   font-weight: bold;
 }
 
-.cm-s-comic-writer-light .cm-dialogue,
-.cm-s-comic-writer-light .cm-caption,
-.cm-s-comic-writer-light .cm-sfx {
+.cm-s-comic-writer-light .cm-dialogue {
   color: var(--color-primary-cactus);
+}
+
+.cm-s-comic-writer-light .cm-sfx {
+  color: var(--color-primary-dark-magenta);
+}
+
+.cm-s-comic-writer-light .cm-caption {
+  color: var(--color-primary-mocha);
 }
 
 .cm-lettering-bold {
