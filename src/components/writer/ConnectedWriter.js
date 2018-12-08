@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 import { statsSelector } from '../../store/selectors/stats';
 import {
