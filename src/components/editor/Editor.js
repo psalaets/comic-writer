@@ -16,7 +16,7 @@ export default class Editor extends Component {
           editorWidth={80}
           value={this.props.value}
           cursor={this.props.cursor}
-          wordCounts={this.props.wordCounts}
+          stats={this.props.stats}
           onChange={this.handleChange}
         />
     )
@@ -34,11 +34,5 @@ Editor.propTypes = {
   cursor: PropTypes.number.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  wordCounts: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      lineNumber: PropTypes.number,
-      count: PropTypes.number
-    })
-  ).isRequired
+  stats: PropTypes.array.isRequired
 };

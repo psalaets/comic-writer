@@ -55,8 +55,8 @@ export default class CodeMirror extends Component {
       });
     }
 
-    if (prevProps.wordCounts !== this.props.wordCounts) {
-      this.wordCountsGutter.update(this.props.wordCounts);
+    if (prevProps.stats !== this.props.stats) {
+      this.wordCountsGutter.update(this.props.stats);
     }
   }
 
@@ -121,11 +121,5 @@ CodeMirror.propTypes = {
   value: PropTypes.string.isRequired,
   cursor: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
-  wordCounts: PropTypes.arrayOf(
-    PropTypes.shape({
-      type: PropTypes.string,
-      lineNumber: PropTypes.number,
-      count: PropTypes.number
-    })
-  ).isRequired
+  stats: PropTypes.array.isRequired
 };

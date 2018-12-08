@@ -15,30 +15,52 @@ function mapStateToProps(state) {
   return {
     cursor: state.editor.cursor,
     source: state.editor.source,
-    wordCounts: wordCounts(state.editor.source)
+    stats: parseStats(state.editor.source)
   };
 }
 
-function wordCounts(source) {
-  const counts = [];
-  const addCount = (type, lineNumber, count) => counts.push({type, lineNumber, count});
+function parseStats(source) {
+  const stats = [];
+  let panelsSeen = 0;
 
   visit(parse(source), {
     enterPage(page) {
-      addCount(types.PAGE, page.startingLine, page.dialogueWordCount + page.captionWordCount);
+      panelsSeen = 0;
+    },
+    exitPage(page) {
+      stats.push({
+        type: types.PAGE,
+        lineNumber: page.startingLine,
+        wordCount: page.dialogueWordCount + page.captionWordCount,
+        panelCount: panelsSeen
+      });
     },
     enterPanel(panel) {
-      addCount(types.PANEL, panel.startingLine, panel.dialogueWordCount + panel.captionWordCount);
+      panelsSeen += 1;
+
+      stats.push({
+        type: types.PANEL,
+        lineNumber: panel.startingLine,
+        wordCount: panel.dialogueWordCount + panel.captionWordCount
+      });
     },
     enterDialogue(dialogue) {
-      addCount(types.DIALOGUE, dialogue.startingLine, dialogue.wordCount);
+      stats.push({
+        type: types.DIALOGUE,
+        lineNumber: dialogue.startingLine,
+        wordCount: dialogue.wordCount
+      });
     },
     enterCaption(caption) {
-      addCount(types.CAPTION, caption.startingLine, caption.wordCount);
+      stats.push({
+        type: types.CAPTION,
+        lineNumber: caption.startingLine,
+        wordCount: caption.wordCount
+      });
     }
   });
 
-  return counts;
+  return stats;
 }
 
 function mapDispatchToProps(dispatch) {

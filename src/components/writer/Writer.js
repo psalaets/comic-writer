@@ -25,7 +25,7 @@ export default class Writer extends Component {
           key="editor"
           value={this.props.source}
           cursor={this.props.cursor}
-          wordCounts={this.props.wordCounts}
+          stats={this.props.stats}
           onChange={this.handleChange}
         />
       </main>
@@ -37,5 +37,5 @@ Writer.propTypes = {
   source: PropTypes.string.isRequired,
   cursor: PropTypes.number.isRequired,
   onSourceChange: PropTypes.func.isRequired,
-  wordCounts: PropTypes.array.isRequired
+  stats: PropTypes.array.isRequired
 };
