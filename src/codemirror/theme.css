@@ -20,15 +20,15 @@
 }
 
 .cm-s-comic-writer-light .cm-dialogue {
-  color: var(--color-primary-cactus);
+  color: var(--color-utility-charcol);
 }
 
 .cm-s-comic-writer-light .cm-sfx {
-  color: var(--color-primary-dark-magenta);
+  color: var(--color-utility-charcol);
 }
 
 .cm-s-comic-writer-light .cm-caption {
-  color: var(--color-primary-mocha);
+  color: var(--color-utility-charcol);
 }
 
 .cm-lettering-bold {
