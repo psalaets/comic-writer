@@ -14,6 +14,8 @@ export function create(cm) {
       pages.forEach(page => {
         cm.getDoc().addLineWidget(page.lineNumber - 1, node(page.panelCount));
       });
+
+      cm.refresh();
     }
   };
 }
