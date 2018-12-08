@@ -1,4 +1,4 @@
-import { DIALOGUE, CAPTION } from '../../parser/types';
+import { DIALOGUE, CAPTION } from '../../types';
 export const ID = 'word-counts';
 
 export function create(cm) {

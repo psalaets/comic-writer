@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 
 import parse from '../../parser';
 import visit from '../../parser/visit';
-import * as types from '../../parser/types';
+import * as types from '../../types';
 
 import {
   changeSource,

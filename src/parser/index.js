@@ -1,4 +1,4 @@
-import * as types from './types';
+import * as types from '../types';
 import countWords from './count-words';
 import { create as createParserState } from './state';
 

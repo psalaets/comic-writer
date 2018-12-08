@@ -1,6 +1,6 @@
 // sends a visitor object through the parse tree that was returned by parse()
 
-import * as types from './types';
+import * as types from '../types';
 
 export default function visit(nodes, visitor) {
   nodes.forEach(node => visitNode(node, visitor));
