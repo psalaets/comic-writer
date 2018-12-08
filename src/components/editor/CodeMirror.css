@@ -43,3 +43,8 @@
   top: 0;
   bottom: 0;
 }
+
+/* panel count line widget */
+.panel-count {
+  color: var(--color-utility-dove);
+}

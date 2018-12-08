@@ -10,6 +10,12 @@ import {
   ID as WORD_COUNTS,
   create as createWordCounts
 } from '../../codemirror/gutters/word-counts';
+
+import {
+  create as createPanelCounts
+} from '../../codemirror/panel-counts';
+
+
 import '../../codemirror/theme.css';
 
 import 'codemirror/addon/display/placeholder';
@@ -30,7 +36,10 @@ export default class CodeMirror extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.value !== this.props.value) {
+    const valueChanged = prevProps.value !== this.props.value;
+    const statsChanged = prevProps.stats !== this.props.stats;
+
+    if (valueChanged) {
       let line = 0;
       let ch = 0;
       let charsSeen = 0;
@@ -55,8 +64,12 @@ export default class CodeMirror extends Component {
       });
     }
 
-    if (prevProps.stats !== this.props.stats) {
+    if (statsChanged) {
       this.wordCountsGutter.update(this.props.stats);
+    }
+
+    if (valueChanged && statsChanged) {
+      this.panelCounts.update(this.props.stats);
     }
   }
 
@@ -104,6 +117,7 @@ export default class CodeMirror extends Component {
     });
 
     this.wordCountsGutter = createWordCounts(this.cm);
+    this.panelCounts = createPanelCounts(this.cm);
   }
 
   componentWillUnmount() {
