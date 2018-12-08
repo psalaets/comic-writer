@@ -3,12 +3,12 @@ export const ID = 'word-counts';
 
 export function create(cm) {
   return {
-    update(wordCounts) {
+    update(stats) {
       // clear
       cm.getDoc().clearGutter(ID);
 
       // set new counts
-      wordCounts.forEach(tuple => {
+      stats.forEach(tuple => {
         const line = tuple.lineNumber - 1;
         cm.getDoc().setGutterMarker(line, ID, element(tuple));
       });
@@ -23,6 +23,6 @@ function element(tuple) {
     span.classList.add('word-count--lettering');
   }
 
-  span.textContent = tuple.count;
+  span.textContent = tuple.wordCount;
   return span;
 }
