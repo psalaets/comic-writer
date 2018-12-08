@@ -1,4 +1,4 @@
-import { DIALOGUE, CAPTION } from '../../types';
+import { PAGE } from '../../types';
 export const ID = 'word-counts';
 
 export function create(cm) {
@@ -19,8 +19,8 @@ export function create(cm) {
 function element(tuple) {
   const span = document.createElement('span');
 
-  if (tuple.type === DIALOGUE || tuple.type === CAPTION) {
-    span.classList.add('word-count--lettering');
+  if (tuple.type === PAGE) {
+    span.classList.add('word-count--page');
   }
 
   span.textContent = tuple.wordCount;

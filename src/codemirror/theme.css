@@ -42,8 +42,8 @@
   border-right: 1px solid var(--color-utility-alabaster);
 }
 
-.word-count--lettering {
-  align-self: flex-start;
+.word-count--page {
+  padding-top: .4em;
 }
 
 .CodeMirror-gutter-elt {  /* 1 */
