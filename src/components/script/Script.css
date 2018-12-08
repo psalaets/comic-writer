@@ -6,7 +6,7 @@
 /******************************************************************************/
 .c-script {
   background-color: var(--color-utility-pure);
-  color: var(--color-utility-charcol);
+  color: var(--color-utility-charcoal);
   flex: 1 1 50%;
   font-family: sans-serif;
   overflow-x: hidden;
