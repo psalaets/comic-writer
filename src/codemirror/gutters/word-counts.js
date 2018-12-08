@@ -4,13 +4,14 @@ export const ID = 'word-counts';
 export function create(cm) {
   return {
     update(stats) {
-      // clear
-      cm.getDoc().clearGutter(ID);
+      cm.operation(() => {
+        // clear
+        cm.clearGutter(ID);
 
-      // set new counts
-      stats.forEach(tuple => {
-        const line = tuple.lineNumber - 1;
-        cm.getDoc().setGutterMarker(line, ID, element(tuple));
+        // set new counts
+        stats.forEach(tuple => {
+          cm.setGutterMarker(tuple.lineNumber - 1, ID, element(tuple));
+        });
       });
     }
   };
