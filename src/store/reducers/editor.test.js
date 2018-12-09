@@ -4,7 +4,7 @@ describe('editor reducer', () => {
   describe('transformMarkdown', () => {
     describe('pages', () => {
       it('first page', () => {
-        const input = `page `;
+        const input = `page`;
 
         const result = transformMarkdown(input, 0);
 
@@ -12,7 +12,7 @@ describe('editor reducer', () => {
       });
 
       it('adding page at start', () => {
-        const input = 'page \nPage 1\nthis is page 1 info';
+        const input = 'page\nPage 1\nthis is page 1 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -20,7 +20,7 @@ describe('editor reducer', () => {
       });
 
       it('adding page at end', () => {
-        const input = 'Page 1\nthis is page 1 info\npage ';
+        const input = 'Page 1\nthis is page 1 info\npage';
 
         const result = transformMarkdown(input, 0);
 
@@ -28,7 +28,7 @@ describe('editor reducer', () => {
       });
 
       it('adding page in the middle', () => {
-        const input = 'Page 1\nthis is page 1 info\npage \nPage 2\nthis is page 2 info';
+        const input = 'Page 1\nthis is page 1 info\npage\nPage 2\nthis is page 2 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -77,7 +77,7 @@ describe('editor reducer', () => {
 
       it('inserting content with page count in double digits', () => {
         const tenPages = Array.from(new Array(10), (p, i) => `Page ${i + 1}`).join('\n');
-        const input = tenPages + '\npage \npage \npage ';
+        const input = tenPages + '\npage\npage\npage';
 
         const result = transformMarkdown(input, 0);
 
@@ -87,7 +87,7 @@ describe('editor reducer', () => {
 
     describe('panels', () => {
       it('adding panel to page', () => {
-        const input = 'Page 1\nthis is page 1 info\npanel ';
+        const input = 'Page 1\nthis is page 1 info\npanel';
 
         const result = transformMarkdown(input, 0);
 
@@ -95,7 +95,7 @@ describe('editor reducer', () => {
       });
 
       it('adding second panel to page', () => {
-        const input = 'Page 1\nthis is page 1 info\nPanel 1\npanel ';
+        const input = 'Page 1\nthis is page 1 info\nPanel 1\npanel';
 
         const result = transformMarkdown(input, 0);
 
@@ -103,7 +103,7 @@ describe('editor reducer', () => {
       });
 
       it('adding panel at start', () => {
-        const input = 'Page 1\nthis is page 1 info\npanel \nPanel 1\nthis is panel 1 info';
+        const input = 'Page 1\nthis is page 1 info\npanel\nPanel 1\nthis is panel 1 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -111,7 +111,7 @@ describe('editor reducer', () => {
       });
 
       it('adding panel in middle', () => {
-        const input = 'Page 1\nPanel 1\nthis is panel 1 info\npanel \nPanel 2\nthis is panel 2 info';
+        const input = 'Page 1\nPanel 1\nthis is panel 1 info\npanel\nPanel 2\nthis is panel 2 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -119,7 +119,7 @@ describe('editor reducer', () => {
       });
 
       it('adding panel to second page', () => {
-        const input = 'Page 1\nPanel 1\nthis is panel 1 info\nPage 2\npanel ';
+        const input = 'Page 1\nPanel 1\nthis is panel 1 info\nPage 2\npanel';
 
         const result = transformMarkdown(input, 0);
 
@@ -127,7 +127,7 @@ describe('editor reducer', () => {
       });
 
       it('adding another panel to second page', () => {
-        const input = 'Page 1\nPanel 1\nthis is panel 1 info\nPage 2\nPanel 1\npanel ';
+        const input = 'Page 1\nPanel 1\nthis is panel 1 info\nPage 2\nPanel 1\npanel';
 
         const result = transformMarkdown(input, 0);
 

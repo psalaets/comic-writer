@@ -65,8 +65,8 @@ export function transformMarkdown(value, cursor) {
 
   const newValue = lines
     .map(line => {
-      const isPage = line.text.match(/^page /i);
-      const isPanel = line.text.match(/^panel /i);
+      const isPage = line.text.match(/^page/i);
+      const isPanel = line.text.match(/^panel/i);
 
       if (isPage) {
         pageNumber += 1;
