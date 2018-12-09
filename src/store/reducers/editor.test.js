@@ -12,7 +12,7 @@ describe('editor reducer', () => {
       });
 
       it('adding page at start', () => {
-        const input = 'page \nPage 1\npage 1 info';
+        const input = 'page \nPage 1\nthis is page 1 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -20,7 +20,7 @@ describe('editor reducer', () => {
       });
 
       it('adding page at end', () => {
-        const input = 'Page 1\npage 1 info\npage ';
+        const input = 'Page 1\nthis is page 1 info\npage ';
 
         const result = transformMarkdown(input, 0);
 
@@ -28,7 +28,7 @@ describe('editor reducer', () => {
       });
 
       it('adding page in the middle', () => {
-        const input = 'Page 1\npage 1 info\npage \nPage 2\npage 2 info';
+        const input = 'Page 1\nthis is page 1 info\npage \nPage 2\nthis is page 2 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -36,7 +36,7 @@ describe('editor reducer', () => {
       });
 
       it('inserting page at start', () => {
-        const input = 'Page 3\npage 3 info\nPage 1\npage 1 info\nPage 2\npage 2 info';
+        const input = 'Page 3\nthis is page 3 info\nPage 1\nthis is page 1 info\nPage 2\nthis is page 2 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -44,7 +44,7 @@ describe('editor reducer', () => {
       });
 
       it('inserting page at end', () => {
-        const input = 'Page 2\npage 2 info\nPage 1\npage 1 info';
+        const input = 'Page 2\nthis is page 2 info\nPage 1\nthis is page 1 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -52,7 +52,7 @@ describe('editor reducer', () => {
       });
 
       it('inserting page in middle', () => {
-        const input = 'Page 1\npage 1 info\nPage 3\npage 3 info\nPage 2\npage 2 info';
+        const input = 'Page 1\nthis is page 1 info\nPage 3\nthis is page 3 info\nPage 2\nthis is page 2 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -60,7 +60,7 @@ describe('editor reducer', () => {
       });
 
       it('remove page from start', () => {
-        const input = 'Page 2\npage 2 info\nPage 3\npage 3 info';
+        const input = 'Page 2\nthis is page 2 info\nPage 3\nthis is page 3 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -68,7 +68,7 @@ describe('editor reducer', () => {
       });
 
       it('remove page from middle', () => {
-        const input = 'Page 1\npage 1 info\nPage 3\npage 3 info';
+        const input = 'Page 1\nthis is page 1 info\nPage 3\nthis is page 3 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -87,7 +87,7 @@ describe('editor reducer', () => {
 
     describe('panels', () => {
       it('adding panel to page', () => {
-        const input = 'Page 1\npage 1 info\npanel ';
+        const input = 'Page 1\nthis is page 1 info\npanel ';
 
         const result = transformMarkdown(input, 0);
 
@@ -95,7 +95,7 @@ describe('editor reducer', () => {
       });
 
       it('adding second panel to page', () => {
-        const input = 'Page 1\npage 1 info\nPanel 1\npanel ';
+        const input = 'Page 1\nthis is page 1 info\nPanel 1\npanel ';
 
         const result = transformMarkdown(input, 0);
 
@@ -103,7 +103,7 @@ describe('editor reducer', () => {
       });
 
       it('adding panel at start', () => {
-        const input = 'Page 1\npage 1 info\npanel \nPanel 1\npanel 1 info';
+        const input = 'Page 1\nthis is page 1 info\npanel \nPanel 1\nthis is panel 1 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -111,7 +111,7 @@ describe('editor reducer', () => {
       });
 
       it('adding panel in middle', () => {
-        const input = 'Page 1\nPanel 1\npanel 1 info\npanel \nPanel 2\npanel 2 info';
+        const input = 'Page 1\nPanel 1\nthis is panel 1 info\npanel \nPanel 2\nthis is panel 2 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -119,7 +119,7 @@ describe('editor reducer', () => {
       });
 
       it('adding panel to second page', () => {
-        const input = 'Page 1\nPanel 1\npanel 1 info\nPage 2\npanel ';
+        const input = 'Page 1\nPanel 1\nthis is panel 1 info\nPage 2\npanel ';
 
         const result = transformMarkdown(input, 0);
 
@@ -127,7 +127,7 @@ describe('editor reducer', () => {
       });
 
       it('adding another panel to second page', () => {
-        const input = 'Page 1\nPanel 1\npanel 1 info\nPage 2\nPanel 1\npanel ';
+        const input = 'Page 1\nPanel 1\nthis is panel 1 info\nPage 2\nPanel 1\npanel ';
 
         const result = transformMarkdown(input, 0);
 
@@ -135,7 +135,7 @@ describe('editor reducer', () => {
       });
 
       it('inserting panel at start', () => {
-        const input = 'Page 1\npage 1 info\nPanel 2\nPanel 1\npanel 1 info';
+        const input = 'Page 1\nthis is page 1 info\nPanel 2\nPanel 1\nthis is panel 1 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -143,7 +143,7 @@ describe('editor reducer', () => {
       });
 
       it('inserting panel in middle', () => {
-        const input = 'Page 1\nPanel 1\npanel 1 info\nPanel 3\nPanel 2\npanel 2 info';
+        const input = 'Page 1\nPanel 1\nthis is panel 1 info\nPanel 3\nPanel 2\nthis is panel 2 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -151,7 +151,7 @@ describe('editor reducer', () => {
       });
 
       it('removing panel from start', () => {
-        const input = 'Page 1\nPanel 2\npanel 2 info';
+        const input = 'Page 1\nPanel 2\nthis is panel 2 info';
 
         const result = transformMarkdown(input, 0);
 
@@ -159,7 +159,7 @@ describe('editor reducer', () => {
       });
 
       it('removing panel from middle', () => {
-        const input = 'Page 1\nPanel 1\npanel 1 info\nPanel 3\npanel 3 info';
+        const input = 'Page 1\nPanel 1\nthis is panel 1 info\nPanel 3\nthis is panel 3 info';
 
         const result = transformMarkdown(input, 0);
 
