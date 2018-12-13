@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 
 import { statsSelector } from '../../store/selectors/stats';
+import { cursorSelector } from '../../store/selectors/cursor';
+
 import {
   changeSource,
   saveScript
@@ -11,7 +13,7 @@ import Writer from './Writer';
 
 function mapStateToProps(state) {
   return {
-    cursor: state.editor.cursor,
+    cursor: cursorSelector(state),
     source: state.editor.source,
     stats: statsSelector(state)
   };
