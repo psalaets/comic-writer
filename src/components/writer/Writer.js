@@ -35,7 +35,10 @@ export default class Writer extends Component {
 
 Writer.propTypes = {
   source: PropTypes.string.isRequired,
-  cursor: PropTypes.number.isRequired,
+  cursor: PropTypes.shape({
+    line: PropTypes.number.isRequired,
+    ch: PropTypes.number.isRequired
+  }).isRequired,
   onSourceChange: PropTypes.func.isRequired,
   stats: PropTypes.array.isRequired
 };

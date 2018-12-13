@@ -24,14 +24,17 @@ export default class Editor extends Component {
 
   handleChange(event) {
     this.props.onChange({
-      value: event.target.value,
-      cursor: event.target.selectionStart
+      value: event.value,
+      cursor: event.cursor
     });
   }
 }
 
 Editor.propTypes = {
-  cursor: PropTypes.number.isRequired,
+  cursor: PropTypes.shape({
+    line: PropTypes.number.isRequired,
+    ch: PropTypes.number.isRequired
+  }).isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   stats: PropTypes.array.isRequired
