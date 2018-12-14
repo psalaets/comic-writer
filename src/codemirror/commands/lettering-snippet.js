@@ -1,13 +1,100 @@
+import CodeMirror from 'codemirror';
+
 export const ID = 'letteringSnippet';
 
 export function install(CodeMirror) {
   if (ID in CodeMirror.commands) {
-    throw new Error(`CodeMirror already has a command called ${ID}`);
+    throw new Error(`"${ID}" is already registered as a CodeMirror command`);
   }
 
   CodeMirror.commands[ID] = letteringSnippetCommand;
 };
 
-function letteringSnippetCommand(cm) {
+function makeSteps() {
+  return [
+    function metadataState(cm) {
+      const cursor = cm.getCursor();
+      const lineText = cm.getLine(cursor.line);
+      const tabIndex = lineText.indexOf('\t');
+      const colonIndex = lineText.indexOf(':');
 
+      cm.setSelection({
+        line: cursor.line,
+        ch: tabIndex + 1
+      },
+      {
+        line: cursor.line,
+        ch: colonIndex
+      });
+    },
+    function contentState(cm) {
+      const cursor = cm.getCursor();
+      const lineText = cm.getLine(cursor.line);
+      const lastColonIndex = lineText.lastIndexOf(':');
+
+      cm.setSelection({
+        line: cursor.line,
+        ch: lastColonIndex + 2
+      }, {
+        line: cursor.line,
+        ch: lastColonIndex + 100000
+      });
+    }
+  ];
+}
+
+function letteringSnippetCommand(cm) {
+  let stepIndex = -1;
+  const steps = makeSteps();
+
+  const keyMap = {
+    Tab(cm) {
+      next();
+    },
+    Enter(cm) {
+      exit();
+      return CodeMirror.Pass;
+    },
+    // auto pair parens
+    ['Shift-9'](cm) {
+      const cursor = cm.getCursor();
+      cm.replaceRange('()', {
+        line: cursor.line,
+        ch: cursor.ch
+      });
+      cm.setCursor({
+        line: cursor.line,
+        ch: cursor.ch + 1
+      });
+    }
+  };
+
+  enter();
+
+  function next() {
+    stepIndex += 1;
+
+    const step = steps[stepIndex];
+    if (step) {
+      step(cm);
+    } else {
+      exit();
+    }
+  }
+
+  function exit() {
+    cm.removeKeyMap(keyMap);
+  }
+
+  function enter() {
+    cm.addKeyMap(keyMap);
+
+    const subjectPlaceholder = 'subject';
+    const contentPlaceholder = 'content';
+    const cursor = cm.getCursor();
+
+    cm.replaceRange(`\t${subjectPlaceholder}: ${contentPlaceholder}`, cursor);
+
+    next();
+  }
 };
