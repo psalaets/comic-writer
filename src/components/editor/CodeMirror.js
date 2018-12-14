@@ -15,11 +15,18 @@ import {
   create as createPanelCounts
 } from '../../codemirror/panel-counts';
 
+import {
+  ID as LETTERING_SNIPPET,
+  install as installLetteringSnippet
+} from '../../codemirror/commands/lettering-snippet';
+
 
 import '../../codemirror/theme.css';
 
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/addon/scroll/scrollpastend';
+
+installLetteringSnippet(codemirror);
 
 export default class CodeMirror extends Component {
   constructor(props) {
@@ -77,7 +84,20 @@ export default class CodeMirror extends Component {
       cursorScrollMargin: 100, // Not *exactly* sure why this value works.
       scrollbarStyle: null,
       scrollPastEnd: true,
-      gutters: [WORD_COUNTS]
+      gutters: [WORD_COUNTS],
+      extraKeys: {
+        Tab(cm) {
+          const cursor = cm.getCursor();
+          const line = cm.getLine(cursor.line);
+
+          // they hit tab on a blank line
+          if (line === '') {
+            cm.execCommand(LETTERING_SNIPPET);
+          } else {
+            return codemirror.Pass;
+          }
+        }
+      }
     });
 
     this.cm.setSize('100%', '100%');
