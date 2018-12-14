@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 
 import { statsSelector } from '../../store/selectors/stats';
-import { cursorSelector } from '../../store/selectors/cursor';
 
 import {
   changeSource,
@@ -13,7 +12,6 @@ import Writer from './Writer';
 
 function mapStateToProps(state) {
   return {
-    cursor: cursorSelector(state),
     source: state.editor.source,
     stats: statsSelector(state)
   };
@@ -24,9 +22,9 @@ function mapDispatchToProps(dispatch) {
 
   return {
     onSourceChange(event) {
-      const {source, cursor} = event;
+      const {source} = event;
 
-      dispatch(changeSource(source, cursor));
+      dispatch(changeSource(source));
       debouncedSaveScript(source);
     }
   };

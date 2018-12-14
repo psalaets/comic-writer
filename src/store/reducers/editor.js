@@ -5,24 +5,18 @@ import {
 
 export default function editorReducer(state, action) {
   state = state || {
-    source: '',
-    cursor: {
-      line: 0,
-      ch: 0
-    }
+    source: ''
   };
 
   switch (action.type) {
     case LOAD_SCRIPT_COMPLETED: {
       return {
-        ...state,
         source: transformMarkdown(action.payload.source)
       };
     }
     case CHANGE_SOURCE: {
       return {
-        source: transformMarkdown(action.payload.source),
-        cursor: action.payload.cursor
+        source: transformMarkdown(action.payload.source)
       };
     }
     default:

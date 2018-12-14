@@ -13,8 +13,7 @@ export default class Writer extends Component {
 
   handleChange(event) {
     this.props.onSourceChange({
-      source: event.value,
-      cursor: event.cursor
+      source: event.value
     });
   }
 
@@ -24,7 +23,6 @@ export default class Writer extends Component {
         <Editor
           key="editor"
           value={this.props.source}
-          cursor={this.props.cursor}
           stats={this.props.stats}
           onChange={this.handleChange}
         />
@@ -35,10 +33,6 @@ export default class Writer extends Component {
 
 Writer.propTypes = {
   source: PropTypes.string.isRequired,
-  cursor: PropTypes.shape({
-    line: PropTypes.number.isRequired,
-    ch: PropTypes.number.isRequired
-  }).isRequired,
   onSourceChange: PropTypes.func.isRequired,
   stats: PropTypes.array.isRequired
 };

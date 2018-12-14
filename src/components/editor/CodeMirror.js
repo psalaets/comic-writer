@@ -87,14 +87,8 @@ export default class CodeMirror extends Component {
         return;
       }
 
-      const cursor = cm.getCursor();
-
       this.props.onChange({
-        value: cm.getValue(),
-        cursor: {
-          line: cursor.line,
-          ch: cursor.ch
-        }
+        value: cm.getValue()
       })
     });
 
@@ -109,10 +103,6 @@ export default class CodeMirror extends Component {
 
 CodeMirror.propTypes = {
   value: PropTypes.string.isRequired,
-  cursor: PropTypes.shape({
-    line: PropTypes.number.isRequired,
-    ch: PropTypes.number.isRequired
-  }).isRequired,
   onChange: PropTypes.func.isRequired,
   stats: PropTypes.array.isRequired
 };
