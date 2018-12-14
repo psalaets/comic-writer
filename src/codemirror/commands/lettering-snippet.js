@@ -10,53 +10,24 @@ export function install(CodeMirror) {
   CodeMirror.commands[ID] = letteringSnippetCommand;
 };
 
-function makeSteps() {
-  return [
-    function metadataState(cm) {
-      const cursor = cm.getCursor();
-      const lineText = cm.getLine(cursor.line);
-      const tabIndex = lineText.indexOf('\t');
-      const colonIndex = lineText.indexOf(':');
-
-      cm.setSelection({
-        line: cursor.line,
-        ch: tabIndex + 1
-      },
-      {
-        line: cursor.line,
-        ch: colonIndex
-      });
-    },
-    function contentState(cm) {
-      const cursor = cm.getCursor();
-      const lineText = cm.getLine(cursor.line);
-      const lastColonIndex = lineText.lastIndexOf(':');
-
-      cm.setSelection({
-        line: cursor.line,
-        ch: lastColonIndex + 2
-      }, {
-        line: cursor.line,
-        ch: lastColonIndex + 100000
-      });
-    }
-  ];
-}
-
 function letteringSnippetCommand(cm) {
   let stepIndex = -1;
   const steps = makeSteps();
 
   const keyMap = {
-    Tab(cm) {
+    Tab() {
       next();
     },
-    Enter(cm) {
+    Enter() {
+      exit();
+      return CodeMirror.Pass;
+    },
+    Escape() {
       exit();
       return CodeMirror.Pass;
     },
     // auto pair parens
-    ['Shift-9'](cm) {
+    'Shift-9'(cm) {
       const cursor = cm.getCursor();
       cm.replaceRange('()', {
         line: cursor.line,
@@ -70,6 +41,12 @@ function letteringSnippetCommand(cm) {
   };
 
   enter();
+
+  function enter() {
+    cm.addKeyMap(keyMap);
+    cm.replaceRange('\tsubject: content', cm.getCursor());
+    next();
+  }
 
   function next() {
     stepIndex += 1;
@@ -85,16 +62,37 @@ function letteringSnippetCommand(cm) {
   function exit() {
     cm.removeKeyMap(keyMap);
   }
+}
 
-  function enter() {
-    cm.addKeyMap(keyMap);
+function makeSteps() {
+  return [
+    function metadataState(cm) {
+      const cursor = cm.getCursor();
+      const lineText = cm.getLine(cursor.line);
+      const tabIndex = lineText.indexOf('\t');
+      const colonIndex = lineText.indexOf(':');
 
-    const subjectPlaceholder = 'subject';
-    const contentPlaceholder = 'content';
-    const cursor = cm.getCursor();
+      cm.setSelection({
+        line: cursor.line,
+        ch: tabIndex + 1
+      },
+        {
+          line: cursor.line,
+          ch: colonIndex
+        });
+    },
+    function contentState(cm) {
+      const cursor = cm.getCursor();
+      const lineText = cm.getLine(cursor.line);
+      const lastColonIndex = lineText.lastIndexOf(':');
 
-    cm.replaceRange(`\t${subjectPlaceholder}: ${contentPlaceholder}`, cursor);
-
-    next();
-  }
-};
+      cm.setSelection({
+        line: cursor.line,
+        ch: lastColonIndex + 2
+      }, {
+          line: cursor.line,
+          ch: lastColonIndex + 100000
+        });
+    }
+  ];
+}
