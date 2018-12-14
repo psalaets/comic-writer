@@ -40,17 +40,28 @@ export default class CodeMirror extends Component {
     const statsChanged = prevProps.stats !== this.props.stats;
 
     if (valueChanged) {
-      withScrollPreserved(this.cm, cm => {
-        cm.setValue(this.props.value);
-        cm.setCursor(this.props.cursor);
-      });
+      if (!this.cm.getValue()) {
+        this.cm.setValue(this.props.value);
+      } else {
+        const oldLines = this.cm.getValue().split('\n');
+        const newLines = this.props.value.split('\n');
+
+        this.cm.operation(() => {
+          newLines.forEach((newLine, index) => {
+            const oldLine = oldLines[index] || '';
+            if (newLine !== oldLine) {
+              const from = { line: index, ch: 0 };
+              const to = { line: index, ch: 10000 };
+
+              this.cm.replaceRange(newLine, from, to, 'setValue');
+            }
+          });
+        });
+      }
     }
 
     if (statsChanged) {
       this.wordCountsGutter.update(this.props.stats);
-    }
-
-    if (valueChanged && statsChanged) {
       this.panelCounts.update(this.props.stats);
     }
   }
@@ -94,12 +105,6 @@ export default class CodeMirror extends Component {
   componentWillUnmount() {
 
   }
-}
-
-function withScrollPreserved(cmInstance, fn) {
-  const scrollInfo = cmInstance.getScrollInfo();
-  fn(cmInstance);
-  cmInstance.scrollTo(scrollInfo.left, scrollInfo.top);
 }
 
 CodeMirror.propTypes = {
