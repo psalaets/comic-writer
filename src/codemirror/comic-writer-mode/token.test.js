@@ -1,9 +1,11 @@
 import CodeMirror from 'codemirror';
 import createMode from './mode-config';
-import token from './token';
 
 const cmConfig = {};
-const startState = createMode(cmConfig).startState;
+const mode = createMode(cmConfig);
+
+const startState = mode.startState;
+const token = mode.token;
 
 describe('mode.token()', () => {
   describe('page', () => {
