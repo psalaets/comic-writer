@@ -15,18 +15,13 @@ import {
   create as createPanelCounts
 } from '../../codemirror/panel-counts';
 
-import {
-  ID as LETTERING_SNIPPET,
-  install as installLetteringSnippet
-} from '../../codemirror/commands/lettering-snippet';
+import { letteringSnippet } from '../../codemirror/lettering-snippet';
 
 
 import '../../codemirror/theme.css';
 
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/addon/scroll/scrollpastend';
-
-installLetteringSnippet(CodeMirror);
 
 export default class CodeMirrorComponent extends Component {
   constructor(props) {
@@ -92,7 +87,7 @@ export default class CodeMirrorComponent extends Component {
 
           // they hit tab on a blank line
           if (line === '') {
-            cm.execCommand(LETTERING_SNIPPET);
+            letteringSnippet(cm);
           } else {
             return CodeMirror.Pass;
           }

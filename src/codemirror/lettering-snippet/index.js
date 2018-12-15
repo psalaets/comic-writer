@@ -1,16 +1,6 @@
 import CodeMirror from 'codemirror';
 
-export const ID = 'letteringSnippet';
-
-export function install(CodeMirror) {
-  if (ID in CodeMirror.commands) {
-    throw new Error(`"${ID}" is already registered as a CodeMirror command`);
-  }
-
-  CodeMirror.commands[ID] = letteringSnippetCommand;
-};
-
-function letteringSnippetCommand(cm) {
+export function letteringSnippet(cm) {
   const lineNumber = cm.getCursor().line;
   let stepIndex = -1;
   const steps = makeSteps();
