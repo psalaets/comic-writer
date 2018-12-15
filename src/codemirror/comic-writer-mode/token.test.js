@@ -8,25 +8,25 @@ const startState = createMode(cmConfig).startState;
 describe('mode.token()', () => {
   describe('page', () => {
     test('single digit page', () => {
-      const tokens = collectTokens('page 5', startState());
+      const tokens = collectTokens('page 5');
 
       expect(tokens).toMatchSnapshot();
     });
 
     test('multi digit page', () => {
-      const tokens = collectTokens('page 10', startState());
+      const tokens = collectTokens('page 10');
 
       expect(tokens).toMatchSnapshot();
     });
 
     test('without suffix', () => {
-      const tokens = collectTokens('page', startState());
+      const tokens = collectTokens('page');
 
       expect(tokens).toMatchSnapshot();
     });
 
     test('without suffix number', () => {
-      const tokens = collectTokens('page ', startState());
+      const tokens = collectTokens('page ');
 
       expect(tokens).toMatchSnapshot();
     });
@@ -34,34 +34,36 @@ describe('mode.token()', () => {
 
   describe('panel', () => {
     test('single digit panel', () => {
-      const tokens = collectTokens('panel 2', startState());
+      const tokens = collectTokens('panel 2');
 
       expect(tokens).toMatchSnapshot();
     });
 
     test('multi digit panel', () => {
-      const tokens = collectTokens('panel 10', startState());
+      const tokens = collectTokens('panel 10');
 
       expect(tokens).toMatchSnapshot();
     });
 
     test('without suffix', () => {
-      const tokens = collectTokens('panel', startState());
+      const tokens = collectTokens('panel');
 
       expect(tokens).toMatchSnapshot();
     });
 
     test('without suffix number', () => {
-      const tokens = collectTokens('panel ', startState());
+      const tokens = collectTokens('panel ');
 
       expect(tokens).toMatchSnapshot();
     });
   });
 });
 
-function collectTokens(line, state) {
+function collectTokens(line) {
   const tabSize = 4;
   const stream = new CodeMirror.StringStream(line, tabSize);
+  const state = startState();
+
   const tokens = [];
 
   while (!stream.eol()) {
