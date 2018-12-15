@@ -4,13 +4,13 @@ export const MODE = 'comic-writer';
 export const THEME = 'comic-writer-light';
 
 // these values become css classes so keep them synced with theme file
-const PAGE_CLASS = 'page';
-const PANEL_CLASS = 'panel';
-const SFX_CLASS = 'sfx';
-const CAPTION_CLASS = 'caption';
-const DIALOGUE_CLASS = 'dialogue';
-const LETTERING_BOLD_CLASS = 'lettering-bold';
-const METADATA_CLASS = 'metadata';
+const PAGE_STYLE = 'page';
+const PANEL_STYLE = 'panel';
+const SFX_STYLE = 'sfx';
+const CAPTION_STYLE = 'caption';
+const DIALOGUE_STYLE = 'dialogue';
+const LETTERING_BOLD_STYLE = 'lettering-bold';
+const METADATA_STYLE = 'metadata';
 
 CodeMirror.defineMode(MODE, cmConfig => {
   return {
@@ -22,33 +22,37 @@ CodeMirror.defineMode(MODE, cmConfig => {
     },
     indent: () => 0,
     token(stream, state) {
-      if (stream.match(/^\tsfx ?(\(.+\))?: ?(.+)$/i)) return SFX_CLASS;
+      if (stream.match(/^\tsfx ?(\(.+\))?: ?(.+)$/i)) return SFX_STYLE;
 
       // match the first part of a caption
       if (stream.match(/^\tcaption ?(\(.+\))?: ?/i)) {
         state.isInCaptionText = !stream.eol();
-        return CAPTION_CLASS;
+        return CAPTION_STYLE;
       }
 
       // handle caption text
       if (state.isInCaptionText) {
-        return tokenLetteringText(stream, state, 'isInCaptionText', CAPTION_CLASS);
+        const styles = tokenLetteringText(stream, CAPTION_STYLE);
+        state.isInCaptionText = !stream.eol();
+        return styles;
       }
 
       // dialogue matching must be after sfx and caption to prevent characters
       // named "sfx" and "caption"
       if (stream.match(/^\t(.+) ?(\(.+\))?: ?/)) {
         state.isInDialogueText = !stream.eol();
-        return DIALOGUE_CLASS;
+        return DIALOGUE_STYLE;
       }
 
       if (state.isInDialogueText) {
-        return tokenLetteringText(stream, state, 'isInDialogueText', DIALOGUE_CLASS);
+        const styles = tokenLetteringText(stream, DIALOGUE_STYLE);
+        state.isInDialogueText = !stream.eol();
+        return styles;
       }
 
-      if (stream.match(/^page \d+$/i)) return PAGE_CLASS;
-      if (stream.match(/^panel \d+$/i)) return PANEL_CLASS;
-      if (stream.match(/^(.+): ?(.+)/)) return METADATA_CLASS;
+      if (stream.match(/^page \d+$/i)) return PAGE_STYLE;
+      if (stream.match(/^panel \d+$/i)) return PANEL_STYLE;
+      if (stream.match(/^(.+): ?(.+)/)) return METADATA_STYLE;
 
       // advance stream past stuff that isn't styled, like plain paragraphs
       stream.skipToEnd();
@@ -61,13 +65,10 @@ CodeMirror.defineMode(MODE, cmConfig => {
  * Special token handler for lettering that can contain bold.
  *
  * @param {Object} stream - Stream from codemirror
- * @param {Object} state - State from codemirror
- * @param {String} stateFlagName - Name of state property that determines if
- *                                 tokener is still in the lettering text.
  * @param {String} defaultToken - Default token to return on every call
  * @returns {String} tokens
  */
-function tokenLetteringText(stream, state, stateFlagName, defaultToken) {
+function tokenLetteringText(stream, defaultToken) {
   const tokens = [defaultToken];
 
   // stream is currently at double star
@@ -75,7 +76,7 @@ function tokenLetteringText(stream, state, stateFlagName, defaultToken) {
     // and there is another double star somewhere
     if (stream.match(/.*?\*\*/)) {
       // that was a run of lettering-bold
-      tokens.push(LETTERING_BOLD_CLASS);
+      tokens.push(LETTERING_BOLD_STYLE);
     }
     // stream is at an unpaired double star
     else {
@@ -94,6 +95,5 @@ function tokenLetteringText(stream, state, stateFlagName, defaultToken) {
     }
   }
 
-  state[stateFlagName] = !stream.eol();
   return tokens.join(' ');
 }
