@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mode.token() page multi digit page 1`] = `
+Array [
+  Object {
+    "end": 7,
+    "start": 0,
+    "string": "page 10",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() page single digit page 1`] = `
+Array [
+  Object {
+    "end": 6,
+    "start": 0,
+    "string": "page 5",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() page without suffix 1`] = `
+Array [
+  Object {
+    "end": 4,
+    "start": 0,
+    "string": "page",
+    "style": null,
+  },
+]
+`;
+
+exports[`mode.token() page without suffix number 1`] = `
+Array [
+  Object {
+    "end": 5,
+    "start": 0,
+    "string": "page ",
+    "style": null,
+  },
+]
+`;
