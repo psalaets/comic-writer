@@ -1,5 +1,5 @@
 import CodeMirror from 'codemirror';
-import createMode from './mode-config';
+import createMode from './mode';
 
 const cmConfig = {};
 const mode = createMode(cmConfig);
