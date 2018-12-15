@@ -31,10 +31,37 @@ describe('mode.token()', () => {
       expect(tokens).toMatchSnapshot();
     });
   });
+
+  describe('panel', () => {
+    test('single digit panel', () => {
+      const tokens = collectTokens('panel 2', startState());
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('multi digit panel', () => {
+      const tokens = collectTokens('panel 10', startState());
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('without suffix', () => {
+      const tokens = collectTokens('panel', startState());
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('without suffix number', () => {
+      const tokens = collectTokens('panel ', startState());
+
+      expect(tokens).toMatchSnapshot();
+    });
+  });
 });
 
 function collectTokens(line, state) {
-  const stream = new CodeMirror.StringStream(line, 4);
+  const tabSize = 4;
+  const stream = new CodeMirror.StringStream(line, tabSize);
   const tokens = [];
 
   while (!stream.eol()) {
