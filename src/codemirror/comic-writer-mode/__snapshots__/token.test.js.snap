@@ -1,5 +1,367 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`mode.token() caption all bold content 1`] = `
+Array [
+  Object {
+    "end": 10,
+    "start": 0,
+    "string": "	caption: ",
+    "style": Array [
+      "caption",
+    ],
+  },
+  Object {
+    "end": 22,
+    "start": 10,
+    "string": "**good one**",
+    "style": Array [
+      "caption",
+      "lettering-bold",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() caption full 1`] = `
+Array [
+  Object {
+    "end": 17,
+    "start": 0,
+    "string": "	caption (bill): ",
+    "style": Array [
+      "caption",
+    ],
+  },
+  Object {
+    "end": 29,
+    "start": 17,
+    "string": "it went well",
+    "style": Array [
+      "caption",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() caption multiple bolds 1`] = `
+Array [
+  Object {
+    "end": 10,
+    "start": 0,
+    "string": "	caption: ",
+    "style": Array [
+      "caption",
+    ],
+  },
+  Object {
+    "end": 17,
+    "start": 10,
+    "string": "it did ",
+    "style": Array [
+      "caption",
+    ],
+  },
+  Object {
+    "end": 24,
+    "start": 17,
+    "string": "**not**",
+    "style": Array [
+      "caption",
+      "lettering-bold",
+    ],
+  },
+  Object {
+    "end": 33,
+    "start": 24,
+    "string": " work at ",
+    "style": Array [
+      "caption",
+    ],
+  },
+  Object {
+    "end": 40,
+    "start": 33,
+    "string": "**all**",
+    "style": Array [
+      "caption",
+      "lettering-bold",
+    ],
+  },
+  Object {
+    "end": 41,
+    "start": 40,
+    "string": "!",
+    "style": Array [
+      "caption",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() caption no colon 1`] = `
+Array [
+  Object {
+    "end": 8,
+    "start": 0,
+    "string": "	caption",
+    "style": null,
+  },
+]
+`;
+
+exports[`mode.token() caption no content 1`] = `
+Array [
+  Object {
+    "end": 9,
+    "start": 0,
+    "string": "	caption:",
+    "style": Array [
+      "caption",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() caption no modifier 1`] = `
+Array [
+  Object {
+    "end": 10,
+    "start": 0,
+    "string": "	caption: ",
+    "style": Array [
+      "caption",
+    ],
+  },
+  Object {
+    "end": 22,
+    "start": 10,
+    "string": "it went well",
+    "style": Array [
+      "caption",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() caption some bold content 1`] = `
+Array [
+  Object {
+    "end": 10,
+    "start": 0,
+    "string": "	caption: ",
+    "style": Array [
+      "caption",
+    ],
+  },
+  Object {
+    "end": 13,
+    "start": 10,
+    "string": "it ",
+    "style": Array [
+      "caption",
+    ],
+  },
+  Object {
+    "end": 24,
+    "start": 13,
+    "string": "**did not**",
+    "style": Array [
+      "caption",
+      "lettering-bold",
+    ],
+  },
+  Object {
+    "end": 29,
+    "start": 24,
+    "string": " work",
+    "style": Array [
+      "caption",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue all bold content 1`] = `
+Array [
+  Object {
+    "end": 7,
+    "start": 0,
+    "string": "	bill: ",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+  Object {
+    "end": 19,
+    "start": 7,
+    "string": "**good one**",
+    "style": Array [
+      "dialogue",
+      "lettering-bold",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue full 1`] = `
+Array [
+  Object {
+    "end": 17,
+    "start": 0,
+    "string": "	bill (whisper): ",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+  Object {
+    "end": 29,
+    "start": 17,
+    "string": "it went well",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue multiple bolds 1`] = `
+Array [
+  Object {
+    "end": 7,
+    "start": 0,
+    "string": "	bill: ",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+  Object {
+    "end": 14,
+    "start": 7,
+    "string": "it did ",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+  Object {
+    "end": 21,
+    "start": 14,
+    "string": "**not**",
+    "style": Array [
+      "dialogue",
+      "lettering-bold",
+    ],
+  },
+  Object {
+    "end": 30,
+    "start": 21,
+    "string": " work at ",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+  Object {
+    "end": 37,
+    "start": 30,
+    "string": "**all**",
+    "style": Array [
+      "dialogue",
+      "lettering-bold",
+    ],
+  },
+  Object {
+    "end": 38,
+    "start": 37,
+    "string": "!",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue no colon 1`] = `
+Array [
+  Object {
+    "end": 5,
+    "start": 0,
+    "string": "	bill",
+    "style": null,
+  },
+]
+`;
+
+exports[`mode.token() dialogue no content 1`] = `
+Array [
+  Object {
+    "end": 6,
+    "start": 0,
+    "string": "	bill:",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue no modifier 1`] = `
+Array [
+  Object {
+    "end": 7,
+    "start": 0,
+    "string": "	bill: ",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+  Object {
+    "end": 19,
+    "start": 7,
+    "string": "it went well",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue some bold content 1`] = `
+Array [
+  Object {
+    "end": 7,
+    "start": 0,
+    "string": "	bill: ",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+  Object {
+    "end": 10,
+    "start": 7,
+    "string": "it ",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+  Object {
+    "end": 21,
+    "start": 10,
+    "string": "**did not**",
+    "style": Array [
+      "dialogue",
+      "lettering-bold",
+    ],
+  },
+  Object {
+    "end": 26,
+    "start": 21,
+    "string": " work",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() page multi digit page 1`] = `
 Array [
   Object {
@@ -92,6 +454,56 @@ Array [
     "start": 0,
     "string": "panel ",
     "style": null,
+  },
+]
+`;
+
+exports[`mode.token() sfx full 1`] = `
+Array [
+  Object {
+    "end": 16,
+    "start": 0,
+    "string": "	sfx (gun): blam",
+    "style": Array [
+      "sfx",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() sfx no colon 1`] = `
+Array [
+  Object {
+    "end": 4,
+    "start": 0,
+    "string": "	sfx",
+    "style": null,
+  },
+]
+`;
+
+exports[`mode.token() sfx no content 1`] = `
+Array [
+  Object {
+    "end": 5,
+    "start": 0,
+    "string": "	sfx:",
+    "style": Array [
+      "dialogue",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() sfx no modifier 1`] = `
+Array [
+  Object {
+    "end": 10,
+    "start": 0,
+    "string": "	sfx: blam",
+    "style": Array [
+      "sfx",
+    ],
   },
 ]
 `;

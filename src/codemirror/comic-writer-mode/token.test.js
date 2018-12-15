@@ -59,6 +59,120 @@ describe('mode.token()', () => {
       expect(tokens).toMatchSnapshot();
     });
   });
+
+  describe('sfx', () => {
+    test('full', () => {
+      const tokens = collectTokens('\tsfx (gun): blam');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no modifier', () => {
+      const tokens = collectTokens('\tsfx: blam');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no content', () => {
+      const tokens = collectTokens('\tsfx:');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no colon', () => {
+      const tokens = collectTokens('\tsfx');
+
+      expect(tokens).toMatchSnapshot();
+    });
+  });
+
+  describe('caption', () => {
+    test('full', () => {
+      const tokens = collectTokens('\tcaption (bill): it went well');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no modifier', () => {
+      const tokens = collectTokens('\tcaption: it went well');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('all bold content', () => {
+      const tokens = collectTokens('\tcaption: **good one**');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('some bold content', () => {
+      const tokens = collectTokens('\tcaption: it **did not** work');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('multiple bolds', () => {
+      const tokens = collectTokens('\tcaption: it did **not** work at **all**!');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no content', () => {
+      const tokens = collectTokens('\tcaption:');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no colon', () => {
+      const tokens = collectTokens('\tcaption');
+
+      expect(tokens).toMatchSnapshot();
+    });
+  });
+
+  describe('dialogue', () => {
+    test('full', () => {
+      const tokens = collectTokens('\tbill (whisper): it went well');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no modifier', () => {
+      const tokens = collectTokens('\tbill: it went well');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('all bold content', () => {
+      const tokens = collectTokens('\tbill: **good one**');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('some bold content', () => {
+      const tokens = collectTokens('\tbill: it **did not** work');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('multiple bolds', () => {
+      const tokens = collectTokens('\tbill: it did **not** work at **all**!');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no content', () => {
+      const tokens = collectTokens('\tbill:');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no colon', () => {
+      const tokens = collectTokens('\tbill');
+
+      expect(tokens).toMatchSnapshot();
+    });
+  });
 });
 
 function collectTokens(line) {
@@ -69,6 +183,7 @@ function collectTokens(line) {
   const tokens = [];
 
   while (!stream.eol()) {
+    stream.start = stream.pos;
     const style = token(stream, state);
 
     if (stream.pos === stream.start) {
