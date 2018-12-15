@@ -13,7 +13,7 @@ export function letteringSnippet(cm) {
       exit();
       return CodeMirror.Pass;
     },
-    Escape() {
+    Esc() {
       exit();
       return CodeMirror.Pass;
     },
