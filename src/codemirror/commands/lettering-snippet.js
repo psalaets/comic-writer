@@ -11,6 +11,7 @@ export function install(CodeMirror) {
 };
 
 function letteringSnippetCommand(cm) {
+  const lineNumber = cm.getCursor().line;
   let stepIndex = -1;
   const steps = makeSteps();
 
@@ -44,6 +45,8 @@ function letteringSnippetCommand(cm) {
 
   function enter() {
     cm.addKeyMap(keyMap);
+    cm.on('cursorActivity', handleCursorActivity);
+
     cm.replaceRange('\tsubject: content', cm.getCursor());
     next();
   }
@@ -60,7 +63,14 @@ function letteringSnippetCommand(cm) {
   }
 
   function exit() {
+    cm.off('cursorActivity', handleCursorActivity);
     cm.removeKeyMap(keyMap);
+  }
+
+  function handleCursorActivity(cm) {
+    if (lineNumber !== cm.getCursor().line) {
+      exit();
+    }
   }
 }
 
