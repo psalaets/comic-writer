@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import codemirror from 'codemirror';
+import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
 import './CodeMirror.css';
 
@@ -26,9 +26,9 @@ import '../../codemirror/theme.css';
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/addon/scroll/scrollpastend';
 
-installLetteringSnippet(codemirror);
+installLetteringSnippet(CodeMirror);
 
-export default class CodeMirror extends Component {
+export default class CodeMirrorComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -74,7 +74,7 @@ export default class CodeMirror extends Component {
   }
 
   componentDidMount() {
-    this.cm = codemirror(this.el.current, {
+    this.cm = CodeMirror(this.el.current, {
       mode: MODE,
       theme: THEME,
       value: this.props.value,
@@ -94,7 +94,7 @@ export default class CodeMirror extends Component {
           if (line === '') {
             cm.execCommand(LETTERING_SNIPPET);
           } else {
-            return codemirror.Pass;
+            return CodeMirror.Pass;
           }
         }
       }
@@ -121,7 +121,7 @@ export default class CodeMirror extends Component {
   }
 }
 
-CodeMirror.propTypes = {
+CodeMirrorComponent.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   stats: PropTypes.array.isRequired
