@@ -173,6 +173,40 @@ describe('mode.token()', () => {
       expect(tokens).toMatchSnapshot();
     });
   });
+
+  describe('metadata', () => {
+    test('full', () => {
+      const tokens = collectTokens('name: value');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no space after colon', () => {
+      const tokens = collectTokens('name:value');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no value', () => {
+      const tokens = collectTokens('name:');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no colon', () => {
+      const tokens = collectTokens('name');
+
+      expect(tokens).toMatchSnapshot();
+    });
+  });
+
+  describe('paragraph', () => {
+    test('text', () => {
+      const tokens = collectTokens('The first rays of sunrise hit the house. A car waits out front.');
+
+      expect(tokens).toMatchSnapshot();
+    });
+  });
 });
 
 function collectTokens(line) {

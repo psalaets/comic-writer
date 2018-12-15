@@ -362,6 +362,54 @@ Array [
 ]
 `;
 
+exports[`mode.token() metadata full 1`] = `
+Array [
+  Object {
+    "end": 11,
+    "start": 0,
+    "string": "name: value",
+    "style": Array [
+      "metadata",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() metadata no colon 1`] = `
+Array [
+  Object {
+    "end": 4,
+    "start": 0,
+    "string": "name",
+    "style": null,
+  },
+]
+`;
+
+exports[`mode.token() metadata no space after colon 1`] = `
+Array [
+  Object {
+    "end": 10,
+    "start": 0,
+    "string": "name:value",
+    "style": Array [
+      "metadata",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() metadata no value 1`] = `
+Array [
+  Object {
+    "end": 5,
+    "start": 0,
+    "string": "name:",
+    "style": null,
+  },
+]
+`;
+
 exports[`mode.token() page multi digit page 1`] = `
 Array [
   Object {
@@ -453,6 +501,17 @@ Array [
     "end": 6,
     "start": 0,
     "string": "panel ",
+    "style": null,
+  },
+]
+`;
+
+exports[`mode.token() paragraph text 1`] = `
+Array [
+  Object {
+    "end": 63,
+    "start": 0,
+    "string": "The first rays of sunrise hit the house. A car waits out front.",
     "style": null,
   },
 ]
