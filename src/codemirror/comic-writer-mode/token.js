@@ -1,7 +1,6 @@
 // these values become css classes so keep them synced with theme file
 const PAGE_STYLE = 'page';
 const PANEL_STYLE = 'panel';
-const SFX_STYLE = 'sfx';
 const CAPTION_STYLE = 'caption';
 const DIALOGUE_STYLE = 'dialogue';
 const LETTERING_BOLD_STYLE = 'lettering-bold';
@@ -16,7 +15,7 @@ const END_OF_LETTERING = Symbol('end of lettering');
 export default function token(stream, state) {
   if (stream.match(/^\t(?=sfx)/i)) {
     state.lettering = letteringState(stream);
-    return null;
+    return state.lettering.lineStyles;
   }
 
   if (state.lettering) {
@@ -106,6 +105,12 @@ function tokenLetteringText(stream, defaultToken) {
 // the style for subject is the lettering-subject style and also a line- style
 // after determining subject, it sets: line- style, bold parsing rules
 function letteringState(stream) {
+  let lineStyles = null;
+
+  if (stream.match(/^sfx/i, false)) {
+    lineStyles = 'line-cm-lettering line-cm-sfx';
+  }
+
   const state = {
     subjectDone: false,
     modifierDone: false,
@@ -156,6 +161,9 @@ function letteringState(stream) {
       }
 
       return END_OF_LETTERING;
+    },
+    get lineStyles() {
+      return lineStyles;
     }
   };
 }

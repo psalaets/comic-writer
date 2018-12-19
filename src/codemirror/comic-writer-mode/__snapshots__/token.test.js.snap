@@ -523,7 +523,10 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": null,
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
   },
   Object {
     "end": 4,
@@ -556,7 +559,10 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": null,
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
   },
   Object {
     "end": 4,
@@ -609,7 +615,10 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": null,
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
   },
   Object {
     "end": 4,
@@ -642,7 +651,10 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": null,
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
   },
   Object {
     "end": 4,
@@ -661,7 +673,10 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": null,
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
   },
   Object {
     "end": 4,
@@ -686,7 +701,10 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": null,
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
   },
   Object {
     "end": 4,
@@ -725,7 +743,10 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": null,
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
   },
   Object {
     "end": 4,
