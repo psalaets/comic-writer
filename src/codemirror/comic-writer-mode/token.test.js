@@ -103,7 +103,7 @@ describe('mode.token()', () => {
       expect(tokens).toMatchSnapshot();
     });
 
-    test('with bold content', () => {
+    test('does not allow bold content', () => {
       const tokens = collectTokens('\tsfx: bam **bam** bam');
 
       expect(tokens).toMatchSnapshot();
@@ -152,6 +152,24 @@ describe('mode.token()', () => {
 
       expect(tokens).toMatchSnapshot();
     });
+
+    test('newly opened modifier', () => {
+      const tokens = collectTokens('\tcaption (');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('unclosed modifier', () => {
+      const tokens = collectTokens('\tcaption (mom');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('closed modifier but no colon', () => {
+      const tokens = collectTokens('\tcaption (mom)');
+
+      expect(tokens).toMatchSnapshot();
+    });
   });
 
   describe('dialogue', () => {
@@ -193,6 +211,24 @@ describe('mode.token()', () => {
 
     test('no colon', () => {
       const tokens = collectTokens('\tbill');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('newly opened modifier', () => {
+      const tokens = collectTokens('\tbill (');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('unclosed modifier', () => {
+      const tokens = collectTokens('\tbill (yell');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('closed modifier but no colon', () => {
+      const tokens = collectTokens('\tbill (yell)');
 
       expect(tokens).toMatchSnapshot();
     });

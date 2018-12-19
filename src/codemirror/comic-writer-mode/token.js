@@ -1,8 +1,6 @@
 // these values become css classes so keep them synced with theme file
 const PAGE = 'page';
 const PANEL = 'panel';
-const CAPTION = 'caption';
-const DIALOGUE = 'dialogue';
 const METADATA = 'metadata';
 
 const LETTERING_SUBJECT = 'lettering-subject';
@@ -85,7 +83,7 @@ function letteringState(stream) {
             spaces and colon
             end of string
           */
-          stream.match(/^.*?(?= *\(.*\)| *:|$)/);
+          stream.match(/^.*?(?= *\(| *:|$)/);
           state.subjectDone = true;
           return LETTERING_SUBJECT;
         }

@@ -43,6 +43,42 @@ Array [
 ]
 `;
 
+exports[`mode.token() caption closed modifier but no colon 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-caption",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 14,
+    "start": 9,
+    "string": "(mom)",
+    "style": Array [
+      "lettering-modifier",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() caption full 1`] = `
 Array [
   Object {
@@ -170,6 +206,42 @@ Array [
     "string": "!",
     "style": Array [
       "lettering-content",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() caption newly opened modifier 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-caption",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 9,
+    "string": "(",
+    "style": Array [
+      "lettering-modifier",
     ],
   },
 ]
@@ -326,6 +398,42 @@ Array [
 ]
 `;
 
+exports[`mode.token() caption unclosed modifier 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-caption",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 13,
+    "start": 9,
+    "string": "(mom",
+    "style": Array [
+      "lettering-modifier",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() dialogue all bold content 1`] = `
 Array [
   Object {
@@ -364,6 +472,42 @@ Array [
     "style": Array [
       "lettering-bold",
       "lettering-content",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue closed modifier but no colon 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-dialogue",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 12,
+    "start": 6,
+    "string": "(yell)",
+    "style": Array [
+      "lettering-modifier",
     ],
   },
 ]
@@ -496,6 +640,42 @@ Array [
     "string": "!",
     "style": Array [
       "lettering-content",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue newly opened modifier 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-dialogue",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 7,
+    "start": 6,
+    "string": "(",
+    "style": Array [
+      "lettering-modifier",
     ],
   },
 ]
@@ -647,6 +827,42 @@ Array [
     "string": " work",
     "style": Array [
       "lettering-content",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue unclosed modifier 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-dialogue",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 11,
+    "start": 6,
+    "string": "(yell",
+    "style": Array [
+      "lettering-modifier",
     ],
   },
 ]
@@ -838,6 +1054,48 @@ Array [
     "string": "(gun)",
     "style": Array [
       "lettering-modifier",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() sfx does not allow bold content 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 4,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 21,
+    "start": 6,
+    "string": "bam **bam** bam",
+    "style": Array [
+      "lettering-content",
     ],
   },
 ]
@@ -1058,48 +1316,6 @@ Array [
     "string": "(gun",
     "style": Array [
       "lettering-modifier",
-    ],
-  },
-]
-`;
-
-exports[`mode.token() sfx with bold content 1`] = `
-Array [
-  Object {
-    "end": 1,
-    "start": 0,
-    "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
-  },
-  Object {
-    "end": 4,
-    "start": 1,
-    "string": "sfx",
-    "style": Array [
-      "lettering-subject",
-    ],
-  },
-  Object {
-    "end": 5,
-    "start": 4,
-    "string": ":",
-    "style": null,
-  },
-  Object {
-    "end": 6,
-    "start": 5,
-    "string": " ",
-    "style": null,
-  },
-  Object {
-    "end": 21,
-    "start": 6,
-    "string": "bam **bam** bam",
-    "style": Array [
-      "lettering-content",
     ],
   },
 ]
