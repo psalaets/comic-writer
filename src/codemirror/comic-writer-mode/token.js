@@ -3,12 +3,12 @@ const PAGE = 'page';
 const PANEL = 'panel';
 const CAPTION = 'caption';
 const DIALOGUE = 'dialogue';
-const LETTERING_BOLD = 'lettering-bold';
 const METADATA = 'metadata';
 
 const LETTERING_SUBJECT = 'lettering-subject';
 const LETTERING_MODIFIER = 'lettering-modifier';
 const LETTERING_CONTENT = 'lettering-content';
+const LETTERING_BOLD = 'lettering-bold';
 
 const LETTERING_LINE = 'line-cm-lettering';
 const SFX_LINE = 'line-cm-sfx';
@@ -40,42 +40,6 @@ export default function token(stream, state) {
   // advance stream past stuff that isn't styled, like plain paragraphs
   stream.skipToEnd();
   return null;
-}
-
-/**
- * Special token handler for lettering that can contain bold.
- *
- * @param {Object} stream - Stream from codemirror
- * @returns {String} tokens
- */
-function tokenLetteringText(stream) {
-  const tokens = [LETTERING_CONTENT];
-
-  // stream is currently at double star
-  if (stream.match(/^\*\*/)) {
-    // and there is another double star somewhere
-    if (stream.match(/.*?\*\*/)) {
-      // that was a run of lettering-bold
-      tokens.push(LETTERING_BOLD);
-    }
-    // stream is at an unpaired double star
-    else {
-      // the rest of the line is regular lettering
-      stream.skipToEnd();
-    }
-  }
-  // stream isn't at double star right now
-  else {
-    // skip to next double star, if any
-    const lineContainsDoubleStar = stream.skipTo('**');
-    // found no double star on the line
-    if (!lineContainsDoubleStar) {
-      // everything else is regular lettering
-      stream.skipToEnd();
-    }
-  }
-
-  return tokens.join(' ');
 }
 
 // figure out lettering type on the fly, when parsing subject token
@@ -178,4 +142,40 @@ function letteringState(stream) {
       return lineStyles;
     }
   };
+}
+
+/**
+ * Special token handler for lettering that can contain bold.
+ *
+ * @param {Object} stream - Stream from codemirror
+ * @returns {String} tokens
+ */
+function tokenLetteringText(stream) {
+  const tokens = [LETTERING_CONTENT];
+
+  // stream is currently at double star
+  if (stream.match(/^\*\*/)) {
+    // and there is another double star somewhere
+    if (stream.match(/.*?\*\*/)) {
+      // that was a run of lettering-bold
+      tokens.push(LETTERING_BOLD);
+    }
+    // stream is at an unpaired double star
+    else {
+      // the rest of the line is regular lettering
+      stream.skipToEnd();
+    }
+  }
+  // stream isn't at double star right now
+  else {
+    // skip to next double star, if any
+    const lineContainsDoubleStar = stream.skipTo('**');
+    // found no double star on the line
+    if (!lineContainsDoubleStar) {
+      // everything else is regular lettering
+      stream.skipToEnd();
+    }
+  }
+
+  return tokens.join(' ');
 }
