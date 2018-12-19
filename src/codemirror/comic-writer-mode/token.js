@@ -1,10 +1,10 @@
 // these values become css classes so keep them synced with theme file
-const PAGE_STYLE = 'page';
-const PANEL_STYLE = 'panel';
-const CAPTION_STYLE = 'caption';
-const DIALOGUE_STYLE = 'dialogue';
-const LETTERING_BOLD_STYLE = 'lettering-bold';
-const METADATA_STYLE = 'metadata';
+const PAGE = 'page';
+const PANEL = 'panel';
+const CAPTION = 'caption';
+const DIALOGUE = 'dialogue';
+const LETTERING_BOLD = 'lettering-bold';
+const METADATA = 'metadata';
 
 const LETTERING_SUBJECT = 'lettering-subject';
 const LETTERING_MODIFIER = 'lettering-modifier';
@@ -33,15 +33,14 @@ export default function token(stream, state) {
     }
   }
 
-  if (stream.match(/^page \d+$/i)) return PAGE_STYLE;
-  if (stream.match(/^panel \d+$/i)) return PANEL_STYLE;
-  if (stream.match(/^(.+): ?(.+)/)) return METADATA_STYLE;
+  if (stream.match(/^page \d+$/i)) return PAGE;
+  if (stream.match(/^panel \d+$/i)) return PANEL;
+  if (stream.match(/^(.+): ?(.+)/)) return METADATA;
 
   // advance stream past stuff that isn't styled, like plain paragraphs
   stream.skipToEnd();
   return null;
 }
-
 
 /**
  * Special token handler for lettering that can contain bold.
@@ -57,7 +56,7 @@ function tokenLetteringText(stream) {
     // and there is another double star somewhere
     if (stream.match(/.*?\*\*/)) {
       // that was a run of lettering-bold
-      tokens.push(LETTERING_BOLD_STYLE);
+      tokens.push(LETTERING_BOLD);
     }
     // stream is at an unpaired double star
     else {
