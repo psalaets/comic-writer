@@ -7,8 +7,27 @@ const DIALOGUE_STYLE = 'dialogue';
 const LETTERING_BOLD_STYLE = 'lettering-bold';
 const METADATA_STYLE = 'metadata';
 
+const LETTERING_SUBJECT = 'lettering-subject';
+const LETTERING_MODIFIER = 'lettering-modifier';
+const LETTERING_CONTENT = 'lettering-content';
+
+const END_OF_LETTERING = Symbol('end of lettering');
+
 export default function token(stream, state) {
-  if (stream.match(/^\tsfx ?(\(.+\))?: ?(.+)$/i)) return SFX_STYLE;
+  if (stream.match(/^\t(?=sfx)/i)) {
+    state.lettering = letteringState(stream);
+    return null;
+  }
+
+  if (state.lettering) {
+    const nextStyle = state.lettering.next(stream);
+    if (nextStyle === END_OF_LETTERING) {
+      state.lettering = undefined;
+      return null;
+    } else {
+      return nextStyle;
+    }
+  }
 
   // match the first part of a caption
   if (stream.match(/^\tcaption ?(\(.+\))?: ?/i)) {
@@ -81,4 +100,62 @@ function tokenLetteringText(stream, defaultToken) {
   }
 
   return tokens.join(' ');
+}
+
+// figure out lettering type on the fly, when parsing subject token
+// the style for subject is the lettering-subject style and also a line- style
+// after determining subject, it sets: line- style, bold parsing rules
+function letteringState(stream) {
+  const state = {
+    subjectDone: false,
+    modifierDone: false,
+    colonDone: false,
+    contentDone: false
+  };
+
+  return {
+    next(stream) {
+      if (!state.subjectDone) {
+        if (stream.match(/^sfx/i)) {
+          state.subjectDone = true;
+          return LETTERING_SUBJECT;
+        } else {
+          return null;
+        }
+      } else if (stream.eatSpace()) {
+        return null;
+      }
+
+      if (!state.modifierDone && !state.colonDone) {
+        if (stream.eatSpace()) return null;
+
+        if (stream.peek() === '(') {
+          if (stream.eatWhile(/[^)]/)) {
+            state.modifierDone = true;
+            stream.next();
+            return LETTERING_MODIFIER;
+          }
+        }
+      }
+
+      if (!state.colonDone) {
+        if (stream.eat(':')) {
+          state.colonDone = true;
+        }
+        return null;
+      }
+
+      if (!state.contentDone) {
+        if (stream.eatSpace()) return null;
+
+        if (!stream.eol()) {
+          stream.skipToEnd();
+          state.contentDone = true;
+          return LETTERING_CONTENT;
+        }
+      }
+
+      return END_OF_LETTERING;
+    }
+  };
 }

@@ -73,6 +73,24 @@ describe('mode.token()', () => {
       expect(tokens).toMatchSnapshot();
     });
 
+    test('newly opened modifier', () => {
+      const tokens = collectTokens('\tsfx (');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('unclosed modifier', () => {
+      const tokens = collectTokens('\tsfx (gun');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('closed modifier but no colon', () => {
+      const tokens = collectTokens('\tsfx (gun)');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
     test('no content', () => {
       const tokens = collectTokens('\tsfx:');
 

@@ -517,14 +517,120 @@ Array [
 ]
 `;
 
+exports[`mode.token() sfx closed modifier but no colon 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": null,
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 4,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 5,
+    "string": "(gun)",
+    "style": Array [
+      "lettering-modifier",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() sfx full 1`] = `
 Array [
   Object {
-    "end": 16,
+    "end": 1,
     "start": 0,
-    "string": "	sfx (gun): blam",
+    "string": "	",
+    "style": null,
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
     "style": Array [
-      "sfx",
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 4,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 5,
+    "string": "(gun)",
+    "style": Array [
+      "lettering-modifier",
+    ],
+  },
+  Object {
+    "end": 11,
+    "start": 10,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 12,
+    "start": 11,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 16,
+    "start": 12,
+    "string": "blam",
+    "style": Array [
+      "lettering-content",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() sfx newly opened modifier 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": null,
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 4,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": "(",
+    "style": Array [
+      "lettering-modifier",
     ],
   },
 ]
@@ -533,10 +639,18 @@ Array [
 exports[`mode.token() sfx no colon 1`] = `
 Array [
   Object {
-    "end": 4,
+    "end": 1,
     "start": 0,
-    "string": "	sfx",
+    "string": "	",
     "style": null,
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
+    "style": Array [
+      "lettering-subject",
+    ],
   },
 ]
 `;
@@ -544,12 +658,24 @@ Array [
 exports[`mode.token() sfx no content 1`] = `
 Array [
   Object {
-    "end": 5,
+    "end": 1,
     "start": 0,
-    "string": "	sfx:",
+    "string": "	",
+    "style": null,
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
     "style": Array [
-      "dialogue",
+      "lettering-subject",
     ],
+  },
+  Object {
+    "end": 5,
+    "start": 4,
+    "string": ":",
+    "style": null,
   },
 ]
 `;
@@ -557,11 +683,70 @@ Array [
 exports[`mode.token() sfx no modifier 1`] = `
 Array [
   Object {
-    "end": 10,
+    "end": 1,
     "start": 0,
-    "string": "	sfx: blam",
+    "string": "	",
+    "style": null,
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
     "style": Array [
-      "sfx",
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 4,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 6,
+    "string": "blam",
+    "style": Array [
+      "lettering-content",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() sfx unclosed modifier 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": null,
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 4,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 9,
+    "start": 5,
+    "string": "(gun",
+    "style": Array [
+      "lettering-modifier",
     ],
   },
 ]
