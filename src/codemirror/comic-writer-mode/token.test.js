@@ -102,6 +102,12 @@ describe('mode.token()', () => {
 
       expect(tokens).toMatchSnapshot();
     });
+
+    test('with bold content', () => {
+      const tokens = collectTokens('\tsfx: bam **bam** bam');
+
+      expect(tokens).toMatchSnapshot();
+    });
   });
 
   describe('caption', () => {

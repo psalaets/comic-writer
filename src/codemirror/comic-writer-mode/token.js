@@ -13,7 +13,7 @@ const LETTERING_CONTENT = 'lettering-content';
 const END_OF_LETTERING = Symbol('end of lettering');
 
 export default function token(stream, state) {
-  if (stream.match(/^\t(?=sfx)/i)) {
+  if (stream.match(/^\t/i)) {
     state.lettering = letteringState(stream);
     return state.lettering.lineStyles;
   }
@@ -26,32 +26,6 @@ export default function token(stream, state) {
     } else {
       return nextStyle;
     }
-  }
-
-  // match the first part of a caption
-  if (stream.match(/^\tcaption ?(\(.+\))?: ?/i)) {
-    state.isInCaptionText = !stream.eol();
-    return CAPTION_STYLE;
-  }
-
-  // handle caption text
-  if (state.isInCaptionText) {
-    const styles = tokenLetteringText(stream, CAPTION_STYLE);
-    state.isInCaptionText = !stream.eol();
-    return styles;
-  }
-
-  // dialogue matching must be after sfx and caption to prevent characters
-  // named "sfx" and "caption"
-  if (stream.match(/^\t(.+) ?(\(.+\))?: ?/)) {
-    state.isInDialogueText = !stream.eol();
-    return DIALOGUE_STYLE;
-  }
-
-  if (state.isInDialogueText) {
-    const styles = tokenLetteringText(stream, DIALOGUE_STYLE);
-    state.isInDialogueText = !stream.eol();
-    return styles;
   }
 
   if (stream.match(/^page \d+$/i)) return PAGE_STYLE;
@@ -68,14 +42,13 @@ export default function token(stream, state) {
  * Special token handler for lettering that can contain bold.
  *
  * @param {Object} stream - Stream from codemirror
- * @param {String} defaultToken - Default token to return on every call
  * @returns {String} tokens
  */
-function tokenLetteringText(stream, defaultToken) {
-  const tokens = [defaultToken];
+function tokenLetteringText(stream) {
+  const tokens = [LETTERING_CONTENT];
 
   // stream is currently at double star
-  if (stream.match(/\*\*/)) {
+  if (stream.match(/^\*\*/)) {
     // and there is another double star somewhere
     if (stream.match(/.*?\*\*/)) {
       // that was a run of lettering-bold
@@ -106,16 +79,26 @@ function tokenLetteringText(stream, defaultToken) {
 // after determining subject, it sets: line- style, bold parsing rules
 function letteringState(stream) {
   let lineStyles = null;
+  let allowsBoldInContent;
 
   if (stream.match(/^sfx/i, false)) {
+    allowsBoldInContent = false;
     lineStyles = 'line-cm-lettering line-cm-sfx';
+  } else if (stream.match(/^caption/i, false)) {
+    allowsBoldInContent = true;
+    lineStyles = 'line-cm-lettering line-cm-caption';
+  } else {
+    allowsBoldInContent = true;
+    lineStyles = 'line-cm-lettering line-cm-dialogue';
   }
 
   const state = {
     subjectDone: false,
+    subjectSuffixTrimmed: false,
     modifierDone: false,
     colonDone: false,
-    contentDone: false
+    contentDone: false,
+    contentPrefixTrimmed: false
   };
 
   return {
@@ -124,11 +107,25 @@ function letteringState(stream) {
         if (stream.match(/^sfx/i)) {
           state.subjectDone = true;
           return LETTERING_SUBJECT;
+        } else if (stream.match(/^caption/i)) {
+          state.subjectDone = true;
+          return LETTERING_SUBJECT;
         } else {
-          return null;
+          /*
+          match some text follow by any of:
+            spaces and parens
+            spaces and colon
+            end of string
+          */
+          stream.match(/^.*?(?= *\(.*\)| *:|$)/);
+          state.subjectDone = true;
+          return LETTERING_SUBJECT;
         }
-      } else if (stream.eatSpace()) {
-        return null;
+      }
+
+      if (!state.subjectSuffixTrimmed) {
+        state.subjectSuffixTrimmed = true;
+        if (stream.eatSpace()) return null;
       }
 
       if (!state.modifierDone && !state.colonDone) {
@@ -150,12 +147,23 @@ function letteringState(stream) {
         return null;
       }
 
-      if (!state.contentDone) {
+      if (!state.contentPrefixTrimmed) {
+        state.contentPrefixTrimmed = true;
         if (stream.eatSpace()) return null;
+      }
 
-        if (!stream.eol()) {
-          stream.skipToEnd();
+      if (!state.contentDone) {
+        if (allowsBoldInContent) {
+          const styles = tokenLetteringText(stream);
+
+          if (stream.eol()) {
+            state.contentDone = true;
+          }
+
+          return styles;
+        } else {
           state.contentDone = true;
+          stream.skipToEnd();
           return LETTERING_CONTENT;
         }
       }

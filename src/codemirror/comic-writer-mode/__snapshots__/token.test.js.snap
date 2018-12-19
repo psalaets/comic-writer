@@ -3,20 +3,41 @@
 exports[`mode.token() caption all bold content 1`] = `
 Array [
   Object {
-    "end": 10,
+    "end": 1,
     "start": 0,
-    "string": "	caption: ",
+    "string": "	",
     "style": Array [
-      "caption",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 9,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 22,
     "start": 10,
     "string": "**good one**",
     "style": Array [
-      "caption",
       "lettering-bold",
+      "lettering-content",
     ],
   },
 ]
@@ -25,19 +46,54 @@ Array [
 exports[`mode.token() caption full 1`] = `
 Array [
   Object {
-    "end": 17,
+    "end": 1,
     "start": 0,
-    "string": "	caption (bill): ",
+    "string": "	",
     "style": Array [
-      "caption",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 15,
+    "start": 9,
+    "string": "(bill)",
+    "style": Array [
+      "lettering-modifier",
+    ],
+  },
+  Object {
+    "end": 16,
+    "start": 15,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 17,
+    "start": 16,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 29,
     "start": 17,
     "string": "it went well",
     "style": Array [
-      "caption",
+      "lettering-content",
     ],
   },
 ]
@@ -46,19 +102,40 @@ Array [
 exports[`mode.token() caption multiple bolds 1`] = `
 Array [
   Object {
-    "end": 10,
+    "end": 1,
     "start": 0,
-    "string": "	caption: ",
+    "string": "	",
     "style": Array [
-      "caption",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 9,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 17,
     "start": 10,
     "string": "it did ",
     "style": Array [
-      "caption",
+      "lettering-content",
     ],
   },
   Object {
@@ -66,8 +143,8 @@ Array [
     "start": 17,
     "string": "**not**",
     "style": Array [
-      "caption",
       "lettering-bold",
+      "lettering-content",
     ],
   },
   Object {
@@ -75,7 +152,7 @@ Array [
     "start": 24,
     "string": " work at ",
     "style": Array [
-      "caption",
+      "lettering-content",
     ],
   },
   Object {
@@ -83,8 +160,8 @@ Array [
     "start": 33,
     "string": "**all**",
     "style": Array [
-      "caption",
       "lettering-bold",
+      "lettering-content",
     ],
   },
   Object {
@@ -92,7 +169,7 @@ Array [
     "start": 40,
     "string": "!",
     "style": Array [
-      "caption",
+      "lettering-content",
     ],
   },
 ]
@@ -101,10 +178,21 @@ Array [
 exports[`mode.token() caption no colon 1`] = `
 Array [
   Object {
-    "end": 8,
+    "end": 1,
     "start": 0,
-    "string": "	caption",
-    "style": null,
+    "string": "	",
+    "style": Array [
+      "line-cm-caption",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
   },
 ]
 `;
@@ -112,12 +200,27 @@ Array [
 exports[`mode.token() caption no content 1`] = `
 Array [
   Object {
-    "end": 9,
+    "end": 1,
     "start": 0,
-    "string": "	caption:",
+    "string": "	",
     "style": Array [
-      "caption",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": ":",
+    "style": null,
   },
 ]
 `;
@@ -125,19 +228,40 @@ Array [
 exports[`mode.token() caption no modifier 1`] = `
 Array [
   Object {
-    "end": 10,
+    "end": 1,
     "start": 0,
-    "string": "	caption: ",
+    "string": "	",
     "style": Array [
-      "caption",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 9,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 22,
     "start": 10,
     "string": "it went well",
     "style": Array [
-      "caption",
+      "lettering-content",
     ],
   },
 ]
@@ -146,19 +270,40 @@ Array [
 exports[`mode.token() caption some bold content 1`] = `
 Array [
   Object {
-    "end": 10,
+    "end": 1,
     "start": 0,
-    "string": "	caption: ",
+    "string": "	",
     "style": Array [
-      "caption",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 8,
+    "start": 1,
+    "string": "caption",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 9,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 13,
     "start": 10,
     "string": "it ",
     "style": Array [
-      "caption",
+      "lettering-content",
     ],
   },
   Object {
@@ -166,8 +311,8 @@ Array [
     "start": 13,
     "string": "**did not**",
     "style": Array [
-      "caption",
       "lettering-bold",
+      "lettering-content",
     ],
   },
   Object {
@@ -175,7 +320,7 @@ Array [
     "start": 24,
     "string": " work",
     "style": Array [
-      "caption",
+      "lettering-content",
     ],
   },
 ]
@@ -184,20 +329,41 @@ Array [
 exports[`mode.token() dialogue all bold content 1`] = `
 Array [
   Object {
-    "end": 7,
+    "end": 1,
     "start": 0,
-    "string": "	bill: ",
+    "string": "	",
     "style": Array [
-      "dialogue",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 7,
+    "start": 6,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 19,
     "start": 7,
     "string": "**good one**",
     "style": Array [
-      "dialogue",
       "lettering-bold",
+      "lettering-content",
     ],
   },
 ]
@@ -206,19 +372,54 @@ Array [
 exports[`mode.token() dialogue full 1`] = `
 Array [
   Object {
-    "end": 17,
+    "end": 1,
     "start": 0,
-    "string": "	bill (whisper): ",
+    "string": "	",
     "style": Array [
-      "dialogue",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 15,
+    "start": 6,
+    "string": "(whisper)",
+    "style": Array [
+      "lettering-modifier",
+    ],
+  },
+  Object {
+    "end": 16,
+    "start": 15,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 17,
+    "start": 16,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 29,
     "start": 17,
     "string": "it went well",
     "style": Array [
-      "dialogue",
+      "lettering-content",
     ],
   },
 ]
@@ -227,19 +428,40 @@ Array [
 exports[`mode.token() dialogue multiple bolds 1`] = `
 Array [
   Object {
-    "end": 7,
+    "end": 1,
     "start": 0,
-    "string": "	bill: ",
+    "string": "	",
     "style": Array [
-      "dialogue",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 7,
+    "start": 6,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 14,
     "start": 7,
     "string": "it did ",
     "style": Array [
-      "dialogue",
+      "lettering-content",
     ],
   },
   Object {
@@ -247,8 +469,8 @@ Array [
     "start": 14,
     "string": "**not**",
     "style": Array [
-      "dialogue",
       "lettering-bold",
+      "lettering-content",
     ],
   },
   Object {
@@ -256,7 +478,7 @@ Array [
     "start": 21,
     "string": " work at ",
     "style": Array [
-      "dialogue",
+      "lettering-content",
     ],
   },
   Object {
@@ -264,8 +486,8 @@ Array [
     "start": 30,
     "string": "**all**",
     "style": Array [
-      "dialogue",
       "lettering-bold",
+      "lettering-content",
     ],
   },
   Object {
@@ -273,7 +495,7 @@ Array [
     "start": 37,
     "string": "!",
     "style": Array [
-      "dialogue",
+      "lettering-content",
     ],
   },
 ]
@@ -282,10 +504,21 @@ Array [
 exports[`mode.token() dialogue no colon 1`] = `
 Array [
   Object {
-    "end": 5,
+    "end": 1,
     "start": 0,
-    "string": "	bill",
-    "style": null,
+    "string": "	",
+    "style": Array [
+      "line-cm-dialogue",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
   },
 ]
 `;
@@ -293,12 +526,27 @@ Array [
 exports[`mode.token() dialogue no content 1`] = `
 Array [
   Object {
-    "end": 6,
+    "end": 1,
     "start": 0,
-    "string": "	bill:",
+    "string": "	",
     "style": Array [
-      "dialogue",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": ":",
+    "style": null,
   },
 ]
 `;
@@ -306,19 +554,40 @@ Array [
 exports[`mode.token() dialogue no modifier 1`] = `
 Array [
   Object {
-    "end": 7,
+    "end": 1,
     "start": 0,
-    "string": "	bill: ",
+    "string": "	",
     "style": Array [
-      "dialogue",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 7,
+    "start": 6,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 19,
     "start": 7,
     "string": "it went well",
     "style": Array [
-      "dialogue",
+      "lettering-content",
     ],
   },
 ]
@@ -327,19 +596,40 @@ Array [
 exports[`mode.token() dialogue some bold content 1`] = `
 Array [
   Object {
-    "end": 7,
+    "end": 1,
     "start": 0,
-    "string": "	bill: ",
+    "string": "	",
     "style": Array [
-      "dialogue",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 7,
+    "start": 6,
+    "string": " ",
+    "style": null,
   },
   Object {
     "end": 10,
     "start": 7,
     "string": "it ",
     "style": Array [
-      "dialogue",
+      "lettering-content",
     ],
   },
   Object {
@@ -347,8 +637,8 @@ Array [
     "start": 10,
     "string": "**did not**",
     "style": Array [
-      "dialogue",
       "lettering-bold",
+      "lettering-content",
     ],
   },
   Object {
@@ -356,7 +646,7 @@ Array [
     "start": 21,
     "string": " work",
     "style": Array [
-      "dialogue",
+      "lettering-content",
     ],
   },
 ]
@@ -768,6 +1058,48 @@ Array [
     "string": "(gun",
     "style": Array [
       "lettering-modifier",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() sfx with bold content 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 4,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 21,
+    "start": 6,
+    "string": "bam **bam** bam",
+    "style": Array [
+      "lettering-content",
     ],
   },
 ]
