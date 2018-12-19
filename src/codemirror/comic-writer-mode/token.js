@@ -10,6 +10,11 @@ const LETTERING_SUBJECT = 'lettering-subject';
 const LETTERING_MODIFIER = 'lettering-modifier';
 const LETTERING_CONTENT = 'lettering-content';
 
+const LETTERING_LINE = 'line-cm-lettering';
+const SFX_LINE = 'line-cm-sfx';
+const CAPTION_LINE = 'line-cm-caption';
+const DIALOGUE_LINE = 'line-cm-dialogue';
+
 const END_OF_LETTERING = Symbol('end of lettering');
 
 export default function token(stream, state) {
@@ -83,13 +88,13 @@ function letteringState(stream) {
 
   if (stream.match(/^sfx/i, false)) {
     allowsBoldInContent = false;
-    lineStyles = 'line-cm-lettering line-cm-sfx';
+    lineStyles = `${LETTERING_LINE} ${SFX_LINE}`;
   } else if (stream.match(/^caption/i, false)) {
     allowsBoldInContent = true;
-    lineStyles = 'line-cm-lettering line-cm-caption';
+    lineStyles = `${LETTERING_LINE} ${CAPTION_LINE}`;
   } else {
     allowsBoldInContent = true;
-    lineStyles = 'line-cm-lettering line-cm-dialogue';
+    lineStyles = `${LETTERING_LINE} ${DIALOGUE_LINE}`;
   }
 
   const state = {
