@@ -773,6 +773,48 @@ Array [
 ]
 `;
 
+exports[`mode.token() dialogue no subject 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-dialogue",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 7,
+    "start": 1,
+    "string": "(yell)",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 8,
+    "start": 7,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 9,
+    "start": 8,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 12,
+    "start": 9,
+    "string": "bam",
+    "style": Array [
+      "lettering-content",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() dialogue some bold content 1`] = `
 Array [
   Object {
@@ -863,6 +905,106 @@ Array [
     "string": "(yell",
     "style": Array [
       "lettering-modifier",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue unclosed modifier with content 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-dialogue",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 5,
+    "start": 1,
+    "string": "bill",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 5,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 17,
+    "start": 6,
+    "string": "(yell: ahhh",
+    "style": Array [
+      "lettering-modifier",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue unopened modifier 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-dialogue",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 11,
+    "start": 1,
+    "string": "bill yell)",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() dialogue unopened modifier with content 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": Array [
+      "line-cm-dialogue",
+      "line-cm-lettering",
+    ],
+  },
+  Object {
+    "end": 11,
+    "start": 1,
+    "string": "bill yell)",
+    "style": Array [
+      "lettering-subject",
+    ],
+  },
+  Object {
+    "end": 12,
+    "start": 11,
+    "string": ":",
+    "style": null,
+  },
+  Object {
+    "end": 13,
+    "start": 12,
+    "string": " ",
+    "style": null,
+  },
+  Object {
+    "end": 17,
+    "start": 13,
+    "string": "ahhh",
+    "style": Array [
+      "lettering-content",
     ],
   },
 ]

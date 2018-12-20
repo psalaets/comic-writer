@@ -77,15 +77,23 @@ function letteringState(stream) {
           state.subjectDone = true;
           return LETTERING_SUBJECT;
         } else {
-          /*
-          match some text follow by any of:
-            spaces and parens
-            spaces and colon
-            end of string
-          */
-          stream.match(/^.*?(?= *\(| *:|$)/);
-          state.subjectDone = true;
-          return LETTERING_SUBJECT;
+          // modifier opened but there was no subject
+          // this is a user mistake but we still have to no blow up
+          if (stream.peek() === '(') {
+            stream.eatWhile(/[^:]/);
+            state.subjectDone = true;
+            return LETTERING_SUBJECT;
+          } else {
+            /*
+            match some text followed by any of:
+              spaces and parens
+              spaces and colon
+              end of string
+            */
+            stream.match(/^.+?(?= *\(| *:|$)/);
+            state.subjectDone = true;
+            return LETTERING_SUBJECT;
+          }
         }
       }
 

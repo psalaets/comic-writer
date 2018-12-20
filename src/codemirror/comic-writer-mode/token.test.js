@@ -227,8 +227,32 @@ describe('mode.token()', () => {
       expect(tokens).toMatchSnapshot();
     });
 
+    test('unclosed modifier with content', () => {
+      const tokens = collectTokens('\tbill (yell: ahhh');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('unopened modifier', () => {
+      const tokens = collectTokens('\tbill yell)');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('unopened modifier with content', () => {
+      const tokens = collectTokens('\tbill yell): ahhh');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
     test('closed modifier but no colon', () => {
       const tokens = collectTokens('\tbill (yell)');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('no subject', () => {
+      const tokens = collectTokens('\t(yell): bam');
 
       expect(tokens).toMatchSnapshot();
     });
