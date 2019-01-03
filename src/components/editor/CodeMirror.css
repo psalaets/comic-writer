@@ -8,6 +8,9 @@
  * 2. the width in "X's" on each side.
  * 3. Each Line of code.
  * 4. Wraps the text in each line's gutter value.
+ * 5. Turning off "focus" outline for the editor.
+ *    TODO: What's the right way to make this a11y without it looking like total
+ *          shit?
 */
 
 /* Block */
@@ -42,6 +45,10 @@
 .CodeMirror-gutter-wrapper {
   top: 0;
   bottom: 0;
+}
+
+.CodeMirror:focus { /* 5 */
+  outline: none;
 }
 
 /* panel count line widget */
