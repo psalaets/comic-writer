@@ -47,7 +47,7 @@
   bottom: 0;
 }
 
-.CodeMirror:focus { /* 5 */
+.CodeMirror *:focus { /* 5 */
   outline: none;
 }
 
