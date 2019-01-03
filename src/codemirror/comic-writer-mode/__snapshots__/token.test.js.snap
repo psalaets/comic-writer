@@ -6,10 +6,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -17,18 +14,14 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 9,
-    "start": 8,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 10,
-    "start": 9,
-    "string": " ",
+    "start": 8,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -49,10 +42,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -60,6 +50,8 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -69,12 +61,24 @@ Array [
     "style": null,
   },
   Object {
-    "end": 14,
+    "end": 10,
     "start": 9,
-    "string": "(mom)",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 13,
+    "start": 10,
+    "string": "mom",
     "style": Array [
       "lettering-modifier",
     ],
+  },
+  Object {
+    "end": 14,
+    "start": 13,
+    "string": ")",
+    "style": null,
   },
 ]
 `;
@@ -85,10 +89,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -96,6 +97,8 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -105,23 +108,29 @@ Array [
     "style": null,
   },
   Object {
-    "end": 15,
+    "end": 10,
     "start": 9,
-    "string": "(bill)",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 14,
+    "start": 10,
+    "string": "bill",
     "style": Array [
       "lettering-modifier",
     ],
   },
   Object {
-    "end": 16,
-    "start": 15,
-    "string": ":",
+    "end": 15,
+    "start": 14,
+    "string": ")",
     "style": null,
   },
   Object {
     "end": 17,
-    "start": 16,
-    "string": " ",
+    "start": 15,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -141,10 +150,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -152,18 +158,14 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 9,
-    "start": 8,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 10,
-    "start": 9,
-    "string": " ",
+    "start": 8,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -217,10 +219,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -228,6 +227,8 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -240,9 +241,7 @@ Array [
     "end": 10,
     "start": 9,
     "string": "(",
-    "style": Array [
-      "lettering-modifier",
-    ],
+    "style": null,
   },
 ]
 `;
@@ -253,10 +252,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -264,6 +260,8 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
 ]
@@ -275,10 +273,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -286,6 +281,8 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -303,10 +300,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -314,18 +308,14 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 9,
-    "start": 8,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 10,
-    "start": 9,
-    "string": " ",
+    "start": 8,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -345,10 +335,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -356,18 +343,14 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 9,
-    "start": 8,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 10,
-    "start": 9,
-    "string": " ",
+    "start": 8,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -404,10 +387,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-caption",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 8,
@@ -415,6 +395,8 @@ Array [
     "string": "caption",
     "style": Array [
       "lettering-subject",
+      "line-cm-caption",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -424,9 +406,15 @@ Array [
     "style": null,
   },
   Object {
-    "end": 13,
+    "end": 10,
     "start": 9,
-    "string": "(mom",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 13,
+    "start": 10,
+    "string": "mom",
     "style": Array [
       "lettering-modifier",
     ],
@@ -440,10 +428,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -451,18 +436,14 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 6,
-    "start": 5,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 7,
-    "start": 6,
-    "string": " ",
+    "start": 5,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -483,10 +464,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -494,6 +472,8 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -503,12 +483,24 @@ Array [
     "style": null,
   },
   Object {
-    "end": 12,
+    "end": 7,
     "start": 6,
-    "string": "(yell)",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 11,
+    "start": 7,
+    "string": "yell",
     "style": Array [
       "lettering-modifier",
     ],
+  },
+  Object {
+    "end": 12,
+    "start": 11,
+    "string": ")",
+    "style": null,
   },
 ]
 `;
@@ -519,10 +511,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -530,6 +519,8 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -539,23 +530,29 @@ Array [
     "style": null,
   },
   Object {
-    "end": 15,
+    "end": 7,
     "start": 6,
-    "string": "(whisper)",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 14,
+    "start": 7,
+    "string": "whisper",
     "style": Array [
       "lettering-modifier",
     ],
   },
   Object {
-    "end": 16,
-    "start": 15,
-    "string": ":",
+    "end": 15,
+    "start": 14,
+    "string": ")",
     "style": null,
   },
   Object {
     "end": 17,
-    "start": 16,
-    "string": " ",
+    "start": 15,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -575,10 +572,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -586,18 +580,14 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 6,
-    "start": 5,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 7,
-    "start": 6,
-    "string": " ",
+    "start": 5,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -651,10 +641,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -662,6 +649,8 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -674,9 +663,7 @@ Array [
     "end": 7,
     "start": 6,
     "string": "(",
-    "style": Array [
-      "lettering-modifier",
-    ],
+    "style": null,
   },
 ]
 `;
@@ -687,10 +674,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -698,6 +682,8 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
 ]
@@ -709,10 +695,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -720,6 +703,8 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -737,10 +722,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -748,18 +730,14 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 6,
-    "start": 5,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 7,
-    "start": 6,
-    "string": " ",
+    "start": 5,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -779,10 +757,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -790,18 +765,14 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 6,
-    "start": 5,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 7,
-    "start": 6,
-    "string": " ",
+    "start": 5,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -838,10 +809,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -849,6 +817,8 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -858,9 +828,15 @@ Array [
     "style": null,
   },
   Object {
-    "end": 11,
+    "end": 7,
     "start": 6,
-    "string": "(yell",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 11,
+    "start": 7,
+    "string": "yell",
     "style": Array [
       "lettering-modifier",
     ],
@@ -1029,10 +1005,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
+    "style": null,
   },
   Object {
     "end": 4,
@@ -1040,6 +1013,8 @@ Array [
     "string": "sfx",
     "style": Array [
       "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
     ],
   },
   Object {
@@ -1049,12 +1024,24 @@ Array [
     "style": null,
   },
   Object {
-    "end": 10,
+    "end": 6,
     "start": 5,
-    "string": "(gun)",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 9,
+    "start": 6,
+    "string": "gun",
     "style": Array [
       "lettering-modifier",
     ],
+  },
+  Object {
+    "end": 10,
+    "start": 9,
+    "string": ")",
+    "style": null,
   },
 ]
 `;
@@ -1065,10 +1052,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
+    "style": null,
   },
   Object {
     "end": 4,
@@ -1076,18 +1060,14 @@ Array [
     "string": "sfx",
     "style": Array [
       "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
     ],
   },
   Object {
-    "end": 5,
-    "start": 4,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 6,
-    "start": 5,
-    "string": " ",
+    "start": 4,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -1107,10 +1087,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
+    "style": null,
   },
   Object {
     "end": 4,
@@ -1118,6 +1095,8 @@ Array [
     "string": "sfx",
     "style": Array [
       "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
     ],
   },
   Object {
@@ -1127,23 +1106,29 @@ Array [
     "style": null,
   },
   Object {
-    "end": 10,
+    "end": 6,
     "start": 5,
-    "string": "(gun)",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 9,
+    "start": 6,
+    "string": "gun",
     "style": Array [
       "lettering-modifier",
     ],
   },
   Object {
-    "end": 11,
-    "start": 10,
-    "string": ":",
+    "end": 10,
+    "start": 9,
+    "string": ")",
     "style": null,
   },
   Object {
     "end": 12,
-    "start": 11,
-    "string": " ",
+    "start": 10,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -1163,10 +1148,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
+    "style": null,
   },
   Object {
     "end": 4,
@@ -1174,6 +1156,8 @@ Array [
     "string": "sfx",
     "style": Array [
       "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
     ],
   },
   Object {
@@ -1186,9 +1170,7 @@ Array [
     "end": 6,
     "start": 5,
     "string": "(",
-    "style": Array [
-      "lettering-modifier",
-    ],
+    "style": null,
   },
 ]
 `;
@@ -1199,10 +1181,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
+    "style": null,
   },
   Object {
     "end": 4,
@@ -1210,6 +1189,8 @@ Array [
     "string": "sfx",
     "style": Array [
       "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
     ],
   },
 ]
@@ -1221,10 +1202,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
+    "style": null,
   },
   Object {
     "end": 4,
@@ -1232,6 +1210,8 @@ Array [
     "string": "sfx",
     "style": Array [
       "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
     ],
   },
   Object {
@@ -1249,10 +1229,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
+    "style": null,
   },
   Object {
     "end": 4,
@@ -1260,18 +1237,14 @@ Array [
     "string": "sfx",
     "style": Array [
       "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
     ],
   },
   Object {
-    "end": 5,
-    "start": 4,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 6,
-    "start": 5,
-    "string": " ",
+    "start": 4,
+    "string": ": ",
     "style": null,
   },
   Object {
@@ -1291,10 +1264,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
+    "style": null,
   },
   Object {
     "end": 4,
@@ -1302,6 +1272,8 @@ Array [
     "string": "sfx",
     "style": Array [
       "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
     ],
   },
   Object {
@@ -1311,9 +1283,15 @@ Array [
     "style": null,
   },
   Object {
-    "end": 9,
+    "end": 6,
     "start": 5,
-    "string": "(gun",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 9,
+    "start": 6,
+    "string": "gun",
     "style": Array [
       "lettering-modifier",
     ],
