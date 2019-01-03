@@ -13,141 +13,137 @@ const SFX_LINE = 'line-cm-sfx';
 const CAPTION_LINE = 'line-cm-caption';
 const DIALOGUE_LINE = 'line-cm-dialogue';
 
-const END_OF_LETTERING = Symbol('end of lettering');
-
 export default function token(stream, state) {
-  if (stream.match(/^\t/i)) {
-    state.lettering = letteringState(stream);
-    return state.lettering.lineStyles;
+  if (stream.sol()) {
+    resetState(state);
+
+    if (stream.peek() === '\t') {
+      stream.next();
+      state.inLettering = true;
+      return null;
+    }
+
+    if (stream.match(/^page \d+$/i)) return PAGE;
+    if (stream.match(/^panel \d+$/i)) return PANEL;
+    if (stream.match(/^(.+): ?(.+)/)) return METADATA;
   }
 
-  if (state.lettering) {
-    const nextStyle = state.lettering.next(stream);
-    if (nextStyle === END_OF_LETTERING) {
-      state.lettering = undefined;
-      return null;
-    } else {
-      return nextStyle;
+  if (state.inLettering) {
+    if (!state.subjectDone) {
+      if (stream.match(/sfx/i)) {
+        state.subjectDone = true;
+        state.allowsBoldInContent = false;
+        return `${LETTERING_SUBJECT} ${LETTERING_LINE} ${SFX_LINE}`;
+      } else if (stream.match(/caption/i)) {
+        state.subjectDone = true;
+        state.allowsBoldInContent = true;
+        return `${LETTERING_SUBJECT} ${LETTERING_LINE} ${CAPTION_LINE}`;
+      } else if (stream.match(/[:(]/)) {
+        // looks like there's no subject
+        stream.skipToEnd();
+        state.inLettering = false;
+        return null;
+      } else {
+        state.subjectDone = true;
+        state.allowsBoldInContent = true;
+
+        const subject = [];
+
+        // inch forward until getting to end of subject
+        let eaten;
+        /* eslint-disable-next-line no-cond-assign */
+        while (eaten = stream.eat(/[^:(]/)) {
+          subject.push(eaten);
+        }
+
+        // back track to get before any whitespace between subject and end of subject
+        while (/\s/.test(subject[subject.length - 1])) {
+          subject.pop();
+          stream.backUp(1);
+        }
+
+        return `${LETTERING_SUBJECT} ${LETTERING_LINE} ${DIALOGUE_LINE}`;
+      }
+    }
+
+    // haven't read modifier yet
+    if (!state.modifierDone) {
+      // consume any whitespace between subject and modifier
+      if (stream.eatSpace()) return null;
+
+      // next char is colon, there was no modifier
+      if (stream.peek() === ':') {
+        state.modifierDone = true;
+      }
+      // modifier has been opened, we're reading modifier text right now
+      else if (state.inModifier) {
+        if (stream.eatWhile(/[^:)]/)) {
+          return LETTERING_MODIFIER;
+        }
+        // modifier is unclosed or empty
+        else if (stream.eat(/[:)]/)) {
+          state.inModifier = false;
+          state.modifierDone = true;
+          return null;
+        }
+        // modifier never ends
+        else {
+          stream.skipToEnd();
+          state.inModifier = false;
+          state.modifierDone = true;
+          return null;
+        }
+      }
+      // modifier not open yet but we know it's there, in some form
+      else {
+        stream.eat('(');
+        state.inModifier = true;
+        return null;
+      }
+    }
+
+    if (!state.contentDone) {
+      if (state.inContent) {
+        if (state.allowsBoldInContent) {
+          const styles = tokenLetteringText(stream);
+
+          if (stream.eol()) {
+            state.contentDone = true;
+            state.inContent = false;
+          }
+
+          return styles;
+        } else {
+          stream.skipToEnd();
+          return LETTERING_CONTENT;
+        }
+      } else if (stream.skipTo(':')) {
+        stream.next();
+        stream.eatSpace();
+
+        state.inContent = true;
+        return null;
+      } else {
+        stream.skipToEnd();
+        state.contentDone = true;
+        return null;
+      }
     }
   }
-
-  if (stream.match(/^page \d+$/i)) return PAGE;
-  if (stream.match(/^panel \d+$/i)) return PANEL;
-  if (stream.match(/^(.+): ?(.+)/)) return METADATA;
 
   // advance stream past stuff that isn't styled, like plain paragraphs
   stream.skipToEnd();
   return null;
 }
 
-// figure out lettering type on the fly, when parsing subject token
-// the style for subject is the lettering-subject style and also a line- style
-// after determining subject, it sets: line- style, bold parsing rules
-function letteringState(stream) {
-  let lineStyles = null;
-  let allowsBoldInContent;
-
-  if (stream.match(/^sfx/i, false)) {
-    allowsBoldInContent = false;
-    lineStyles = `${LETTERING_LINE} ${SFX_LINE}`;
-  } else if (stream.match(/^caption/i, false)) {
-    allowsBoldInContent = true;
-    lineStyles = `${LETTERING_LINE} ${CAPTION_LINE}`;
-  } else {
-    allowsBoldInContent = true;
-    lineStyles = `${LETTERING_LINE} ${DIALOGUE_LINE}`;
-  }
-
-  const state = {
-    subjectDone: false,
-    subjectSuffixTrimmed: false,
-    modifierDone: false,
-    colonDone: false,
-    contentDone: false,
-    contentPrefixTrimmed: false
-  };
-
-  return {
-    next(stream) {
-      if (!state.subjectDone) {
-        if (stream.match(/^sfx/i)) {
-          state.subjectDone = true;
-          return LETTERING_SUBJECT;
-        } else if (stream.match(/^caption/i)) {
-          state.subjectDone = true;
-          return LETTERING_SUBJECT;
-        } else {
-          // modifier opened but there was no subject
-          // this is a user mistake but we still have to no blow up
-          if (stream.peek() === '(') {
-            stream.eatWhile(/[^:]/);
-            state.subjectDone = true;
-            return LETTERING_SUBJECT;
-          } else {
-            /*
-            match some text followed by any of:
-              spaces and parens
-              spaces and colon
-              end of string
-            */
-            stream.match(/^.+?(?= *\(| *:|$)/);
-            state.subjectDone = true;
-            return LETTERING_SUBJECT;
-          }
-        }
-      }
-
-      if (!state.subjectSuffixTrimmed) {
-        state.subjectSuffixTrimmed = true;
-        if (stream.eatSpace()) return null;
-      }
-
-      if (!state.modifierDone && !state.colonDone) {
-        if (stream.eatSpace()) return null;
-
-        if (stream.peek() === '(') {
-          if (stream.eatWhile(/[^)]/)) {
-            state.modifierDone = true;
-            stream.next();
-            return LETTERING_MODIFIER;
-          }
-        }
-      }
-
-      if (!state.colonDone) {
-        if (stream.eat(':')) {
-          state.colonDone = true;
-        }
-        return null;
-      }
-
-      if (!state.contentPrefixTrimmed) {
-        state.contentPrefixTrimmed = true;
-        if (stream.eatSpace()) return null;
-      }
-
-      if (!state.contentDone) {
-        if (allowsBoldInContent) {
-          const styles = tokenLetteringText(stream);
-
-          if (stream.eol()) {
-            state.contentDone = true;
-          }
-
-          return styles;
-        } else {
-          state.contentDone = true;
-          stream.skipToEnd();
-          return LETTERING_CONTENT;
-        }
-      }
-
-      return END_OF_LETTERING;
-    },
-    get lineStyles() {
-      return lineStyles;
-    }
-  };
+function resetState(state) {
+  state.inLettering = false;
+  state.allowsBoldInContent = false;
+  state.subjectDone = false;
+  state.modifierDone = false;
+  state.inModifier = false;
+  state.contentDone = false;
+  state.inContent = false;
 }
 
 /**
