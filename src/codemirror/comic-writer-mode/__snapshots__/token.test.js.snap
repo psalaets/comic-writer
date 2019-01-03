@@ -757,38 +757,13 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
-  },
-  Object {
-    "end": 7,
-    "start": 1,
-    "string": "(yell)",
-    "style": Array [
-      "lettering-subject",
-    ],
-  },
-  Object {
-    "end": 8,
-    "start": 7,
-    "string": ":",
-    "style": null,
-  },
-  Object {
-    "end": 9,
-    "start": 8,
-    "string": " ",
     "style": null,
   },
   Object {
     "end": 12,
-    "start": 9,
-    "string": "bam",
-    "style": Array [
-      "lettering-content",
-    ],
+    "start": 1,
+    "string": "(yell): bam",
+    "style": null,
   },
 ]
 `;
@@ -892,10 +867,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 5,
@@ -903,6 +875,8 @@ Array [
     "string": "bill",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
@@ -912,11 +886,31 @@ Array [
     "style": null,
   },
   Object {
-    "end": 17,
+    "end": 7,
     "start": 6,
-    "string": "(yell: ahhh",
+    "string": "(",
+    "style": null,
+  },
+  Object {
+    "end": 11,
+    "start": 7,
+    "string": "yell",
     "style": Array [
       "lettering-modifier",
+    ],
+  },
+  Object {
+    "end": 13,
+    "start": 11,
+    "string": ": ",
+    "style": null,
+  },
+  Object {
+    "end": 17,
+    "start": 13,
+    "string": "ahhh",
+    "style": Array [
+      "lettering-content",
     ],
   },
 ]
@@ -928,10 +922,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 11,
@@ -939,6 +930,8 @@ Array [
     "string": "bill yell)",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
 ]
@@ -950,10 +943,7 @@ Array [
     "end": 1,
     "start": 0,
     "string": "	",
-    "style": Array [
-      "line-cm-dialogue",
-      "line-cm-lettering",
-    ],
+    "style": null,
   },
   Object {
     "end": 11,
@@ -961,18 +951,14 @@ Array [
     "string": "bill yell)",
     "style": Array [
       "lettering-subject",
+      "line-cm-dialogue",
+      "line-cm-lettering",
     ],
   },
   Object {
-    "end": 12,
-    "start": 11,
-    "string": ":",
-    "style": null,
-  },
-  Object {
     "end": 13,
-    "start": 12,
-    "string": " ",
+    "start": 11,
+    "string": ": ",
     "style": null,
   },
   Object {
