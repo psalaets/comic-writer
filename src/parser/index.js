@@ -71,6 +71,9 @@ function parsePage(lines, state) {
     number: Number(number),
     content,
     panelCount: panels.length,
+    speakers: panels.reduce((pageSpeakers, panel) => {
+      return pageSpeakers.concat(panel.speakers);
+    }, []),
     dialogueCount: panels.reduce((total, p) => total + p.dialogueCount, 0),
     captionCount: panels.reduce((total, p) => total + p.captionCount, 0),
     sfxCount: panels.reduce((total, p) => total + p.sfxCount, 0),
@@ -115,6 +118,7 @@ function parsePanel(lines, state) {
     type: types.PANEL,
     number: Number(number),
     content,
+    speakers: dialogues.map(d => d.speaker),
     dialogueCount: dialogues.length,
     captionCount: captions.length,
     sfxCount: sfxs.length,

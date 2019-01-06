@@ -16,6 +16,7 @@ export default class Editor extends Component {
           editorWidth={80}
           value={this.props.value}
           stats={this.props.stats}
+          characters={this.props.characters}
           onChange={this.handleChange}
         />
     )
@@ -29,5 +30,6 @@ export default class Editor extends Component {
 Editor.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  stats: PropTypes.array.isRequired
+  stats: PropTypes.array.isRequired,
+  characters: PropTypes.arrayOf(PropTypes.string).isRequired
 };
