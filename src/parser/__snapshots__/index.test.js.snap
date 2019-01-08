@@ -234,6 +234,59 @@ Array [
 ]
 `;
 
+exports[`parse() dialogue with modifier 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [
+      Object {
+        "captionCount": 0,
+        "captionWordCount": 0,
+        "content": Array [
+          Object {
+            "content": Array [
+              Object {
+                "content": "go!",
+                "type": "text",
+              },
+            ],
+            "id": "1.1.1",
+            "modifier": "yell",
+            "number": 1,
+            "speaker": "bob",
+            "startingLine": 4,
+            "type": "dialogue",
+            "wordCount": 1,
+          },
+        ],
+        "dialogueCount": 1,
+        "dialogueWordCount": 1,
+        "id": "1.1",
+        "number": 1,
+        "sfxCount": 0,
+        "speakers": Array [
+          "bob",
+        ],
+        "startingLine": 2,
+        "type": "panel",
+      },
+    ],
+    "dialogueCount": 1,
+    "dialogueWordCount": 1,
+    "id": "1",
+    "number": 1,
+    "panelCount": 1,
+    "sfxCount": 0,
+    "speakers": Array [
+      "bob",
+    ],
+    "startingLine": 1,
+    "type": "page",
+  },
+]
+`;
+
 exports[`parse() kitchen sink 1`] = `
 Array [
   Object {

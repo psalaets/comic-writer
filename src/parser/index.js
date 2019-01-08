@@ -6,7 +6,7 @@ const PAGE_REGEX      = /^page (\d+)/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
 const CAPTION_REGEX   = /^\tcaption ?(\(.+\))?: ?(.+)/i;
 const SFX_REGEX       = /^\tsfx ?(\(.+\))?: ?(.+)/i;
-const DIALOGUE_REGEX  = /^\t(.+) ?(\(.+\))?: ?(.+)/;
+const DIALOGUE_REGEX  = /^\t(.+?) ?(\(.+\))?: ?(.+)/;
 const METADATA_REGEX  = /^(.+): ?(.+)/;
 const PARAGRAPH_REGEX = /^.+/;
 
