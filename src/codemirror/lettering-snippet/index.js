@@ -93,10 +93,8 @@ function makeSteps(getCharacterNames) {
         }
       );
 
-      const suggestionsSnapshot = ['sfx', 'caption'].concat(getCharacterNames());
-
       cm.showHint({
-        hint: makeHinter(suggestionsSnapshot),
+        hint: makeHinter(getCharacterNames()),
         // don't auto select a single suggestion because use could be typing a
         // new character name
         completeSingle: false,
@@ -121,37 +119,26 @@ function makeSteps(getCharacterNames) {
   ];
 }
 
-function makeHinter(suggestionsSnapshot) {
+function makeHinter(characterNames) {
   function hinter(cm) {
     const cursor = cm.getCursor();
     const token = cm.getTokenAt(cursor);
 
-    const suggestions = suggestionsSnapshot
+    const suggestions = ['caption', 'sfx'].concat(characterNames)
       .filter(name => {
         return token.string === SUBJECT_PLACEHOLDER || name.startsWith(token.string);
-      })
-      .map(name => {
-        return {
-          text: name,
-          displayText: name.toUpperCase(),
-          hint: function applySuggestion(cm) {
-            const from = {
-              line: cursor.line,
-              ch: token.start
-            };
-
-            const to = {
-              line: cursor.line,
-              ch: token.end
-            };
-
-            cm.replaceRange(name, from, to);
-          }
-        };
       });
 
     return {
       list: suggestions,
+      from: {
+        line: cursor.line,
+        ch: token.start
+      },
+      to: {
+        line: cursor.line,
+        ch: token.end
+      }
     };
   }
 
