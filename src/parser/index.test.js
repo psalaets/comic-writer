@@ -68,6 +68,15 @@ This is panel description.
     expect(result).toMatchSnapshot();
   });
 
+  it('dialogue with modifier', () => {
+    const result = parse(`Page 1
+Panel 1
+
+\tbob (yell): go!`);
+
+    expect(result).toMatchSnapshot();
+  });
+
   it('dialogue with bold', () => {
     const result = parse(`Page 1
 Panel 1

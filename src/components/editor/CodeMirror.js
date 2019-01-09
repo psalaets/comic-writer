@@ -23,11 +23,15 @@ import '../../codemirror/theme.css';
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/addon/scroll/scrollpastend';
 
+import 'codemirror/addon/hint/show-hint';
+import 'codemirror/addon/hint/show-hint.css';
+
 export default class CodeMirrorComponent extends Component {
   constructor(props) {
     super(props);
 
     this.el = React.createRef();
+    this.getCharacterNames = this.getCharacterNames.bind(this);
   }
 
   render() {
@@ -69,6 +73,8 @@ export default class CodeMirrorComponent extends Component {
   }
 
   componentDidMount() {
+    const getCharacterNames = this.getCharacterNames;
+
     this.cm = CodeMirror(this.el.current, {
       mode: MODE,
       theme: THEME,
@@ -87,11 +93,11 @@ export default class CodeMirrorComponent extends Component {
 
           // they hit tab on a blank line
           if (line === '') {
-            letteringSnippet(cm);
+            letteringSnippet(cm, getCharacterNames);
           } else {
             return CodeMirror.Pass;
           }
-        }
+        },
       }
     });
 
@@ -111,6 +117,10 @@ export default class CodeMirrorComponent extends Component {
     this.panelCounts = createPanelCounts(this.cm);
   }
 
+  getCharacterNames() {
+    return this.props.characters;
+  }
+
   componentWillUnmount() {
 
   }
@@ -119,5 +129,6 @@ export default class CodeMirrorComponent extends Component {
 CodeMirrorComponent.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  stats: PropTypes.array.isRequired
+  stats: PropTypes.array.isRequired,
+  characters: PropTypes.arrayOf(PropTypes.string).isRequired
 };
