@@ -1,5 +1,7 @@
 import CodeMirror from 'codemirror';
 
+const SUBJECT_PLACEHOLDER = 'subject';
+
 export function letteringSnippet(cm, getCharacterNames) {
   const lineNumber = cm.getCursor().line;
   let stepIndex = -1;
@@ -32,13 +34,11 @@ export function letteringSnippet(cm, getCharacterNames) {
   };
 
   enter();
+  next();
 
   function enter() {
     cm.addKeyMap(keyMap);
     cm.on('cursorActivity', handleCursorActivity);
-
-    cm.replaceRange('\tsubject: content', cm.getCursor());
-    next();
   }
 
   function next() {
@@ -58,7 +58,15 @@ export function letteringSnippet(cm, getCharacterNames) {
   }
 
   function handleCursorActivity(cm) {
+    // Exit if it seems like user is trying to get out of snippet
+
+    // moved to different line
     if (lineNumber !== cm.getCursor().line) {
+      exit();
+    }
+
+    // moved to start of line
+    if (cm.getCursor().ch === 0) {
       exit();
     }
   }
@@ -67,8 +75,9 @@ export function letteringSnippet(cm, getCharacterNames) {
 function makeSteps(getCharacterNames) {
   return [
     function metadataState(cm) {
-      const suggestionsSnapshot = ['sfx', 'caption'].concat(getCharacterNames());
       const cursor = cm.getCursor();
+      cm.replaceRange(`\t${SUBJECT_PLACEHOLDER}: content`, cursor);
+
       const lineText = cm.getLine(cursor.line);
       const tabIndex = lineText.indexOf('\t');
       const colonIndex = lineText.indexOf(':');
@@ -84,47 +93,12 @@ function makeSteps(getCharacterNames) {
         }
       );
 
-
-      function hint() {
-        const suggestions = suggestionsSnapshot
-          .filter(name => {
-            const cursor = cm.getCursor();
-            const token = cm.getTokenAt(cursor);
-
-            return token.string === 'subject' || name.startsWith(token.string);
-          })
-          .map(name => {
-            return {
-              text: name,
-              displayText: name.toUpperCase(),
-              hint(cm) {
-                const cursor = cm.getCursor();
-                const token = cm.getTokenAt(cursor);
-
-                const from = {
-                  line: cursor.line,
-                  ch: token.start
-                };
-
-                const to = {
-                  line: cursor.line,
-                  ch: token.end
-                };
-
-                cm.replaceRange(name, from, to);
-              }
-            };
-          });
-
-        return {
-          list: suggestions
-        };
-      }
-
-      hint.supportsSelection = true;
+      const suggestionsSnapshot = ['sfx', 'caption'].concat(getCharacterNames());
 
       cm.showHint({
-        hint,
+        hint: makeHinter(suggestionsSnapshot),
+        // don't auto select a single suggestion because use could be typing a
+        // new character name
         completeSingle: false,
       });
     },
@@ -133,13 +107,56 @@ function makeSteps(getCharacterNames) {
       const lineText = cm.getLine(cursor.line);
       const lastColonIndex = lineText.lastIndexOf(':');
 
-      cm.setSelection({
-        line: cursor.line,
-        ch: lastColonIndex + 2
-      }, {
+      cm.setSelection(
+        {
+          line: cursor.line,
+          ch: lastColonIndex + 2
+        },
+        {
           line: cursor.line,
           ch: lastColonIndex + 100000
-        });
+        }
+      );
     }
   ];
+}
+
+function makeHinter(suggestionsSnapshot) {
+  function hinter(cm) {
+    const cursor = cm.getCursor();
+    const token = cm.getTokenAt(cursor);
+
+    const suggestions = suggestionsSnapshot
+      .filter(name => {
+        return token.string === SUBJECT_PLACEHOLDER || name.startsWith(token.string);
+      })
+      .map(name => {
+        return {
+          text: name,
+          displayText: name.toUpperCase(),
+          hint: function applySuggestion(cm) {
+            const from = {
+              line: cursor.line,
+              ch: token.start
+            };
+
+            const to = {
+              line: cursor.line,
+              ch: token.end
+            };
+
+            cm.replaceRange(name, from, to);
+          }
+        };
+      });
+
+    return {
+      list: suggestions,
+    };
+  }
+
+  // allow hint popup when text is selected
+  hinter.supportsSelection = true;
+
+  return hinter;
 }
