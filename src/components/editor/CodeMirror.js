@@ -16,7 +16,7 @@ import {
 } from '../../codemirror/panel-counts';
 
 import { letteringSnippet } from '../../codemirror/lettering-snippet';
-
+import { letteringBoldCommand } from '../../codemirror/lettering-bold-command';
 
 import '../../codemirror/theme.css';
 
@@ -25,6 +25,8 @@ import 'codemirror/addon/scroll/scrollpastend';
 
 import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/show-hint.css';
+
+CodeMirror.commands.letteringBoldCommand = letteringBoldCommand;
 
 export default class CodeMirrorComponent extends Component {
   constructor(props) {
@@ -98,6 +100,7 @@ export default class CodeMirrorComponent extends Component {
             return CodeMirror.Pass;
           }
         },
+        'Cmd-B': 'letteringBoldCommand'
       }
     });
 
