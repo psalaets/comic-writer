@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import ConnectedWriter from './components/writer/ConnectedWriter';
+import ConnectedStats from './components/stats/ConnectedStats';
 import StatusLine from './components/status-line/StatusLine';
 import FormattingGuide from './components/formatting-guide/FormattingGuide';
 import Settings from './components/settings/Settings';
@@ -55,6 +56,9 @@ class App extends Component {
         <div className="c-app">
           <div className="c-app__writer">
             <ConnectedWriter/>
+          </div>
+          <div className="c-app__stats">
+            <ConnectedStats/>
           </div>
           <div className="c-app__status-line">
             <StatusLine.Container>
