@@ -22,7 +22,8 @@ function parseStats(source) {
         type: types.PAGE,
         lineNumber: page.startingLine,
         wordCount: page.dialogueWordCount + page.captionWordCount,
-        panelCount: panelsSeen
+        panelCount: panelsSeen,
+        speakers: page.speakers
       });
     },
     enterPanel(panel) {

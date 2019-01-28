@@ -1,9 +1,11 @@
 import CodeMirror from 'codemirror';
 
-export function letteringSnippet(cm) {
+const SUBJECT_PLACEHOLDER = 'subject';
+
+export function letteringSnippet(cm, getCharacterNames) {
   const lineNumber = cm.getCursor().line;
   let stepIndex = -1;
-  const steps = makeSteps();
+  const steps = makeSteps(getCharacterNames);
 
   const keyMap = {
     Tab() {
@@ -32,13 +34,11 @@ export function letteringSnippet(cm) {
   };
 
   enter();
+  next();
 
   function enter() {
     cm.addKeyMap(keyMap);
     cm.on('cursorActivity', handleCursorActivity);
-
-    cm.replaceRange('\tsubject: content', cm.getCursor());
-    next();
   }
 
   function next() {
@@ -58,41 +58,92 @@ export function letteringSnippet(cm) {
   }
 
   function handleCursorActivity(cm) {
+    // Exit if it seems like user is trying to get out of snippet
+
+    // moved to different line
     if (lineNumber !== cm.getCursor().line) {
+      exit();
+    }
+
+    // moved to start of line
+    if (cm.getCursor().ch === 0) {
       exit();
     }
   }
 }
 
-function makeSteps() {
+function makeSteps(getCharacterNames) {
   return [
     function metadataState(cm) {
       const cursor = cm.getCursor();
+      cm.replaceRange(`\t${SUBJECT_PLACEHOLDER}: content`, cursor);
+
       const lineText = cm.getLine(cursor.line);
       const tabIndex = lineText.indexOf('\t');
       const colonIndex = lineText.indexOf(':');
 
-      cm.setSelection({
-        line: cursor.line,
-        ch: tabIndex + 1
-      },
+      cm.setSelection(
+        {
+          line: cursor.line,
+          ch: tabIndex + 1
+        },
         {
           line: cursor.line,
           ch: colonIndex
-        });
+        }
+      );
+
+      cm.showHint({
+        hint: makeHinter(getCharacterNames()),
+        // don't auto select a single suggestion because use could be typing a
+        // new character name
+        completeSingle: false,
+      });
     },
     function contentState(cm) {
       const cursor = cm.getCursor();
       const lineText = cm.getLine(cursor.line);
       const lastColonIndex = lineText.lastIndexOf(':');
 
-      cm.setSelection({
-        line: cursor.line,
-        ch: lastColonIndex + 2
-      }, {
+      cm.setSelection(
+        {
+          line: cursor.line,
+          ch: lastColonIndex + 2
+        },
+        {
           line: cursor.line,
           ch: lastColonIndex + 100000
-        });
+        }
+      );
     }
   ];
+}
+
+function makeHinter(characterNames) {
+  function hinter(cm) {
+    const cursor = cm.getCursor();
+    const token = cm.getTokenAt(cursor);
+
+    const suggestions = ['caption', 'sfx'].concat(characterNames)
+      .filter(name => {
+        return token.string === SUBJECT_PLACEHOLDER || name.startsWith(token.string);
+      });
+
+    return {
+      list: suggestions,
+      from: {
+        line: cursor.line,
+        ch: token.start
+      },
+      to: {
+        line: cursor.line,
+        ch: token.end
+      }
+    };
+  }
+
+  // allow hint popup when text is selected
+  hinter.supportsSelection = true;
+
+  return hinter;
 }

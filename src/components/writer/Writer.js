@@ -24,6 +24,7 @@ export default class Writer extends Component {
           key="editor"
           value={this.props.source}
           stats={this.props.stats}
+          characters={this.props.characters}
           onChange={this.handleChange}
         />
       </main>
@@ -34,5 +35,6 @@ export default class Writer extends Component {
 Writer.propTypes = {
   source: PropTypes.string.isRequired,
   onSourceChange: PropTypes.func.isRequired,
-  stats: PropTypes.array.isRequired
+  stats: PropTypes.array.isRequired,
+  characters: PropTypes.arrayOf(PropTypes.string).isRequired
 };
