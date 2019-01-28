@@ -19,9 +19,9 @@
 }
 
 .c-app__stats {
-  position: absolute;
   bottom: 1.2em;
   left: 0;
+  position: absolute;
   width: 100%;
 }
 

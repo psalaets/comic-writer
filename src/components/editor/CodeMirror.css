@@ -17,7 +17,6 @@
 /* Block */
 /******************************************************************************/
 .c-codemirror {
-  z-index: 0; /* 6 */
   height: 100%;
   padding-left: 1.5ex; /* 2 */
   padding-right: 3ex; /* 2 */
@@ -27,6 +26,7 @@
   background-color: var(--color-utility-pure);
   border-left: 1px solid var(--color-utility-milk);
   border-right: 1px solid var(--color-utility-milk);
+  z-index: 0; /* 6 */
 }
 
 /* Misc */
