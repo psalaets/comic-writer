@@ -12,6 +12,7 @@
   text-align: center;
   cursor: pointer;
   border: 0;
+  border-radius: 3px;
   padding: .25em 1em;
   color: var(--color-utility-black);
   background-color: var(--color-utility-milk);
