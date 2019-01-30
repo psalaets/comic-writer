@@ -18,8 +18,8 @@
   position: relative;
 }
 
-.c-app__stats {
-  bottom: 1.2em;
+.c-app__footer {
+  bottom: 1.8em;
   left: 0;
   position: absolute;
   width: 100%;

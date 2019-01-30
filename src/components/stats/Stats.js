@@ -4,7 +4,13 @@ import React, { Component } from 'react';
 import './Stats.css';
 
 // Third Party Imports
-import {BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import {
+  ResponsiveContainer,
+  Bar,
+  ComposedChart,
+  XAxis,
+  YAxis,
+  CartesianGrid } from 'recharts';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Stats
@@ -19,16 +25,16 @@ export default class Stats extends Component {
 
   render() {
     return (
-      <div className="c-stats">
-        {/* Make width of c-stats pass it's width to chart */}
-        <BarChart width={400} height={100} data={this.props.stats
-          .filter(o => o.type === this.state.filterType)}>
-          <XAxis dataKey="lineNumber"/>
-          <YAxis/>
-          <CartesianGrid/>
-          <Bar dataKey="wordCount" fill="var(--color-utility-dove)"/>
-        </BarChart>
-      </div>
+      <>
+        <h2 className="u-font-size--saya">Words Per Line</h2>
+        <ResponsiveContainer >
+          <ComposedChart data={this.props.stats
+            .filter(o => o.type === this.state.filterType)}>
+            <XAxis dataKey="wordCount"/>
+            <Bar barSize={15} dataKey="wordCount" fill="var(--color-utility-dove)"/>
+          </ComposedChart>
+        </ResponsiveContainer>
+      </>
     );
   }
 }

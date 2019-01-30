@@ -8,6 +8,7 @@ import FormattingGuide from './components/formatting-guide/FormattingGuide';
 import Settings from './components/settings/Settings';
 import Button from './components/button/Button';
 import Modal from './components/modal/Modal';
+import Drawer from './components/drawer/Drawer';
 
 class App extends Component {
   constructor(props) {
@@ -16,13 +17,19 @@ class App extends Component {
     this.state = {
       modalActive: false,
       modalContent: false,
-      modalTitle: false
+      modalTitle: false,
+      drawerIsOpen: true
     };
 
+    // Modal
     this.activateModal = this.activateModal.bind(this);
     this.deactivateModal = this.deactivateModal.bind(this);
+
+    // Drawer
+    this.toggleDrawer = this.toggleDrawer.bind(this);
   }
 
+  // Modal Handlers
   activateModal = ({modalTitle, modalContent}) => () => {
     this.setState({
       modalActive: true,
@@ -39,6 +46,12 @@ class App extends Component {
      });
   };
 
+  // Drawer Handlers
+  toggleDrawer = () => {
+    this.setState({
+      drawerIsOpen: !this.state.drawerIsOpen
+    })
+  }
 
   render() {
     // Hopefully this isn't stupid.
@@ -57,13 +70,16 @@ class App extends Component {
           <div className="c-app__writer">
             <ConnectedWriter/>
           </div>
-          <div className="c-app__stats">
-            <ConnectedStats/>
+          <div className="c-app__footer">
+            <Drawer isOpen={this.state.drawerIsOpen}>
+              <ConnectedStats/>
+            </Drawer>
           </div>
           <div className="c-app__status-line">
             <StatusLine.Container>
               <Button onClick={this.activateModal(formattingModal)}>Formatting Guide</Button>
               <StatusLine.Spacer/>
+              <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen}>Statistics</Button>
               <Button onClick={this.activateModal(settingsModal)}>Settings</Button>
             </StatusLine.Container>
           </div>
