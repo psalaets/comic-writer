@@ -21,7 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "lintcss": "node ./stylelint-ci.js",
+    "lintcss": "node ./stylelint-ci.js > ./cssreport.xml",
     "eject": "react-scripts eject",
     "plop": "npx plop"
   },
