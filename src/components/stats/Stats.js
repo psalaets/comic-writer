@@ -26,7 +26,7 @@ export default class Stats extends Component {
     return (
       <>
         <h2 className="u-font-size--saya">Words per Panel</h2>
-        <ResponsiveContainer >
+        <ResponsiveContainer>
           <ComposedChart data={this.props.stats
             .filter(o => o.type === this.state.filterType)}>
             <XAxis dataKey="wordCount"/>
