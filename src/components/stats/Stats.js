@@ -8,9 +8,8 @@ import {
   ResponsiveContainer,
   Bar,
   ComposedChart,
-  XAxis,
-  YAxis,
-  CartesianGrid } from 'recharts';
+  XAxis
+ } from 'recharts';
 
 ////////////////////////////////////////////////////////////////////////////////
 // Stats
@@ -19,14 +18,14 @@ export default class Stats extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterType: 'dialogue'
+      filterType: 'panel'
     };
   }
 
   render() {
     return (
       <>
-        <h2 className="u-font-size--saya">Words Per Line</h2>
+        <h2 className="u-font-size--saya">Words per Panel</h2>
         <ResponsiveContainer >
           <ComposedChart data={this.props.stats
             .filter(o => o.type === this.state.filterType)}>
