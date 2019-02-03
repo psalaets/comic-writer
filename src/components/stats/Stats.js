@@ -8,7 +8,7 @@ import {
   ResponsiveContainer,
   Bar,
   ComposedChart,
-  XAxis
+  Tooltip
  } from 'recharts';
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,9 +27,8 @@ export default class Stats extends Component {
       <>
         <h2 className="u-font-size--saya">Words per Panel</h2>
         <ResponsiveContainer>
-          <ComposedChart data={this.props.stats
-            .filter(o => o.type === this.state.filterType)}>
-            <XAxis dataKey="wordCount"/>
+          <ComposedChart data={this.props.stats}>
+            <Tooltip isAnimationActive={false}/>
             <Bar barSize={15} dataKey="wordCount" fill="var(--color-utility-dove)"/>
           </ComposedChart>
         </ResponsiveContainer>
