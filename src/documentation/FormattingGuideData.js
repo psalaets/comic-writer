@@ -1,27 +1,31 @@
 const FormattingGuideData = [
   {
     title: 'Metadata',
-    code: 'Title: East of West'
+    code: 'title: The Comic Title'
   },
   {
     title: 'Page',
-    code: 'Page'
+    code: 'page'
   },
   {
     title: 'Panel',
-    code: 'Panel'
+    code: 'panel'
   },
   {
-    title: 'Dialouge',
+    title: 'Dialogue',
     code: '<tab>Mao: I have robot parts.'
   },
   {
-    title: 'Sound Effects',
-    code: '<tab>sfx Mao: Oof!'
+    title: 'SFX',
+    code: '<tab>sfx: BLAM'
   },
   {
     title: 'Caption',
     code: '<tab>caption: Once upon a wasteland...'
+  },
+  {
+    title: 'Bold',
+    code: '**bold dialogue**'
   }
 ]
 
