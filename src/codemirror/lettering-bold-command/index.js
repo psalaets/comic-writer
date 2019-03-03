@@ -10,12 +10,6 @@ export function letteringBoldCommand(cm) {
 
       const letteringTokens = tokensOverlapped(cm, cursor.line, selection)
 
-      console.log('selection');
-      console.log(selection);
-
-      console.log('letteringTokens overlapped');
-      console.log(letteringTokens);
-
 
 
       if (isAllBold(letteringTokens)) {

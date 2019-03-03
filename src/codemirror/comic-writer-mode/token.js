@@ -5,8 +5,8 @@ const METADATA = 'metadata';
 
 const LETTERING_SUBJECT = 'lettering-subject';
 const LETTERING_MODIFIER = 'lettering-modifier';
-const LETTERING_CONTENT = 'lettering-content';
-const LETTERING_BOLD = 'lettering-bold';
+export const LETTERING_CONTENT = 'lettering-content';
+export const LETTERING_BOLD = 'lettering-bold';
 
 const LETTERING_LINE = 'line-cm-lettering';
 const SFX_LINE = 'line-cm-sfx';
