@@ -22,7 +22,8 @@
     "test": "react-scripts test",
     "lintcss": "node ./stylelint-ci.js",
     "eject": "react-scripts eject",
-    "plop": "npx plop"
+    "plop": "npx plop",
+    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache"
   },
   "devDependencies": {
     "plop": "^2.1.0",

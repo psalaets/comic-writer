@@ -6,94 +6,220 @@ import {
 import { toggle } from './toggle-bold';
 
 describe('toggle()', () => {
-  describe('bold token', () => {
-    test('front selected', () => {
+  describe('one non-bold word', () => {
+    test('fully selected', () => {
       const tokens = [
-        bold(4, 12, '**blah**')
+        nonBold(4, 7, 'one')
       ];
 
-      const modified = toggle(tokens, selection(4), selection(8));
+      const modified = toggle(tokens, selection(4), selection(7));
 
       expect(modified).toEqual(
         [
-          nonBold(4, 6, 'bl'),
-          bold(6, 12, '**ah**')
+          bold(4, 11, '**one**')
         ]
       );
     });
 
-    test('back selected', () => {
+    test('only front selected', () => {
       const tokens = [
-        bold(4, 12, '**blah**')
-      ];
-
-      const modified = toggle(tokens, selection(8), selection(12));
-
-      expect(modified).toEqual(
-        [
-          bold(4, 10, '**bl**'),
-          nonBold(10, 12, 'ah')
-        ]
-      );
-    });
-
-    test('middle selected', () => {
-      const tokens = [
-        bold(4, 12, '**blah**')
-      ];
-
-      const modified = toggle(tokens, selection(7), selection(9));
-
-      expect(modified).toEqual(
-        [
-          bold(4, 9, '**b**'),
-          nonBold(9, 11, 'la'),
-          bold(11, 16, '**h**'),
-        ]
-      );
-    });
-
-    test('all selected', () => {
-      const tokens = [
-        bold(4, 12, '**blah**')
-      ];
-
-      const modified = toggle(tokens, selection(4), selection(12));
-
-      expect(modified).toEqual(
-        [
-          nonBold(4, 8, 'blah')
-        ]
-      );
-    });
-  });
-
-  describe('non-bold token', () => {
-    test('all selected', () => {
-      const tokens = [
-        nonBold(4, 8, 'blah')
-      ];
-
-      const modified = toggle(tokens, selection(4), selection(8));
-
-      expect(modified).toEqual(
-        [
-          bold(4, 12, '**blah**')
-        ]
-      );
-    });
-
-    test('front selected', () => {
-      const tokens = [
-        bold(4, 8, 'blah')
+        nonBold(4, 7, 'one')
       ];
 
       const modified = toggle(tokens, selection(4), selection(6));
 
       expect(modified).toEqual(
         [
-          bold(4, 10, '**bl**'),
-          nonBold(10, 12, 'ah')
+          bold(4, 11, '**one**')
+        ]
+      );
+    });
+
+    test('only back selected', () => {
+      const tokens = [
+        nonBold(4, 7, 'one')
+      ];
+
+      const modified = toggle(tokens, selection(5), selection(7));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 11, '**one**')
+        ]
+      );
+    });
+
+    test('only middle selected', () => {
+      const tokens = [
+        nonBold(4, 7, 'one')
+      ];
+
+      const modified = toggle(tokens, selection(5), selection(6));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 11, '**one**')
+        ]
+      );
+    });
+
+    test('just cursor on token', () => {
+      const tokens = [
+        nonBold(4, 7, 'one')
+      ];
+
+      const modified = toggle(tokens, selection(5), selection(5));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 11, '**one**')
+        ]
+      );
+    });
+
+    test('no cursor overlap', () => {
+      const tokens = [
+        nonBold(4, 7, 'one')
+      ];
+
+      const modified = toggle(tokens, selection(10), selection(17));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 7, 'one')
+        ]
+      );
+    });
+  });
+
+  describe('multiple non-bold words', () => {
+    test('all fully selected', () => {
+      const tokens = [
+        nonBold(4, 17, 'one two three')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(17));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 21, '**one two three**')
+        ]
+      );
+    });
+
+    test('some fully selected', () => {
+      const tokens = [
+        nonBold(4, 17, 'one two three')
+      ];
+
+      const modified = toggle(tokens, selection(8), selection(17));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 8, 'one '),
+          bold(8, 21, '**two three**')
+        ]
+      );
+    });
+
+    test('one fully selected', () => {
+      const tokens = [
+        nonBold(4, 17, 'one two three')
+      ];
+
+      const modified = toggle(tokens, selection(8), selection(11));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 8, 'one '),
+          bold(8, 15, '**two**'),
+          nonBold(15, 21, ' three'),
+        ]
+      );
+    });
+  });
+
+  describe('one bold word', () => {
+    test('fully selected', () => {
+      const tokens = [
+        bold(4, 11, '**one**')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(11));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 7, 'one')
+        ]
+      );
+    });
+
+    test('only front selected', () => {
+      const tokens = [
+        bold(4, 11, '**one**')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(7));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 7, 'one')
+        ]
+      );
+    });
+
+    test('only back selected', () => {
+      const tokens = [
+        bold(4, 11, '**one**')
+      ];
+
+      const modified = toggle(tokens, selection(8), selection(11));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 7, 'one')
+        ]
+      );
+    });
+
+    test('only middle selected', () => {
+      const tokens = [
+        bold(4, 11, '**one**')
+      ];
+
+      const modified = toggle(tokens, selection(6), selection(8));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 7, 'one')
+        ]
+      );
+    });
+
+    test('just cursor on token', () => {
+      const tokens = [
+        bold(4, 11, '**one**')
+      ];
+
+      const modified = toggle(tokens, selection(7), selection(7));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 7, 'one')
+        ]
+      );
+    });
+
+    test('no cursor overlap', () => {
+      const tokens = [
+        bold(4, 11, '**one**')
+      ];
+
+      const modified = toggle(tokens, selection(15), selection(17));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 11, '**one**')
         ]
       );
     });
