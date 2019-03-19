@@ -3,24 +3,6 @@ import {
   LETTERING_BOLD,
 } from '../comic-writer-mode/token';
 
-/*
-token:
-
-start
-end
-string
-type - space separated class names
-
-
-bold
-not
-bold not
-not bold
-not bold not
-bold not bold
-
-*/
-
 export function toggle(tokens, selectionStart, selectionEnd) {
   const internalTokens = tokens.map(token => {
     if (isBold(token)) {
@@ -30,11 +12,16 @@ export function toggle(tokens, selectionStart, selectionEnd) {
     }
   });
 
-  const transformedTokens = internalTokens.map(token => {
+  // if multiple tokens are selected, convert everything to bold
+  const selected = internalTokens.filter(token => {
+    return overlaps(token, selectionStart, selectionEnd);
+  });
+  const multipleSelected = selected.length > 1;
 
+  const transformedTokens = internalTokens.map(token => {
     if (overlaps(token, selectionStart, selectionEnd)) {
-      if (token.isBold) {
-        return nonBoldInternal(unwrapBold(token.string));
+      if (multipleSelected) {
+        return token.toBold();
       } else {
         return token.toggle(selectionStart.ch, selectionEnd.ch);
       }
@@ -108,34 +95,10 @@ function unwrapBold(string) {
   return string.replace(/\*\*/g, '');
 }
 
-function contains(token, ch) {
-  return token.start <= ch && token.end >= ch;
-}
-
-function overlapsFully(token, start, end) {
-  return token.start === start.ch && token.end === end.ch;
-}
-
-function overlapsMiddle(token, start, end) {
-  return token.start < start.ch && end.ch < token.end;
-}
-
-function overlapsFront(token, start, end) {
-  return token.start === start.ch && end.ch < token.end;
-}
-
-function overlapsEnd(token, start, end) {
-  return token.start < start.ch && end.ch === token.end;
-}
-
 function overlaps(token, start, end) {
   return (token.start >= start.ch && token.start < end.ch)
     || (token.end > start.ch && token.end <= end.ch)
     || (token.start < start.ch && token.end > end.ch);
-}
-
-function justCursor(selectionStart, selectionEnd) {
-  return selectionStart.ch === selectionEnd.ch;
 }
 
 function isBold(token) {
@@ -145,15 +108,9 @@ function isBold(token) {
 function boldInternal(string, start = null, end = null) {
   const token = tokenInternal(string, true, start, end);
 
-  token.toggle = function toggle(start, end) {
-
+  token.toBold = function toBold() {
+    return this;
   };
-
-  return token;
-}
-
-function nonBoldInternal(string, start = null, end = null) {
-  const token = tokenInternal(string, false, start, end);
 
   token.toggle = function toggle(selectionStart, selectionEnd) {
     const parts = string.split(/(\s+)/g);
@@ -169,12 +126,12 @@ function nonBoldInternal(string, start = null, end = null) {
           || (end > selectionStart && end <= selectionEnd)
           || (start < selectionStart && end > selectionEnd);
 
-
         const chunk = {
           string: part,
           start,
           end,
-          selected
+          selected,
+          whitespace: /^\s+$/.test(part)
         };
 
         position += part.length;
@@ -182,17 +139,90 @@ function nonBoldInternal(string, start = null, end = null) {
         return chunk;
       });
 
-      return chunks
-        .map(chunk => {
-          if (chunk.selected) {
-            return boldInternal(chunk.string);
-          } else {
-            return nonBoldInternal(chunk.string);
-          }
-        });
+    const justCursor = selectionStart === selectionEnd;
+    if (justCursor) {
+      return [nonBoldInternal(unwrapBold(string))];
+    }
+
+    return chunks
+      .map(chunk => {
+        if (chunk.selected) {
+          return nonBoldInternal(unwrapBold(chunk.string));
+        } else {
+          return boldInternal(chunk.string);
+        }
+      });
   };
 
   return token;
+}
+
+function nonBoldInternal(string, start = null, end = null) {
+  const token = tokenInternal(string, false, start, end);
+
+  token.toBold = function toBold() {
+    return boldInternal(this.string);
+  };
+
+  token.toggle = function toggle(selectionStart, selectionEnd) {
+    const parts = string.split(/(\s+)/g);
+
+    let position = start;
+
+    // add start/end to each word
+    const chunks = parts
+      .map(part => {
+        const start = position;
+        const end = position + part.length;
+        const selected = (start >= selectionStart && start < selectionEnd)
+          || (end > selectionStart && end <= selectionEnd)
+          || (start < selectionStart && end > selectionEnd);
+
+        const chunk = {
+          string: part,
+          start,
+          end,
+          selected,
+          whitespace: /^\s+$/.test(part)
+        };
+
+        position += part.length;
+
+        return chunk;
+      });
+
+      return flatMap(chunks, chunk => {
+        if (chunk.selected && chunk.whitespace && selectionStart === selectionEnd) {
+          // insert 4 stars
+          const position = chunk.start - selectionStart;
+          return [
+            nonBoldInternal(chunk.string.slice(0, position)),
+            boldInternal('****'),
+            nonBoldInternal(chunk.string.slice(position))
+          ];
+        } else if (chunk.selected) {
+          return boldInternal(chunk.string);
+        } else {
+          return nonBoldInternal(chunk.string);
+        }
+      });
+  };
+
+  return token;
+}
+
+function flatMap(array, fn) {
+  return array
+    .map(fn)
+    .reduce((result, current) => {
+      if (Array.isArray(current)) {
+        result.push(...current);
+      } else {
+        result.push(current);
+      }
+
+      return result;
+    }, []);
 }
 
 function tokenInternal(string, isBold, start, end) {
@@ -210,18 +240,4 @@ function tokenInternal(string, isBold, start, end) {
   }
 
   return token;
-}
-
-function boldString(string) {
-  return {
-    string,
-    type: `${LETTERING_BOLD} ${LETTERING_CONTENT}`
-  };
-}
-
-function nonBoldString(string) {
-  return {
-    string,
-    type: LETTERING_CONTENT
-  };
 }

@@ -93,6 +93,37 @@ describe('toggle()', () => {
   });
 
   describe('multiple non-bold words', () => {
+    test('just a cursor on a word', () => {
+      const tokens = [
+        nonBold(4, 17, 'one two three')
+      ];
+
+      const modified = toggle(tokens, selection(5), selection(5));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 11, '**one**'),
+          nonBold(11, 21, ' two three')
+        ]
+      );
+    });
+
+    test('just a cursor in whitespace', () => {
+      const tokens = [
+        nonBold(4, 12, 'one  two')
+      ];
+
+      const modified = toggle(tokens, selection(8), selection(8));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 8, 'one '),
+          bold(8, 12, '****'),
+          nonBold(12, 16, ' two')
+        ]
+      );
+    });
+
     test('all fully selected', () => {
       const tokens = [
         nonBold(4, 17, 'one two three')
@@ -224,6 +255,210 @@ describe('toggle()', () => {
       );
     });
   });
+
+  describe('multiple bold words', () => {
+    test('just a cursor on a word', () => {
+      const tokens = [
+        bold(4, 21, '**one two three**')
+      ];
+
+      const modified = toggle(tokens, selection(7), selection(7));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 17, 'one two three')
+        ]
+      );
+    });
+
+    test('just a cursor in whitespace', () => {
+      const tokens = [
+        bold(4, 16, '**one  two**')
+      ];
+
+      const modified = toggle(tokens, selection(10), selection(10));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 12, 'one  two')
+        ]
+      );
+    });
+
+    test('all fully selected', () => {
+      const tokens = [
+        bold(4, 21, '**one two three**')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(21));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 17, 'one two three')
+        ]
+      );
+    });
+
+    test('some fully selected', () => {
+      const tokens = [
+        bold(4, 21, '**one two three**')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(13));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 11, 'one two'),
+          bold(11, 21, '** three**')
+        ]
+      );
+    });
+
+    test('one fully selected', () => {
+      const tokens = [
+        bold(4, 21, '**one two three**')
+      ];
+
+      const modified = toggle(tokens, selection(10), selection(13));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 12, '**one **'),
+          nonBold(12, 15, 'two'),
+          bold(15, 25, '** three**'),
+        ]
+      );
+    });
+  });
+
+  describe('mixed tokens: bold, not bold', () => {
+    test('all fully selected', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 16, ' not')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(16));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 16, '**bold not**')
+        ]
+      );
+    });
+
+    test('all partially selected', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 16, ' not')
+      ];
+
+      const modified = toggle(tokens, selection(7), selection(14));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 16, '**bold not**')
+        ]
+      );
+    });
+
+    test('bold fully selected', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 16, ' not')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(12));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 12, 'bold not')
+        ]
+      );
+    });
+
+    test('non bold fully selected', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 16, ' not')
+      ];
+
+      const modified = toggle(tokens, selection(13), selection(16));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 12, '**bold**'),
+          nonBold(12, 13, ' '),
+          bold(13, 20, '**not**')
+        ]
+      );
+    });
+  });
+
+  describe('mixed tokens: bold, not bold, bold', () => {
+    test('all fully selected', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 17, ' not '),
+        bold(17, 26, '**bold**')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(26));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 21, '**bold not bold**')
+        ]
+      );
+    });
+
+    test('ends partially selected', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 17, ' not '),
+        bold(17, 26, '**bold**')
+      ];
+
+      const modified = toggle(tokens, selection(7), selection(22));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 21, '**bold not bold**')
+        ]
+      );
+    });
+
+    test('middle fully selected', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 17, ' not '),
+        bold(17, 26, '**bold**')
+      ];
+
+      const modified = toggle(tokens, selection(13), selection(16));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 12, '**bold**'),
+          nonBold(12, 13, ' '),
+          bold(13, 20, '**not**'),
+          nonBold(20, 21, ' '),
+          bold(21, 29, '**bold**')
+        ]
+      );
+    });
+  });
+
+  /*
+rules for spaces:
+space between bolds becomes bold
+space between bold and non becomes non
+space between non and non becomes non
+
+select a mix, bolds everything
+
+*/
+
 });
 
 function bold(start, end, string) {
