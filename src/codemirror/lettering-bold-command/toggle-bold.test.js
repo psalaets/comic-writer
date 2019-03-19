@@ -447,6 +447,24 @@ describe('toggle()', () => {
         ]
       );
     });
+
+    test('non bold partially selected', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 22, ' not here '),
+        bold(22, 30, '**bold**')
+      ];
+
+      const modified = toggle(tokens, selection(7), selection(16));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 16, '**bold not**'),
+          nonBold(16, 22, ' here '),
+          bold(22, 30, '**bold**'),
+        ]
+      );
+    });
   });
 
   /*
@@ -454,9 +472,6 @@ rules for spaces:
 space between bolds becomes bold
 space between bold and non becomes non
 space between non and non becomes non
-
-select a mix, bolds everything
-
 */
 
 });

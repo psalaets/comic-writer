@@ -21,7 +21,7 @@ export function toggle(tokens, selectionStart, selectionEnd) {
   const transformedTokens = internalTokens.map(token => {
     if (overlaps(token, selectionStart, selectionEnd)) {
       if (multipleSelected) {
-        return token.toBold();
+        return token.toBold(selectionStart.ch, selectionEnd.ch);
       } else {
         return token.toggle(selectionStart.ch, selectionEnd.ch);
       }
@@ -160,8 +160,8 @@ function boldInternal(string, start = null, end = null) {
 function nonBoldInternal(string, start = null, end = null) {
   const token = tokenInternal(string, false, start, end);
 
-  token.toBold = function toBold() {
-    return boldInternal(this.string);
+  token.toBold = function toBold(selectionStart, selectionEnd) {
+    return this.toggle(selectionStart, selectionEnd);
   };
 
   token.toggle = function toggle(selectionStart, selectionEnd) {
