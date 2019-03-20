@@ -4,6 +4,12 @@ import {
 } from '../comic-writer-mode/token';
 
 export function toggle(tokens, selectionStart, selectionEnd) {
+  if (tokens.length === 0) {
+    return externalizeTokens(selectionStart.ch, [
+      boldInternal('****')
+    ]);
+  }
+
   const internalTokens = tokens.map(token => {
     if (isBold(token)) {
       return boldInternal(token.string, token.start, token.end);

@@ -554,7 +554,6 @@ describe('toggle()', () => {
   });
 
   /*
-bold shortcut with no tokens should insert ****
 all: calc and set cursor position
 */
 
