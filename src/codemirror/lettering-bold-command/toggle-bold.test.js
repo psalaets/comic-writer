@@ -6,6 +6,20 @@ import {
 import { toggle } from './toggle-bold';
 
 describe('toggle()', () => {
+  describe('no tokens', () => {
+    test('just a cursor', () => {
+      const tokens = [];
+
+      const modified = toggle(tokens, selection(0), selection(0));
+
+      expect(modified).toEqual(
+        [
+          bold(0, 4, '****')
+        ]
+      );
+    });
+  });
+
   describe('one non-bold word', () => {
     test('fully selected', () => {
       const tokens = [
