@@ -308,8 +308,8 @@ describe('toggle()', () => {
 
       expect(modified).toEqual(
         [
-          nonBold(4, 11, 'one two'),
-          bold(11, 21, '** three**')
+          nonBold(4, 12, 'one two '),
+          bold(12, 21, '**three**')
         ]
       );
     });
@@ -323,9 +323,9 @@ describe('toggle()', () => {
 
       expect(modified).toEqual(
         [
-          bold(4, 12, '**one **'),
-          nonBold(12, 15, 'two'),
-          bold(15, 25, '** three**'),
+          bold(4, 11, '**one**'),
+          nonBold(11, 16, ' two '),
+          bold(16, 25, '**three**'),
         ]
       );
     });
@@ -387,9 +387,7 @@ describe('toggle()', () => {
 
       expect(modified).toEqual(
         [
-          bold(4, 12, '**bold**'),
-          nonBold(12, 13, ' '),
-          bold(13, 20, '**not**')
+          bold(4, 16, '**bold not**')
         ]
       );
     });
@@ -439,11 +437,7 @@ describe('toggle()', () => {
 
       expect(modified).toEqual(
         [
-          bold(4, 12, '**bold**'),
-          nonBold(12, 13, ' '),
-          bold(13, 20, '**not**'),
-          nonBold(20, 21, ' '),
-          bold(21, 29, '**bold**')
+          bold(4, 21, '**bold not bold**')
         ]
       );
     });
@@ -467,11 +461,101 @@ describe('toggle()', () => {
     });
   });
 
+  describe('space between tokens', () => {
+    test('1 space between bolds', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 16, ' not')
+      ];
+
+      const modified = toggle(tokens, selection(13), selection(16));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 16, '**bold not**')
+        ]
+      );
+    });
+
+    test('some spaces between bolds', () => {
+      const tokens = [
+        bold(4, 12, '**bold**'),
+        nonBold(12, 16, '   not')
+      ];
+
+      const modified = toggle(tokens, selection(15), selection(18));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 18, '**bold   not**')
+        ]
+      );
+    });
+
+    test('1 space between bold and non bold', () => {
+      const tokens = [
+        nonBold(4, 12, 'soon not')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(9));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 12, '**soon**'),
+          nonBold(12, 16, ' not')
+        ]
+      );
+    });
+
+    test('some spaces between bold and non bold', () => {
+      const tokens = [
+        nonBold(4, 14, 'soon   not')
+      ];
+
+      const modified = toggle(tokens, selection(4), selection(9));
+
+      expect(modified).toEqual(
+        [
+          bold(4, 12, '**soon**'),
+          nonBold(12, 18, '   not')
+        ]
+      );
+    });
+
+    test('1 space between non bold and bold', () => {
+      const tokens = [
+        nonBold(4, 12, 'not soon')
+      ];
+
+      const modified = toggle(tokens, selection(7), selection(12));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 8, 'not '),
+          bold(8, 16, '**soon**'),
+        ]
+      );
+    });
+
+    test('some spaces between non bold and bold', () => {
+      const tokens = [
+        nonBold(4, 14, 'not   soon')
+      ];
+
+      const modified = toggle(tokens, selection(7), selection(12));
+
+      expect(modified).toEqual(
+        [
+          nonBold(4, 10, 'not   '),
+          bold(10, 18, '**soon**'),
+        ]
+      );
+    });
+  });
+
   /*
-rules for spaces:
-space between bolds becomes bold
-space between bold and non becomes non
-space between non and non becomes non
+bold shortcut with no tokens should insert ****
+all: calc and set cursor position
 */
 
 });

@@ -39,8 +39,36 @@ export function toggle(tokens, selectionStart, selectionEnd) {
     return tokens;
   }, []);
 
+  const collapsed = flattenedTokens
+    .reduce((newArr, current, index, arr) => {
+      if (/^\s+$/.test(current.string)) {
+        const previous = arr[index - 1];
+        const next = arr[index + 1];
+
+        if (previous && next) {
+          if (previous.isBold && next.isBold) {
+            newArr.push(boldInternal(current.string));
+          } else if (previous.isBold && !next.isBold) {
+            newArr.push(nonBoldInternal(current.string));
+          } else if (!previous.isBold && next.isBold) {
+            newArr.push(nonBoldInternal(current.string));
+          } else {
+            newArr.push(current);
+          }
+        } else {
+          newArr.push(current);
+        }
+
+
+      } else {
+        newArr.push(current);
+      }
+
+      return newArr;
+    }, []);
+
   // merge adjacent tokens of same type
-  const mergedTokens = flattenedTokens
+  const mergedTokens = collapsed
     .reduce((arr, current) => {
       if (arr.length > 0) {
         const last = arr[arr.length - 1];
@@ -165,7 +193,9 @@ function nonBoldInternal(string, start = null, end = null) {
   };
 
   token.toggle = function toggle(selectionStart, selectionEnd) {
-    const parts = string.split(/(\s+)/g);
+    const parts = string
+      .split(/(\s+)/g)
+      .filter(part => part);
 
     let position = start;
 
@@ -191,21 +221,21 @@ function nonBoldInternal(string, start = null, end = null) {
         return chunk;
       });
 
-      return flatMap(chunks, chunk => {
-        if (chunk.selected && chunk.whitespace && selectionStart === selectionEnd) {
-          // insert 4 stars
-          const position = chunk.start - selectionStart;
-          return [
-            nonBoldInternal(chunk.string.slice(0, position)),
-            boldInternal('****'),
-            nonBoldInternal(chunk.string.slice(position))
-          ];
-        } else if (chunk.selected) {
-          return boldInternal(chunk.string);
-        } else {
-          return nonBoldInternal(chunk.string);
-        }
-      });
+    return flatMap(chunks, chunk => {
+      if (chunk.selected && chunk.whitespace && selectionStart === selectionEnd) {
+        // insert 4 stars
+        const position = chunk.start - selectionStart;
+        return [
+          nonBoldInternal(chunk.string.slice(0, position)),
+          boldInternal('****'),
+          nonBoldInternal(chunk.string.slice(position))
+        ];
+      } else if (chunk.selected) {
+        return boldInternal(chunk.string);
+      } else {
+        return nonBoldInternal(chunk.string);
+      }
+    });
   };
 
   return token;
