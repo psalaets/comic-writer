@@ -71,7 +71,7 @@ class App extends Component {
             <ConnectedWriter/>
           </div>
           <div className="c-app__footer">
-            <Drawer isOpen={this.state.drawerIsOpen}>
+            <Drawer isOpen={this.state.drawerIsOpen} propagateHeight={true}>
               <ConnectedStats/>
             </Drawer>
           </div>

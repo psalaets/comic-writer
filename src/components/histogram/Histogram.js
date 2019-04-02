@@ -1,0 +1,34 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+// CSS Imports
+import './Histogram.css';
+
+// Third Party Imports
+
+////////////////////////////////////////////////////////////////////////////////
+// Histogram
+////////////////////////////////////////////////////////////////////////////////
+export default class Histogram extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <div className="c-histogram">
+        data magic here
+      </div>
+    );
+  }
+}
+
+// Default Props
+////////////////////////////////////////////////////////////////////////////////
+Histogram.defaultProps = {};
+
+// Type Checking
+////////////////////////////////////////////////////////////////////////////////
+Histogram.PropTypes = {};
