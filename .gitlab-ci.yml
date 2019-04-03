@@ -20,6 +20,7 @@ javascript_tests:
 lint_css:
   stage: test
   script:
+    - mkdir reports
     - npm ci
     - npm run lintcss
   artifacts:
