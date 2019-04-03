@@ -1,5 +1,5 @@
 /******************************************************************************/
-/* Drawer                                                */
+/* Drawer                                                                     */
 /******************************************************************************/
 
 /* Notes:
@@ -11,8 +11,8 @@
 .c-drawer {
   background-color: var(--color-utility-pure);
   border-top: 1px solid var(--color-utility-milk);
-  min-height: 8em;
-  height: 20vh;
+  /* min-height: 8em; */
+  /* height: 20vh; */
   padding: 1em;
 }
 

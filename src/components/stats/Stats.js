@@ -7,8 +7,9 @@ import './Stats.css';
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// Stats Maths
+// Stats Maths & Transforms
 ////////////////////////////////////////////////////////////////////////////////
+
 const calculateAverageDialogueLength = a => {
   const dialogues = a.filter(a => a.type === 'dialogue');
   // Gets average, and rounds. Sums wordCounts, and devides by length.
@@ -16,6 +17,23 @@ const calculateAverageDialogueLength = a => {
 }
 
 const calculatePageCount = a => a.filter(a => a.type === 'page').length;
+
+const transformHistographData = type => data => data.reduce((a, c) => {
+  // we encounter an A
+  if (c.type === "page" ) {
+  // start a new sub array
+    a.push([]);
+  } else { // current is not A
+  // make sure there is a sub array started
+    if (a.length === 0) {
+      a.push([]);
+    }
+    // add current to the latest sub array
+    a[a.length - 1].push(c);
+  }
+  return a;
+}, []).filter(a => a.length > 0);
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Stats
@@ -38,8 +56,8 @@ export default class Stats extends Component {
         <Stat.Text title="Average Dialouge Length">
           {calculateAverageDialogueLength(this.props.stats)}
         </Stat.Text>
-        <Stat.HistoGraph title="Average Dialouge Length">
-          <Histogram filter={this.state.histogramType}/>
+        <Stat.HistoGraph title="ComicGraph™">
+          <Histogram data={transformHistographData("")(this.props.stats)}/>
         </Stat.HistoGraph>
       </div>
     );

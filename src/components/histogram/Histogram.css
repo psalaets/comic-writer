@@ -1,5 +1,5 @@
 /******************************************************************************/
-/* Histogram                                                */
+/* Histogram                                                                  */
 /******************************************************************************/
 
 /* Notes:
@@ -9,12 +9,85 @@
 /* Block */
 /******************************************************************************/
 .c-histogram {
-
+  display: flex;
 }
 
 /* Element */
 /******************************************************************************/
-/* .c-histogram__element {} */
+.c-histogram__page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.c-histogram__type {
+  height: 1em;
+  width: 1em;
+  margin: 1px;
+}
+
+.c-histogram__column-label {
+  text-align: center;
+}
+
+.c-histogram__row-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-right: .25em;
+}
+
+.c-histogram__type--panel {
+  background-color: var(--color-primary-cactus);
+}
+
+.c-histogram__type--dialogue {
+  background-color: var(--color-primary-cool);
+}
+
+.c-histogram__type--intensity-0 {
+  opacity: 0;
+}
+
+.c-histogram__type--intensity-1 {
+  opacity: 0.1;
+}
+
+.c-histogram__type--intensity-2 {
+  opacity: 0.2;
+}
+
+.c-histogram__type--intensity-3 {
+  opacity: 0.3;
+}
+
+.c-histogram__type--intensity-4 {
+  opacity: 0.4;
+}
+
+.c-histogram__type--intensity-5 {
+  opacity: 0.5;
+}
+
+.c-histogram__type--intensity-6 {
+  opacity: 0.6;
+}
+
+.c-histogram__type--intensity-7 {
+  opacity: 0.7;
+}
+
+.c-histogram__type--intensity-8 {
+  opacity: 0.8;
+}
+
+.c-histogram__type--intensity-9 {
+  opacity: 0.9;
+}
+
+.c-histogram__type--intensity-10 {
+  opacity: 1;
+}
 
 /* Modifier */
 /******************************************************************************/
