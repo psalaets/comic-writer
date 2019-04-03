@@ -568,6 +568,15 @@ describe('toggle()', () => {
   });
 
   /*
+empty bold doesn't merge into whitespace separated bold token
+
+cursor at non/bold boundary
+cursor at bold/non boundary
+cursor at start string, at non
+cursor at start string, at bold
+cursor at end string, at non
+cursor at end string, at bold
+
 all: calc and set cursor position
 */
 
