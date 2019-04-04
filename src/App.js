@@ -79,7 +79,7 @@ class App extends Component {
             <StatusLine.Container>
               <Button onClick={this.activateModal(formattingModal)}>Formatting Guide</Button>
               <StatusLine.Spacer/>
-              <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen}>Statistics</Button>
+              <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen}>Insights</Button>
               <Button onClick={this.activateModal(settingsModal)}>Settings</Button>
             </StatusLine.Container>
           </div>
