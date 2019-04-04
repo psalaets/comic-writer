@@ -18,7 +18,7 @@ class App extends Component {
       modalActive: false,
       modalContent: false,
       modalTitle: false,
-      drawerIsOpen: true
+      drawerIsOpen: false
     };
 
     // Modal
