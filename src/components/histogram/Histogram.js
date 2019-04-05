@@ -52,14 +52,14 @@ const makeTypes = data => (
     <Tooltip
       className="c-histogram__unit-container"
       label={
-        props => <HistogramUnit {...props.labelAttributes} intensity={clamp(Math.round(data.reduce((a, c) => a + c.wordCount, 0) * .1), 0, 10)} type="word-count" />
+        props => <HistogramUnit {...props.labelAttributes} intensity={clamp(Math.round((data.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2) * .1), 0, 10)} type="word-count" />
       }
       overlay={
         props => (
           <ToolipPopover {...props.overlayAttributes}
             hidden={props.isHidden}
             noWrap={true}>
-            {data.reduce((a, c) => a + c.wordCount, 0)} Words
+            {data.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2} Words
           </ToolipPopover>
         )
       }/>
