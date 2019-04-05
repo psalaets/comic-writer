@@ -12,8 +12,6 @@ const GuideDataToJSX = data => data.map((a, i) => [
 
 const FormattingGuide = props => (
   <>
-    Getting Started
-    <hr/>
     <dl className="c-formatting-guide">
       {GuideDataToJSX(FormattingGuideData)}
     </dl>
