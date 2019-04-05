@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+import ToolipPopover from '../tooltip-popover/TooltipPopover'
 
 // CSS Imports
 import './Histogram.css';
 
 // Third Party Imports
+import { Tooltip } from "react-accessible-tooltip";
 
 ////////////////////////////////////////////////////////////////////////////////
 // Histogram
@@ -13,18 +15,40 @@ import './Histogram.css';
 const clamp = (num, min, max) => num <= min ? min : num >= max ? max : num;
 
 const HistogramUnit = props => (
-  <div className={`c-histogram__type c-histogram__type--${props.type} c-histogram__type--intensity-${props.intensity}`}/>
+  <div className={`c-histogram__unit c-histogram__unit--${props.type} c-histogram__unit--intensity-${props.intensity}`}></div>
 )
 const makeTypes = data => (
   <>
-    <HistogramUnit
-      intensity={clamp(data.filter(a => a.type === "panel").length, 0, 10)}
-      type="panel"
-    />
-    <HistogramUnit
-      intensity={clamp(data.filter(a => a.type === "dialogue").length, 0, 10)}
-      type="dialogue"
-    />
+    <Tooltip
+      className="c-histogram__unit-container"
+      label={
+        props => <HistogramUnit {...props.labelAttributes}intensity={clamp(data.filter(a => a.type === "panel").length, 0, 10)} type="panel" />
+      }
+      overlay={
+        props => (
+          <ToolipPopover {...props.overlayAttributes}
+            hidden={props.isHidden}
+            noWrap={true}>
+            {data.filter(a => a.type === "panel").length} Panels
+          </ToolipPopover>
+        )
+      }/>
+
+    <Tooltip
+      className="c-histogram__unit-container"
+      label={
+        props => <HistogramUnit {...props.labelAttributes} intensity={clamp(data.filter(a => a.type === "dialogue").length, 0, 10)} type="dialogue" />
+      }
+      overlay={
+        props => (
+          <ToolipPopover {...props.overlayAttributes}
+            hidden={props.isHidden}
+            noWrap={true}>
+            {data.filter(a => a.type === "dialogue").length} Dialogues
+          </ToolipPopover>
+        )
+      }/>
+
   </>
 )
 
@@ -65,4 +89,4 @@ Histogram.defaultProps = {};
 
 // Type Checking
 ////////////////////////////////////////////////////////////////////////////////
-Histogram.PropTypes = {};
+// Histogram.PropTypes = {};

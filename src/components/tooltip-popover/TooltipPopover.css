@@ -1,0 +1,66 @@
+/******************************************************************************/
+/* Tooltip Popover                                                */
+/******************************************************************************/
+
+/* Notes:
+ * 1. Z-index is set to 2 to clear the status-line/bar. If status bar didn't
+ *    exsist, we would use z-index 1 here.
+*/
+
+/* Block */
+/******************************************************************************/
+.c-tooltip-popover {
+  pointer-events: none;
+  background-color: var(--color-utility-pure);
+  border-radius: 3px;
+  padding-top: 0.25em;
+  padding-right: 0.5em;
+  padding-left: 0.5em;
+  padding-bottom: 0;
+  border: 1px solid var(--color-utility-milk);
+  position: absolute;
+  bottom: 100%;
+  user-select: none;
+  text-align: center;
+  z-index: 2; /* 1 */
+  box-shadow: .1em .1em 0 0 var(--color-effect-ghost);
+}
+
+.c-tooltip-popover::after,
+.c-tooltip-popover::before {
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: .5em .5em 0 .5em;
+  top: 100%;
+}
+
+.c-tooltip-popover::after {
+  border-color: var(--color-utility-pure) transparent transparent;
+  top: 100%;
+  left: 3px;
+}
+
+.c-tooltip-popover::before {
+  border-color: var(--color-effect-ghost) transparent transparent;
+  top: calc(100% + .1em);
+  left: 3px;
+}
+
+/* Element */
+/******************************************************************************/
+/* .c-tooltip-popover__element {} */
+
+/* Modifier */
+/******************************************************************************/
+.c-tooltip-popover--hidden {
+  display: none;
+}
+
+.c-tooltip-popover--no-wrap {
+  white-space: nowrap;
+}
+/* Misc */
+/******************************************************************************/

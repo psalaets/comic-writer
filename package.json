@@ -7,6 +7,7 @@
     "lodash": "^4.17.11",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
+    "react-accessible-tooltip": "^2.0.3",
     "react-aria-modal": "^3.0.0",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
