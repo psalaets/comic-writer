@@ -31,7 +31,11 @@
   color: var(--color-utility-charcoal);
 }
 
-.cm-lettering-bold {
+.cm-s-comic-writer-light .cm-lettering-subject {
+  text-transform: uppercase;
+}
+
+.cm-s-comic-writer-light .cm-lettering-bold {
   font-weight: bold;
   text-decoration: underline;
 }
