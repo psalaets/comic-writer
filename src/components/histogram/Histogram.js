@@ -49,6 +49,21 @@ const makeTypes = data => (
         )
       }/>
 
+    <Tooltip
+      className="c-histogram__unit-container"
+      label={
+        props => <HistogramUnit {...props.labelAttributes} intensity={clamp(Math.round(data.reduce((a, c) => a + c.wordCount, 0) * .1), 0, 10)} type="word-count" />
+      }
+      overlay={
+        props => (
+          <ToolipPopover {...props.overlayAttributes}
+            hidden={props.isHidden}
+            noWrap={true}>
+            {data.reduce((a, c) => a + c.wordCount, 0)} Words
+          </ToolipPopover>
+        )
+      }/>
+
   </>
 )
 
@@ -76,6 +91,7 @@ export default class Histogram extends Component {
           <div className="u-font-size--saya">&nbsp;</div>
           <div className="u-font-size--saya">Panel</div>
           <div className="u-font-size--saya">Dialouge</div>
+          <div className="u-font-size--saya">Words</div>
         </div>
         {makePages(this.props.data)}
       </div>
