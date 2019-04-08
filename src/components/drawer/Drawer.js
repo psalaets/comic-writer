@@ -3,9 +3,10 @@ import './Drawer.css';
 
 const Drawer = props => {
   return props.isOpen ?
-    (<div className={`c-drawer ${props.propagateHeight ? 'c-drawer--propagate-height' : ''}`}>
+    (<aside className={`c-drawer ${props.propagateHeight ? 'c-drawer--propagate-height' : ''}`}>
+      <h2 className="u-hide--visually">{props.title}</h2>
       {props.children}
-    </div>) :
+    </aside>) :
     false;
 };
 

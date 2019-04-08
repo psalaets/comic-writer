@@ -33,6 +33,12 @@
   margin: 1px;
 }
 
+.c-histogram__unit-desc {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .c-histogram__column-label {
   text-align: center;
 }

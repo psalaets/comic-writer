@@ -9,11 +9,11 @@
 /* Block */
 /******************************************************************************/
 .c-stat {
-  padding-left: 1em;
   padding-right: 1em;
 }
 
 .c-stat + .c-stat {
+  padding-left: 1em;
   border-left: 1px solid var(--color-utility-milk);
 }
 
@@ -24,7 +24,7 @@
 /* Modifier */
 /******************************************************************************/
 .c-stat--text {
-  /* flex: 0 0 10em; */
+  flex: 0 0 auto;
 }
 
 .c-stat--histo {

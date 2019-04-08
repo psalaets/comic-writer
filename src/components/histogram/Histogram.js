@@ -15,14 +15,14 @@ import { Tooltip } from "react-accessible-tooltip";
 const clamp = (num, min, max) => num <= min ? min : num >= max ? max : num;
 
 const HistogramUnit = props => (
-  <div className={`c-histogram__unit c-histogram__unit--${props.type} c-histogram__unit--intensity-${props.intensity}`}></div>
+  <div aria-role="gridcell" className={`c-histogram__unit c-histogram__unit--${props.type} c-histogram__unit--intensity-${props.intensity}`}><div className="c-histogram__unit-desc u-hide--visually">{props.intensity}</div></div>
 )
 const makeTypes = data => (
   <>
     <Tooltip
       className="c-histogram__unit-container"
       label={
-        props => <HistogramUnit {...props.labelAttributes}intensity={clamp(data.filter(a => a.type === "panel").length, 0, 10)} type="panel" />
+        props => <HistogramUnit {...props.labelAttributes} intensity={clamp(data.filter(a => a.type === "panel").length, 0, 10)} type="panel" />
       }
       overlay={
         props => (
@@ -86,13 +86,13 @@ export default class Histogram extends Component {
 
   render() {
     return (
-      <div className="c-histogram">
-        <div className="c-histogram__row-label">
-          <div className="u-font-size--saya">&nbsp;</div>
-          <div className="u-font-size--saya">Panel</div>
-          <div className="u-font-size--saya">Dialouge</div>
-          <div className="u-font-size--saya">Words</div>
-        </div>
+      <div role="grid" className="c-histogram">
+        <section className="c-histogram__row-label">
+          <div aria-hidden="true" className="u-font-size--saya">&nbsp;</div>
+          <h4 className="u-font-size--saya">Panel</h4>
+          <h4 className="u-font-size--saya">Dialouge</h4>
+          <h4 className="u-font-size--saya">Words</h4>
+        </section>
         {makePages(this.props.data)}
       </div>
     );

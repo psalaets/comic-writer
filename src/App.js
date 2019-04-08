@@ -66,12 +66,13 @@ class App extends Component {
 
     return (
       <>
+        <h1 className="u-hide--visually">Comic-Writer</h1>
         <div className="c-app">
           <div className="c-app__writer">
             <ConnectedWriter/>
           </div>
           <div className="c-app__footer">
-            <Drawer isOpen={this.state.drawerIsOpen} propagateHeight={true}>
+            <Drawer title="Insights" isOpen={this.state.drawerIsOpen} propagateHeight={true}>
               <ConnectedStats/>
             </Drawer>
           </div>
