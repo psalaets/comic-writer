@@ -54,11 +54,12 @@ export default class Stats extends Component {
         <Stat.Text title="Page Count">
           {calculatePageCount(this.props.stats)}
         </Stat.Text>
+
         <Stat.Text title="Average Dialouge Length">
           {calculateAverageDialogueLength(this.props.stats)}
         </Stat.Text>
-        <Stat.HistoGraph title="ComicGraph™">
 
+        <Stat.HistoGraph title="ComicGraph™">
           <Histogram.Container>
             <Histogram.Labels>
               <h4 className="u-font-size--saya">Panel</h4>

@@ -34,9 +34,7 @@ const Page = props => (
 const Unit = props => (
   <div
     role="gridcell"
-    className={`c-histogram__unit c-histogram__unit--${
-      props.type
-    } c-histogram__unit--intensity-${props.intensity}`}
+    className={`c-histogram__unit c-histogram__unit--${props.type} c-histogram__unit--intensity-${props.intensity}`}
   >
     <div className="c-histogram__unit-desc u-hide--visually">
       {props.intensity}
