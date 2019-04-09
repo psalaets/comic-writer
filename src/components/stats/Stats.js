@@ -21,7 +21,7 @@ const calculateAverageDialogueLength = a => {
 
 const calculatePageCount = a => a.filter(a => a.type === 'page').length;
 
-const transformHistographData = type => data => data.reduce((a, c) => {
+const transformHistographData = data => data.reduce((a, c) => {
   // we encounter an A
   if (c.type === "page" ) {
   // start a new sub array
@@ -67,7 +67,7 @@ export default class Stats extends Component {
               <h4 className="u-font-size--saya">Words</h4>
             </Histogram.Labels>
 
-            {transformHistographData("")(this.props.stats)
+            {transformHistographData(this.props.stats)
               .map((p, i) =>
                 <Histogram.Page index={i + 1} page={p}>
 
