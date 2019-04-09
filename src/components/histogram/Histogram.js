@@ -25,7 +25,7 @@ const Labels = props => (
 const Page = props => (
   <div className="c-histogram__page">
     <div className="c-histogram__column-label u-font-size--saya">
-      {props.index}
+      {props.pageIndex}
     </div>
     {props.children}
   </div>

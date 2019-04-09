@@ -69,7 +69,7 @@ export default class Stats extends Component {
 
             {transformHistographData(this.props.stats)
               .map((p, i) =>
-                <Histogram.Page index={i + 1} page={p}>
+                <Histogram.Page pageIndex={i + 1}>
 
                   <Tooltip
                     className="c-histogram__unit-container"
