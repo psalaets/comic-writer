@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import Stat from '../stat/Stat'
 import Histogram from '../histogram/Histogram'
+import ToolipPopover from "../tooltip-popover/TooltipPopover";
 
 // CSS Imports
 import './Stats.css';
 
+// Thirt Party Imports
+import { Tooltip } from "react-accessible-tooltip";
 
 ////////////////////////////////////////////////////////////////////////////////
 // Stats Maths & Transforms
@@ -42,9 +45,7 @@ const transformHistographData = type => data => data.reduce((a, c) => {
 export default class Stats extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      histogramType: ''
-    };
+    this.state = {};
   }
 
   render() {
@@ -57,7 +58,85 @@ export default class Stats extends Component {
           {calculateAverageDialogueLength(this.props.stats)}
         </Stat.Text>
         <Stat.HistoGraph title="ComicGraph™">
-          <Histogram data={transformHistographData("")(this.props.stats)}/>
+
+          <Histogram.Container>
+            <Histogram.Labels>
+              <h4 className="u-font-size--saya">Panel</h4>
+              <h4 className="u-font-size--saya">Dialouge</h4>
+              <h4 className="u-font-size--saya">Words</h4>
+            </Histogram.Labels>
+
+            {transformHistographData("")(this.props.stats)
+              .map((p, i) =>
+                <Histogram.Page index={i + 1} page={p}>
+
+                  <Tooltip
+                    className="c-histogram__unit-container"
+                    label={props => (
+                      <Histogram.Unit
+                        {...props.labelAttributes}
+                        intensity={Histogram.clamp(p.filter(a => a.type === "panel").length, 0, 10)}
+                        type="panel"
+                      />
+                    )}
+                    overlay={props => (
+                      <ToolipPopover
+                        {...props.overlayAttributes}
+                        hidden={props.isHidden}
+                        noWrap={true}
+                      >
+                        {p.filter(a => a.type === "panel").length} Panels
+                      </ToolipPopover>
+                    )}
+                  />
+
+                  <Tooltip
+                    className="c-histogram__unit-container"
+                    label={props => (
+                      <Histogram.Unit
+                        {...props.labelAttributes}
+                        intensity={Histogram.clamp(
+                          p.filter(a => a.type === "dialogue").length, 0, 10
+                        )}
+                        type="dialogue"
+                      />
+                    )}
+                    overlay={props => (
+                      <ToolipPopover
+                        {...props.overlayAttributes}
+                        hidden={props.isHidden}
+                        noWrap={true}
+                      >
+                        {p.filter(a => a.type === "dialogue").length} Dialogues
+                      </ToolipPopover>
+                    )}
+                  />
+
+                  <Tooltip
+                    className="c-histogram__unit-container"
+                    label={props => (
+                      <Histogram.Unit
+                        {...props.labelAttributes}
+                        intensity={Histogram.clamp(
+                            Math.round((p.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2) * 0.1
+                          ), 0, 10)}
+                        type="word-count"
+                      />
+                    )}
+                    overlay={props => (
+                      <ToolipPopover
+                        {...props.overlayAttributes}
+                        hidden={props.isHidden}
+                        noWrap={true}
+                      >
+                        {p.filter(a => a.type !== "page")
+                          .reduce((a, c) => a + c.wordCount, 0) / 2} Words
+                      </ToolipPopover>
+                    )}
+                  />
+
+                </Histogram.Page>)}
+          </Histogram.Container>
         </Stat.HistoGraph>
       </div>
     );
