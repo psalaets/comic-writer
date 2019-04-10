@@ -8,7 +8,7 @@ const Button = (props) => (
       c-button
       ${props.block ? 'c-button--block' : ''}
       ${props.isActive ? 'c-button--active' : ''}
-      `}
+    `}
     onClick={props.onClick}
   >
     {props.children}

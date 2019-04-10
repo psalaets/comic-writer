@@ -3,7 +3,7 @@
 /******************************************************************************/
 
 /* Notes:
- * 1.
+ * 1. Using flexbox to propigate an even height to the children.
 */
 
 /* Block */
@@ -11,8 +11,6 @@
 .c-drawer {
   background-color: var(--color-utility-pure);
   border-top: 1px solid var(--color-utility-milk);
-  /* min-height: 8em; */
-  /* height: 20vh; */
   padding: 1em;
 }
 
@@ -23,7 +21,7 @@
 /* Modifier */
 /******************************************************************************/
 .c-drawer--propagate-height {
-  display: flex;
+  display: flex; /* 1 */
 }
 
 /* Misc */

@@ -9,10 +9,10 @@
 /* Block */
 /******************************************************************************/
 .c-metadata {
-  padding: .5em .8em;
   background-color: var(--color-utility-milk);
   margin-left: -.8em; /* 2 */
   margin-right: -.8em; /* 2 */
+  padding: .5em .8em;
 }
 
 .c-metadata + .c-metadata {
@@ -20,4 +20,4 @@
 }
 /* Elements */
 /******************************************************************************/
-.c-metadata__content {}
+/* .c-metadata__content {} */

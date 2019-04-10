@@ -6,7 +6,7 @@ const TooltipPopover = props => (
     c-tooltip-popover
     ${props.hidden ? 'c-tooltip-popover--hidden' : false}
     ${props.noWrap ? 'c-tooltip-popover--no-wrap' : false}
-    `}>
+  `}>
     {props.children}
   </div>
 );

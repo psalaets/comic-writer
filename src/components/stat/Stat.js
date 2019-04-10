@@ -11,7 +11,9 @@ const Text = props => (
 const HistoGraph = props => (
   <section className="c-stat c-stat--histo">
     <h3 className="u-font-size--saya">{props.title}</h3>
-    <div className="c-stat__content">{props.children}</div>
+    <div className="c-stat__content">
+      {props.children}
+    </div>
   </section>
 )
 

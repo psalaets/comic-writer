@@ -5,18 +5,18 @@
 /* Block */
 /******************************************************************************/
 .c-button {
-  user-select: none;
-  display: inline-block;
-  vertical-align: middle;
-  font: inherit;
-  text-align: center;
-  cursor: pointer;
-  border: 0;
-  border-radius: 3px;
-  padding: .25em 1em;
-  color: var(--color-utility-black);
   background-color: var(--color-utility-milk);
+  border-radius: 3px;
+  border: 0;
+  color: var(--color-utility-black);
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  padding: .25em 1em;
+  text-align: center;
   transition: color .2s, background-color .2s;
+  user-select: none;
+  vertical-align: middle;
 }
 
 .c-button:hover {

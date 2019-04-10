@@ -5,9 +5,9 @@
 /* Block */
 /******************************************************************************/
 .c-writer {
-  display: flex;
-  position: absolute;
-  height: 100%;
-  width: 100%;
   background-color: var(--color-utility-alabaster);
+  display: flex;
+  height: 100%;
+  position: absolute;
+  width: 100%;
 }
