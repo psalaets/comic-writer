@@ -10,8 +10,8 @@ function mapStateToProps(state) {
   };
 }
 
-const ConnectedWriter = connect(
+const ConnectedStats = connect(
   mapStateToProps
 )(Stats);
 
-export default ConnectedWriter;
+export default ConnectedStats;
