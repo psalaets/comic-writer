@@ -26,7 +26,7 @@ export default class Script extends Component {
         <div className="c-script__content">
           {renderNodes(this.props.blocks)}
         </div>
-        <div className="c-script__scrollpast"></div>
+        <div area-hidden="true" className="c-script__scrollpast"></div>
       </article>
     );
   }

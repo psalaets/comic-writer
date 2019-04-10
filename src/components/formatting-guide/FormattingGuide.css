@@ -25,10 +25,10 @@
 }
 
 .c-formatting-guide__code {
+  background-color: var(--color-utility-milk);
+  border-radius: 2px;
+  color: var(--color-utility-charcoal);
   display: inline-block;
   padding-left: .5em;
   padding-right: .5em;
-  background-color: var(--color-utility-milk);
-  color: var(--color-utility-charcoal);
-  border-radius: 2px;
 }

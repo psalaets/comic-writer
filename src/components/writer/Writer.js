@@ -20,6 +20,7 @@ export default class Writer extends Component {
   render() {
     return (
       <main className="c-writer">
+        <h2 className="u-hide--visually">Editor</h2>
         <Editor
           key="editor"
           value={this.props.source}

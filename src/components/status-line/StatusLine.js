@@ -2,9 +2,9 @@ import React from 'react';
 import './StatusLine.css';
 
 const Container = (props) => (
-  <div className="c-status-line u-font-size--saya">
+  <nav className="c-status-line u-font-size--saya">
     {props.children}
-  </div>
+  </nav>
 );
 const Spacer = (props) => (
   <div className="c-status-line__spacer"/>

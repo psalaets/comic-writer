@@ -20,17 +20,24 @@ javascript_tests:
 lint_css:
   stage: test
   script:
+    - mkdir reports
     - npm ci
-    - npm run lintcss > cssreport.xml
+    - npm run lintcss
   artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - reports/*.xml
     reports:
-      junit: cssreport.xml
+      junit: reports/cssreport.xml
 
 audit_js:
   stage: test
   script:
     - npx auditjs --prod --report --suppressExitError
   artifacts:
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - reports/*.xml
     reports:
       junit: reports/scan_node_modules.xml
 

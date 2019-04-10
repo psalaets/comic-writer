@@ -11,20 +11,22 @@
  * 5. Turning off "focus" outline for the editor.
  *    TODO: What's the right way to make this a11y without it looking like total
  *          shit?
+ * 6. Resetting z-index to creat a new stacking context for this Component.
 */
 
 /* Block */
 /******************************************************************************/
 .c-codemirror {
-  height: 100%;
-  padding-left: 1.5ex; /* 2 */
-  padding-right: 3ex; /* 2 */
-  margin-right: auto;
-  margin-left: auto;
-  width: 100%;
   background-color: var(--color-utility-pure);
   border-left: 1px solid var(--color-utility-milk);
   border-right: 1px solid var(--color-utility-milk);
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5ex; /* 2 */
+  padding-right: 3ex; /* 2 */
+  width: 100%;
+  z-index: 0; /* 6 */
 }
 
 /* Misc */
@@ -36,15 +38,15 @@
 .CodeMirror-line[class] {} /* 3 */
 
 .CodeMirror-gutter-elt { /* 4 */
-  top: 0;
+  align-items: flex-start;
   bottom: 0;
   display: flex;
-  align-items: flex-start;
+  top: 0;
 }
 
 .CodeMirror-gutter-wrapper {
-  top: 0;
   bottom: 0;
+  top: 0;
 }
 
 .CodeMirror *:focus { /* 5 */

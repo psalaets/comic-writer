@@ -1,0 +1,115 @@
+/******************************************************************************/
+/* Histogram                                                                  */
+/******************************************************************************/
+
+/* Notes:
+ * 1. We're doing this so that the tooltip can be absolutely positioned inside
+ *    the histogram unit
+*/
+
+/* Block */
+/******************************************************************************/
+.c-histogram {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Element */
+/******************************************************************************/
+.c-histogram__page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.c-histogram__unit {
+  height: 1em;
+  width: 1em;
+}
+
+.c-histogram__unit-container {
+  border: 1px solid var(--color-utility-milk);
+  margin: 1px;
+  position: relative; /* 1 */
+}
+
+.c-histogram__unit-desc {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
+.c-histogram__column-label {
+  text-align: center;
+}
+
+.c-histogram__row-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-right: .5em;
+  text-align: right;
+}
+
+.c-histogram__unit--panel {
+  background-color: var(--color-primary-cactus);
+}
+
+.c-histogram__unit--dialogue {
+  background-color: var(--color-primary-cool);
+}
+
+.c-histogram__unit--word-count {
+  background-color: var(--color-primary-dark-magenta);
+}
+
+.c-histogram__unit--intensity-0 {
+  opacity: 0;
+}
+
+.c-histogram__unit--intensity-1 {
+  opacity: 0.1;
+}
+
+.c-histogram__unit--intensity-2 {
+  opacity: 0.2;
+}
+
+.c-histogram__unit--intensity-3 {
+  opacity: 0.3;
+}
+
+.c-histogram__unit--intensity-4 {
+  opacity: 0.4;
+}
+
+.c-histogram__unit--intensity-5 {
+  opacity: 0.5;
+}
+
+.c-histogram__unit--intensity-6 {
+  opacity: 0.6;
+}
+
+.c-histogram__unit--intensity-7 {
+  opacity: 0.7;
+}
+
+.c-histogram__unit--intensity-8 {
+  opacity: 0.8;
+}
+
+.c-histogram__unit--intensity-9 {
+  opacity: 0.9;
+}
+
+.c-histogram__unit--intensity-10 {
+  opacity: 1;
+}
+
+/* Modifier */
+/******************************************************************************/
+/* .c-histogram--modifier {} */
+
+/* Misc */
+/******************************************************************************/

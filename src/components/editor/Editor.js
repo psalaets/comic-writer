@@ -13,12 +13,12 @@ export default class Editor extends Component {
   render() {
     return (
       <CodeMirror
-          editorWidth={80}
-          value={this.props.value}
-          stats={this.props.stats}
-          characters={this.props.characters}
-          onChange={this.handleChange}
-        />
+        editorWidth={80}
+        value={this.props.value}
+        stats={this.props.stats}
+        characters={this.props.characters}
+        onChange={this.handleChange}
+      />
     )
   }
 

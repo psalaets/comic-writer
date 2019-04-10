@@ -4,7 +4,11 @@ import './Button.css';
 const Button = (props) => (
   <button
     id={props.id}
-    className={`c-button ${props.block ? 'c-button--block' : ''}`}
+    className={`
+      c-button
+      ${props.block ? 'c-button--block' : ''}
+      ${props.isActive ? 'c-button--active' : ''}
+    `}
     onClick={props.onClick}
   >
     {props.children}

@@ -5,25 +5,28 @@
 /* Block */
 /******************************************************************************/
 .c-button {
-  user-select: none;
-  display: inline-block;
-  vertical-align: middle;
-  font: inherit;
-  text-align: center;
-  cursor: pointer;
-  border: 0;
-  padding: .25em 1em;
-  color: var(--color-utility-black);
   background-color: var(--color-utility-milk);
+  border-radius: 3px;
+  border: 0;
+  color: var(--color-utility-black);
+  cursor: pointer;
+  display: inline-block;
+  font: inherit;
+  padding: .25em 1em;
+  text-align: center;
   transition: color .2s, background-color .2s;
+  user-select: none;
+  vertical-align: middle;
 }
 
 .c-button:hover {
   box-shadow: inset 200px 0 0 0 rgba(255, 255, 255, .4);
 }
 
-.c-button:active {
+.c-button:active,
+.c-button--active {
   box-shadow: inset 200px 0 0 0 rgba(0, 0, 0, .2);
+  transition: color .2s, background-color .2s;
 }
 
 /* Modifiers */
