@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // CSS Imports
 import './Stats.css';
@@ -9,21 +9,9 @@ import './Stats.css';
 // Stats
 ////////////////////////////////////////////////////////////////////////////////
 
-export default class Stats extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+const Stats = props =>
+  <div className="c-stats">
+    {props.children}
+  </div>
 
-  render() {
-    return (
-      <div className="c-stats">
-        {this.props.children}
-      </div>
-    );
-  }
-}
-
-// Default Props
-////////////////////////////////////////////////////////////////////////////////
-Stats.defaultProps = {};
+export default Stats;
