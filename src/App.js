@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import ConnectedWriter from './components/writer/ConnectedWriter';
+import Stats from './components/stats/Stats';
 import ConnectedStats from './components/stats/ConnectedStats';
 import StatusLine from './components/status-line/StatusLine';
 import FormattingGuide from './components/formatting-guide/FormattingGuide';
@@ -73,7 +74,11 @@ class App extends Component {
           </div>
           <div className="c-app__footer">
             <Drawer title="Insights" isOpen={this.state.drawerIsOpen} propagateHeight={true}>
-              <ConnectedStats/>
+              <Stats>
+                <ConnectedStats.PageCount/>
+                <ConnectedStats.DialougeLength/>
+                <ConnectedStats.PageHistogram/>
+              </Stats>
             </Drawer>
           </div>
           <div className="c-app__status-line">

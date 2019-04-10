@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 
 import { statsSelector } from '../../store/selectors/stats';
 
-import Stats from './Stats';
+import PageCount from './PageCount'
+import DialougeLength from './DialougeLength'
+import PageHistogram from './PageHistogram'
 
 function mapStateToProps(state) {
   return {
@@ -10,8 +12,10 @@ function mapStateToProps(state) {
   };
 }
 
-const ConnectedStats = connect(
-  mapStateToProps
-)(Stats);
+const ConnectedStats = {
+  PageCount: connect(mapStateToProps)(PageCount),
+  DialougeLength: connect(mapStateToProps)(DialougeLength),
+  PageHistogram: connect(mapStateToProps)(PageHistogram)
+};
 
-export default ConnectedStats;
+export default ConnectedStats
