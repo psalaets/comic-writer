@@ -32,7 +32,7 @@ const PageHistogram = props =>
         <h4 className="u-font-size--saya">Words</h4>
       </Histogram.Labels>
       {transformHistographData(props.stats).map((p, i) =>
-      <Histogram.Page pageIndex={i + 1}>
+      <Histogram.Page key={i} pageIndex={i + 1}>
         <Tooltip
           className="c-histogram__unit-container"
           label={props => (

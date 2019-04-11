@@ -10,7 +10,7 @@ const calculateAverageDialogueLength = a => {
 
 const DialogLength = props =>
   <Stat.Text title="Average Dialouge Length">
-    {calculateAverageDialogueLength(props.stats)}
+    {calculateAverageDialogueLength(props.stats) || "0"}
   </Stat.Text>
 
 export default DialogLength;
