@@ -85,6 +85,7 @@ export default class CodeMirrorComponent extends Component {
       cursorScrollMargin: 100, // Not *exactly* sure why this value works.
       scrollbarStyle: null,
       scrollPastEnd: true,
+      spellcheck: true,
       gutters: [WORD_COUNTS],
       extraKeys: {
         Tab(cm) {
