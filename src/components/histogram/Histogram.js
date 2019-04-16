@@ -34,7 +34,7 @@ const Page = props => (
 const Unit = props => (
   <div
     role="gridcell"
-    className={`c-histogram__unit c-histogram__unit--${props.type} c-histogram__unit--intensity-${props.intensity}`}
+    className={`c-histogram__unit c-histogram__unit--${props.type} c-histogram__unit--intensity-${clamp(props.intensity, 0, 10)}`}
   >
     <div className="c-histogram__unit-desc u-hide--visually">
       {props.intensity}
@@ -48,8 +48,7 @@ const Histogram = {
   Container: Container,
   Labels: Labels,
   Page: Page,
-  Unit: Unit,
-  clamp: clamp
+  Unit: Unit
 }
 
 export default Histogram;

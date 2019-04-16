@@ -7,23 +7,48 @@ import ToolipPopover from '../tooltip-popover/TooltipPopover';
 // Thirt Party Imports
 import { Tooltip } from "react-accessible-tooltip";
 
-const transformHistographData = data => data.reduce((a, c) => {
-  // we encounter an A
-  if (c.type === "page" ) {
-  // start a new sub array
-    a.push([]);
-  } else { // current is not A
-  // make sure there is a sub array started
-    if (a.length === 0) {
-      a.push([]);
-    }
-    // add current to the latest sub array
-    a[a.length - 1].push(c);
+// These are the individual metrics for the graph. They define the "rows"
+// Intensity is clamped to a number between 1 - 10
+const pageMetrics = pageData => [
+  {
+    label: 'Panels',
+    type: 'panel',
+    intensity: pageData.filter(a => a.type === "panel").length,
+    popoverContent: `${pageData.filter(a => a.type === "panel").length} Panels`
+  },
+  {
+    label: 'Dialogues',
+    type: 'dialogue',
+    intensity: pageData.filter(a => a.type === "dialogue").length,
+    popoverContent: `${pageData.filter(a => a.type === "dialogue").length} Dialogues`
+  },
+  {
+    label: 'Word Count',
+    type: 'word-count',
+    intensity: Math.round((pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2) * 0.1),
+    popoverContent: `${pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2} Words`
   }
-  return a;
-}, []).filter(a => a.length >= 0);
+]
 
-const pageMetric = (type, intensity, popoverContent) =>
+const transformHistographData = data => data.reduce((a, c) => {
+    // we encounter a dataset with the type "page"
+    if (c.type === "page" ) {
+    // start a new sub array
+      a.push([]);
+    } else {
+    // make sure there is a sub array started
+      if (a.length === 0) {
+        a.push([]);
+      }
+      // add current to the latest sub array
+      a[a.length - 1].push(c);
+    }
+    return a;
+  }, [])
+  // Remove empty Arrays []
+  .filter(a => a.length >= 0);
+
+const makePageMetric = ({type, intensity, popoverContent}) =>
   <Tooltip
     className="c-histogram__unit-container"
     label={props => (
@@ -44,33 +69,19 @@ const pageMetric = (type, intensity, popoverContent) =>
     )}
   />
 
-
 const PageHistogram = props =>
   <Stat.HistoGraph title="ComicGraph™">
     <Histogram.Container>
-      <Histogram.Labels>
-        <h4 className="u-font-size--saya">Panel</h4>
-        <h4 className="u-font-size--saya">Dialouge</h4>
-        <h4 className="u-font-size--saya">Words</h4>
-      </Histogram.Labels>
       {transformHistographData(props.stats).map((p, i) =>
+        <>
+        {i === 0 ?
+          <Histogram.Labels key={i}>
+            {pageMetrics(p).map(a => <h4 className="u-font-size--saya">{a.label}</h4>)}
+          </Histogram.Labels>: false}
         <Histogram.Page key={i} pageIndex={i + 1}>
-          {pageMetric(
-            'panel',
-            Histogram.clamp(p.filter(a => a.type === "panel").length, 0, 10),
-            `${p.filter(a => a.type === "panel").length} Panels`
-          )}
-          {pageMetric(
-            'dialogue',
-            Histogram.clamp(p.filter(a => a.type === "dialogue").length, 0, 10),
-            `${p.filter(a => a.type === "dialogue").length} Dialogues`
-          )}
-          {pageMetric(
-            'word-count',
-            Histogram.clamp(Math.round((p.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2) * 0.1), 0, 10),
-            `${p.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2} Words`
-          )}
+          {pageMetrics(p).map(makePageMetric)}
         </Histogram.Page>
+        </>
       )}
     </Histogram.Container>
   </Stat.HistoGraph>
