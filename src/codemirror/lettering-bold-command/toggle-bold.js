@@ -4,19 +4,33 @@ import {
 } from '../comic-writer-mode/token';
 
 export function toggle(tokens, selectionStart, selectionEnd) {
-  // Convert incoming lettering tokens into internal token format
-  const internalTokens = tokens.map(token => {
+  const internalTokens = internalizeTokens(tokens);
+  const toggledTokens = toggleSelected(internalTokens, selectionStart, selectionEnd);
+  const collapsedTokens = collapseDanglingWhitespace(toggledTokens);
+  const mergedTokens = mergeRedundantTokens(collapsedTokens);
+
+  if (internalTokens.length > 0) {
+    return externalizeTokens(internalTokens[0].start, mergedTokens);
+  } else {
+    return externalizeTokens(selectionStart.ch, [boldInternal('')]);
+  }
+}
+
+// convert CM tokens into internal token format
+function internalizeTokens(externalTokens) {
+  return externalTokens.map(token => {
     if (isBold(token)) {
       return boldInternal(token.string, token.start, token.end);
     } else {
       return nonBoldInternal(token.string, token.start, token.end);
     }
   });
+}
 
+function toggleSelected(internalTokens, selectionStart, selectionEnd) {
   const multipleSelected = hasMultipleSelected(internalTokens, selectionStart, selectionEnd);
 
-  // toggle any selected tokens
-  const transformedTokens = internalTokens.map(token => {
+  const toggledTokens = internalTokens.map(token => {
     if (overlaps(token, selectionStart, selectionEnd)) {
       // if multiple tokens are selected, convert everything to bold
       if (multipleSelected) {
@@ -32,7 +46,7 @@ export function toggle(tokens, selectionStart, selectionEnd) {
   // toggling a token sometimes results in an array of tokens (eg selecting the
   // middle of a non-bold token produces [non bold, bold, non bold]), so
   // flatten those arrays down
-  const flattenedTokens = transformedTokens.reduce((tokens, curr) => {
+  return toggledTokens.reduce((tokens, curr) => {
     if (Array.isArray(curr)) {
       tokens.push(...curr);
     } else {
@@ -40,38 +54,44 @@ export function toggle(tokens, selectionStart, selectionEnd) {
     }
     return tokens;
   }, []);
+}
 
-  // merge whitespace tokens into the appropriate neighbor token
-  const collapsed = flattenedTokens
+function hasMultipleSelected(tokens, selectionStart, selectionEnd) {
+  const selected = tokens
+    .filter(token => overlaps(token, selectionStart, selectionEnd));
+  return selected.length > 1;
+}
+
+// make some whitespace tokens same weight as their appropriate neighbor token
+function collapseDanglingWhitespace(tokens) {
+  return tokens
     .reduce((newArr, current, index, arr) => {
-      if (/^\s+$/.test(current.string)) {
+      if (current.isWhitespace) {
         const previous = arr[index - 1];
         const next = arr[index + 1];
 
         if (previous && next) {
           if (previous.isBold && next.isBold) {
             newArr.push(boldInternal(current.string));
-          } else if (previous.isBold && !next.isBold) {
-            newArr.push(nonBoldInternal(current.string));
-          } else if (!previous.isBold && next.isBold) {
-            newArr.push(nonBoldInternal(current.string));
-          } else {
+          } else if (!previous.isBold && !next.isBold) {
             newArr.push(current);
+          } else {
+            newArr.push(nonBoldInternal(current.string));
           }
         } else {
           newArr.push(current);
         }
-
-
       } else {
         newArr.push(current);
       }
 
       return newArr;
     }, []);
+}
 
-  // merge adjacent tokens of same type
-  const mergedTokens = collapsed
+// Turn bold next to bold into a single bold, and same for non bolds
+function mergeRedundantTokens(tokens) {
+  return tokens
     .reduce((arr, current) => {
       if (arr.length > 0) {
         const last = arr[arr.length - 1];
@@ -90,41 +110,18 @@ export function toggle(tokens, selectionStart, selectionEnd) {
 
       return arr;
     }, []);
-
-  if (internalTokens.length > 0) {
-    return externalizeTokens(internalTokens[0].start, mergedTokens);
-  } else {
-    return externalizeTokens(selectionStart.ch, [boldInternal('****')]);
-  }
 }
 
-function hasMultipleSelected(tokens, selectionStart, selectionEnd) {
-  const selected = tokens
-    .filter(token => overlaps(token, selectionStart, selectionEnd));
-  return selected.length > 1;
-}
-
+// Convert internal tokens into CM token format
 function externalizeTokens(start, tokens) {
   let startPosition = start;
 
   return tokens.map(token => {
-    const type = token.isBold
-      ? `${LETTERING_BOLD} ${LETTERING_CONTENT}`
-      : LETTERING_CONTENT;
-    const string = token.isBold
-      ? wrapBold(unwrapBold(token.string))
-      : token.string;
+    const external = token.externalize(startPosition);
 
-    const externalToken = {
-      start: startPosition,
-      end: startPosition + string.length,
-      string,
-      type
-    };
+    startPosition += external.string.length;
 
-    startPosition += string.length;
-
-    return externalToken;
+    return external;
   });
 }
 
@@ -148,6 +145,17 @@ function isBold(token) {
 
 function boldInternal(string, start = null, end = null) {
   const token = tokenInternal(string, true, start, end);
+
+  token.externalize = function externalize(startPosition) {
+    const string = wrapBold(unwrapBold(this.string))
+
+    return {
+      start: startPosition,
+      end: startPosition + string.length,
+      string,
+      type: `${LETTERING_BOLD} ${LETTERING_CONTENT}`
+    };
+  };
 
   token.toBold = function toBold() {
     return this;
@@ -200,6 +208,17 @@ function boldInternal(string, start = null, end = null) {
 
 function nonBoldInternal(string, start = null, end = null) {
   const token = tokenInternal(string, false, start, end);
+
+  token.externalize = function externalize(startPosition) {
+    const string = this.string;
+
+    return {
+      start: startPosition,
+      end: startPosition + string.length,
+      string,
+      type: LETTERING_CONTENT
+    };
+  };
 
   token.toBold = function toBold(selectionStart, selectionEnd) {
     return this.toggle(selectionStart, selectionEnd);
@@ -271,7 +290,8 @@ function flatMap(array, fn) {
 function tokenInternal(string, isBold, start, end) {
   const token = {
     string,
-    isBold
+    isBold,
+    isWhitespace: /^\s+$/.test(string)
   };
 
   if (start != null) {

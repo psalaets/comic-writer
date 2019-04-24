@@ -19,9 +19,9 @@ export function letteringBoldCommand(cm) {
   const toggledContent = toggle(content, selection.start, selection.end);
 
   const newTokens = meta.concat(toggledContent);
-  const newLine = newTokens.map(token => {
-    return token.string;
-  }).join('');
+  const newLine = newTokens
+    .map(token => token.string)
+    .join('');
 
   cm.replaceRange(newLine, {
     line: cursor.line,
