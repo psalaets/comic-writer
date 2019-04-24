@@ -4,12 +4,7 @@ import {
 } from '../comic-writer-mode/token';
 
 export function toggle(tokens, selectionStart, selectionEnd) {
-  if (tokens.length === 0) {
-    return externalizeTokens(selectionStart.ch, [
-      boldInternal('****')
-    ]);
-  }
-
+  // Convert incoming lettering tokens into internal token format
   const internalTokens = tokens.map(token => {
     if (isBold(token)) {
       return boldInternal(token.string, token.start, token.end);
@@ -18,14 +13,12 @@ export function toggle(tokens, selectionStart, selectionEnd) {
     }
   });
 
-  // if multiple tokens are selected, convert everything to bold
-  const selected = internalTokens.filter(token => {
-    return overlaps(token, selectionStart, selectionEnd);
-  });
-  const multipleSelected = selected.length > 1;
+  const multipleSelected = hasMultipleSelected(internalTokens, selectionStart, selectionEnd);
 
+  // toggle any selected tokens
   const transformedTokens = internalTokens.map(token => {
     if (overlaps(token, selectionStart, selectionEnd)) {
+      // if multiple tokens are selected, convert everything to bold
       if (multipleSelected) {
         return token.toBold(selectionStart.ch, selectionEnd.ch);
       } else {
@@ -36,6 +29,9 @@ export function toggle(tokens, selectionStart, selectionEnd) {
     return token;
   });
 
+  // toggling a token sometimes results in an array of tokens (eg selecting the
+  // middle of a non-bold token produces [non bold, bold, non bold]), so
+  // flatten those arrays down
   const flattenedTokens = transformedTokens.reduce((tokens, curr) => {
     if (Array.isArray(curr)) {
       tokens.push(...curr);
@@ -45,6 +41,7 @@ export function toggle(tokens, selectionStart, selectionEnd) {
     return tokens;
   }, []);
 
+  // merge whitespace tokens into the appropriate neighbor token
   const collapsed = flattenedTokens
     .reduce((newArr, current, index, arr) => {
       if (/^\s+$/.test(current.string)) {
@@ -94,7 +91,17 @@ export function toggle(tokens, selectionStart, selectionEnd) {
       return arr;
     }, []);
 
-  return externalizeTokens(internalTokens[0].start, mergedTokens);
+  if (internalTokens.length > 0) {
+    return externalizeTokens(internalTokens[0].start, mergedTokens);
+  } else {
+    return externalizeTokens(selectionStart.ch, [boldInternal('****')]);
+  }
+}
+
+function hasMultipleSelected(tokens, selectionStart, selectionEnd) {
+  const selected = tokens
+    .filter(token => overlaps(token, selectionStart, selectionEnd));
+  return selected.length > 1;
 }
 
 function externalizeTokens(start, tokens) {
