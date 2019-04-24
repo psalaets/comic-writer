@@ -2,8 +2,8 @@ import { toggle } from './toggle-bold';
 
 export function letteringBoldCommand(cm) {
   const cursor = cm.getCursor();
-  const selections = cm.listSelections();
 
+  // split up line's tokens by their use: meta vs the actual content
   const {meta, content} = cm.getLineTokens(cursor.line)
     .reduce((obj, current) => {
       if (current.type && current.type.includes('lettering-content')) {
@@ -15,11 +15,11 @@ export function letteringBoldCommand(cm) {
       return obj;
     }, {meta: [], content: []});
 
-  const selection = normalizeSelection(selections[0]);
+  const selection = normalizeSelection(cm.listSelections()[0]);
   const toggledContent = toggle(content, selection.start, selection.end);
 
-  const newTokens = meta.concat(toggledContent);
-  const newLine = newTokens
+  // re-construct line with toggled content tokens
+  const newLine = meta.concat(toggledContent)
     .map(token => token.string)
     .join('');
 
