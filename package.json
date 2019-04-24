@@ -11,7 +11,7 @@
     "react-aria-modal": "^3.0.0",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
-    "react-scripts": "^2.1.8",
+    "react-scripts": "3.0.0",
     "recharts": "^1.4.2",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
@@ -19,11 +19,11 @@
     "wordcount": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "npx react-scripts start",
+    "build": "npx react-scripts build",
+    "test": "npx react-scripts test",
     "lintcss": "node ./stylelint-ci.js > ./reports/cssreport.xml",
-    "eject": "react-scripts eject",
+    "eject": "npx react-scripts eject",
     "plop": "npx plop"
   },
   "devDependencies": {
