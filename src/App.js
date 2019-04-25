@@ -5,11 +5,11 @@ import ConnectedWriter from './components/writer/ConnectedWriter';
 import Stats from './components/stats/Stats';
 import ConnectedStats from './components/stats/ConnectedStats';
 import StatusLine from './components/status-line/StatusLine';
-import FormattingGuide from './components/formatting-guide/FormattingGuide';
-import Settings from './components/settings/Settings';
 import Button from './components/button/Button';
 import Modal from './components/modal/Modal';
 import Drawer from './components/drawer/Drawer';
+import ModalTypes from './components/modal/ModalTypes'
+
 
 class App extends Component {
   constructor(props) {
@@ -55,16 +55,6 @@ class App extends Component {
   }
 
   render() {
-    // Hopefully this isn't stupid.
-    const formattingModal = {
-      modalTitle: 'Formatting Guide',
-      modalContent: <FormattingGuide/>
-    }
-    const settingsModal = {
-      modalTitle: 'Settings',
-      modalContent: <Settings/>
-    }
-
     return (
       <>
         <h1 className="u-hide--visually">Comic-Writer</h1>
@@ -83,10 +73,10 @@ class App extends Component {
           </div>
           <div className="c-app__status-line">
             <StatusLine.Container>
-              <Button onClick={this.activateModal(formattingModal)}>Formatting Guide</Button>
+              <Button onClick={this.activateModal(ModalTypes.formattingGuide)}>Formatting Guide</Button>
               <StatusLine.Spacer/>
               <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen}>Insights</Button>
-              <Button onClick={this.activateModal(settingsModal)}>Settings</Button>
+              <Button onClick={this.activateModal(ModalTypes.settingsModal)}>Settings</Button>
             </StatusLine.Container>
           </div>
         </div>
