@@ -188,11 +188,6 @@ function boldInternal(string, start = null, end = null) {
         return chunk;
       });
 
-    const justCursor = selectionStart === selectionEnd;
-    if (justCursor) {
-      return [nonBoldInternal(unwrapBold(string))];
-    }
-
     return chunks
       .map(chunk => {
         if (chunk.selected) {

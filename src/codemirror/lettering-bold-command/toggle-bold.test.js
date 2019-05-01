@@ -280,7 +280,8 @@ describe('toggle()', () => {
 
       expect(modified).toEqual(
         [
-          nonBold(4, 17, 'one two three')
+          nonBold(4, 8, 'one '),
+          bold(8, 21, '**two three**')
         ]
       );
     });
@@ -294,7 +295,7 @@ describe('toggle()', () => {
 
       expect(modified).toEqual(
         [
-          nonBold(4, 12, 'one  two')
+          bold(4, 16, '**one  two**')
         ]
       );
     });
