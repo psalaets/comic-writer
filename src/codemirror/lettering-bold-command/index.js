@@ -47,29 +47,22 @@ export function letteringBoldCommand(cm) {
     ch: 100000
   });
 
-  if (chunks.some(chunk => chunk.relativeCursorLocation != null)) {
-    const hasCursor = chunks.find(chunk => chunk.relativeCursorLocation);
-    const cursorPosition = hasCursor.start + hasCursor.relativeCursorLocation;
+  const withStart = chunks.find(c => c.containsSelectionStart);
+  const selectionStart = withStart.start + withStart.relativeSelectionStart;
 
-    cm.setCursor(cursor.line, cursorPosition);
-  } else {
-    const withStart = chunks.find(c => c.containsSelectionStart);
-    const selectionStart = withStart.start + withStart.relativeSelectionStart;
+  const withEnd = chunks.find(c => c.containsSelectionEnd);
+  const selectionEnd = withEnd.start + withStart.relativeSelectionEnd;
 
-    const withEnd = chunks.find(c => c.containsSelectionEnd);
-    const selectionEnd = withEnd.start + withStart.relativeSelectionEnd;
-
-    cm.setSelection(
-      {
-        line: cursor.line,
-        ch: selectionStart
-      },
-      {
-        line: cursor.line,
-        ch: selectionEnd
-      }
-    );
-  }
+  cm.setSelection(
+    {
+      line: cursor.line,
+      ch: selectionStart
+    },
+    {
+      line: cursor.line,
+      ch: selectionEnd
+    }
+  );
 }
 
 // returns object with start and end, start is never to the right of end

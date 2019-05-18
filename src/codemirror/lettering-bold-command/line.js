@@ -5,11 +5,7 @@ import {
 
 /*
 TODO
-- add a flag to chunk: contains selection start, contains selection end
-if that is true, we look at its selection start/end deltas, otherwise ignore them
-- selection placement is wrong
 - seeing issues with "no chunks selected" when cursor at front/back of a chunk
-- when insert empty bold, place cursor relative to teh chunk that contains it, not relative to the entire line
 */
 
 export default class Line {
@@ -215,30 +211,13 @@ export default class Line {
     return this.transformSelected(chunk => chunk.toBold());
   }
 
-  splitSelectedWithEmptyBold(relativeSplitPosition) {
-    return this.transformSelected(chunk => chunk.insertEmptyBoldAt(relativeSplitPosition));
+  splitSelectedWithEmptyBold(relativePosition) {
+    return this.transformSelected(chunk => chunk.insertEmptyBoldAt(relativePosition));
   }
 
   transformSelected(fn) {
     return flatMap(this.normalizedChunks, chunk => {
       return chunk.selected ? fn(chunk) : chunk;
-    });
-  }
-
-  // if selected is whitespace and selection is single cursor
-  insertEmptyBold(selectedRelativePosition) {
-    return this.transformSelected(selected => {
-      const before = selected.string.slice(0, selectedRelativePosition);
-      const after = selected.string.slice(selectedRelativePosition);
-
-      const middle = createChunk('', true, selected.end, true);
-      middle.relativeCursorLocation = selectedRelativePosition + 2;
-
-      return [
-        createChunk(before, selected.bold, selected.start, true),
-        middle,
-        createChunk(after, selected.bold, selected.end, true),
-      ];
     });
   }
 }
@@ -267,10 +246,6 @@ export function toChunks(tokens, selectionStart, selectionEnd) {
   });
 
   return chunks;
-}
-
-export function createChunk(string, bold, start, selected) {
-  return new Chunk(string, bold, start, selected);
 }
 
 function isBold(token) {
@@ -349,19 +324,30 @@ class Chunk {
     this.bold = bold;
     this.start = start;
     this.end = start + string.length;
-    this.selectionStartDelta = 0;
-    this.selectionEndDelta = 0;
 
-    // if this is non-null, cursor is placed here and all selection deltas are
-    // ignored
-    this.relativeCursorLocation = null;
     this.selected = selected;
 
     this.containsSelectionStart = false;
     this.containsSelectionEnd = false;
 
-    this.relativeSelectionStart = null;
-    this.relativeSelectionEnd = null;
+    this._relativeSelectionStart = null;
+    this._relativeSelectionEnd = null;
+  }
+
+  get relativeSelectionStart() {
+    return this._relativeSelectionStart;
+  }
+
+  set relativeSelectionStart(value) {
+    this._relativeSelectionStart = value;
+  }
+
+  get relativeSelectionEnd() {
+    return this._relativeSelectionEnd;
+  }
+
+  set relativeSelectionEnd(value) {
+    this._relativeSelectionEnd = value;
   }
 
   insertEmptyBoldAt(relativePosition) {
@@ -369,12 +355,15 @@ class Chunk {
     const after = this.string.slice(relativePosition);
 
     const middle = new Chunk('', true, this.end, this.selected);
-    middle.relativeCursorLocation = relativePosition + 2;
+    middle.containsSelectionStart = true;
+    middle.relativeSelectionStart = 0;
+    middle.containsSelectionEnd = true;
+    middle.relativeSelectionEnd = 0;
 
     return [
-      new Chunk(before, this.bold, this.start, this.selected),
+      new Chunk(before, this.bold, this.start, false),
       middle,
-      new Chunk(after, this.bold, this.end, this.selected),
+      new Chunk(after, this.bold, this.end, false),
     ];
   }
 
@@ -405,12 +394,6 @@ class Chunk {
       merged.relativeSelectionEnd = other.relativeSelectionEnd + this.string.length;
     }
 
-    merged.selectionStartDelta += this.selectionStartDelta;
-    merged.selectionStartDelta += other.selectionStartDelta;
-
-    merged.selectionEndDelta += this.selectionEndDelta;
-    merged.selectionEndDelta += other.selectionEndDelta;
-
     return merged;
   }
 
@@ -431,16 +414,6 @@ class Chunk {
       if (this.containsSelectionEnd) {
         newChunk.containsSelectionEnd = true;
         newChunk.relativeSelectionEnd = this.relativeSelectionEnd + 2;
-      }
-
-      newChunk.selectionStartDelta += this.selectionStartDelta;
-      if (newChunk.selectionStartDelta) {
-        newChunk.selectionStartDelta += 2;
-      }
-
-      newChunk.selectionEndDelta += this.selectionEndDelta;
-      if (newChunk.selectionEndDelta) {
-        newChunk.selectionEndDelta += 2
       }
 
       newChunk.relativeCursorLocation = this.relativeCursorLocation;
@@ -499,8 +472,6 @@ class Chunk {
     }
 
     const newChunk = new Chunk(newString, this.bold, this.start, this.selected);
-    newChunk.selectionStartDelta = newSelectionStart - selectionStart;
-    newChunk.selectionEndDelta = newSelectionEnd - selectionEnd;
 
     newChunk.containsSelectionStart = this.containsSelectionStart;
     newChunk.containsSelectionEnd = this.containsSelectionEnd;
