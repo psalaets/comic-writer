@@ -1,6 +1,8 @@
 import { toggle } from './toggle-bold';
 
 export function letteringBoldCommand(cm) {
+  console.log('-'.repeat(50));
+
   const cursor = cm.getCursor();
 
   // split up line's tokens by their use: meta vs the actual content
@@ -15,11 +17,25 @@ export function letteringBoldCommand(cm) {
       return obj;
     }, {meta: [], content: []});
 
+  // nothing to transform on this line
+  if (content.length === 0) {
+    return;
+  }
+
+  // selection is outside of content tokens
   const selection = normalizeSelection(cm.listSelections()[0]);
-  const toggledContent = toggle(content, selection.start, selection.end);
+  if (selection.start.ch < content[0].start) {
+    return;
+  }
+
+  const chunks = toggle(content, selection.start, selection.end);
+
+  console.log('result:');
+  console.log(chunks);
+
 
   // re-construct line with toggled content tokens
-  const newLine = meta.concat(toggledContent)
+  const newLine = meta.concat(chunks)
     .map(token => token.string)
     .join('');
 
@@ -30,6 +46,30 @@ export function letteringBoldCommand(cm) {
     line: cursor.line,
     ch: 100000
   });
+
+  if (chunks.some(chunk => chunk.relativeCursorLocation != null)) {
+    const hasCursor = chunks.find(chunk => chunk.relativeCursorLocation);
+    const cursorPosition = hasCursor.start + hasCursor.relativeCursorLocation;
+
+    cm.setCursor(cursor.line, cursorPosition);
+  } else {
+    const withStart = chunks.find(c => c.containsSelectionStart);
+    const selectionStart = withStart.start + withStart.relativeSelectionStart;
+
+    const withEnd = chunks.find(c => c.containsSelectionEnd);
+    const selectionEnd = withEnd.start + withStart.relativeSelectionEnd;
+
+    cm.setSelection(
+      {
+        line: cursor.line,
+        ch: selectionStart
+      },
+      {
+        line: cursor.line,
+        ch: selectionEnd
+      }
+    );
+  }
 }
 
 // returns object with start and end, start is never to the right of end
