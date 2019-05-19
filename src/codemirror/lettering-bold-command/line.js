@@ -1,7 +1,4 @@
 import {
-  // TODO: Remove eslint disable when we need the below
-  // eslint-disable-next-line no-unused-vars
-  LETTERING_CONTENT,
   LETTERING_BOLD,
 } from '../comic-writer-mode/token';
 
@@ -347,19 +344,6 @@ function flatMap(array, fn) {
 
       return result;
     }, []);
-}
-
-
-// TODO: Remove eslint disable when we need the below
-// eslint-disable-next-line no-unused-vars
-function wrapBold(string) {
-  return `**${string}**`;
-}
-
-// TODO: Remove eslint disable when we need the below
-// eslint-disable-next-line no-unused-vars
-function unwrapBold(string) {
-  return string.replace(/\*\*/g, '');
 }
 
 class Chunk {
