@@ -5,11 +5,14 @@ import {
 
 /*
 TODO
-- seeing issues with "no chunks selected" when cursor at front/back of a chunk
+- **** with cursor at the end puts selection 2 chars too far to the right
 */
 
 export default class Line {
   constructor(tokens, selectionStart, selectionEnd) {
+    console.log('incoming tokens');
+    console.log(tokens);
+
     this.tokens = tokens;
     this.originalSelectionStart = selectionStart.ch;
     this.originalSelectionEnd = selectionEnd.ch;
@@ -18,30 +21,23 @@ export default class Line {
     console.log(`originalSelectionEnd: ${this.originalSelectionEnd}`);
 
 
-    const chunks = toChunks(tokens, selectionStart.ch, selectionEnd.ch);
-
+    let chunks = toChunks(tokens, selectionStart.ch, selectionEnd.ch);
 
     console.log(`after toChunks`);
     console.log(chunks);
 
-    const singleCursor = selectionStart.ch === selectionEnd.ch;
+    // reconstruct bold whitespace
+    chunks = cleanUpBoldFragments(chunks);
 
-    if (singleCursor && selectionStart.ch === chunks[0].start) {
-      chunks.forEach(c => c.containsSelectionEnd = false);
-      chunks[0].containsSelectionEnd = true;
-      chunks[0].selected = true;
-    }
-
-    if (singleCursor && selectionEnd.ch === chunks[chunks.length - 1].end) {
-      chunks.forEach(c => c.containsSelectionStart = false);
-      chunks[chunks.length - 1].containsSelectionStart = true;
-      chunks[chunks.length - 1].selected = true;
-    }
+    console.log('after bold fragment clean up');
+    console.log(chunks);
 
     this.normalizedChunks = removeBoldStarsFromChunks(chunks, selectionStart.ch, selectionEnd.ch);
 
-    // assert that exactly one chunk contains selection start and selection end
+    console.log('after removeBoldStarsFromChunks');
+    console.log(this.normalizedChunks);
 
+    // assert that exactly one chunk contains selection start and selection end
     const chunksContainingSelectionStart = this.normalizedChunks
       .filter(c => c.containsSelectionStart).length;
 
@@ -58,9 +54,6 @@ export default class Line {
   }
 
   execute() {
-    console.log('after normalize');
-    console.log(this.normalizedChunks);
-
     let chunks = this.transform();
 
     console.log('after transform');
@@ -91,14 +84,21 @@ export default class Line {
 
   transform() {
     if (this.hasMultipleWeightsSelected()) {
+      console.log(`bolding selected chunks`);
+
       return this.boldSelected();
     }
 
     const selected = this.getSelected();
-    if (selected.length === 1 && selected[0].whitespace && this.selectionIsSingleCursor()) {
+    if (selected.length === 1 && selected[0].whitespace && !selected[0].bold && this.selectionIsSingleCursor()) {
+      console.log(`inserting empty bold at cursor`);
+
       // insert empty bold at cursor
       return this.splitSelectedWithEmptyBold(this.originalSelectionStart - selected[0].start);
     }
+
+
+    console.log(`toggling selected chunks`);
 
     return this.toggleSelected();
   }
@@ -136,32 +136,6 @@ export default class Line {
           return chunk;
         }
       });
-
-    // return chunks
-    //   .reduce((newArray, chunk, index, array) => {
-    //     if (chunk.whitespace) {
-    //       const previous = array[index - 1];
-    //       const next = array[index + 1];
-
-    //       if (previous && next) {
-    //         if (previous.bold && next.bold) {
-    //           newArray.push(chunk.toBold());
-    //         } else if (!previous.bold && !next.bold) {
-    //           newArray.push(chunk);
-    //         } else {
-    //           const newNonBold = chunk.clone();
-    //           newNonBold.bold = false;
-    //           newArray.push(newNonBold);
-    //         }
-    //       } else {
-    //         newArray.push(chunk);
-    //       }
-    //     } else {
-    //       newArray.push(chunk);
-    //     }
-
-    //     return newArray;
-    //   }, []);
   }
 
   // bold next to bold becomes one bold
@@ -200,7 +174,7 @@ export default class Line {
   }
 
   selectionIsSingleCursor() {
-    return this.selectionStart === this.selectionEnd;
+    return this.originalSelectionStart === this.originalSelectionEnd;
   }
 
   toggleSelected() {
@@ -245,6 +219,54 @@ export function toChunks(tokens, selectionStart, selectionEnd) {
       });
   });
 
+  const singleCursor = selectionStart === selectionEnd;
+
+  // single cursor at the very front of chunks
+  const firstChunk = chunks[0];
+  if (singleCursor && selectionStart === firstChunk.start) {
+    chunks.forEach(c => c.containsSelectionEnd = false);
+    firstChunk.containsSelectionStart = true;
+    firstChunk.containsSelectionEnd = true;
+    firstChunk.relativeSelectionStart = selectionStart - firstChunk.start;
+    firstChunk.relativeSelectionEnd = selectionEnd - firstChunk.start;
+    firstChunk.selected = true;
+  }
+
+  // single cursor at the very back of chunks
+  const lastChunk = chunks[chunks.length - 1];
+  if (singleCursor && selectionEnd === lastChunk.end) {
+    chunks.forEach(c => c.containsSelectionStart = false);
+    lastChunk.containsSelectionStart = true;
+    lastChunk.containsSelectionEnd = true;
+    lastChunk.relativeSelectionStart = selectionStart - lastChunk.start;
+    lastChunk.relativeSelectionEnd = selectionEnd - lastChunk.start;
+    lastChunk.selected = true;
+  }
+
+  // if a whitespace chunk contains single cursor but it's at boundary between it
+  // and a non-whitespace chunk, give seletion to the non-whitespace chunk
+
+  if (singleCursor) {
+    const index = chunks.findIndex(c => c.containsSelectionStart);
+    const containsCursor = chunks[index];
+
+    if (containsCursor.whitespace) {
+      const prev = chunks[index - 1];
+
+      if (prev && selectionStart === containsCursor.start) {
+        prev.containsSelectionStart = true;
+        prev.containsSelectionEnd = true;
+        prev.relativeSelectionStart = selectionStart - prev.start;
+        prev.relativeSelectionEnd = selectionEnd - prev.start;
+        prev.selected = true;
+
+        containsCursor.containsSelectionStart = false;
+        containsCursor.containsSelectionEnd = false;
+        containsCursor.selected = false;
+      }
+    }
+  }
+
   return chunks;
 }
 
@@ -267,7 +289,7 @@ function selectionContainsEnd(end, selectionStart, selectionEnd) {
 }
 
 function containsSelection(start, end, selectionStart, selectionEnd) {
-  return start < selectionStart && end > selectionEnd;
+  return selectionStart >= start && end > selectionEnd;
 }
 
 /**
@@ -281,6 +303,26 @@ function containsSelection(start, end, selectionStart, selectionEnd) {
 export function removeBoldStarsFromChunks(chunks, selectionStart, selectionEnd) {
   return chunks
     .map(chunk => chunk.removeBoldStars(selectionStart, selectionEnd));
+}
+
+function cleanUpBoldFragments(chunks) {
+  return chunks.reduce((array, current) => {
+    if (array.length > 0) {
+      const last = array[array.length - 1];
+
+      if (last.bold && last.string === '**' && current.bold) {
+        array[array.length - 1] = last.merge(current);
+      } else if (current.bold && current.string === '**' && last.bold) {
+        array[array.length - 1] = last.merge(current);
+      } else {
+        array.push(current);
+      }
+    } else {
+      array.push(current);
+    }
+
+    return array;
+  }, []);
 }
 
 function startsWithStars(string) {
@@ -319,6 +361,7 @@ class Chunk {
     this.whitespace = bold
       ? /^(\*\*)?\s+(\*\*)?$/.test(string)
       : /^\s+$/.test(string);
+    this.empty = string === '';
 
     this.string = string;
     this.bold = bold;
@@ -448,7 +491,7 @@ class Chunk {
 
         if (relativeSelectionEnd >= 0 && relativeSelectionEnd <= 2) {
           newSelectionEnd -= relativeSelectionEnd;
-        } else if (relativeSelectionEnd >= 0 && relativeSelectionEnd < this.string.length) {
+        } else if (relativeSelectionEnd >= 0 && relativeSelectionEnd <= this.string.length) {
           newSelectionEnd -= 2;
         }
       }
@@ -536,8 +579,14 @@ class Chunk {
       selected(start, end, selectionStart, selectionEnd)
     );
 
-    chunk.containsSelectionStart = selectionStart >= start && selectionStart < end;
-    chunk.containsSelectionEnd = selectionEnd > start && selectionEnd <= end;
+    const singleCursor = selectionStart === selectionEnd;
+    if (singleCursor) {
+      chunk.containsSelectionStart = selectionStart >= start && selectionStart < end;
+      chunk.containsSelectionEnd = chunk.containsSelectionStart;
+    } else {
+      chunk.containsSelectionStart = selectionStart >= start && selectionStart < end;
+      chunk.containsSelectionEnd = selectionEnd > start && selectionEnd <= end;
+    }
 
     if (chunk.containsSelectionStart) {
       chunk.relativeSelectionStart = selectionStart - start;
