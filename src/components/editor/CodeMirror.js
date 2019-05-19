@@ -101,7 +101,8 @@ export default class CodeMirrorComponent extends Component {
             return CodeMirror.Pass;
           }
         },
-        'Cmd-B': 'letteringBoldCommand'
+        'Cmd-B': 'letteringBoldCommand',
+        'Ctrl-B': 'letteringBoldCommand',
       }
     });
 
