@@ -32,7 +32,7 @@ export default function token(stream, state) {
     if (!state.subjectDone) {
       if (stream.match(/sfx/i)) {
         state.subjectDone = true;
-        state.allowsBoldInContent = false;
+        state.allowsBoldInContent = true;
         return `${LETTERING_SUBJECT} ${LETTERING_LINE} ${SFX_LINE}`;
       } else if (stream.match(/caption/i)) {
         state.subjectDone = true;
