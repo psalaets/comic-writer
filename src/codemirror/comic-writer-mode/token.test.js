@@ -103,7 +103,7 @@ describe('mode.token()', () => {
       expect(tokens).toMatchSnapshot();
     });
 
-    test('does not allow bold content', () => {
+    test('allows bold content', () => {
       const tokens = collectTokens('\tsfx: bam **bam** bam');
 
       expect(tokens).toMatchSnapshot();

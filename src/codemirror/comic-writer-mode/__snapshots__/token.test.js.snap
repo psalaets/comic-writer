@@ -1127,6 +1127,58 @@ Array [
 ]
 `;
 
+exports[`mode.token() sfx allows bold content 1`] = `
+Array [
+  Object {
+    "end": 1,
+    "start": 0,
+    "string": "	",
+    "style": null,
+  },
+  Object {
+    "end": 4,
+    "start": 1,
+    "string": "sfx",
+    "style": Array [
+      "lettering-subject",
+      "line-cm-lettering",
+      "line-cm-sfx",
+    ],
+  },
+  Object {
+    "end": 6,
+    "start": 4,
+    "string": ": ",
+    "style": null,
+  },
+  Object {
+    "end": 10,
+    "start": 6,
+    "string": "bam ",
+    "style": Array [
+      "lettering-content",
+    ],
+  },
+  Object {
+    "end": 17,
+    "start": 10,
+    "string": "**bam**",
+    "style": Array [
+      "lettering-bold",
+      "lettering-content",
+    ],
+  },
+  Object {
+    "end": 21,
+    "start": 17,
+    "string": " bam",
+    "style": Array [
+      "lettering-content",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() sfx closed modifier but no colon 1`] = `
 Array [
   Object {
@@ -1170,41 +1222,6 @@ Array [
     "start": 9,
     "string": ")",
     "style": null,
-  },
-]
-`;
-
-exports[`mode.token() sfx does not allow bold content 1`] = `
-Array [
-  Object {
-    "end": 1,
-    "start": 0,
-    "string": "	",
-    "style": null,
-  },
-  Object {
-    "end": 4,
-    "start": 1,
-    "string": "sfx",
-    "style": Array [
-      "lettering-subject",
-      "line-cm-lettering",
-      "line-cm-sfx",
-    ],
-  },
-  Object {
-    "end": 6,
-    "start": 4,
-    "string": ": ",
-    "style": null,
-  },
-  Object {
-    "end": 21,
-    "start": 6,
-    "string": "bam **bam** bam",
-    "style": Array [
-      "lettering-content",
-    ],
   },
 ]
 `;
