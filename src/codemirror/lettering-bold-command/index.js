@@ -28,16 +28,17 @@ export function letteringBoldCommand(cm) {
     return;
   }
 
-  const chunks = toggle(content, selection.start, selection.end);
+  const result = toggle(content, selection.start, selection.end);
 
   console.log('result:');
-  console.log(chunks);
-
+  console.log(result);
 
   // re-construct line with toggled content tokens
-  const newLine = meta.concat(chunks)
+  const metaString = meta
     .map(token => token.string)
     .join('');
+
+  const newLine = metaString + result.string;
 
   cm.replaceRange(newLine, {
     line: cursor.line,
@@ -47,20 +48,14 @@ export function letteringBoldCommand(cm) {
     ch: 100000
   });
 
-  const withStart = chunks.find(c => c.containsSelectionStart);
-  const selectionStart = withStart.start + withStart.relativeSelectionStart;
-
-  const withEnd = chunks.find(c => c.containsSelectionEnd);
-  const selectionEnd = withEnd.start + withStart.relativeSelectionEnd;
-
   cm.setSelection(
     {
       line: cursor.line,
-      ch: selectionStart
+      ch: result.selectionStart
     },
     {
       line: cursor.line,
-      ch: selectionEnd
+      ch: result.selectionEnd
     }
   );
 }
