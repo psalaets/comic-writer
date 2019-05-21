@@ -9,7 +9,7 @@ import { Tooltip } from "react-accessible-tooltip";
 
 // These are the individual metrics for the graph. They define the "rows"
 // Intensity is clamped to a number between 1 - 10
-const pageMetrics = pageData => [
+const pageMetrics = (pageData) => [
   {
     label: 'Panels',
     type: 'panel',
@@ -48,11 +48,13 @@ const transformHistographData = data => data.reduce((a, c) => {
   // Remove empty Arrays []
   .filter(a => a.length >= 0);
 
-const makePageMetric = ({type, intensity, popoverContent}) =>
+const makePageMetric = ({type, intensity, popoverContent}, i) =>
   <Tooltip
+    key={i}
     className="c-histogram__unit-container"
     label={props => (
       <Histogram.Unit
+        key={i}
         {...props.labelAttributes}
         intensity={intensity}
         type={type}
@@ -60,6 +62,7 @@ const makePageMetric = ({type, intensity, popoverContent}) =>
     )}
     overlay={props => (
       <ToolipPopover
+        key={i}
         {...props.overlayAttributes}
         hidden={props.isHidden}
         noWrap={true}
@@ -73,15 +76,15 @@ const PageHistogram = props =>
   <Stat.HistoGraph title="ComicGraph™">
     <Histogram.Container>
       {transformHistographData(props.stats).map((p, i) =>
-        <>
+        <React.Fragment key={i}>
         {i === 0 ?
-          <Histogram.Labels key={i}>
-            {pageMetrics(p).map(a => <h4 className="u-font-size--saya">{a.label}</h4>)}
+          <Histogram.Labels key={`label-${i}`}>
+            {pageMetrics(p).map((a, i) => <h4 key={i} className="u-font-size--saya">{a.label}</h4>)}
           </Histogram.Labels>: false}
         <Histogram.Page key={i} pageIndex={i + 1}>
           {pageMetrics(p).map(makePageMetric)}
         </Histogram.Page>
-        </>
+        </React.Fragment>
       )}
     </Histogram.Container>
   </Stat.HistoGraph>
