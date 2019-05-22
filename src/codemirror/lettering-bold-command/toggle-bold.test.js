@@ -395,6 +395,7 @@ describe('toggle()', () => {
       });
     });
 
+    // weird
     test('1 space between bold and non bold', () => {
       const tokens = ['soon not'];
 
@@ -407,6 +408,7 @@ describe('toggle()', () => {
       });
     });
 
+    // weird
     test('some spaces between bold and non bold', () => {
       const tokens = ['soon   not'];
 
@@ -419,6 +421,7 @@ describe('toggle()', () => {
       });
     });
 
+    // weird
     test('1 space between non bold and bold', () => {
       const tokens = ['not soon'];
 
@@ -431,6 +434,7 @@ describe('toggle()', () => {
       });
     });
 
+    // weird
     test('some spaces between non bold and bold', () => {
       const tokens = ['not   soon'];
 
@@ -444,19 +448,80 @@ describe('toggle()', () => {
     });
   });
 
-  /*
-empty bold doesn't merge into whitespace separated bold token
+  describe('cursor at boundaries', () => {
+    it('cursor at line start', () => {
+      const tokens = ['one two three'];
 
-cursor at non/bold boundary
-cursor at bold/non boundary
-cursor at start string, at non
-cursor at start string, at bold
-cursor at end string, at non
-cursor at end string, at bold
+      const result = execute(tokens, 4, 4, 4);
 
-all: calc and set cursor position
-*/
+      expect(result).toEqual({
+        string: '**one** two three',
+        selectionStart: 6,
+        selectionEnd: 6
+      });
+    });
 
+    it('cursor at line end', () => {
+      const tokens = ['one two three'];
+
+      const result = execute(tokens, 4, 17, 17);
+
+      expect(result).toEqual({
+        string: 'one two **three**',
+        selectionStart: 19,
+        selectionEnd: 19
+      });
+    });
+
+    it('cursor at non-bold start', () => {
+      const tokens = ['one two three'];
+
+      const result = execute(tokens, 4, 8, 8);
+
+      expect(result).toEqual({
+        string: 'one **two** three',
+        selectionStart: 10,
+        selectionEnd: 10
+      });
+    });
+
+    it('cursor at non-bold end', () => {
+      const tokens = ['one two three'];
+
+      const result = execute(tokens, 4, 11, 11);
+
+      expect(result).toEqual({
+        string: 'one **two** three',
+        selectionStart: 13,
+        selectionEnd: 13
+      });
+    });
+
+    it('cursor at bold start', () => {
+      const tokens = ['one ', '**two**', ' three'];
+
+      const result = execute(tokens, 4, 8, 8);
+
+      expect(result).toEqual({
+        string: 'one two three',
+        selectionStart: 8,
+        selectionEnd: 8
+      });
+    });
+
+    // weird
+    it('cursor at bold end', () => {
+      const tokens = ['one ', '**two**', ' three'];
+
+      const result = execute(tokens, 4, 15, 15);
+
+      expect(result).toEqual({
+        string: 'one two three',
+        selectionStart: 13,
+        selectionEnd: 11
+      });
+    });
+  });
 });
 
 /**
