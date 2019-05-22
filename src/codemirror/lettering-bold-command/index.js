@@ -17,17 +17,7 @@ export function letteringBoldCommand(cm) {
       return obj;
     }, {meta: [], content: []});
 
-  // nothing to transform on this line
-  if (content.length === 0) {
-    return;
-  }
-
-  // selection is outside of content tokens
   const selection = normalizeSelection(cm.listSelections()[0]);
-  if (selection.start.ch < content[0].start) {
-    return;
-  }
-
   const result = toggle(content, selection.start, selection.end);
 
   console.log('result:');

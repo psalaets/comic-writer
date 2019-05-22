@@ -14,8 +14,8 @@ describe('toggle()', () => {
 
       expect(result).toEqual({
         string: '****',
-        selectionStart: 0,
-        selectionEnd: 0
+        selectionStart: 2,
+        selectionEnd: 2
       });
     });
   });

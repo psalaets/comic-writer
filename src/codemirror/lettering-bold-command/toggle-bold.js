@@ -2,7 +2,7 @@ import Line from './line';
 
 export function toggle(tokens, selectionStart, selectionEnd) {
   if (tokens.length === 0) {
-    return transformNoTokens();
+    return transformNoTokens(selectionStart.ch, selectionEnd.ch);
   }
 
   const line = new Line(tokens, selectionStart, selectionEnd);
@@ -18,10 +18,10 @@ export function toggle(tokens, selectionStart, selectionEnd) {
   };
 }
 
-function transformNoTokens() {
+function transformNoTokens(selectionStart, selectionEnd) {
   return {
     string: '****',
-    selectionStart: 0,
-    selectionEnd: 0
+    selectionStart: selectionStart + 2,
+    selectionEnd: selectionEnd + 2
   };
 }
