@@ -395,7 +395,6 @@ describe('toggle()', () => {
       });
     });
 
-    // weird
     test('1 space between bold and non bold', () => {
       const tokens = ['soon not'];
 
@@ -404,11 +403,10 @@ describe('toggle()', () => {
       expect(result).toEqual({
         string: '**soon** not',
         selectionStart: 6,
-        selectionEnd: 12
+        selectionEnd: 13
       });
     });
 
-    // weird
     test('some spaces between bold and non bold', () => {
       const tokens = ['soon   not'];
 
@@ -417,11 +415,10 @@ describe('toggle()', () => {
       expect(result).toEqual({
         string: '**soon**   not',
         selectionStart: 6,
-        selectionEnd: 12
+        selectionEnd: 13
       });
     });
 
-    // weird
     test('1 space between non bold and bold', () => {
       const tokens = ['not soon'];
 
@@ -430,11 +427,10 @@ describe('toggle()', () => {
       expect(result).toEqual({
         string: 'not **soon**',
         selectionStart: 7,
-        selectionEnd: 8
+        selectionEnd: 14
       });
     });
 
-    // weird
     test('some spaces between non bold and bold', () => {
       const tokens = ['not   soon'];
 
@@ -443,7 +439,7 @@ describe('toggle()', () => {
       expect(result).toEqual({
         string: 'not   **soon**',
         selectionStart: 7,
-        selectionEnd: 10
+        selectionEnd: 14
       });
     });
   });

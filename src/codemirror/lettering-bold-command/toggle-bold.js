@@ -14,7 +14,7 @@ export function toggle(tokens, selectionStart, selectionEnd) {
   return {
     string: chunks.map(c => c.string).join(''),
     selectionStart: withStart.start + withStart.relativeSelectionStart,
-    selectionEnd: withEnd.start + withStart.relativeSelectionEnd
+    selectionEnd: withEnd.start + withEnd.relativeSelectionEnd
   };
 }
 
