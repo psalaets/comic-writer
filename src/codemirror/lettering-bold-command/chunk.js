@@ -101,11 +101,6 @@ export default class Chunk {
         newChunk.relativeSelectionEnd = this.relativeSelectionEnd + 2;
       }
 
-      newChunk.relativeCursorLocation = this.relativeCursorLocation;
-      if (newChunk.relativeCursorLocation != null) {
-        newChunk.relativeCursorLocation += 2;
-      }
-
       return newChunk;
     } else {
       return this;
