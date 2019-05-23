@@ -5,7 +5,7 @@ export function toggle(tokens, selectionStart, selectionEnd) {
     return transformNoTokens(selectionStart.ch, selectionEnd.ch);
   }
 
-  const line = new Line(tokens, selectionStart, selectionEnd);
+  const line = new Line(tokens, selectionStart.ch, selectionEnd.ch);
   const chunks = line.execute();
 
   const withStart = chunks.find(c => c.containsSelectionStart);

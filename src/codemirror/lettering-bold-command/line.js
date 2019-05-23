@@ -11,18 +11,11 @@ TODO
 
 export default class Line {
   constructor(tokens, selectionStart, selectionEnd) {
-    console.log('incoming tokens');
-    console.log(tokens);
-
     this.tokens = tokens;
-    this.originalSelectionStart = selectionStart.ch;
-    this.originalSelectionEnd = selectionEnd.ch;
+    this.originalSelectionStart = selectionStart;
+    this.originalSelectionEnd = selectionEnd;
 
-    console.log(`originalSelectionStart: ${this.originalSelectionStart}`);
-    console.log(`originalSelectionEnd: ${this.originalSelectionEnd}`);
-
-
-    let chunks = toChunks(tokens, selectionStart.ch, selectionEnd.ch);
+    let chunks = toChunks(tokens, selectionStart, selectionEnd);
 
     console.log(`after toChunks`);
     console.log(chunks);
@@ -33,7 +26,7 @@ export default class Line {
     console.log('after bold fragment clean up');
     console.log(chunks);
 
-    this.normalizedChunks = removeBoldStarsFromChunks(chunks, selectionStart.ch, selectionEnd.ch);
+    this.normalizedChunks = removeBoldStarsFromChunks(chunks, selectionStart, selectionEnd);
 
     console.log('after removeBoldStarsFromChunks');
     console.log(this.normalizedChunks);
@@ -55,6 +48,8 @@ export default class Line {
   }
 
   execute() {
+
+
     let chunks = this.transform();
 
     console.log('after transform');
