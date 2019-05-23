@@ -127,7 +127,7 @@ export default class Chunk {
 
         if (relativeSelectionStart >= 0 && relativeSelectionStart <= 2) {
           newSelectionStart -= relativeSelectionStart;
-        } else if (relativeSelectionStart >= 0 && relativeSelectionStart < this.string.length) {
+        } else if (relativeSelectionStart >= 0 && relativeSelectionStart <= this.string.length) {
           newSelectionStart -= 2;
         }
 

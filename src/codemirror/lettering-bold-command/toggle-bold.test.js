@@ -509,7 +509,6 @@ describe('toggle()', () => {
       });
     });
 
-    // weird
     it('cursor at bold end', () => {
       const tokens = ['one ', '**two**', ' three'];
 
@@ -517,7 +516,7 @@ describe('toggle()', () => {
 
       expect(result).toEqual({
         string: 'one two three',
-        selectionStart: 13,
+        selectionStart: 11,
         selectionEnd: 11
       });
     });
