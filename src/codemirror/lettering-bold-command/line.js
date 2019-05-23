@@ -17,19 +17,10 @@ export default class Line {
 
     let chunks = toChunks(tokens, selectionStart, selectionEnd);
 
-    console.log(`after toChunks`);
-    console.log(chunks);
-
     // reconstruct bold whitespace
     chunks = cleanUpBoldFragments(chunks);
 
-    console.log('after bold fragment clean up');
-    console.log(chunks);
-
     this.normalizedChunks = removeBoldStarsFromChunks(chunks, selectionStart, selectionEnd);
-
-    console.log('after removeBoldStarsFromChunks');
-    console.log(this.normalizedChunks);
 
     // assert that exactly one chunk contains selection start and selection end
     const chunksContainingSelectionStart = this.normalizedChunks
@@ -48,53 +39,29 @@ export default class Line {
   }
 
   execute() {
-
-
     let chunks = this.transform();
-
-    console.log('after transform');
-    console.log(chunks);
 
     chunks = this.cleanUpWhitespace(chunks);
 
-    console.log('after cleaning up cleanUpWhitespace');
-    console.log(chunks);
-
     chunks = this.mergeRedundant(chunks);
-
-    console.log('after mergeRedundant');
-    console.log(chunks);
 
     chunks = this.addBoldStars(chunks);
 
-    console.log('after addBoldStars');
-    console.log(chunks);
-
     chunks = this.fixBoundaries(chunks);
-
-    console.log('after fixBoundaries');
-    console.log(chunks);
 
     return chunks;
   }
 
   transform() {
     if (this.hasMultipleWeightsSelected()) {
-      console.log(`bolding selected chunks`);
-
       return this.boldSelected();
     }
 
     const selected = this.getSelected();
     if (selected.length === 1 && selected[0].whitespace && !selected[0].bold && this.selectionIsSingleCursor()) {
-      console.log(`inserting empty bold at cursor`);
-
       // insert empty bold at cursor
       return this.splitSelectedWithEmptyBold(this.originalSelectionStart - selected[0].start);
     }
-
-
-    console.log(`toggling selected chunks`);
 
     return this.toggleSelected();
   }
