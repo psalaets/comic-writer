@@ -1,4 +1,4 @@
-import transformTokens from './line';
+import transformTokens from './transform-tokens';
 
 export function toggle(tokens, selectionStart, selectionEnd) {
   if (tokens.length === 0) {

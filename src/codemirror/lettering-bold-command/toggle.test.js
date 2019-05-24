@@ -3,7 +3,7 @@ import {
   LETTERING_BOLD,
 } from '../comic-writer-mode/token';
 
-import { toggle } from './toggle-bold';
+import { toggle } from './toggle';
 
 describe('toggle()', () => {
   describe('no tokens', () => {
