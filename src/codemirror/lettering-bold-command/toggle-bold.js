@@ -1,12 +1,11 @@
-import Line from './line';
+import transformTokens from './line';
 
 export function toggle(tokens, selectionStart, selectionEnd) {
   if (tokens.length === 0) {
     return transformNoTokens(selectionStart.ch, selectionEnd.ch);
   }
 
-  const line = new Line(tokens, selectionStart.ch, selectionEnd.ch);
-  const chunks = line.execute();
+  const chunks = transformTokens(tokens, selectionStart.ch, selectionEnd.ch);
 
   const withStart = chunks.find(c => c.containsSelectionStart);
   const withEnd = chunks.find(c => c.containsSelectionEnd);

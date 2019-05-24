@@ -15,24 +15,8 @@ export default class Chunk {
     this.containsSelectionStart = false;
     this.containsSelectionEnd = false;
 
-    this._relativeSelectionStart = null;
-    this._relativeSelectionEnd = null;
-  }
-
-  get relativeSelectionStart() {
-    return this._relativeSelectionStart;
-  }
-
-  set relativeSelectionStart(value) {
-    this._relativeSelectionStart = value;
-  }
-
-  get relativeSelectionEnd() {
-    return this._relativeSelectionEnd;
-  }
-
-  set relativeSelectionEnd(value) {
-    this._relativeSelectionEnd = value;
+    this.relativeSelectionStart = null;
+    this.relativeSelectionEnd = null;
   }
 
   insertEmptyBoldAt(relativePosition) {

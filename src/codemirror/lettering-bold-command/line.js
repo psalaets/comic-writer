@@ -4,159 +4,148 @@ import {
 
 import Chunk from './chunk';
 
-/*
-TODO
-- **** with cursor at the end puts selection 2 chars too far to the right
-*/
+export default function transformTokens(tokens, selectionStart, selectionEnd) {
+  let chunks = toChunks(tokens, selectionStart, selectionEnd);
 
-export default class Line {
-  constructor(tokens, selectionStart, selectionEnd) {
-    this.tokens = tokens;
-    this.originalSelectionStart = selectionStart;
-    this.originalSelectionEnd = selectionEnd;
+  // reconstruct bold whitespace
+  chunks = cleanUpBoldFragments(chunks);
 
-    let chunks = toChunks(tokens, selectionStart, selectionEnd);
+  chunks = removeBoldStarsFromChunks(chunks, selectionStart, selectionEnd);
 
-    // reconstruct bold whitespace
-    chunks = cleanUpBoldFragments(chunks);
+  // assert that exactly one chunk contains selection start and selection end
+  const countWithSelectionStart = chunks
+    .filter(c => c.containsSelectionStart).length;
 
-    this.normalizedChunks = removeBoldStarsFromChunks(chunks, selectionStart, selectionEnd);
+  const countWithSelectionEnd = chunks
+    .filter(c => c.containsSelectionEnd).length;
 
-    // assert that exactly one chunk contains selection start and selection end
-    const chunksContainingSelectionStart = this.normalizedChunks
-      .filter(c => c.containsSelectionStart).length;
-
-    const chunksContainingSelectionEnd = this.normalizedChunks
-      .filter(c => c.containsSelectionEnd).length;
-
-    if (chunksContainingSelectionStart !== 1) {
-      throw new Error(`Expected 1 chunk containing selection start but was ${chunksContainingSelectionStart}`);
-    }
-
-    if (chunksContainingSelectionEnd !== 1) {
-      throw new Error(`Expected 1 chunk containing selection end but was ${chunksContainingSelectionEnd}`);
-    }
+  if (countWithSelectionStart !== 1) {
+    throw new Error(`Expected 1 chunk containing selection start but was ${countWithSelectionStart}`);
   }
 
-  execute() {
-    let chunks = this.transform();
-
-    chunks = this.cleanUpWhitespace(chunks);
-
-    chunks = this.mergeRedundant(chunks);
-
-    chunks = this.addBoldStars(chunks);
-
-    chunks = this.fixBoundaries(chunks);
-
-    return chunks;
+  if (countWithSelectionEnd !== 1) {
+    throw new Error(`Expected 1 chunk containing selection end but was ${countWithSelectionEnd}`);
   }
 
-  transform() {
-    if (this.hasMultipleWeightsSelected()) {
-      return this.boldSelected();
-    }
+  chunks = transform(chunks, selectionStart, selectionEnd);
 
-    const selected = this.getSelected();
-    if (selected.length === 1 && selected[0].whitespace && !selected[0].bold && this.selectionIsSingleCursor()) {
-      // insert empty bold at cursor
-      return this.splitSelectedWithEmptyBold(this.originalSelectionStart - selected[0].start);
-    }
+  chunks = cleanUpWhitespace(chunks);
 
-    return this.toggleSelected();
+  chunks = mergeSameWeightNeighbors(chunks);
+
+  chunks = addBoldStars(chunks);
+
+  chunks = fixBoundaries(chunks);
+
+  return chunks;
+}
+
+function transform(chunks, selectionStart, selectionEnd) {
+  const selected = chunks.filter(c => c.selected);
+
+  if (hasMultipleWeights(selected)) {
+    return boldSelected(chunks);
   }
 
-  // readjust start and end of every chunk
-  fixBoundaries(chunks) {
-    let position = chunks[0].start;
-    chunks.forEach(chunk => {
-      chunk.start = position;
-      chunk.end = position + chunk.string.length;
-      position += chunk.string.length;
-    });
-    return chunks;
+  const singleCursor = selectionStart === selectionEnd;
+  if (isOneNonBoldWhitespace(selected) && singleCursor) {
+    // insert empty bold at cursor
+    return splitSelectedWithEmptyBold(chunks, selectionStart - selected[0].start);
   }
 
-  cleanUpWhitespace(chunks) {
-    return chunks
-      .map((chunk, index, array) => {
-        if (chunk.whitespace) {
-          const previous = array[index - 1];
-          const next = array[index + 1];
+  return toggleSelected(chunks);
+}
 
-          if (previous && next) {
-            if (previous.bold && next.bold) {
-              return chunk.toBold();
-            } else if (!previous.bold && !next.bold) {
-              return chunk;
-            } else {
-              return chunk.toNonBold();
-            }
-          } else {
+// change whitespace weight based on weights of its neighbors
+function cleanUpWhitespace(chunks) {
+  return chunks
+    .map((chunk, index, array) => {
+      if (chunk.whitespace) {
+        const previous = array[index - 1];
+        const next = array[index + 1];
+
+        if (previous && next) {
+          if (previous.bold && next.bold) {
+            return chunk.toBold();
+          } else if (!previous.bold && !next.bold) {
             return chunk;
+          } else {
+            return chunk.toNonBold();
           }
         } else {
           return chunk;
         }
-      });
-  }
+      } else {
+        return chunk;
+      }
+    });
+}
 
-  // bold next to bold becomes one bold
-  // non-bold next to non-bold becomes one non-bold
-  mergeRedundant(chunks) {
-    return chunks
-      .reduce((arr, current) => {
-        if (arr.length > 0) {
-          const last = arr[arr.length - 1];
-          // merge adjacent chunks of same weight
-          if (current.bold === last.bold) {
-            arr[arr.length - 1] = last.merge(current);
-          } else {
-            arr.push(current);
-          }
+// bold next to bold becomes one bold
+// non-bold next to non-bold becomes one non-bold
+function mergeSameWeightNeighbors(chunks) {
+  return chunks
+    .reduce((arr, current) => {
+      if (arr.length > 0) {
+        const last = arr[arr.length - 1];
+        // merge adjacent chunks of same weight
+        if (current.bold === last.bold) {
+          arr[arr.length - 1] = last.merge(current);
         } else {
           arr.push(current);
         }
+      } else {
+        arr.push(current);
+      }
 
-        return arr;
-      }, []);
-  }
+      return arr;
+    }, []);
+}
 
-  addBoldStars(chunks) {
-    return chunks
-      .map(chunk => chunk.addBoldStars());
-  }
+function addBoldStars(chunks) {
+  return chunks.map(chunk => chunk.addBoldStars());
+}
 
-  getSelected() {
-    return this.normalizedChunks.filter(c => c.selected);
-  }
+// readjust start and end of every chunk
+function fixBoundaries(chunks) {
+  let position = chunks[0].start;
+  chunks.forEach(chunk => {
+    chunk.start = position;
+    chunk.end = position + chunk.string.length;
+    position += chunk.string.length;
+  });
+  return chunks;
+}
 
-  hasMultipleWeightsSelected() {
-    const selected = this.getSelected();
-    return selected.some(c => c.bold) && selected.some(c => !c.bold);
+function isOneNonBoldWhitespace(chunks) {
+  if (chunks.length === 1) {
+    const loneChunk = chunks[0];
+    return !loneChunk.bold && loneChunk.whitespace;
   }
+  return false;
+}
 
-  selectionIsSingleCursor() {
-    return this.originalSelectionStart === this.originalSelectionEnd;
-  }
+function hasMultipleWeights(chunks) {
+  return chunks.some(c => c.bold) && chunks.some(c => !c.bold);
+}
 
-  toggleSelected() {
-    return this.transformSelected(chunk => chunk.toggle());
-  }
 
-  boldSelected() {
-    return this.transformSelected(chunk => chunk.toBold());
-  }
+function toggleSelected(chunks) {
+  return transformSelected(chunks, chunk => chunk.toggle());
+}
 
-  splitSelectedWithEmptyBold(relativePosition) {
-    return this.transformSelected(chunk => chunk.insertEmptyBoldAt(relativePosition));
-  }
+function boldSelected(chunks) {
+  return transformSelected(chunks, chunk => chunk.toBold());
+}
 
-  transformSelected(fn) {
-    return flatMap(this.normalizedChunks, chunk => {
-      return chunk.selected ? fn(chunk) : chunk;
-    });
-  }
+function splitSelectedWithEmptyBold(chunks, relativePosition) {
+  return transformSelected(chunks, chunk => chunk.insertEmptyBoldAt(relativePosition));
+}
+
+function transformSelected(chunks, fn) {
+  return flatMap(chunks, chunk => {
+    return chunk.selected ? fn(chunk) : chunk;
+  });
 }
 
 /**
@@ -165,7 +154,7 @@ export default class Line {
  * @param {Token[]} tokens - Array of {start, end, string, type}
  * @returns {Chunk[]}
  */
-export function toChunks(tokens, selectionStart, selectionEnd) {
+function toChunks(tokens, selectionStart, selectionEnd) {
   const chunks = flatMap(tokens, token => {
     let position = token.start;
 
@@ -245,7 +234,7 @@ function isBold(token) {
  * @param {*} selectionEnd
  * @returns chunks
  */
-export function removeBoldStarsFromChunks(chunks, selectionStart, selectionEnd) {
+function removeBoldStarsFromChunks(chunks, selectionStart, selectionEnd) {
   return chunks
     .map(chunk => chunk.removeBoldStars(selectionStart, selectionEnd));
 }
