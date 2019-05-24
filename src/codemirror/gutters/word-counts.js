@@ -9,9 +9,11 @@ export function create(cm) {
         cm.clearGutter(ID);
 
         // set new counts
-        stats.forEach(tuple => {
-          cm.setGutterMarker(tuple.lineNumber - 1, ID, element(tuple));
-        });
+        stats
+          .filter(tuple => tuple.wordCount > 0)
+          .forEach(tuple => {
+            cm.setGutterMarker(tuple.lineNumber - 1, ID, element(tuple))
+          });
       });
     }
   };

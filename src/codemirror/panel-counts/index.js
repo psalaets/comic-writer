@@ -12,6 +12,7 @@ export function create(cm) {
         // add new widgets
         widgets = stats
           .filter(tuple => tuple.type === PAGE)
+          .filter(tuple => tuple.panelCount > 0)
           .map(page => cm.addLineWidget(page.lineNumber - 1, node(page)));
       });
 
