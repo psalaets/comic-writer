@@ -35,7 +35,7 @@ export default function transformTokens(tokens, selectionStart, selectionEnd) {
 
   chunks = addBoldStars(chunks);
 
-  chunks = fixBoundaries(chunks);
+  chunks = recalculateBoundaries(chunks);
 
   return chunks;
 }
@@ -107,7 +107,7 @@ function addBoldStars(chunks) {
 }
 
 // readjust start and end of every chunk
-function fixBoundaries(chunks) {
+function recalculateBoundaries(chunks) {
   let position = chunks[0].start;
   chunks.forEach(chunk => {
     chunk.start = position;
@@ -128,7 +128,6 @@ function isOneNonBoldWhitespace(chunks) {
 function hasMultipleWeights(chunks) {
   return chunks.some(c => c.bold) && chunks.some(c => !c.bold);
 }
-
 
 function toggleSelected(chunks) {
   return transformSelected(chunks, chunk => chunk.toggle());

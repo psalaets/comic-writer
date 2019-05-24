@@ -1,9 +1,11 @@
+/**
+ * A piece of a string in lettering.
+ */
 export default class Chunk {
   constructor(string, bold, start, selected) {
     this.whitespace = bold
       ? /^(\*\*)?\s+(\*\*)?$/.test(string)
       : /^\s+$/.test(string);
-    this.empty = string === '';
 
     this.string = string;
     this.bold = bold;
@@ -19,6 +21,12 @@ export default class Chunk {
     this.relativeSelectionEnd = null;
   }
 
+  /**
+   * Split this and insert an empty bold chunk at the split point.
+   *
+   * @param {Number} relativePosition - Relative position to split at
+   * @returns Array of resulting chunks
+   */
   insertEmptyBoldAt(relativePosition) {
     const before = this.string.slice(0, relativePosition);
     const after = this.string.slice(relativePosition);
@@ -36,6 +44,12 @@ export default class Chunk {
     ];
   }
 
+  /**
+   * Merge some other chunk into this.
+   *
+   * @param {Chunk} other - Chunk to merge into this, must be same weight as this
+   * @returns Chunk that results from the merge
+   */
   merge(other) {
     if (this.bold !== other.bold) {
       throw new Error('cannot merge chunks of different weights');
@@ -66,6 +80,11 @@ export default class Chunk {
     return merged;
   }
 
+  /**
+   * Wrap the string of this chunk, if it's bold.
+   *
+   * @returns Chunk that results from wrapping with stars.
+   */
   addBoldStars() {
     if (this.bold) {
       const newChunk = new Chunk(
@@ -91,6 +110,13 @@ export default class Chunk {
     }
   }
 
+  /**
+   * Removes bold stars from this chunk.
+   *
+   * @param {Number} selectionStart - Position of selecton start
+   * @param {Number} selectionEnd - Position of selecton end
+   * @returns Chunks that results from removing the bold stars
+   */
   removeBoldStars(selectionStart, selectionEnd) {
     let newString = this.string;
 
@@ -151,10 +177,20 @@ export default class Chunk {
     return newChunk;
   }
 
+  /**
+   * Toggle this chunk to the other weight.
+   *
+   * @returns Chunk that results from the toggle.
+   */
   toggle() {
     return this.bold ? this.toNonBold() : this.toBold();
   }
 
+  /**
+   * Convert this chunk to bold.
+   *
+   * @returns Bold chunk
+   */
   toBold() {
     if (this.bold) {
       return this;
@@ -165,6 +201,11 @@ export default class Chunk {
     }
   }
 
+  /**
+   * Convert this chunks to non-bold.
+   *
+   * @returns Non-bold chunk
+   */
   toNonBold() {
     if (this.bold) {
       const chunk = this.clone();
@@ -175,6 +216,11 @@ export default class Chunk {
     }
   }
 
+  /**
+   * Copy this chunk.
+   *
+   * @returns copy
+   */
   clone() {
     const chunk = new Chunk(this.string, this.bold, this.start, this.selected);
 
@@ -191,6 +237,16 @@ export default class Chunk {
     return chunk;
   }
 
+  /**
+   * Create a new Chunk.
+   *
+   * @param {String} string
+   * @param {Boolean} bold
+   * @param {Number} start
+   * @param {Number} selectionStart
+   * @param {Number} selectionEnd
+   * @returns New chunk
+   */
   static create(string, bold, start, selectionStart, selectionEnd) {
     const end = start + string.length;
     const chunk = new Chunk(
