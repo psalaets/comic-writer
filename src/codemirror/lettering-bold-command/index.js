@@ -1,8 +1,6 @@
-import { toggle } from './toggle-bold';
+import { toggle } from './toggle';
 
 export function letteringBoldCommand(cm) {
-  console.log('-'.repeat(50));
-
   const cursor = cm.getCursor();
 
   // split up line's tokens by their use: meta vs the actual content
@@ -19,9 +17,6 @@ export function letteringBoldCommand(cm) {
 
   const selection = normalizeSelection(cm.listSelections()[0]);
   const result = toggle(content, selection.start, selection.end);
-
-  console.log('result:');
-  console.log(result);
 
   // re-construct line with toggled content tokens
   const metaString = meta
