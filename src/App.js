@@ -4,7 +4,7 @@ import './App.css';
 import ConnectedWriter from './components/writer/ConnectedWriter';
 import Stats from './components/stats/Stats';
 import ConnectedStats from './components/stats/ConnectedStats';
-import StatusLine from './components/status-line/StatusLine';
+import MenuBar from './components/menu-bar/MenuBar';
 import Button from './components/button/Button';
 import Modal from './components/modal/Modal';
 import Drawer from './components/drawer/Drawer';
@@ -72,12 +72,12 @@ class App extends Component {
             </Drawer>
           </div>
           <div className="c-app__status-line">
-            <StatusLine.Container>
+            <MenuBar.Container>
               <Button onClick={this.activateModal(ModalTypes.formattingGuide)}>Formatting Guide</Button>
-              <StatusLine.Spacer/>
+              <MenuBar.Spacer/>
               <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen}>Insights</Button>
               <Button onClick={this.activateModal(ModalTypes.settingsModal)}>Settings</Button>
-            </StatusLine.Container>
+            </MenuBar.Container>
           </div>
         </div>
         <Modal
