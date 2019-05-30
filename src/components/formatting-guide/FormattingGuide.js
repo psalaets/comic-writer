@@ -16,7 +16,7 @@ const FormattingGuide = props => (
       {GuideDataToJSX(FormattingGuideData)}
     </dl>
     <hr/>
-    <a href="https://gitlab.com/psalaets/comic-writer/blob/master/src/documentation/readme.md"
+    <a href="https://gitlab.com/comic-writer/comic-writer/blob/master/src/documentation/readme.md"
       rel="noopener noreferrer"
       target="_blank"
     >Need More Help?</a>

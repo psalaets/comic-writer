@@ -59,6 +59,14 @@ class App extends Component {
       <>
         <h1 className="u-hide--visually">Comic-Writer</h1>
         <div className="c-app">
+          <div className="c-app__status-line">
+            <MenuBar.Container>
+              <MenuBar.Spacer/>
+              <Button onClick={this.activateModal(ModalTypes.formattingGuide)}>Guide</Button>
+              <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen}>Insights</Button>
+              {/*<Button onClick={this.activateModal(ModalTypes.settingsModal)}>Settings</Button>*/}
+            </MenuBar.Container>
+          </div>
           <div className="c-app__writer">
             <ConnectedWriter/>
           </div>
@@ -70,14 +78,6 @@ class App extends Component {
                 <ConnectedStats.PageHistogram/>
               </Stats>
             </Drawer>
-          </div>
-          <div className="c-app__status-line">
-            <MenuBar.Container>
-              <Button onClick={this.activateModal(ModalTypes.formattingGuide)}>Formatting Guide</Button>
-              <MenuBar.Spacer/>
-              <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen}>Insights</Button>
-              <Button onClick={this.activateModal(ModalTypes.settingsModal)}>Settings</Button>
-            </MenuBar.Container>
           </div>
         </div>
         <Modal
