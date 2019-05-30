@@ -9,7 +9,7 @@
 /******************************************************************************/
 .c-menu-bar {
   background-color: var(--color-utility-pure);
-  border-top: 1px solid var(--color-utility-milk);
+  border-bottom: 1px solid var(--color-utility-milk);
   display: flex;
   padding: .25em;
 }
