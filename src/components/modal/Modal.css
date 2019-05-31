@@ -20,7 +20,7 @@
 /******************************************************************************/
 
 .c-modal__dialouge {
-  border-radius: 2px;
+  border-radius: 5px;
   padding: 1em;
   background-color: var(--color-utility-pure);
   min-width: 20em;

@@ -8,10 +8,9 @@
 /* Block */
 /******************************************************************************/
 .c-menu-bar {
-  background-color: var(--color-utility-pure);
-  border-bottom: 1px solid var(--color-utility-milk);
   display: flex;
-  padding: .25em;
+  padding: .25em .5em .25em 1em;
+  align-items: center;
 }
 
 .c-menu-bar > * + * {
@@ -22,4 +21,10 @@
 /******************************************************************************/
 .c-menu-bar__spacer {
   flex: 1 1 0%; /* 1 */
+}
+
+.c-menu-bar--primary {
+  background-color: var(--color-primary-cool);
+  color: var(--color-utility-pure);
+  box-shadow: 0 .25em 0 0 var(--color-effect-ghost);
 }

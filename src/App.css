@@ -9,12 +9,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  font-family: 'Varela Round', sans-serif;
 }
 
 /* Element */
 /******************************************************************************/
 .c-app__writer {
-  flex: 1 1 calc(100vh - 1.8em);
+  flex: 1 1 calc(100vh - 2.25em);
   position: relative;
 }
 

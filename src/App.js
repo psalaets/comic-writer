@@ -57,13 +57,14 @@ class App extends Component {
   render() {
     return (
       <>
-        <h1 className="u-hide--visually">Comic-Writer</h1>
+
         <div className="c-app">
           <div className="c-app__status-line">
-            <MenuBar.Container>
+            <MenuBar.Container primary>
+              <h1 className="u-font-size--maria">Comic Writer <sup aria-hidden="true" className="u-font-size--saya">α</sup></h1>
               <MenuBar.Spacer/>
-              <Button onClick={this.activateModal(ModalTypes.formattingGuide)}>Guide</Button>
-              <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen}>Insights</Button>
+              <Button onClick={this.activateModal(ModalTypes.formattingGuide)} transparent>Guide</Button>
+              <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen} transparent>Insights</Button>
               {/*<Button onClick={this.activateModal(ModalTypes.settingsModal)}>Settings</Button>*/}
             </MenuBar.Container>
           </div>

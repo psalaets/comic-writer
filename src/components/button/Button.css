@@ -6,7 +6,7 @@
 /******************************************************************************/
 .c-button {
   background-color: var(--color-utility-milk);
-  border-radius: 3px;
+  border-radius: 5px;
   border: 0;
   color: var(--color-utility-black);
   cursor: pointer;
@@ -32,9 +32,10 @@
 /* Modifiers */
 /******************************************************************************/
 /* Types*/
-.c-button--primary {
-  background-color: var(--color-primary-cool);
-  color: var(--color-utility-pure);
+.c-button--transparent {
+  background-color: transparent;
+  box-shadow: inset 200px 0 0 0 rgba(255, 255, 255, .1);
+  color: inherit;
 }
 
 /* Shapes */
