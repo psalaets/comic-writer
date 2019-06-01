@@ -8,9 +8,9 @@
 /* Block */
 /******************************************************************************/
 .c-menu-bar {
+  align-items: center;
   display: flex;
   padding: .25em .5em .25em 1em;
-  align-items: center;
 }
 
 .c-menu-bar > * + * {
@@ -25,6 +25,6 @@
 
 .c-menu-bar--primary {
   background-color: var(--color-primary-cool);
-  color: var(--color-utility-pure);
   box-shadow: 0 .25em 0 0 var(--color-effect-ghost);
+  color: var(--color-utility-pure);
 }

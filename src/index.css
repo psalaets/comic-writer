@@ -3,10 +3,10 @@
 /******************************************************************************/
 :root {
   /* Callout Colors */
-  --color-primary-cool: rgb(11, 117, 203);
   --color-primary-cactus: rgb(46, 125, 50);
-  --color-primary-mocha: rgb(130, 74, 0);
+  --color-primary-cool: rgb(11, 117, 203);
   --color-primary-dark-magenta: rgb(166, 87, 166);
+  --color-primary-mocha: rgb(130, 74, 0);
   /* Utility Colors */
   --color-utility-pure: rgb(255, 255, 255);
   --color-utility-alabaster: rgb(251, 251, 251);

@@ -23,16 +23,16 @@
 }
 
 .c-histogram__unit {
+  border-radius: 3px;
   height: 1em;
   width: 1em;
-  border-radius: 3px;
 }
 
 .c-histogram__unit-container {
+  border-radius: 5px;
   border: 2px solid var(--color-utility-milk);
   margin: 1px;
   position: relative; /* 1 */
-  border-radius: 5px;
 }
 
 .c-histogram__unit-desc {
