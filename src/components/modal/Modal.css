@@ -36,7 +36,7 @@
 
 .c-modal__title {
   padding-bottom: .5em;
-  border-bottom: 1px solid var(--color-utility-milk);
+  border-bottom: 2px solid var(--color-utility-milk);
 }
 
 .c-modal__content {

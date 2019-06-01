@@ -32,7 +32,7 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: 'Varela Round', sans-serif;
   font-size: 18px;
   line-height: 1.5;
   margin: 0;
@@ -65,7 +65,7 @@ button {
 
 hr {
   border: 0;
-  border-bottom: 1px solid var(--color-utility-milk);
+  border-bottom: 2px solid var(--color-utility-milk);
   margin-bottom: 1em;
 }
 
@@ -79,6 +79,19 @@ textarea::-moz-placeholder {  /* Firefox 19+ */
 
 textarea:-ms-input-placeholder {
   color: rgba(0, 0, 0, .5);
+}
+
+a {
+  color: var(--color-primary-cool);
+  text-decoration: none;
+}
+
+a:hover {
+  box-shadow: inset 0 -2px 0 0 var(--color-primary-cool);
+}
+
+a:focus {
+  outline: 1px solid inherit;
 }
 
 /******************************************************************************/

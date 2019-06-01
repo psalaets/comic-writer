@@ -9,7 +9,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  font-family: 'Varela Round', sans-serif;
 }
 
 /* Element */
@@ -26,7 +25,7 @@
   width: 100%;
 }
 
-.c-app__status-line {
+.c-app__menu-bar {
   flex: 0 0 auto;
   z-index: 1;
 }

@@ -57,11 +57,10 @@ class App extends Component {
   render() {
     return (
       <>
-
         <div className="c-app">
-          <div className="c-app__status-line">
+          <div className="c-app__menu-bar">
             <MenuBar.Container primary>
-              <h1 className="u-font-size--maria">Comic Writer <sup aria-hidden="true" className="u-font-size--saya">α</sup></h1>
+              <h1 className="u-font-size--maria">Comic Writer <sup aria-hidden="true" className="u-font-size--saya">αlρhα</sup></h1>
               <MenuBar.Spacer/>
               <Button onClick={this.activateModal(ModalTypes.formattingGuide)} transparent>Guide</Button>
               <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen} transparent>Insights</Button>

@@ -2,6 +2,11 @@
 /* Button                                                                     */
 /******************************************************************************/
 
+/* Notes:
+ * 1. "acitve" needs to be lower in the stylesheet so it overides other stats of
+ *    button in transparent mode.
+*/
+
 /* Block */
 /******************************************************************************/
 .c-button {
@@ -23,12 +28,6 @@
   box-shadow: inset 200px 0 0 0 rgba(255, 255, 255, .4);
 }
 
-.c-button:active,
-.c-button--active {
-  box-shadow: inset 200px 0 0 0 rgba(0, 0, 0, .2);
-  transition: color .2s, background-color .2s;
-}
-
 /* Modifiers */
 /******************************************************************************/
 /* Types*/
@@ -36,6 +35,12 @@
   background-color: transparent;
   box-shadow: inset 200px 0 0 0 rgba(255, 255, 255, .1);
   color: inherit;
+}
+
+.c-button:active, /* 1 */
+.c-button--active {
+  box-shadow: inset 200px 0 0 0 rgba(0, 0, 0, .2);
+  transition: color .2s, background-color .2s;
 }
 
 /* Shapes */

@@ -25,12 +25,14 @@
 .c-histogram__unit {
   height: 1em;
   width: 1em;
+  border-radius: 3px;
 }
 
 .c-histogram__unit-container {
-  border: 1px solid var(--color-utility-milk);
+  border: 2px solid var(--color-utility-milk);
   margin: 1px;
   position: relative; /* 1 */
+  border-radius: 5px;
 }
 
 .c-histogram__unit-desc {
