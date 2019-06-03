@@ -1,6 +1,6 @@
 # ![Comic Writer](./ComicWriter-IntroImage.png)
 
-## [Current Demo](https://psalaets.gitlab.io/comic-writer/)
+## [Current Demo](https://comic-writer.gitlab.io/comic-writer/)
 ---
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
