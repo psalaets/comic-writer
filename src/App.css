@@ -5,16 +5,16 @@
 /* Block */
 /******************************************************************************/
 .c-app {
-  overflow: hidden;
-  position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  position: relative;
 }
 
 /* Element */
 /******************************************************************************/
 .c-app__writer {
-  flex: 1 1 calc(100vh - 1.8em);
+  flex: 1 1 calc(100vh - 2.25em);
   position: relative;
 }
 
@@ -25,7 +25,7 @@
   width: 100%;
 }
 
-.c-app__status-line {
+.c-app__menu-bar {
   flex: 0 0 auto;
   z-index: 1;
 }

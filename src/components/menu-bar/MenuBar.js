@@ -2,7 +2,7 @@ import React from 'react';
 import './MenuBar.css';
 
 const Container = props => (
-  <nav className="c-menu-bar u-font-size--saya">
+  <nav className={`u-font-size--billy c-menu-bar ${props.primary ? 'c-menu-bar--primary' : ''}`}>
     {props.children}
   </nav>
 );

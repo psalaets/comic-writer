@@ -13,11 +13,12 @@
 /******************************************************************************/
 .c-tooltip-popover {
   background-color: var(--color-utility-pure);
-  border-radius: 3px;
-  border: 1px solid var(--color-utility-milk);
+  border-radius: 5px;
+  border: 2px solid var(--color-utility-milk);
   bottom: 100%;
-  box-shadow: .1em .1em 0 0 var(--color-effect-ghost);
+  box-shadow: 0 .15em 0 0 var(--color-effect-ghost);
   left: -3px; /* 2 */
+  opacity: 1;
   padding-bottom: 0;
   padding-left: 0.5em;
   padding-right: 0.5em;
@@ -25,6 +26,7 @@
   pointer-events: none;
   position: absolute;
   text-align: center;
+  transition: opacity .1s;
   user-select: none;
   z-index: 2; /* 1 */
 }
@@ -59,7 +61,8 @@
 /* Modifier */
 /******************************************************************************/
 .c-tooltip-popover--hidden {
-  display: none;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .c-tooltip-popover--no-wrap {
