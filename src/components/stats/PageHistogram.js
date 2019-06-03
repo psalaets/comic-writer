@@ -7,7 +7,7 @@ import ToolipPopover from '../tooltip-popover/TooltipPopover';
 // Thirt Party Imports
 import { Tooltip } from "react-accessible-tooltip";
 
-// These are the individual metrics for the graph. They define the "rows"
+// These are the individual metrics for the graph. They define the "rows"'s
 // Intensity is clamped to a number between 1 - 10
 const pageMetrics = (pageData) => [
   {
@@ -49,6 +49,8 @@ const transformHistographData = data => data.reduce((a, c) => {
   .filter(a => a.length >= 0);
 
 const makePageMetric = ({type, intensity, popoverContent}, i) =>
+  // https://github.com/ryami333/react-accessible-tooltip
+  // Tooltip Documentation
   <Tooltip
     key={i}
     tabIndex="0"
@@ -76,18 +78,21 @@ const makePageMetric = ({type, intensity, popoverContent}, i) =>
 const PageHistogram = props =>
   <Stat.HistoGraph title="ComicGraph™">
     <Histogram.Container>
-      {transformHistographData(props.stats).map((p, i) =>
-        <React.Fragment key={i}>
-        {i === 0 ?
-          <Histogram.Labels key={`label-${i}`}>
-            {pageMetrics(p).map((a, i) => <h4 key={i} className="u-font-size--saya">{a.label}</h4>)}
-          </Histogram.Labels>: false}
-        <Histogram.Page key={i} pageIndex={i + 1}>
-          {pageMetrics(p).map(makePageMetric)}
-        </Histogram.Page>
-        </React.Fragment>
-      )}
+      {transformHistographData(props.stats).some(a => a) ?
+        transformHistographData(props.stats).map((p, i) =>
+          <React.Fragment key={i}>
+          {i === 0 ?
+            <Histogram.Labels key={`label-${i}`}>
+              {pageMetrics(p).map((a, i) => <h4 key={i} className="u-font-size--saya">{a.label}</h4>)}
+            </Histogram.Labels>: false}
+          <Histogram.Page key={i} pageIndex={i + 1}>
+            {pageMetrics(p).map(makePageMetric)}
+          </Histogram.Page>
+          </React.Fragment>
+        ) :
+        <span>No Data, yet! Get writing!</span>}
     </Histogram.Container>
   </Stat.HistoGraph>
+
 
 export default PageHistogram;
