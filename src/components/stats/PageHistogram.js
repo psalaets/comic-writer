@@ -51,6 +51,7 @@ const transformHistographData = data => data.reduce((a, c) => {
 const makePageMetric = ({type, intensity, popoverContent}, i) =>
   <Tooltip
     key={i}
+    tabIndex="0"
     className="c-histogram__unit-container"
     label={props => (
       <Histogram.Unit
