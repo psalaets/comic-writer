@@ -1,5 +1,5 @@
 /******************************************************************************/
-/* Stat                                                */
+/* Stat                                                                       */
 /******************************************************************************/
 
 /* Notes:
@@ -13,7 +13,7 @@
 }
 
 .c-stat + .c-stat {
-  border-left: 1px solid var(--color-utility-milk);
+  border-left: 2px solid var(--color-utility-milk);
   padding-left: 1em;
 }
 

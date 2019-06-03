@@ -19,7 +19,7 @@ const Modal = props => props.modalActive ?
         {props.children}
       </div>
       <div className="c-modal__close">
-        <Button id="close-modal" onClick={props.closeButtonOnClick}>
+        <Button id="close-modal" transparent onClick={props.closeButtonOnClick}>
           <span className="u-hide--visually">Close Modal</span>×
         </Button>
       </div>

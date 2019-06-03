@@ -9,7 +9,7 @@ import "./Histogram.css";
 // Histogram
 ////////////////////////////////////////////////////////////////////////////////
 const Container = props =>
-  <div role="grid" className="c-histogram">
+  <div className="c-histogram">
     {props.children}
   </div>
 
@@ -33,7 +33,6 @@ const Page = props => (
 
 const Unit = props => (
   <div
-    role="gridcell"
     className={`c-histogram__unit c-histogram__unit--${props.type} c-histogram__unit--intensity-${clamp(props.intensity, 0, 10)}`}
   >
     <div className="c-histogram__unit-desc u-hide--visually">

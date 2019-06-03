@@ -7,6 +7,7 @@ const Button = (props) => (
     className={`
       c-button
       ${props.block ? 'c-button--block' : ''}
+      ${props.transparent ? 'c-button--transparent' : ''}
       ${props.isActive ? 'c-button--active' : ''}
     `}
     onClick={props.onClick}

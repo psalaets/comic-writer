@@ -2,11 +2,16 @@
 /* Button                                                                     */
 /******************************************************************************/
 
+/* Notes:
+ * 1. "acitve" needs to be lower in the stylesheet so it overides other stats of
+ *    button in transparent mode.
+*/
+
 /* Block */
 /******************************************************************************/
 .c-button {
   background-color: var(--color-utility-milk);
-  border-radius: 3px;
+  border-radius: 5px;
   border: 0;
   color: var(--color-utility-black);
   cursor: pointer;
@@ -14,27 +19,38 @@
   font: inherit;
   padding: .25em 1em;
   text-align: center;
-  transition: color .2s, background-color .2s;
+  transition:
+    color .2s,
+    background-color .2s,
+    box-shadow .2s;
   user-select: none;
   vertical-align: middle;
 }
 
 .c-button:hover {
-  box-shadow: inset 200px 0 0 0 rgba(255, 255, 255, .4);
-}
-
-.c-button:active,
-.c-button--active {
-  box-shadow: inset 200px 0 0 0 rgba(0, 0, 0, .2);
-  transition: color .2s, background-color .2s;
+  box-shadow:
+    inset 200px 0 0 0 rgba(255, 255, 255, .2),
+    inset 0 -.125em 0 0 rgba(0, 0, 0, .4);
 }
 
 /* Modifiers */
 /******************************************************************************/
 /* Types*/
-.c-button--primary {
-  background-color: var(--color-primary-cool);
-  color: var(--color-utility-pure);
+.c-button--transparent {
+  background-color: transparent;
+  box-shadow:
+    inset 200px 0 0 0 rgba(255, 255, 255, .1),
+    inset 0 -.125em 0 0 rgba(0, 0, 0, .25);
+  color: inherit;
+  outline-color: inherit;
+}
+
+.c-button:active, /* 1 */
+.c-button--active {
+  box-shadow:
+    inset 200px 0 0 0 rgba(0, 0, 0, .2),
+    inset 0 .125em 0 0 rgba(0, 0, 0, .25);
+  transition: color .2s, background-color .2s;
 }
 
 /* Shapes */
