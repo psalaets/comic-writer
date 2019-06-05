@@ -17,17 +17,17 @@ const pageMetrics = (pageData) => [
     popoverContent: `${pageData.filter(a => a.type === "panel").length} Panels`
   },
   {
-    label: 'Dialogues',
+    label: 'Words',
+    type: 'word-count',
+    intensity: Math.round((pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2) * 0.1),
+    popoverContent: `${pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2} Words`
+  },
+  {
+    label: 'Balloons',
     type: 'dialogue',
     intensity: pageData.filter(a => a.type === "dialogue").length,
     popoverContent: `${pageData.filter(a => a.type === "dialogue").length} Dialogues`
   },
-  {
-    label: 'Word Count',
-    type: 'word-count',
-    intensity: Math.round((pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2) * 0.1),
-    popoverContent: `${pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2} Words`
-  }
 ]
 
 const transformHistographData = data => data.reduce((a, c) => {
@@ -76,7 +76,7 @@ const makePageMetric = ({type, intensity, popoverContent}, i) =>
   />
 
 const PageHistogram = props =>
-  <Stat.HistoGraph title="ComicGraph™">
+  <Stat.HistoGraph title="By Page">
     <Histogram.Container>
       {transformHistographData(props.stats).some(a => a) ?
         transformHistographData(props.stats).map((p, i) =>
