@@ -14,21 +14,38 @@ const pageMetrics = (pageData) => [
     label: 'Panels',
     type: 'panel',
     intensity: pageData.filter(a => a.type === "panel").length,
-    popoverContent: `${pageData.filter(a => a.type === "panel").length} Panels`
+    popoverContent: () => {
+      const count = pageData.filter(a => a.type === "panel").length;
+      const label = pluralize('Panel', count);
+      return `${count} ${label}`;
+    }
   },
   {
     label: 'Words',
     type: 'word-count',
     intensity: Math.round((pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2) * 0.1),
-    popoverContent: `${pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2} Words`
+    popoverContent: () => {
+      const count = pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2;
+      const label = pluralize('Word', count);
+      return `${count} ${label}`;
+    }
   },
   {
     label: 'Balloons',
     type: 'dialogue',
     intensity: pageData.filter(a => a.type === "dialogue").length,
-    popoverContent: `${pageData.filter(a => a.type === "dialogue").length} Dialogues`
+    popoverContent: () => {
+      const count = pageData.filter(a => a.type === "dialogue").length;
+      const label = pluralize('Balloon', count);
+      return `${count} ${label}`;
+    }
   },
 ]
+
+// appends an 's' if necessary
+function pluralize(label, count) {
+  return count === 1 ? label : label + 's';
+}
 
 const transformHistographData = data => data.reduce((a, c) => {
     // we encounter a dataset with the type "page"
@@ -70,7 +87,7 @@ const makePageMetric = ({type, intensity, popoverContent}, i) =>
         hidden={props.isHidden}
         noWrap={true}
       >
-        {popoverContent}
+        {popoverContent()}
       </ToolipPopover>
     )}
   />
