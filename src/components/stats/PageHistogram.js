@@ -61,9 +61,7 @@ const transformHistographData = data => data.reduce((a, c) => {
       a[a.length - 1].push(c);
     }
     return a;
-  }, [])
-  // Remove empty Arrays []
-  .filter(a => a.length >= 0);
+  }, []);
 
 const makePageMetric = ({type, intensity, popoverContent}, i) =>
   // https://github.com/ryami333/react-accessible-tooltip
