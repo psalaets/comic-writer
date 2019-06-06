@@ -23,9 +23,9 @@ const pageMetrics = (pageData) => [
   {
     label: 'Words',
     type: 'word-count',
-    intensity: Math.round((pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2) * 0.1),
+    intensity: Math.round(pageData.filter(a => a.type === "panel").reduce((a, c) => a + c.wordCount, 0) * 0.1),
     popoverContent: () => {
-      const count = pageData.filter(a => a.type !== "page").reduce((a, c) => a + c.wordCount, 0) / 2;
+      const count = pageData.filter(a => a.type === "panel").reduce((a, c) => a + c.wordCount, 0);
       const label = pluralize('Word', count);
       return `${count} ${label}`;
     }
