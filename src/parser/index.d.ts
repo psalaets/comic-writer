@@ -7,14 +7,14 @@ declare namespace parse {
 
   export type Paragraph = {
     id: number;
-    type: string;
+    type: 'paragraph';
     content: string;
     startingLine: number;
   }
 
   export type Metadata = {
     id: number;
-    type: string;
+    type: 'metadata';
     name: string;
     value: string;
     startingLine: number;
@@ -22,7 +22,7 @@ declare namespace parse {
 
   export type Page = {
     id: number;
-    type: string;
+    type: 'page';
     number: number;
     content: PageChild[];
     panelCount: number;
@@ -39,7 +39,7 @@ declare namespace parse {
 
   export type Panel = {
     id: number;
-    type: string;
+    type: 'panel';
     number: number;
     content: PanelChild[]
   }
@@ -50,7 +50,7 @@ declare namespace parse {
 
   export type Dialogue = {
     id: number;
-    type: string;
+    type: 'dialogue';
     number: number;
     speaker: string;
     modifier: string;
@@ -61,7 +61,7 @@ declare namespace parse {
 
   export type Caption = {
     id: number;
-    type: string;
+    type: 'caption';
     number: number;
     modifier: string;
     content: LetteringContentChunk[];
@@ -71,7 +71,7 @@ declare namespace parse {
 
   export type Sfx = {
     id: number;
-    type: string;
+    type: 'sfx';
     number: number;
     modifier: string;
     content: string;
@@ -79,7 +79,7 @@ declare namespace parse {
   }
 
   export type LetteringContentChunk = {
-    type: "text" | "lettering-bold";
+    type: 'text' | 'lettering-bold';
     content: string;
   }
 }
