@@ -1,19 +1,19 @@
 import { createSelector } from 'reselect';
 
-import parse from '../../parser';
 import visit from '../../parser/visit';
 import * as types from '../../types';
+import { parseResultSelector } from './parse-result';
 
 export const statsSelector = createSelector(
-  state => state.editor.source,
-  source => parseStats(source)
+  parseResultSelector,
+  parseResult => extractStats(parseResult)
 );
 
-function parseStats(source) {
+function extractStats(parseResult) {
   const stats = [];
   let panelsSeen = 0;
 
-  visit(parse(source), {
+  visit(parseResult, {
     enterPage(page) {
       panelsSeen = 0;
     },
