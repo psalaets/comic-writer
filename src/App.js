@@ -10,6 +10,7 @@ import Modal from './components/modal/Modal';
 import Drawer from './components/drawer/Drawer';
 import ModalTypes from './components/modal/ModalTypes'
 
+import PdfModal from './components/pdf-modal/PdfModal';
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class App extends Component {
       modalActive: false,
       modalContent: false,
       modalTitle: false,
-      drawerIsOpen: false
+      drawerIsOpen: false,
+      pdfModalActive: false
     };
 
     // Modal
@@ -47,6 +49,14 @@ class App extends Component {
      });
   };
 
+  togglePdfModal = () => {
+    this.setState(state => {
+      return {
+        pdfModalActive: !state.pdfModalActive
+      };
+    })
+  };
+
   // Drawer Handlers
   toggleDrawer = () => {
     this.setState({
@@ -64,6 +74,7 @@ class App extends Component {
               <MenuBar.Spacer/>
               <Button onClick={this.activateModal(ModalTypes.formattingGuide)} transparent>Guide</Button>
               <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen} transparent>Insights</Button>
+              <Button onClick={this.togglePdfModal} isActive={this.state.pdfModalActive} transparent>PDF</Button>
               {/*<Button onClick={this.activateModal(ModalTypes.settingsModal)}>Settings</Button>*/}
             </MenuBar.Container>
           </div>
@@ -87,6 +98,7 @@ class App extends Component {
         >
           {this.state.modalContent}
         </Modal>
+        <PdfModal modalActive={this.state.pdfModalActive} onCloseButtonClick={this.togglePdfModal}/>
       </>
     );
   }
