@@ -5,6 +5,7 @@ import ConnectedWriter from './components/writer/ConnectedWriter';
 import Stats from './components/stats/Stats';
 import ConnectedStats from './components/stats/ConnectedStats';
 import MenuBar from './components/menu-bar/MenuBar';
+import TopBar from './components/top-bar/TopBar';
 import Button from './components/button/Button';
 import Modal from './components/modal/Modal';
 import Drawer from './components/drawer/Drawer';
@@ -69,14 +70,12 @@ class App extends Component {
       <>
         <div className="c-app">
           <div className="c-app__menu-bar">
-            <MenuBar.Container primary>
-              <h1 className="u-font-size--maria">Comic Writer <sup aria-hidden="true" className="u-font-size--saya">αlρhα</sup></h1>
-              <MenuBar.Spacer/>
-              <Button onClick={this.activateModal(ModalTypes.formattingGuide)} transparent>Guide</Button>
-              <Button onClick={this.toggleDrawer} isActive={this.state.drawerIsOpen} transparent>Insights</Button>
-              <Button onClick={this.togglePdfModal} isActive={this.state.pdfModalActive} transparent>PDF</Button>
-              {/*<Button onClick={this.activateModal(ModalTypes.settingsModal)}>Settings</Button>*/}
-            </MenuBar.Container>
+            <TopBar
+              onGuideClick={this.activateModal(ModalTypes.formattingGuide)}
+              onInsightsClick={this.toggleDrawer}
+              onPdfClick={null}
+              drawerOpen={this.state.drawerIsOpen}
+            />
           </div>
           <div className="c-app__writer">
             <ConnectedWriter/>
