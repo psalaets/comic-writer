@@ -5,13 +5,11 @@ import ConnectedWriter from './components/writer/ConnectedWriter';
 import Stats from './components/stats/Stats';
 import ConnectedStats from './components/stats/ConnectedStats';
 import MenuBar from './components/menu-bar/MenuBar';
-import TopBar from './components/top-bar/TopBar';
+import ConnectedTopBar from './components/top-bar/ConnectedTopBar';
 import Button from './components/button/Button';
 import Modal from './components/modal/Modal';
 import Drawer from './components/drawer/Drawer';
 import ModalTypes from './components/modal/ModalTypes'
-
-import PdfModal from './components/pdf-modal/PdfModal';
 
 class App extends Component {
   constructor(props) {
@@ -21,8 +19,7 @@ class App extends Component {
       modalActive: false,
       modalContent: false,
       modalTitle: false,
-      drawerIsOpen: false,
-      pdfModalActive: false
+      drawerIsOpen: false
     };
 
     // Modal
@@ -50,14 +47,6 @@ class App extends Component {
      });
   };
 
-  togglePdfModal = () => {
-    this.setState(state => {
-      return {
-        pdfModalActive: !state.pdfModalActive
-      };
-    })
-  };
-
   // Drawer Handlers
   toggleDrawer = () => {
     this.setState({
@@ -70,10 +59,9 @@ class App extends Component {
       <>
         <div className="c-app">
           <div className="c-app__menu-bar">
-            <TopBar
+            <ConnectedTopBar
               onGuideClick={this.activateModal(ModalTypes.formattingGuide)}
               onInsightsClick={this.toggleDrawer}
-              onPdfClick={null}
               drawerOpen={this.state.drawerIsOpen}
             />
           </div>
@@ -97,7 +85,6 @@ class App extends Component {
         >
           {this.state.modalContent}
         </Modal>
-        <PdfModal modalActive={this.state.pdfModalActive} onCloseButtonClick={this.togglePdfModal}/>
       </>
     );
   }
