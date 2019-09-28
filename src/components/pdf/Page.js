@@ -8,10 +8,16 @@ const style = {
   paddingHorizontal: 35,
 };
 
+const titleStyle = {
+  marginVertical: 12,
+  fontFamily: 'Helvetica-Bold',
+  textDecoration: 'underline'
+};
+
 export default function Page({ number, content, panelCount }) {
   return (
     <PdfPage style={style}>
-      <Text>Page {number}</Text>
+      <Text style={titleStyle}>Page {number}</Text>
       {renderNodes(content)}
     </PdfPage>
   )

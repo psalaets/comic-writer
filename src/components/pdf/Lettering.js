@@ -2,7 +2,8 @@ import React from 'react';
 import { Text, View } from '@react-pdf/renderer';
 
 const style = {
-  paddingLeft: 35
+  paddingLeft: 35,
+  marginVertical: 12
 };
 const boldStyle = {
   fontFamily: 'Helvetica-Bold',

@@ -4,10 +4,15 @@ import { renderNodes } from './render-pdf-content';
 
 const style = {};
 
+const titleStyle = {
+  marginVertical: 12,
+  fontFamily: 'Helvetica-Bold'
+};
+
 export default function Panel({ number, content }) {
   return (
     <View style={style}>
-      <Text>Panel {number}</Text>
+      <Text style={titleStyle}>Panel {number}</Text>
       {renderNodes(content)}
     </View>
   );
