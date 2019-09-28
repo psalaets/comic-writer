@@ -10,7 +10,7 @@ const boldStyle = {
 };
 
 export default function Lettering({ number, subject, modifier, content }) {
-  const leftSide = `${number}. ${subject}${renderModifier(modifier)}`
+  const leftSide = `${number}. ${renderSubject(subject)}${renderModifier(modifier)}`
   const rightSide = renderContent(content);
 
   return (
@@ -20,6 +20,10 @@ export default function Lettering({ number, subject, modifier, content }) {
       </Text>
     </View>
   );
+}
+
+function renderSubject(subject) {
+  return subject.toUpperCase();
 }
 
 function renderModifier(modifier) {
