@@ -1,6 +1,5 @@
 import React from 'react';
-import { Document, Text, View } from '@react-pdf/renderer';
-import * as types from '../../types';
+import { Document } from '@react-pdf/renderer';
 import { renderNodes } from './render-pdf-content';
 
 export default function Script({ nodes }) {

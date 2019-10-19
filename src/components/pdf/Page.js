@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page as PdfPage, Text, View } from '@react-pdf/renderer';
+import { Page as PdfPage, Text } from '@react-pdf/renderer';
 import { renderNodes } from './render-pdf-content';
 
 const style = {

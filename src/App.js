@@ -4,9 +4,7 @@ import './App.css';
 import ConnectedWriter from './components/writer/ConnectedWriter';
 import Stats from './components/stats/Stats';
 import ConnectedStats from './components/stats/ConnectedStats';
-import MenuBar from './components/menu-bar/MenuBar';
 import ConnectedTopBar from './components/top-bar/ConnectedTopBar';
-import Button from './components/button/Button';
 import Modal from './components/modal/Modal';
 import Drawer from './components/drawer/Drawer';
 import ModalTypes from './components/modal/ModalTypes'
