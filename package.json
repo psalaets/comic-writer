@@ -4,18 +4,18 @@
   "private": true,
   "dependencies": {
     "@react-pdf/renderer": "^1.6.4",
-    "codemirror": "^5.41.0",
     "file-saver": "^2.0.2",
-    "lodash": "^4.17.11",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
+    "codemirror": "^5.49.0",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
     "react-accessible-tooltip": "^2.0.3",
-    "react-aria-modal": "^3.0.0",
-    "react-dom": "^16.4.1",
-    "react-redux": "^5.0.7",
-    "react-scripts": "3.0.0",
-    "recharts": "^1.4.2",
-    "redux": "^4.0.0",
+    "react-aria-modal": "^3.1.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "^5.1.1",
+    "react-scripts": "^3.1.2",
+    "recharts": "^1.7.1",
+    "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "wordcount": "^1.1.1"
@@ -29,11 +29,11 @@
     "plop": "npx plop"
   },
   "devDependencies": {
-    "plop": "^2.1.0",
-    "react-test-renderer": "^16.4.1",
+    "plop": "^2.4.0",
+    "react-test-renderer": "^16.9.0",
     "stylelint": "^9.10.1",
-    "stylelint-config-standard": "^18.2.0",
-    "stylelint-junit-formatter": "^0.2.1"
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-junit-formatter": "^0.2.2"
   },
   "homepage": "https://psalaets.gitlab.io/comic-writer",
   "browserslist": [
