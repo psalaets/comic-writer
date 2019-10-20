@@ -26,9 +26,9 @@ function mapDispatchToProps(dispatch) {
 
   return {
     onSourceChange(event) {
-      const {source} = event;
+      const {source, cursorLine} = event;
 
-      dispatch(changeSource(source));
+      dispatch(changeSource(source, cursorLine));
       debouncedSaveScript(source);
     }
   };

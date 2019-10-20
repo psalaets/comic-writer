@@ -114,8 +114,9 @@ export default class CodeMirrorComponent extends Component {
       }
 
       this.props.onChange({
-        value: cm.getValue()
-      })
+        value: cm.getValue(),
+        cursorLine: cm.getCursor().line
+      });
     });
 
     this.wordCountsGutter = createWordCounts(this.cm);
