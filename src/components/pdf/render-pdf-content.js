@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, Page as PdfPage } from '@react-pdf/renderer';
+import { Text } from '@react-pdf/renderer';
 
 import * as types from '../../types';
 
 import Page from './Page';
+import FrontPage from './FrontPage';
 import Panel from './Panel';
 import Dialogue from './Dialogue';
 import Caption from './Caption';
@@ -30,15 +31,7 @@ function countFrontPageContent(content) {
 }
 
 function renderFrontPage(content) {
-  if (content.length > 0) {
-    return (
-      <PdfPage>
-        {renderNodes(content)}
-      </PdfPage>
-    );
-  } else {
-    return null;
-  }
+  return <FrontPage content={content} />;
 }
 
 export function renderNodes(content) {
