@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from '@react-pdf/renderer';
+import { Text, Page as PdfPage } from '@react-pdf/renderer';
 
 import * as types from '../../types';
 
@@ -9,6 +9,37 @@ import Dialogue from './Dialogue';
 import Caption from './Caption';
 import Sfx from './Sfx';
 import Paragraph from './Paragraph';
+
+export function renderScriptPages(content) {
+  const frontPageCount = countFrontPageContent(content);
+
+  return [
+    renderFrontPage(content.slice(0, frontPageCount)),
+    ...renderNodes(content.slice(frontPageCount))
+  ];
+}
+
+function countFrontPageContent(content) {
+  let index = 0;
+
+  while (content.length > 0 && content[index].type !== types.PAGE) {
+    index += 1;
+  }
+
+  return index;
+}
+
+function renderFrontPage(content) {
+  if (content.length > 0) {
+    return (
+      <PdfPage>
+        {renderNodes(content)}
+      </PdfPage>
+    );
+  } else {
+    return null;
+  }
+}
 
 export function renderNodes(content) {
   return content.map(renderNode);
