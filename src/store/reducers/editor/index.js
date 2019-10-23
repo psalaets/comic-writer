@@ -3,6 +3,8 @@ import {
   LOAD_SCRIPT_COMPLETED
 } from '../../action-types';
 
+import classifyLines from './classify-lines';
+
 export default function editorReducer(state, action) {
   state = state || {
     source: ''
@@ -31,90 +33,7 @@ export function transformMarkdown(value, cursorLine) {
 
   const lines = value.split(/\n/);
   const newValue = lines
-    .map((line, lineNumber) => {
-      const cursorOnThisLine = lineNumber === cursorLine;
-      const lonePageKeyword = line.match(/^page *$/i);
-
-      if (lonePageKeyword && cursorOnThisLine) {
-        return {
-          line,
-          type: 'regular'
-        };
-      } else if (lonePageKeyword && !cursorOnThisLine) {
-        return {
-          line,
-          type: 'page',
-          count: 1
-        };
-      }
-
-      const longPageRangeKeyword = line.match(/^pages *$/i);
-
-      if (longPageRangeKeyword && cursorOnThisLine) {
-        return {
-          line,
-          type: 'regular'
-        };
-      } else if (longPageRangeKeyword && !cursorOnThisLine) {
-        return {
-          line,
-          type: 'page',
-          count: 2
-        };
-      }
-
-      const singlePage = line.match(/^pages? +\d{1,}$/i);
-
-      if (singlePage) {
-        return {
-          line,
-          type: 'page',
-          count: 1
-        };
-      }
-
-      const pageRange = line.match(/^pages? +(\d{1,})-(\d{1,})$/i);
-
-      if (pageRange) {
-        let start = parseInt(pageRange[1], 10);
-        let end = parseInt(pageRange[2], 10);
-
-        // turn invalid ranges into a 2 pager
-        if (start > end) {
-          end = start + 1;
-        }
-
-        return {
-          line,
-          type: 'page',
-          count: 1 + end - start
-        };
-      }
-
-      const partialPageRange = line.match(/^pages? \d{1,}-$/i);
-
-      if (partialPageRange) {
-        return {
-          line,
-          type: 'page',
-          count: 1
-        };
-      }
-
-      const panel = line.match(/^panel/i);
-
-      if (panel) {
-        return {
-          line,
-          type: 'panel'
-        };
-      }
-
-      return {
-        line,
-        type: 'regular'
-      };
-    })
+    .map(classifyLines(cursorLine))
     .map(obj => {
       const {line, type, count} = obj;
 
@@ -143,8 +62,4 @@ export function transformMarkdown(value, cursorLine) {
     .join('\n');
 
   return newValue;
-}
-
-function pageCount(start, end) {
-  return 1 + end - start;
 }
