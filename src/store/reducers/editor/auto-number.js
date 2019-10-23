@@ -11,14 +11,23 @@ export default function createAutoNumber() {
 
       const startPage = pagesInComic;
 
-      if (count > 1) {
+      if (count === 1) {
+        return `Page ${startPage}`;
+      } else if (count > 1) {
         pagesInComic += count - 1;
         const endPage = pagesInComic;
 
         return `Pages ${startPage}-${endPage}`;
       } else {
-        return `Page ${startPage}`;
+        return line;
       }
+    } else if (type === 'partial-page') {
+      pagesInComic += 1;
+      panelsInPage = 0;
+
+      const startPage = pagesInComic;
+
+      return `Page ${startPage}-`;
     } else if (type === 'panel') {
       panelsInPage += 1;
 

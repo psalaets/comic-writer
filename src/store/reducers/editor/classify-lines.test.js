@@ -22,15 +22,15 @@ describe('classify lines', () => {
         ['page 20-22', 'page', 3],
         ['pages 20-22', 'page', 3],
 
-        // invalid range becomes a 2 pager
-        ['pages 22-10', 'page', 2],
-        // same to same range is a 1 pager
+        // invalid range with cursor still there is like 1 page
+        ['pages 22-10', 'page', -11],
+        // same to same range is 1 page
         ['pages 5-5', 'page', 1],
 
-        ['page 2-', 'page', 1],
-        ['pages 2-', 'page', 1],
-        ['page 20-', 'page', 1],
-        ['pages 20-', 'page', 1],
+        ['page 2-', 'partial-page', 1],
+        ['pages 2-', 'partial-page', 1],
+        ['page 20-', 'partial-page', 1],
+        ['pages 20-', 'partial-page', 1],
       ]
         .map(testCase => testCase.concat([3, 3]))
         .forEach(defineTestCase);
@@ -57,7 +57,7 @@ describe('classify lines', () => {
         ['page 20-22', 'page', 3],
         ['pages 20-22', 'page', 3],
 
-        // invalid range becomes a 2 pager
+        // invalid range with cursor gone becomes a 2 pager
         ['pages 22-10', 'page', 2],
         // same to same range is a 1 pager
         ['pages 5-5', 'page', 1],

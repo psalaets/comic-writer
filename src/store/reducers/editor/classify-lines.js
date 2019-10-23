@@ -47,8 +47,8 @@ export default function classifyLines(cursorLine) {
       let start = parseInt(pageRange[1], 10);
       let end = parseInt(pageRange[2], 10);
 
-      // turn invalid ranges into a 2 pager
-      if (start > end) {
+      // turn invalid ranges with cursor gone into a 2 pager
+      if (start > end && !cursorOnThisLine) {
         end = start + 1;
       }
 
@@ -61,7 +61,13 @@ export default function classifyLines(cursorLine) {
 
     const partialPageRange = line.match(/^pages? \d{1,}-$/i);
 
-    if (partialPageRange) {
+    if (partialPageRange && cursorOnThisLine) {
+      return {
+        line,
+        type: 'partial-page',
+        count: 1
+      };
+    } else if (partialPageRange && !cursorOnThisLine) {
       return {
         line,
         type: 'page',
