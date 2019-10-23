@@ -4,6 +4,7 @@ import {
 } from '../../action-types';
 
 import classifyLines from './classify-lines';
+import autoNumber from './auto-number';
 
 export default function editorReducer(state, action) {
   state = state || {
@@ -28,38 +29,9 @@ export default function editorReducer(state, action) {
 
 // exported for testing purposes
 export function transformMarkdown(value, cursorLine) {
-  let pagesInComic = 0;
-  let panelsInPage = 0;
-
-  const lines = value.split(/\n/);
-  const newValue = lines
+  return value
+    .split(/\n/)
     .map(classifyLines(cursorLine))
-    .map(obj => {
-      const {line, type, count} = obj;
-
-      if (type === 'page') {
-        pagesInComic += 1;
-        panelsInPage = 0;
-
-        const startPage = pagesInComic;
-
-        if (count > 1) {
-          pagesInComic += count - 1;
-          const endPage = pagesInComic;
-
-          return `Pages ${startPage}-${endPage}`;
-        } else {
-          return `Page ${startPage}`;
-        }
-      } else if (type === 'panel') {
-        panelsInPage += 1;
-
-        return `Panel ${panelsInPage}`;
-      } else {
-        return line;
-      }
-    })
+    .map(autoNumber())
     .join('\n');
-
-  return newValue;
 }
