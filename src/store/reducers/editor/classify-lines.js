@@ -84,6 +84,16 @@ export default function classifyLines(cursorLine) {
       };
     }
 
+    const spread = line.match(/spread/i);
+
+    if (spread && !cursorOnThisLine) {
+      return {
+        type: 'page',
+        count: 2,
+        line
+      };
+    }
+
     return {
       line,
       type: 'regular'

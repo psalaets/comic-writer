@@ -31,6 +31,8 @@ describe('classify lines', () => {
         ['pages 2-', 'partial-page', 1],
         ['page 20-', 'partial-page', 1],
         ['pages 20-', 'partial-page', 1],
+
+        ['spread', 'regular', undefined],
       ]
         .map(testCase => testCase.concat([3, 3]))
         .forEach(defineTestCase);
@@ -66,6 +68,8 @@ describe('classify lines', () => {
         ['pages 2-', 'page', 1],
         ['page 20-', 'page', 1],
         ['pages 20-', 'page', 1],
+
+        ['spread', 'page', 2],
       ]
         .map(testCase => testCase.concat([2, 3]))
         .forEach(defineTestCase);
