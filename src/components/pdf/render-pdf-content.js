@@ -31,7 +31,8 @@ function countFrontPageContent(content) {
 }
 
 function renderFrontPage(content) {
-  return <FrontPage content={content} />;
+  console.log(content);
+  return <FrontPage key="frontpage" content={content} />;
 }
 
 export function renderNodes(content) {
@@ -93,6 +94,6 @@ function renderNode(node) {
         />
       );
     default:
-      return <Text>Unhandled node type: "{node.type}"</Text>;
+      return <Text key={node.id}>Unhandled node type: "{node.type}"</Text>;
   }
 }
