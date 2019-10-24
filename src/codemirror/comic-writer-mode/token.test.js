@@ -27,8 +27,82 @@ describe('mode.token()', () => {
       expect(tokens).toMatchSnapshot();
     });
 
-    test('without suffix number', () => {
-      const tokens = collectTokens('page ');
+    test('single digit range', () => {
+      const tokens = collectTokens('page 1-2');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('double digit range', () => {
+      const tokens = collectTokens('page 10-11');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('mixed digit range', () => {
+      const tokens = collectTokens('page 9-10');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('single digit partial', () => {
+      const tokens = collectTokens('page 9-');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('double digit partial', () => {
+      const tokens = collectTokens('page 10-');
+
+      expect(tokens).toMatchSnapshot();
+    });
+  });
+
+  describe('pages', () => {
+    test('single digit pages', () => {
+      const tokens = collectTokens('pages 5');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('multi digit pages', () => {
+      const tokens = collectTokens('pages 10');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('without suffix', () => {
+      const tokens = collectTokens('pages');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('single digit range', () => {
+      const tokens = collectTokens('pages 1-2');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('double digit range', () => {
+      const tokens = collectTokens('pages 10-11');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('mixed digit range', () => {
+      const tokens = collectTokens('pages 9-10');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('single digit partial', () => {
+      const tokens = collectTokens('pages 9-');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('double digit partial', () => {
+      const tokens = collectTokens('pages 10-');
 
       expect(tokens).toMatchSnapshot();
     });
