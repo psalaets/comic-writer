@@ -1,48 +1,23 @@
 export default function classifyLines(cursorLine) {
   return function classify(line, lineNumber) {
     const cursorOnThisLine = lineNumber === cursorLine;
-    const lonePageKeyword = line.match(/^page *$/i);
 
-    if (lonePageKeyword && cursorOnThisLine) {
-      return {
-        line,
-        type: 'regular'
-      };
-    } else if (lonePageKeyword && !cursorOnThisLine) {
-      return {
-        line,
-        type: 'page',
-        count: 1
-      };
+    const lonePageKeyword = line.match(/^page *$/i);
+    if (lonePageKeyword) {
+      return cursorOnThisLine ? regularType(line) : pageType(line, 1);
     }
 
     const longPageRangeKeyword = line.match(/^pages *$/i);
-
-    if (longPageRangeKeyword && cursorOnThisLine) {
-      return {
-        line,
-        type: 'regular'
-      };
-    } else if (longPageRangeKeyword && !cursorOnThisLine) {
-      return {
-        line,
-        type: 'page',
-        count: 2
-      };
+    if (longPageRangeKeyword) {
+      return cursorOnThisLine ? regularType(line) : pageType(line, 2);
     }
 
     const singlePage = line.match(/^pages? +\d{1,}$/i);
-
     if (singlePage) {
-      return {
-        line,
-        type: 'page',
-        count: 1
-      };
+      return pageType(line, 1);
     }
 
     const pageRange = line.match(/^pages? +(\d{1,})-(\d{1,})$/i);
-
     if (pageRange) {
       let start = parseInt(pageRange[1], 10);
       let end = parseInt(pageRange[2], 10);
@@ -52,51 +27,57 @@ export default function classifyLines(cursorLine) {
         end = start + 1;
       }
 
-      return {
-        line,
-        type: 'page',
-        count: 1 + end - start
-      };
+      return pageType(line, 1 + end - start);
     }
 
     const partialPageRange = line.match(/^pages? \d{1,}-$/i);
 
-    if (partialPageRange && cursorOnThisLine) {
-      return {
-        line,
-        type: 'partial-page',
-        count: 1
-      };
-    } else if (partialPageRange && !cursorOnThisLine) {
-      return {
-        line,
-        type: 'page',
-        count: 1
-      };
+    if (partialPageRange) {
+      return cursorOnThisLine
+        ? partialPageRangeType(line, 1)
+        : pageType(line, 1);
     }
 
     const panel = line.match(/^panel/i);
-
     if (panel) {
-      return {
-        line,
-        type: 'panel'
-      };
+      return panelType(line);
     }
 
     const spread = line.match(/spread/i);
-
     if (spread && !cursorOnThisLine) {
-      return {
-        type: 'page',
-        count: 2,
-        line
-      };
+      return pageType(line, 2);
     }
 
-    return {
-      line,
-      type: 'regular'
-    };
+    return regularType(line);
+  };
+}
+
+function regularType(line) {
+  return {
+    type: 'regular',
+    line
+  };
+}
+
+function pageType(line, count) {
+  return {
+    type: 'page',
+    count,
+    line
+  };
+}
+
+function partialPageRangeType(line, count) {
+  return {
+    type: 'partial-page',
+    count,
+    line
+  };
+}
+
+function panelType(line) {
+  return {
+    line,
+    type: 'panel'
   };
 }
