@@ -1,8 +1,8 @@
-import { transformMarkdown } from './editor';
+import { transformMarkdown } from './index';
 
 describe('editor reducer', () => {
   describe('transformMarkdown', () => {
-    describe('pages', () => {
+    describe('single page', () => {
       it('first page', () => {
         const input = `page`;
 

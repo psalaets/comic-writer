@@ -1020,6 +1020,45 @@ Array [
 ]
 `;
 
+exports[`mode.token() page double digit partial 1`] = `
+Array [
+  Object {
+    "end": 8,
+    "start": 0,
+    "string": "page 10-",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() page double digit range 1`] = `
+Array [
+  Object {
+    "end": 10,
+    "start": 0,
+    "string": "page 10-11",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() page mixed digit range 1`] = `
+Array [
+  Object {
+    "end": 9,
+    "start": 0,
+    "string": "page 9-10",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() page multi digit page 1`] = `
 Array [
   Object {
@@ -1046,6 +1085,32 @@ Array [
 ]
 `;
 
+exports[`mode.token() page single digit partial 1`] = `
+Array [
+  Object {
+    "end": 7,
+    "start": 0,
+    "string": "page 9-",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() page single digit range 1`] = `
+Array [
+  Object {
+    "end": 8,
+    "start": 0,
+    "string": "page 1-2",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() page without suffix 1`] = `
 Array [
   Object {
@@ -1057,12 +1122,103 @@ Array [
 ]
 `;
 
-exports[`mode.token() page without suffix number 1`] = `
+exports[`mode.token() pages double digit partial 1`] = `
+Array [
+  Object {
+    "end": 9,
+    "start": 0,
+    "string": "pages 10-",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() pages double digit range 1`] = `
+Array [
+  Object {
+    "end": 11,
+    "start": 0,
+    "string": "pages 10-11",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() pages mixed digit range 1`] = `
+Array [
+  Object {
+    "end": 10,
+    "start": 0,
+    "string": "pages 9-10",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() pages multi digit pages 1`] = `
+Array [
+  Object {
+    "end": 8,
+    "start": 0,
+    "string": "pages 10",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() pages single digit pages 1`] = `
+Array [
+  Object {
+    "end": 7,
+    "start": 0,
+    "string": "pages 5",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() pages single digit partial 1`] = `
+Array [
+  Object {
+    "end": 8,
+    "start": 0,
+    "string": "pages 9-",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() pages single digit range 1`] = `
+Array [
+  Object {
+    "end": 9,
+    "start": 0,
+    "string": "pages 1-2",
+    "style": Array [
+      "page",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() pages without suffix 1`] = `
 Array [
   Object {
     "end": 5,
     "start": 0,
-    "string": "page ",
+    "string": "pages",
     "style": null,
   },
 ]

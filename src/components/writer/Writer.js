@@ -13,7 +13,8 @@ export default class Writer extends Component {
 
   handleChange(event) {
     this.props.onSourceChange({
-      source: event.value
+      source: event.value,
+      cursorLine: event.cursorLine
     });
   }
 

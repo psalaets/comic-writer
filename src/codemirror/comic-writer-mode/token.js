@@ -23,7 +23,7 @@ export default function token(stream, state) {
       return null;
     }
 
-    if (stream.match(/^page \d+$/i)) return PAGE;
+    if (stream.match(/^pages? \d+(-(\d+)?)?$/i)) return PAGE;
     if (stream.match(/^panel \d+$/i)) return PANEL;
     if (stream.match(/^(.+): ?(.+)/)) return METADATA;
   }

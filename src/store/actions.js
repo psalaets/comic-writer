@@ -8,9 +8,10 @@ import {
 
 import localstorage from '../localstorage';
 
-export function changeSource(source) {
+export function changeSource(source, cursorLine) {
   return action(CHANGE_SOURCE, {
-    source
+    source,
+    cursorLine
   });
 }
 
