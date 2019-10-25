@@ -5,15 +5,22 @@ export default function createAutoNumber() {
   return function autoNumber(lineClassification) {
     const { line, type, count } = lineClassification;
 
-    if (type === 'page') {
+    if (type === 'single-page') {
       pagesInComic += 1;
       panelsInPage = 0;
 
       const startPage = pagesInComic;
 
-      if (count === 1) {
-        return `Page ${startPage}`;
-      } else if (count > 1) {
+      return `Page ${startPage}`;
+    }
+
+    if (type ===  'multi-page') {
+      pagesInComic += 1;
+      panelsInPage = 0;
+
+      const startPage = pagesInComic;
+
+      if (count > 1) {
         pagesInComic += count - 1;
         const endPage = pagesInComic;
 
@@ -21,7 +28,9 @@ export default function createAutoNumber() {
       } else {
         return line;
       }
-    } else if (type === 'partial-page') {
+    }
+
+    if (type === 'partial-page-range') {
       pagesInComic += 1;
       panelsInPage = 0;
 

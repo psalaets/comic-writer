@@ -5,9 +5,9 @@ describe('auto number', () => {
     const autoNumber = createAutoNumber();
 
     const result = [
-      { type: 'page', count: 1},
+      { type: 'single-page'},
       { type: 'regular', line: 'blah' },
-      { type: 'page', count: 1 },
+      { type: 'single-page', },
       { type: 'regular', line: 'foo' },
     ]
       .map(autoNumber);
@@ -24,9 +24,9 @@ describe('auto number', () => {
     const autoNumber = createAutoNumber();
 
     const result = [
-      { type: 'page', count: 2 },
+      { type: 'multi-page', count: 2 },
       { type: 'regular', line: 'blah' },
-      { type: 'page', count: 2 },
+      { type: 'multi-page', count: 2 },
       { type: 'regular', line: 'foo' },
     ]
       .map(autoNumber);
@@ -39,13 +39,13 @@ describe('auto number', () => {
     ]);
   });
 
-  it('big page range', () => {
+  it('big multi page', () => {
     const autoNumber = createAutoNumber();
 
     const result = [
-      { type: 'page', count: 3 },
+      { type: 'multi-page', count: 3 },
       { type: 'regular', line: 'blah' },
-      { type: 'page', count: 4 },
+      { type: 'multi-page', count: 4 },
       { type: 'regular', line: 'foo' },
     ]
       .map(autoNumber);
@@ -62,12 +62,12 @@ describe('auto number', () => {
     const autoNumber = createAutoNumber();
 
     const result = [
-      { type: 'page', count: 1 },
+      { type: 'single-page' },
       { type: 'regular', line: 'blah' },
-      { type: 'partial-page' },
-      { type: 'page', count: 2 },
+      { type: 'partial-page-range' },
+      { type: 'multi-page', count: 2 },
       { type: 'regular', line: 'foo' },
-      { type: 'page', count: 4 },
+      { type: 'multi-page', count: 4 },
       { type: 'regular', line: 'bar' },
     ]
       .map(autoNumber);
@@ -83,13 +83,13 @@ describe('auto number', () => {
     ]);
   });
 
-  it('partial page', () => {
+  it('partial page range', () => {
     const autoNumber = createAutoNumber();
 
     const result = [
-      { type: 'partial-page' },
+      { type: 'partial-page-range' },
       { type: 'regular', line: 'blah' },
-      { type: 'partial-page' },
+      { type: 'partial-page-range' },
       { type: 'regular', line: 'foo' },
     ]
       .map(autoNumber);
@@ -102,13 +102,13 @@ describe('auto number', () => {
     ]);
   });
 
-  it('page with count < 1 is output as-is', () => {
+  it('multi page with count < 1 is output as-is', () => {
     const autoNumber = createAutoNumber();
 
     const result = [
-      { type: 'page', count: 0, line: 'Page 2-1' },
+      { type: 'multi-page', count: 0, line: 'Page 2-1' },
       { type: 'regular', line: 'blah' },
-      { type: 'page', count: -1, line: 'Page 2-1' },
+      { type: 'multi-page', count: -1, line: 'Page 2-1' },
       { type: 'regular', line: 'foo' },
     ]
       .map(autoNumber);

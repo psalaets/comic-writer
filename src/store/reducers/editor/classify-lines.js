@@ -28,12 +28,21 @@ export default function classifyLines(cursorLine) {
       let start = parseInt(pageRange[1], 10);
       let end = parseInt(pageRange[2], 10);
 
-      // turn invalid ranges with cursor gone into a 2 pager
-      if (start > end && !cursorOnThisLine) {
-        end = start + 1;
+      if (start < end) {
+        return multiPageLine(line, 1 + end - start);
       }
 
-      return multiPageLine(line, 1 + end - start);
+      // handle weird ranges
+      if (start > end) {
+        return cursorOnThisLine
+          // cursor still there treat it like 1 page
+          ? singlePageLine(line)
+          // with cursor gone it's like a 2 pager
+          : multiPageLine(line, 2);
+      }
+
+      // start === end
+      return singlePageLine(line);
     }
 
     if (line.match(PARTIAL_PAGE_RANGE_PATTERN)) {
@@ -63,7 +72,7 @@ function regularLine(line) {
 
 function singlePageLine(line) {
   return {
-    type: 'page',
+    type: 'single-page',
     count: 1,
     line
   };
@@ -71,7 +80,7 @@ function singlePageLine(line) {
 
 function multiPageLine(line, count) {
   return {
-    type: 'page',
+    type: 'multi-page',
     count,
     line
   };
@@ -79,15 +88,14 @@ function multiPageLine(line, count) {
 
 function partialPageRangeLine(line) {
   return {
-    type: 'partial-page',
-    count: 1,
+    type: 'partial-page-range',
     line
   };
 }
 
 function panelLine(line) {
   return {
-    line,
-    type: 'panel'
+    type: 'panel',
+    line
   };
 }
