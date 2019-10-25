@@ -9,22 +9,17 @@ export default function createAutoNumber() {
       pagesInComic += 1;
       panelsInPage = 0;
 
-      const startPage = pagesInComic;
-
-      return `Page ${startPage}`;
+      return `Page ${pagesInComic}`;
     }
 
     if (type ===  'multi-page') {
-      pagesInComic += 1;
+      const startPage = pagesInComic + 1;
       panelsInPage = 0;
 
-      const startPage = pagesInComic;
-
       if (count > 1) {
-        pagesInComic += count - 1;
-        const endPage = pagesInComic;
+        pagesInComic += count;
 
-        return `Pages ${startPage}-${endPage}`;
+        return `Pages ${startPage}-${pagesInComic}`;
       } else {
         return line;
       }
@@ -34,9 +29,7 @@ export default function createAutoNumber() {
       pagesInComic += 1;
       panelsInPage = 0;
 
-      const startPage = pagesInComic;
-
-      return `Page ${startPage}-`;
+      return `Page ${pagesInComic}-`;
     } else if (type === 'panel') {
       panelsInPage += 1;
 
