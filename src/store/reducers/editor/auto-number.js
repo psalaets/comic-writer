@@ -29,7 +29,7 @@ export default function createAutoNumber() {
       pagesInComic += 1;
       panelsInPage = 0;
 
-      return `Page ${pagesInComic}-`;
+      return `Pages ${pagesInComic}-`;
     } else if (type === 'panel') {
       panelsInPage += 1;
 

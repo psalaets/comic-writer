@@ -75,7 +75,7 @@ describe('auto number', () => {
     expect(result).toEqual([
       'Page 1',
       'blah',
-      'Page 2-',
+      'Pages 2-',
       'Pages 3-4',
       'foo',
       'Pages 5-8',
@@ -95,9 +95,9 @@ describe('auto number', () => {
       .map(autoNumber);
 
     expect(result).toEqual([
-      'Page 1-',
+      'Pages 1-',
       'blah',
-      'Page 2-',
+      'Pages 2-',
       'foo'
     ]);
   });
@@ -106,17 +106,17 @@ describe('auto number', () => {
     const autoNumber = createAutoNumber();
 
     const result = [
-      { type: 'multi-page', count: 0, line: 'Page 2-1' },
+      { type: 'multi-page', count: 0, line: 'Pages 2-1' },
       { type: 'regular', line: 'blah' },
-      { type: 'multi-page', count: -1, line: 'Page 2-1' },
+      { type: 'multi-page', count: -1, line: 'Pages 2-1' },
       { type: 'regular', line: 'foo' },
     ]
       .map(autoNumber);
 
     expect(result).toEqual([
-      'Page 2-1',
+      'Pages 2-1',
       'blah',
-      'Page 2-1',
+      'Pages 2-1',
       'foo'
     ]);
   });
