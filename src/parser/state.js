@@ -1,6 +1,7 @@
 // parser state - keeps track of stuff while parsing through script input
 
 export function create() {
+  let pagesSeen = 0;
   let pageNumber = 0;
   let panelNumber = 0;
   let letteringNumber = 0;
@@ -8,7 +9,18 @@ export function create() {
   let metadataNumber = 0;
   let paragraphNumber = 0;
 
+  let spreadLabel = '';
+
   return {
+    startNewSpread(pageCount) {
+      spreadLabel = pageCount === 1
+        ? String(pagesSeen + 1)
+        : `${pagesSeen + 1}-${pagesSeen + pageCount}`;
+
+      pagesSeen += pageCount;
+      panelNumber = 0;
+      letteringNumber = 0;
+    },
     startNewPage() {
       pageNumber += 1;
       panelNumber = 0;
@@ -26,6 +38,12 @@ export function create() {
     startNewParagraph() {
       paragraphNumber += 1;
     },
+    get currentSpreadLabel() {
+      return spreadLabel;
+    },
+    get currentSpreadId() {
+      return this.currentSpreadLabel;
+    },
     get currentLetteringNumber() {
       return letteringNumber;
     },
@@ -33,7 +51,7 @@ export function create() {
       return String(pageNumber);
     },
     get currentPanelId() {
-      return `${this.currentPageId}.${panelNumber}`;
+      return `${this.currentSpreadId}.${panelNumber}`;
     },
     get currentLetteringId() {
       return `${this.currentPanelId}.${letteringNumber}`;

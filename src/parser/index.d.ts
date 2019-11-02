@@ -3,22 +3,40 @@ export = parse;
 declare function parse(source: string): parse.ComicChild[];
 
 declare namespace parse {
-  export type ComicChild = Page | Panel | Metadata | Paragraph;
+  export type ComicChild = Spread | Panel | Metadata | Paragraph;
 
   export type Paragraph = {
-    id: number;
+    id: string;
     type: 'paragraph';
     content: string;
     startingLine: number;
   }
 
   export type Metadata = {
-    id: number;
+    id: string;
     type: 'metadata';
     name: string;
     value: string;
     startingLine: number;
   }
+
+  export type Spread = {
+    id: string;
+    type: 'spread';
+    label: string;
+    content: SpreadChild[];
+    pageCount: number;
+    panelCount: number;
+    speakers: string[];
+    dialogueCount: number;
+    captionCount: number;
+    sfxCount: number;
+    dialogueWordCount: number;
+    captionWordCount: number;
+    startingLine: number;
+  }
+
+  export type SpreadChild = Panel | Lettering | Paragraph;
 
   export type Page = {
     id: number;
@@ -38,7 +56,7 @@ declare namespace parse {
   export type PageChild = Panel | Lettering | Paragraph;
 
   export type Panel = {
-    id: number;
+    id: string;
     type: 'panel';
     number: number;
     content: PanelChild[]
@@ -49,7 +67,7 @@ declare namespace parse {
   export type Lettering = Dialogue | Caption | Sfx;
 
   export type Dialogue = {
-    id: number;
+    id: string;
     type: 'dialogue';
     number: number;
     speaker: string;
@@ -60,7 +78,7 @@ declare namespace parse {
   }
 
   export type Caption = {
-    id: number;
+    id: string;
     type: 'caption';
     number: number;
     modifier: string;
@@ -70,7 +88,7 @@ declare namespace parse {
   }
 
   export type Sfx = {
-    id: number;
+    id: string;
     type: 'sfx';
     number: number;
     modifier: string;

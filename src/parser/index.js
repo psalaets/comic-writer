@@ -2,7 +2,22 @@ import * as types from '../types';
 import countWords from './count-words';
 import { create as createParserState } from './state';
 
-const PAGE_REGEX      = /^page (\d+)/i;
+/*
+x update page regex
+x when parsing spread, extract start page and maybe end page
+x set page range
+x set label
+x spread id needs to be set correctly
+x how to handle invalid ranges
+x spread type instead of page type
+x update ts file
+
+update tests
+update names to say spread
+delete unused page stuff
+*/
+
+const PAGE_REGEX      = /^pages? (\d+)(-(\d+)?)?/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
 const CAPTION_REGEX   = /^\tcaption ?(\(.+\))?: ?(.+)/i;
 const SFX_REGEX       = /^\tsfx ?(\(.+\))?: ?(.+)/i;
@@ -14,7 +29,13 @@ export default function parse(source) {
   const lines = lineStream(source);
   const state = createParserState();
 
-  return parseScript(lines, state);
+const result = parseScript(lines, state);
+
+// console.log(result);
+
+
+  // return parseScript(lines, state);
+  return result;
 }
 
 function parseScript(lines, state) {
@@ -40,12 +61,53 @@ function parseScript(lines, state) {
 function parsePage(lines, state) {
   if (!lines.nextIsPageStart()) throw new Error('parsing page but next isnt page');
 
-  state.startNewPage();
-
-  const content = [];
   const pageStart = lines.consume();
-  const number = PAGE_REGEX.exec(pageStart)[1];
+  const matchResult = PAGE_REGEX.exec(pageStart);
+
+  const startPage = Number(matchResult[1]);
+  const endPage = matchResult[3] != null ? Number(matchResult[3]) : startPage;
+  const pageCount = countPages(startPage, endPage);
+
+  state.startNewSpread(pageCount);
+
   const startingLine = lines.lineNumber;
+  const content = parseSpreadContent(lines, state);
+
+  const panels = content.filter(node => node.type === types.PANEL);
+
+  return {
+    id: state.currentSpreadLabel,
+    type: types.SPREAD,
+    label: state.currentSpreadLabel,
+    pageCount,
+    content,
+    panelCount: panels.length,
+    speakers: panels.reduce((pageSpeakers, panel) => {
+      return pageSpeakers.concat(panel.speakers);
+    }, []),
+    dialogueCount: panels.reduce((total, p) => total + p.dialogueCount, 0),
+    captionCount: panels.reduce((total, p) => total + p.captionCount, 0),
+    sfxCount: panels.reduce((total, p) => total + p.sfxCount, 0),
+    dialogueWordCount: panels.reduce((total, p) => total + p.dialogueWordCount, 0),
+    captionWordCount: panels.reduce((total, p) => total + p.captionWordCount, 0),
+    startingLine
+  };
+}
+
+function countPages(startPage, endPage) {
+  if (endPage == null) {
+    return 1;
+  } else if (startPage < endPage) {
+    return (endPage - startPage) + 1;
+  } else if (startPage > endPage) {
+    return 2;
+  } else { // startPage === endPage
+    return 1;
+  }
+}
+
+function parseSpreadContent(lines, state) {
+  const content = [];
 
   while (!lines.nextIsPageEnd()) {
     if (lines.nextIsPanelStart()) {
@@ -63,24 +125,7 @@ function parsePage(lines, state) {
     }
   }
 
-  const panels = content.filter(node => node.type === types.PANEL);
-
-  return {
-    id: state.currentPageId,
-    type: types.PAGE,
-    number: Number(number),
-    content,
-    panelCount: panels.length,
-    speakers: panels.reduce((pageSpeakers, panel) => {
-      return pageSpeakers.concat(panel.speakers);
-    }, []),
-    dialogueCount: panels.reduce((total, p) => total + p.dialogueCount, 0),
-    captionCount: panels.reduce((total, p) => total + p.captionCount, 0),
-    sfxCount: panels.reduce((total, p) => total + p.sfxCount, 0),
-    dialogueWordCount: panels.reduce((total, p) => total + p.dialogueWordCount, 0),
-    captionWordCount: panels.reduce((total, p) => total + p.captionWordCount, 0),
-    startingLine
-  };
+  return content;
 }
 
 function parsePanel(lines, state) {
