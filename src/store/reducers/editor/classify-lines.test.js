@@ -22,9 +22,9 @@ describe('classify lines', () => {
         ['page 20-22', 'multi-page', 3],
         ['pages 20-22', 'multi-page', 3],
 
-        // weird range cases
+        // invalid range cases
         ['pages 22-10', 'invalid-page-range', undefined],
-        ['pages 5-5', 'single-page', 1],
+        ['pages 5-5', 'invalid-page-range', undefined],
 
         // partial range cases
         ['page 2-', 'partial-page-range', undefined],

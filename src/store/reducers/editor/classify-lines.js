@@ -41,7 +41,9 @@ export default function classifyLines(cursorLine) {
       }
 
       // start === end
-      return singlePageLine(line);
+      return cursorOnThisLine
+        ? invalidPageRangeLine(line)
+        : singlePageLine(line);
     }
 
     if (line.match(PARTIAL_PAGE_RANGE_PATTERN)) {
