@@ -22,11 +22,11 @@ describe('classify lines', () => {
         ['page 20-22', 'multi-page', 3],
         ['pages 20-22', 'multi-page', 3],
 
-        // invalid range with cursor still there is like 1 page
-        ['pages 22-10', 'single-page', 1],
-        // same to same range is 1 page
+        // weird range cases
+        ['pages 22-10', 'invalid-page-range', undefined],
         ['pages 5-5', 'single-page', 1],
 
+        // partial range cases
         ['page 2-', 'partial-page-range', undefined],
         ['pages 2-', 'partial-page-range', undefined],
         ['page 20-', 'partial-page-range', undefined],

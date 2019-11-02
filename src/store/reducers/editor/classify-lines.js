@@ -35,8 +35,7 @@ export default function classifyLines(cursorLine) {
       // handle weird ranges
       if (start > end) {
         return cursorOnThisLine
-          // cursor still there treat it like 1 page
-          ? singlePageLine(line)
+          ? invalidPageRangeLine(line)
           // with cursor gone it's like a 2 pager
           : multiPageLine(line, 2);
       }
@@ -86,9 +85,18 @@ function multiPageLine(line, count) {
   };
 }
 
+// startPage and a dash but no endPage
 function partialPageRangeLine(line) {
   return {
     type: 'partial-page-range',
+    line
+  };
+}
+
+// startPage >= endPage
+function invalidPageRangeLine(line) {
+  return {
+    type: 'invalid-page-range',
     line
   };
 }

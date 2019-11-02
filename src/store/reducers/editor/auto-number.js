@@ -25,6 +25,13 @@ export default function createAutoNumber() {
       }
     }
 
+    if (type === 'invalid-page-range') {
+      pagesInComic += 2;
+      panelsInPage = 0;
+
+      return line;
+    }
+
     if (type === 'partial-page-range') {
       pagesInComic += 1;
       panelsInPage = 0;
