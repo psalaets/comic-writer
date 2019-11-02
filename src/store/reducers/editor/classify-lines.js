@@ -25,24 +25,21 @@ export default function classifyLines(cursorLine) {
 
     const pageRange = line.match(PAGE_RANGE_PATTERN);
     if (pageRange) {
-      let start = parseInt(pageRange[1], 10);
-      let end = parseInt(pageRange[2], 10);
+      const start = parseInt(pageRange[1], 10);
+      const end = parseInt(pageRange[2], 10);
 
-      if (start < end) {
+      if (isValidPageRange(start, end)) {
         return multiPageLine(line, 1 + end - start);
       }
 
-      // handle weird ranges
-      if (start > end) {
-        return cursorOnThisLine
-          ? invalidPageRangeLine(line)
-          // with cursor gone it's like a 2 pager
-          : multiPageLine(line, 2);
+      // invalid but user is still editing the line
+      if (cursorOnThisLine) {
+        return invalidPageRangeLine(line)
       }
 
-      // start === end
-      return cursorOnThisLine
-        ? invalidPageRangeLine(line)
+      // invalid and cursor is gone, change the line to something usable
+      return isInvertedPageRange(start, end)
+        ? multiPageLine(line, 2)
         : singlePageLine(line);
     }
 
@@ -62,6 +59,14 @@ export default function classifyLines(cursorLine) {
 
     return regularLine(line);
   };
+}
+
+function isValidPageRange(start, end) {
+  return start < end;
+}
+
+function isInvertedPageRange(start, end) {
+  return start > end;
 }
 
 function regularLine(line) {
