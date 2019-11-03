@@ -6,9 +6,9 @@ export default function create(statsSelector) {
     statsSelector,
     stats => {
       const allSpeakers = stats
-        .filter(stat => stat.type === types.PAGE)
-        .reduce((comicSpeakers, page) => {
-          return comicSpeakers.concat(page.speakers);
+        .filter(stat => stat.type === types.SPREAD)
+        .reduce((speakers, spread) => {
+          return speakers.concat(spread.speakers);
         }, []);
 
       return [...new Set(allSpeakers)].sort();

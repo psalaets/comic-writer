@@ -3,7 +3,7 @@ import { Text } from '@react-pdf/renderer';
 
 import * as types from '../../types';
 
-import Page from './Page';
+import Spread from './Spread';
 import FrontPage from './FrontPage';
 import Panel from './Panel';
 import Dialogue from './Dialogue';
@@ -23,7 +23,7 @@ export function renderScriptPages(content) {
 function countFrontPageContent(content) {
   let index = 0;
 
-  while (content.length > 0 && content[index].type !== types.PAGE) {
+  while (content.length > 0 && content[index].type !== types.SPREAD) {
     index += 1;
   }
 
@@ -31,7 +31,6 @@ function countFrontPageContent(content) {
 }
 
 function renderFrontPage(content) {
-  console.log(content);
   return <FrontPage key="frontpage" content={content} />;
 }
 
@@ -41,11 +40,12 @@ export function renderNodes(content) {
 
 function renderNode(node) {
   switch (node.type) {
-    case types.PAGE:
+    case types.SPREAD:
       return (
-        <Page
+        <Spread
           key={node.id}
-          number={node.number}
+          label={node.label}
+          pageCount={node.pageCount}
           panelCount={node.panelCount}
           content={node.content}
         />

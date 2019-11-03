@@ -1,4 +1,4 @@
-import { PAGE } from '../../types';
+import * as types from '../../types';
 
 export function create(cm) {
   let widgets = [];
@@ -11,7 +11,7 @@ export function create(cm) {
 
         // add new widgets
         widgets = stats
-          .filter(tuple => tuple.type === PAGE)
+          .filter(tuple => tuple.type === types.SPREAD)
           .filter(tuple => tuple.panelCount > 0)
           .map(page => cm.addLineWidget(page.lineNumber - 1, node(page)));
       });

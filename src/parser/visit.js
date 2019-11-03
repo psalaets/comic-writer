@@ -11,9 +11,6 @@ function visitNode(node, visitor) {
     case types.SPREAD:
       visitSpread(node, visitor);
       break;
-    case types.PAGE:
-      visitPage(node, visitor);
-      break;
     case types.PANEL:
       visitPanel(node, visitor);
       break;
@@ -44,14 +41,6 @@ function visitSpread(spread, visitor) {
   visit(spread.content, visitor);
 
   if (visitor.exitSpread) visitor.exitSpread(spread);
-}
-
-function visitPage(page, visitor) {
-  if (visitor.enterPage) visitor.enterPage(page);
-
-  visit(page.content, visitor);
-
-  if (visitor.exitPage) visitor.exitPage(page);
 }
 
 function visitPanel(panel, visitor) {

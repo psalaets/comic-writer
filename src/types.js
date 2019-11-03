@@ -1,5 +1,4 @@
 export const SPREAD = 'spread';
-export const PAGE = 'page';
 export const PANEL = 'panel';
 export const PARAGRAPH = 'paragraph';
 export const CAPTION = 'caption';

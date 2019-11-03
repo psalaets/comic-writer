@@ -14,12 +14,14 @@ x update ts file
 x update tests
 x update names to say spread
 x update visitor
+x update visitor usages
+x pdf changes
+x delete unused page stuff
 
-update visitor usages/stats
-delete unused page stuff
+stats
 */
 
-const SPREAD_REGEX      = /^pages? (\d+)(-(\d+)?)?/i;
+const SPREAD_REGEX    = /^pages? (\d+)(-(\d+)?)?/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
 const CAPTION_REGEX   = /^\tcaption ?(\(.+\))?: ?(.+)/i;
 const SFX_REGEX       = /^\tsfx ?(\(.+\))?: ?(.+)/i;
@@ -31,13 +33,7 @@ export default function parse(source) {
   const lines = lineStream(source);
   const state = createParserState();
 
-const result = parseScript(lines, state);
-
-// console.log(result);
-
-
-  // return parseScript(lines, state);
-  return result;
+  return parseScript(lines, state);
 }
 
 function parseScript(lines, state) {
@@ -133,26 +129,11 @@ function parsePanel(lines, state) {
 
   state.startNewPanel();
 
-  const content = [];
   const panelStart = lines.consume();
   const number = PANEL_REGEX.exec(panelStart)[1];
   const startingLine = lines.lineNumber;
 
-  while (!lines.nextIsPanelEnd()) {
-    if (lines.nextIsCaption()) {
-      content.push(parseCaption(lines, state));
-    } else if (lines.nextIsSfx()) {
-      content.push(parseSfx(lines, state));
-    } else if (lines.nextIsDialogue()) {
-      content.push(parseDialogue(lines, state));
-    } else if (lines.nextIsMetadata()) {
-      content.push(parseMetadata(lines, state));
-    } else if (lines.nextIsParagraph()) {
-      content.push(parseParagraph(lines, state));
-    } else if (lines.nextIsEmpty()) {
-      lines.consume();
-    }
-  }
+  const content = parsePanelContent(lines, state);
 
   const dialogues = content.filter(node => node.type === types.DIALOGUE);
   const captions = content.filter(node => node.type === types.CAPTION);
@@ -171,6 +152,28 @@ function parsePanel(lines, state) {
     captionWordCount: captions.reduce((total, c) => total + c.wordCount, 0),
     startingLine
   };
+}
+
+function parsePanelContent(lines, state) {
+  const content = [];
+
+  while (!lines.nextIsPanelEnd()) {
+    if (lines.nextIsCaption()) {
+      content.push(parseCaption(lines, state));
+    } else if (lines.nextIsSfx()) {
+      content.push(parseSfx(lines, state));
+    } else if (lines.nextIsDialogue()) {
+      content.push(parseDialogue(lines, state));
+    } else if (lines.nextIsMetadata()) {
+      content.push(parseMetadata(lines, state));
+    } else if (lines.nextIsParagraph()) {
+      content.push(parseParagraph(lines, state));
+    } else if (lines.nextIsEmpty()) {
+      lines.consume();
+    }
+  }
+
+  return content;
 }
 
 function parseParagraph(lines, state) {

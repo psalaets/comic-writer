@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page as PdfPage, Text } from '@react-pdf/renderer';
+import { Page, Text } from '@react-pdf/renderer';
 import { renderNodes } from './render-pdf-content';
 
 const style = {
@@ -14,11 +14,13 @@ const titleStyle = {
   textDecoration: 'underline'
 };
 
-export default function Page({ number, content, panelCount }) {
+export default function Spread({ pageCount, label, content, panelCount }) {
+  const title = pageCount === 1 ? `Page ${label}` : `Pages ${label}`;
+
   return (
-    <PdfPage style={style}>
-      <Text style={titleStyle}>Page {number}</Text>
+    <Page style={style}>
+      <Text style={titleStyle}>{title}</Text>
       {renderNodes(content)}
-    </PdfPage>
-  )
+    </Page>
+  );
 }

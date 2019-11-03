@@ -9,9 +9,6 @@ declare namespace visit {
     enterSpread?: (spread: parse.Spread) => void,
     exitSpread?: (spread: parse.Spread) => void,
 
-    enterPage?: (page: parse.Page) => void,
-    exitPage?: (page: parse.Page) => void,
-
     enterPanel?: (panel: parse.Panel) => void,
     exitPanel?: (panel: parse.Panel) => void,
 
