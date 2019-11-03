@@ -2,25 +2,6 @@ import * as types from '../types';
 import countWords from './count-words';
 import { create as createParserState } from './state';
 
-/*
-x update page regex
-x when parsing spread, extract start page and maybe end page
-x set page range
-x set label
-x spread id needs to be set correctly
-x how to handle invalid ranges
-x spread type instead of page type
-x update ts file
-x update tests
-x update names to say spread
-x update visitor
-x update visitor usages
-x pdf changes
-x delete unused page stuff
-
-stats
-*/
-
 const SPREAD_REGEX    = /^pages? (\d+)(-(\d+)?)?/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
 const CAPTION_REGEX   = /^\tcaption ?(\(.+\))?: ?(.+)/i;
