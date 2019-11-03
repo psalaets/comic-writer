@@ -11,13 +11,13 @@ x spread id needs to be set correctly
 x how to handle invalid ranges
 x spread type instead of page type
 x update ts file
+x update tests
 
-update tests
 update names to say spread
 delete unused page stuff
 */
 
-const PAGE_REGEX      = /^pages? (\d+)(-(\d+)?)?/i;
+const SPREAD_REGEX      = /^pages? (\d+)(-(\d+)?)?/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
 const CAPTION_REGEX   = /^\tcaption ?(\(.+\))?: ?(.+)/i;
 const SFX_REGEX       = /^\tsfx ?(\(.+\))?: ?(.+)/i;
@@ -42,8 +42,8 @@ function parseScript(lines, state) {
   const script = [];
 
   while (lines.hasMore()) {
-    if (lines.nextIsPageStart()) {
-      script.push(parsePage(lines, state));
+    if (lines.nextIsSpreadStart()) {
+      script.push(parseSpread(lines, state));
     } else if (lines.nextIsPanelStart()) {
       script.push(parsePanel(lines, state));
     } else if (lines.nextIsMetadata()) {
@@ -58,11 +58,11 @@ function parseScript(lines, state) {
   return script;
 }
 
-function parsePage(lines, state) {
-  if (!lines.nextIsPageStart()) throw new Error('parsing page but next isnt page');
+function parseSpread(lines, state) {
+  if (!lines.nextIsSpreadStart()) throw new Error('parsing spread but next isnt spread start');
 
-  const pageStart = lines.consume();
-  const matchResult = PAGE_REGEX.exec(pageStart);
+  const spreadStart = lines.consume();
+  const matchResult = SPREAD_REGEX.exec(spreadStart);
 
   const startPage = Number(matchResult[1]);
   const endPage = matchResult[3] != null ? Number(matchResult[3]) : startPage;
@@ -82,9 +82,7 @@ function parsePage(lines, state) {
     pageCount,
     content,
     panelCount: panels.length,
-    speakers: panels.reduce((pageSpeakers, panel) => {
-      return pageSpeakers.concat(panel.speakers);
-    }, []),
+    speakers: panels.reduce((speakers, panel) => speakers.concat(panel.speakers), []),
     dialogueCount: panels.reduce((total, p) => total + p.dialogueCount, 0),
     captionCount: panels.reduce((total, p) => total + p.captionCount, 0),
     sfxCount: panels.reduce((total, p) => total + p.sfxCount, 0),
@@ -109,7 +107,7 @@ function countPages(startPage, endPage) {
 function parseSpreadContent(lines, state) {
   const content = [];
 
-  while (!lines.nextIsPageEnd()) {
+  while (!lines.nextIsSpreadEnd()) {
     if (lines.nextIsPanelStart()) {
       content.push(parsePanel(lines, state));
     } else if (lines.nextIsCaption()) {
@@ -129,7 +127,7 @@ function parseSpreadContent(lines, state) {
 }
 
 function parsePanel(lines, state) {
-  if (!lines.nextIsPanelStart()) throw new Error('parsing panel but next isnt panel');
+  if (!lines.nextIsPanelStart()) throw new Error('parsing panel but next isnt panel start');
 
   state.startNewPanel();
 
@@ -316,14 +314,14 @@ function lineStream(source) {
     nextIsPanelStart() {
       return this.hasMore() && PANEL_REGEX.test(this.peek());
     },
-    nextIsPageStart() {
-      return this.hasMore() && PAGE_REGEX.test(this.peek());
+    nextIsSpreadStart() {
+      return this.hasMore() && SPREAD_REGEX.test(this.peek());
     },
-    nextIsPageEnd() {
-      return !this.hasMore() || this.nextIsPageStart();
+    nextIsSpreadEnd() {
+      return !this.hasMore() || this.nextIsSpreadStart();
     },
     nextIsPanelEnd() {
-      return !this.hasMore() || this.nextIsPageStart() || this.nextIsPanelStart();
+      return !this.hasMore() || this.nextIsSpreadStart() || this.nextIsPanelStart();
     },
     nextIsEmpty() {
       return this.hasMore() && this.peek().trim() === '';
