@@ -14,16 +14,16 @@ function extractStats(parseResult) {
   let panelsSeen = 0;
 
   visit(parseResult, {
-    enterPage(page) {
+    enterSpread() {
       panelsSeen = 0;
     },
-    exitPage(page) {
+    exitSpread(spread) {
       stats.push({
-        type: types.PAGE,
-        lineNumber: page.startingLine,
-        wordCount: page.dialogueWordCount + page.captionWordCount,
+        type: types.SPREAD,
+        lineNumber: spread.startingLine,
+        wordCount: spread.dialogueWordCount + spread.captionWordCount,
         panelCount: panelsSeen,
-        speakers: page.speakers
+        speakers: spread.speakers
       });
     },
     enterPanel(panel) {

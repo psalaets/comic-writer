@@ -5,8 +5,12 @@ import * as types from '../types';
 export default function visit(nodes, visitor) {
   nodes.forEach(node => visitNode(node, visitor));
 }
+
 function visitNode(node, visitor) {
   switch (node.type) {
+    case types.SPREAD:
+      visitSpread(node, visitor);
+      break;
     case types.PAGE:
       visitPage(node, visitor);
       break;
@@ -32,6 +36,14 @@ function visitNode(node, visitor) {
       // no-op
       break;
   }
+}
+
+function visitSpread(spread, visitor) {
+  if (visitor.enterSpread) visitor.enterSpread(spread);
+
+  visit(spread.content, visitor);
+
+  if (visitor.exitSpread) visitor.exitSpread(spread);
 }
 
 function visitPage(page, visitor) {

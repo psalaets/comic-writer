@@ -12,8 +12,10 @@ x how to handle invalid ranges
 x spread type instead of page type
 x update ts file
 x update tests
+x update names to say spread
+x update visitor
 
-update names to say spread
+update visitor usages/stats
 delete unused page stuff
 */
 

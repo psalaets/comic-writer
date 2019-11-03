@@ -6,6 +6,9 @@ declare function visit(nodes: string, visitor: visit.Visitor): void;
 
 declare namespace visit {
   interface Visitor {
+    enterSpread?: (spread: parse.Spread) => void,
+    exitSpread?: (spread: parse.Spread) => void,
+
     enterPage?: (page: parse.Page) => void,
     exitPage?: (page: parse.Page) => void,
 
