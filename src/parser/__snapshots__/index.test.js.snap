@@ -1,5 +1,45 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`parse() 2 page range 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "1-2",
+    "label": "1-2",
+    "pageCount": 2,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 1,
+    "type": "spread",
+  },
+]
+`;
+
+exports[`parse() 3 page range 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "1-3",
+    "label": "1-3",
+    "pageCount": 3,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 1,
+    "type": "spread",
+  },
+]
+`;
+
 exports[`parse() caption with bold 1`] = `
 Array [
   Object {
@@ -291,6 +331,26 @@ Array [
 ]
 `;
 
+exports[`parse() inverted page range 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "1-2",
+    "label": "1-2",
+    "pageCount": 2,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 1,
+    "type": "spread",
+  },
+]
+`;
+
 exports[`parse() kitchen sink 1`] = `
 Array [
   Object {
@@ -335,7 +395,7 @@ Array [
                 "type": "text",
               },
             ],
-            "id": "1.1.1",
+            "id": "1-2.1.1",
             "modifier": null,
             "number": 1,
             "speaker": "bob",
@@ -354,7 +414,7 @@ Array [
                 "type": "lettering-bold",
               },
             ],
-            "id": "1.1.2",
+            "id": "1-2.1.2",
             "modifier": null,
             "number": 2,
             "speaker": "bob",
@@ -365,7 +425,7 @@ Array [
         ],
         "dialogueCount": 2,
         "dialogueWordCount": 4,
-        "id": "1.1",
+        "id": "1-2.1",
         "number": 1,
         "sfxCount": 0,
         "speakers": Array [
@@ -387,7 +447,7 @@ Array [
           },
           Object {
             "content": "boom",
-            "id": "1.2.3",
+            "id": "1-2.2.3",
             "modifier": null,
             "number": 3,
             "startingLine": 19,
@@ -400,7 +460,7 @@ Array [
                 "type": "text",
               },
             ],
-            "id": "1.2.4",
+            "id": "1-2.2.4",
             "modifier": null,
             "number": 4,
             "startingLine": 21,
@@ -410,7 +470,7 @@ Array [
         ],
         "dialogueCount": 0,
         "dialogueWordCount": 0,
-        "id": "1.2",
+        "id": "1-2.2",
         "number": 2,
         "sfxCount": 1,
         "speakers": Array [],
@@ -420,9 +480,9 @@ Array [
     ],
     "dialogueCount": 2,
     "dialogueWordCount": 4,
-    "id": "1",
-    "label": "1",
-    "pageCount": 1,
+    "id": "1-2",
+    "label": "1-2",
+    "pageCount": 2,
     "panelCount": 2,
     "sfxCount": 1,
     "speakers": Array [
@@ -430,6 +490,42 @@ Array [
       "bob",
     ],
     "startingLine": 5,
+    "type": "spread",
+  },
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [
+      Object {
+        "captionCount": 0,
+        "captionWordCount": 0,
+        "content": Array [
+          Object {
+            "content": "And they walk off into the sunset.",
+            "id": "paragraph-3",
+            "startingLine": 27,
+            "type": "paragraph",
+          },
+        ],
+        "dialogueCount": 0,
+        "dialogueWordCount": 0,
+        "id": "3.1",
+        "number": 1,
+        "sfxCount": 0,
+        "speakers": Array [],
+        "startingLine": 25,
+        "type": "panel",
+      },
+    ],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "3",
+    "label": "3",
+    "pageCount": 1,
+    "panelCount": 1,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 23,
     "type": "spread",
   },
 ]
@@ -500,6 +596,71 @@ Array [
     "sfxCount": 0,
     "speakers": Array [],
     "startingLine": 2,
+    "type": "spread",
+  },
+]
+`;
+
+exports[`parse() page mix 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "1",
+    "label": "1",
+    "pageCount": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 1,
+    "type": "spread",
+  },
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "2-3",
+    "label": "2-3",
+    "pageCount": 2,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 3,
+    "type": "spread",
+  },
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "4",
+    "label": "4",
+    "pageCount": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 5,
+    "type": "spread",
+  },
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "5-10",
+    "label": "5-10",
+    "pageCount": 6,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 7,
     "type": "spread",
   },
 ]
@@ -690,6 +851,26 @@ Array [
       "bob",
     ],
     "startingLine": 3,
+    "type": "spread",
+  },
+]
+`;
+
+exports[`parse() self to self page range 1`] = `
+Array [
+  Object {
+    "captionCount": 0,
+    "captionWordCount": 0,
+    "content": Array [],
+    "dialogueCount": 0,
+    "dialogueWordCount": 0,
+    "id": "1",
+    "label": "1",
+    "pageCount": 1,
+    "panelCount": 0,
+    "sfxCount": 0,
+    "speakers": Array [],
+    "startingLine": 1,
     "type": "spread",
   },
 ]
