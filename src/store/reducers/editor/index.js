@@ -19,7 +19,7 @@ export default function editorReducer(state, action) {
     }
     case CHANGE_SOURCE: {
       return {
-        source: transformMarkdown(action.payload.source, action.payload.cursorLine)
+        source: preprocessSource(action.payload.source, action.payload.cursorLine)
       };
     }
     default:
@@ -28,7 +28,7 @@ export default function editorReducer(state, action) {
 }
 
 // exported for testing purposes
-export function transformMarkdown(value, cursorLine) {
+export function preprocessSource(value, cursorLine) {
   return value
     .split(/\n/)
     .map(classifyLines(cursorLine))
