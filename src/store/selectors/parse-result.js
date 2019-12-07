@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 import parse from '../../parser';
-import { sourceSelector } from './source';
+import sourceSelector from './source';
 
-export const parseResultSelector = createSelector(
+export default createSelector(
   sourceSelector,
   source => parse(source)
 );

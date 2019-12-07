@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 
 import visit from '../../parser/visit';
 import * as types from '../../types';
-import { parseResultSelector } from './parse-result';
+import parseResultSelector from './parse-result';
 
-export const statsSelector = createSelector(
+export default createSelector(
   parseResultSelector,
   parseResult => extractStats(parseResult)
 );

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { statsSelector } from '../../store/selectors/stats';
+import statsSelector from '../../store/selectors/stats';
 
 import PageCount from './PageCount'
 import DialougeLength from './DialougeLength'

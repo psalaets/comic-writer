@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 
-import { statsSelector } from '../../store/selectors/stats';
+import statsSelector from '../../store/selectors/stats';
 import charactersSelector from '../../store/selectors/characters';
-import { sourceSelector } from '../../store/selectors/source';
+import sourceSelector from '../../store/selectors/source';
 
 import {
   changeSource,

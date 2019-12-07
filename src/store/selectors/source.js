@@ -1,1 +1,1 @@
-export const sourceSelector = state => state.editor.source;
+export default state => state.editor.source;
