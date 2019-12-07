@@ -2,7 +2,8 @@ import { connect } from 'react-redux';
 import debounce from 'lodash/debounce';
 
 import { statsSelector } from '../../store/selectors/stats';
-import createCharactersSelector from '../../store/selectors/characters';
+import charactersSelector from '../../store/selectors/characters';
+import { sourceSelector } from '../../store/selectors/source';
 
 import {
   changeSource,
@@ -11,11 +12,9 @@ import {
 
 import Writer from './Writer';
 
-const charactersSelector = createCharactersSelector(statsSelector);
-
 function mapStateToProps(state) {
   return {
-    source: state.editor.source,
+    source: sourceSelector(state),
     stats: statsSelector(state),
     characters: charactersSelector(state),
   };
