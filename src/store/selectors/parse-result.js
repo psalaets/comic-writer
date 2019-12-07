@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import parse from '../../parser';
-
-const sourceSelector = state => state.editor.source;
+import { sourceSelector } from './source';
 
 export const parseResultSelector = createSelector(
   sourceSelector,
