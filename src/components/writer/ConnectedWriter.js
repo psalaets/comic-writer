@@ -3,11 +3,7 @@ import { connect } from 'react-redux';
 import statsSelector from '../../store/selectors/stats';
 import charactersSelector from '../../store/selectors/characters';
 import sourceSelector from '../../store/selectors/source';
-
-import {
-  changeSource,
-  saveScript
-} from '../../store/actions';
+import { changeSource } from '../../store/actions';
 
 import Writer from './Writer';
 
