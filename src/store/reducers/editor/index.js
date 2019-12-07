@@ -14,7 +14,7 @@ export default function editorReducer(state, action) {
   switch (action.type) {
     case LOAD_SCRIPT_COMPLETED: {
       return {
-        source: transformMarkdown(action.payload.source, 0)
+        source: action.payload.source
       };
     }
     case CHANGE_SOURCE: {
