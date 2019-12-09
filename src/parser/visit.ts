@@ -1,12 +1,23 @@
 // sends a visitor object through the parse tree that was returned by parse()
 
 import * as types from '../types';
+import {
+  ComicNode,
+  ComicChild,
+  Spread,
+  Panel,
+  Dialogue,
+  Sfx,
+  Caption,
+  Metadata,
+  Paragraph
+} from './parse-types';
 
-export default function visit(nodes, visitor) {
+export default function visit(nodes: ComicNode[], visitor: Visitor) {
   nodes.forEach(node => visitNode(node, visitor));
 }
 
-function visitNode(node, visitor) {
+function visitNode(node: ComicNode, visitor: Visitor) {
   switch (node.type) {
     case types.SPREAD:
       visitSpread(node, visitor);
@@ -35,7 +46,7 @@ function visitNode(node, visitor) {
   }
 }
 
-function visitSpread(spread, visitor) {
+function visitSpread(spread: Spread, visitor: Visitor) {
   if (visitor.enterSpread) visitor.enterSpread(spread);
 
   visit(spread.content, visitor);
@@ -43,7 +54,7 @@ function visitSpread(spread, visitor) {
   if (visitor.exitSpread) visitor.exitSpread(spread);
 }
 
-function visitPanel(panel, visitor) {
+function visitPanel(panel: Panel, visitor: Visitor) {
   if (visitor.enterPanel) visitor.enterPanel(panel);
 
   visit(panel.content, visitor);
@@ -51,27 +62,50 @@ function visitPanel(panel, visitor) {
   if (visitor.exitPanel) visitor.exitPanel(panel);
 }
 
-function visitDialogue(dialogue, visitor) {
+function visitDialogue(dialogue: Dialogue, visitor: Visitor) {
   if (visitor.enterDialogue) visitor.enterDialogue(dialogue);
   if (visitor.exitDialogue) visitor.exitDialogue(dialogue);
 }
 
-function visitCaption(caption, visitor) {
+function visitCaption(caption: Caption, visitor: Visitor) {
   if (visitor.enterCaption) visitor.enterCaption(caption);
   if (visitor.exitCaption) visitor.exitCaption(caption);
 }
 
-function visitSfx(sfx, visitor) {
+function visitSfx(sfx: Sfx, visitor: Visitor) {
   if (visitor.enterSfx) visitor.enterSfx(sfx);
   if (visitor.exitSfx) visitor.exitSfx(sfx);
 }
 
-function visitMetadata(metadata, visitor) {
+function visitMetadata(metadata: Metadata, visitor: Visitor) {
   if (visitor.enterMetadata) visitor.enterMetadata(metadata);
   if (visitor.exitMetadata) visitor.exitMetadata(metadata);
 }
 
-function visitParagraph(paragraph, visitor) {
+function visitParagraph(paragraph: Paragraph, visitor: Visitor) {
   if (visitor.enterParagraph) visitor.enterParagraph(paragraph);
   if (visitor.exitParagraph) visitor.exitParagraph(paragraph);
+}
+
+interface Visitor {
+  enterSpread?: (spread: Spread) => void,
+  exitSpread?: (spread: Spread) => void,
+
+  enterPanel?: (panel: Panel) => void,
+  exitPanel?: (panel: Panel) => void,
+
+  enterDialogue?: (dialogue: Dialogue) => void,
+  exitDialogue?: (dialogue: Dialogue) => void,
+
+  enterCaption?: (caption: Caption) => void,
+  exitCaption?: (caption: Caption) => void,
+
+  enterSfx?: (sfx: Sfx) => void,
+  exitSfx?: (sfx: Sfx) => void,
+
+  enterMetadata?: (metadata: Metadata) => void,
+  exitMetadata?: (metadata: Metadata) => void,
+
+  enterParagraph?: (paragraph: Paragraph) => void,
+  exitParagraph?: (paragraph: Paragraph) => void,
 }

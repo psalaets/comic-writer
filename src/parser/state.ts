@@ -1,6 +1,24 @@
 // parser state - keeps track of stuff while parsing through script input
 
-export function create() {
+export interface ParserState {
+  currentSpreadLabel: string;
+  currentSpreadId: string;
+  currentLetteringNumber: number;
+  currentPageId: string;
+  currentPanelId: string;
+  currentLetteringId: string;
+  currentMetadataId: string;
+  currentParagraphId: string;
+
+  startNewSpread(pageCount: number): void;
+  startNewPage(): void;
+  startNewPanel(): void;
+  startNewLettering(): void;
+  startNewMetadata(): void;
+  startNewParagraph(): void;
+}
+
+export function create(): ParserState {
   let pagesSeen = 0;
   let pageNumber = 0;
   let panelNumber = 0;

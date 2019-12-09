@@ -1,6 +1,19 @@
 import * as types from '../types';
 import countWords from './count-words';
-import { create as createParserState } from './state';
+import { create as createParserState, ParserState } from './state';
+import {
+  ComicChild,
+  Paragraph,
+  Metadata,
+  Spread,
+  SpreadChild,
+  Panel,
+  PanelChild,
+  Dialogue,
+  Caption,
+  Sfx,
+  LetteringContentChunk
+} from './parse-types';
 
 const SPREAD_REGEX    = /^pages? (\d+)(-(\d+)?)?/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
@@ -10,15 +23,15 @@ const DIALOGUE_REGEX  = /^\t(.+?) ?(\(.+\))?: ?(.+)/;
 const METADATA_REGEX  = /^(.+): ?(.+)/;
 const PARAGRAPH_REGEX = /^.+/;
 
-export default function parse(source) {
+export default function parse(source: string): ComicChild[] {
   const lines = lineStream(source);
   const state = createParserState();
 
   return parseScript(lines, state);
 }
 
-function parseScript(lines, state) {
-  const script = [];
+function parseScript(lines: LineStream, state: ParserState): ComicChild[] {
+  const script: ComicChild[] = [];
 
   while (lines.hasMore()) {
     if (lines.nextIsSpreadStart()) {
@@ -37,11 +50,11 @@ function parseScript(lines, state) {
   return script;
 }
 
-function parseSpread(lines, state) {
+function parseSpread(lines: LineStream, state: ParserState): Spread {
   if (!lines.nextIsSpreadStart()) throw new Error('parsing spread but next isnt spread start');
 
   const spreadStart = lines.consume();
-  const matchResult = SPREAD_REGEX.exec(spreadStart);
+  const matchResult = SPREAD_REGEX.exec(spreadStart) as string[];
 
   const startPage = Number(matchResult[1]);
   const endPage = matchResult[3] != null ? Number(matchResult[3]) : startPage;
@@ -52,7 +65,7 @@ function parseSpread(lines, state) {
   const startingLine = lines.lineNumber;
   const content = parseSpreadContent(lines, state);
 
-  const panels = content.filter(node => node.type === types.PANEL);
+  const panels = content.filter(node => node.type === types.PANEL) as Panel[];
 
   return {
     id: state.currentSpreadLabel,
@@ -61,17 +74,17 @@ function parseSpread(lines, state) {
     pageCount,
     content,
     panelCount: panels.length,
-    speakers: panels.reduce((speakers, panel) => speakers.concat(panel.speakers), []),
-    dialogueCount: panels.reduce((total, p) => total + p.dialogueCount, 0),
-    captionCount: panels.reduce((total, p) => total + p.captionCount, 0),
-    sfxCount: panels.reduce((total, p) => total + p.sfxCount, 0),
-    dialogueWordCount: panels.reduce((total, p) => total + p.dialogueWordCount, 0),
-    captionWordCount: panels.reduce((total, p) => total + p.captionWordCount, 0),
+    speakers: panels.reduce<string[]>((speakers, panel) => speakers.concat(panel.speakers), []),
+    dialogueCount: panels.reduce<number>((total, p) => total + p.dialogueCount, 0),
+    captionCount: panels.reduce<number>((total, p) => total + p.captionCount, 0),
+    sfxCount: panels.reduce<number>((total, p) => total + p.sfxCount, 0),
+    dialogueWordCount: panels.reduce<number>((total, p) => total + p.dialogueWordCount, 0),
+    captionWordCount: panels.reduce<number>((total, p) => total + p.captionWordCount, 0),
     startingLine
   };
 }
 
-function countPages(startPage, endPage) {
+function countPages(startPage: number, endPage?: number): number {
   if (endPage == null) {
     return 1;
   } else if (startPage < endPage) {
@@ -83,8 +96,8 @@ function countPages(startPage, endPage) {
   }
 }
 
-function parseSpreadContent(lines, state) {
-  const content = [];
+function parseSpreadContent(lines: LineStream, state: ParserState): SpreadChild[] {
+  const content: SpreadChild[] = [];
 
   while (!lines.nextIsSpreadEnd()) {
     if (lines.nextIsPanelStart()) {
@@ -105,20 +118,20 @@ function parseSpreadContent(lines, state) {
   return content;
 }
 
-function parsePanel(lines, state) {
+function parsePanel(lines: LineStream, state: ParserState): Panel {
   if (!lines.nextIsPanelStart()) throw new Error('parsing panel but next isnt panel start');
 
   state.startNewPanel();
 
   const panelStart = lines.consume();
-  const number = PANEL_REGEX.exec(panelStart)[1];
+  const [, number] = PANEL_REGEX.exec(panelStart) as string[];
   const startingLine = lines.lineNumber;
 
   const content = parsePanelContent(lines, state);
 
-  const dialogues = content.filter(node => node.type === types.DIALOGUE);
-  const captions = content.filter(node => node.type === types.CAPTION);
-  const sfxs = content.filter(node => node.type === types.SFX);
+  const dialogues = content.filter(node => node.type === types.DIALOGUE) as Dialogue[];
+  const captions = content.filter(node => node.type === types.CAPTION) as Caption[];
+  const sfxs = content.filter(node => node.type === types.SFX) as Sfx[];
 
   return {
     id: state.currentPanelId,
@@ -135,8 +148,8 @@ function parsePanel(lines, state) {
   };
 }
 
-function parsePanelContent(lines, state) {
-  const content = [];
+function parsePanelContent(lines: LineStream, state: ParserState): PanelChild[] {
+  const content: PanelChild[] = [];
 
   while (!lines.nextIsPanelEnd()) {
     if (lines.nextIsCaption()) {
@@ -157,7 +170,7 @@ function parsePanelContent(lines, state) {
   return content;
 }
 
-function parseParagraph(lines, state) {
+function parseParagraph(lines: LineStream, state: ParserState): Paragraph {
   state.startNewParagraph();
 
   return {
@@ -168,9 +181,9 @@ function parseParagraph(lines, state) {
   };
 }
 
-function parseMetadata(lines, state) {
+function parseMetadata(lines: LineStream, state: ParserState): Metadata {
   const line = lines.consume();
-  const [, name, value] = METADATA_REGEX.exec(line);
+  const [, name, value] = METADATA_REGEX.exec(line) as string[];
 
   state.startNewMetadata();
 
@@ -183,11 +196,11 @@ function parseMetadata(lines, state) {
   };
 }
 
-function parseDialogue(lines, state) {
+function parseDialogue(lines: LineStream, state: ParserState): Dialogue {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line);
+  const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as string[];
   const startingLine = lines.lineNumber;
 
   const parseTree = parseLetteringContent(content);
@@ -204,11 +217,11 @@ function parseDialogue(lines, state) {
   };
 }
 
-function parseSfx(lines, state) {
+function parseSfx(lines: LineStream, state: ParserState): Sfx {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [, modifier, content] = SFX_REGEX.exec(line);
+  const [, modifier, content] = SFX_REGEX.exec(line) as string[];
 
   return {
     id: state.currentLetteringId,
@@ -220,11 +233,11 @@ function parseSfx(lines, state) {
   };
 }
 
-function parseCaption(lines, state) {
+function parseCaption(lines: LineStream, state: ParserState): Caption {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [, modifier, content] = CAPTION_REGEX.exec(line);
+  const [, modifier, content] = CAPTION_REGEX.exec(line) as string[];
   const parseTree = parseLetteringContent(content);
 
   return {
@@ -238,9 +251,9 @@ function parseCaption(lines, state) {
   };
 }
 
-function parseLetteringContent(content, state) {
+function parseLetteringContent(content: string): LetteringContentChunk[] {
   const boldRegex = /\*\*(.+?)\*\*(?!\*)/;
-  const parts = [];
+  const parts: LetteringContentChunk[] = [];
 
   let index = 0;
   let result = null;
@@ -275,7 +288,24 @@ function parseLetteringContent(content, state) {
   return parts;
 }
 
-function lineStream(source) {
+interface LineStream {
+  nextIsSfx(): boolean;
+  nextIsCaption(): boolean;
+  nextIsDialogue(): boolean;
+  nextIsMetadata(): boolean;
+  nextIsParagraph(): boolean;
+  nextIsPanelStart(): boolean;
+  nextIsSpreadStart(): boolean;
+  nextIsSpreadEnd(): boolean;
+  nextIsPanelEnd(): boolean;
+  nextIsEmpty(): boolean;
+  consume(): string;
+  peek(): string;
+  hasMore(): boolean;
+  lineNumber: number;
+}
+
+function lineStream(source: string): LineStream {
   const lines = (source || '')
     .split('\n');
 
