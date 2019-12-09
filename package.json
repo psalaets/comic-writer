@@ -29,11 +29,16 @@
     "plop": "npx plop"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.15",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
     "plop": "^2.4.0",
     "react-test-renderer": "^16.9.0",
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.3.0",
-    "stylelint-junit-formatter": "^0.2.2"
+    "stylelint-junit-formatter": "^0.2.2",
+    "typescript": "^3.7.3"
   },
   "homepage": "https://psalaets.gitlab.io/comic-writer",
   "browserslist": [
