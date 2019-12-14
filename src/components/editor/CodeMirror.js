@@ -49,6 +49,7 @@ export default class CodeMirrorComponent extends Component {
     const valueChanged = prevProps.value !== this.props.value;
     const statsChanged = prevProps.stats !== this.props.stats;
 
+    // initial value
     if (valueChanged && !this.cm.getValue()) {
       this.cm.setValue(this.props.value);
     }
@@ -124,10 +125,6 @@ export default class CodeMirrorComponent extends Component {
 
   getCharacterNames() {
     return this.props.characters;
-  }
-
-  componentWillUnmount() {
-
   }
 }
 
