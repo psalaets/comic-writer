@@ -3,9 +3,6 @@ import {
   LOAD_SCRIPT_COMPLETED
 } from '../../action-types';
 
-import classifyLines from './classify-lines';
-import autoNumber from './auto-number';
-
 export default function editorReducer(state, action) {
   state = state || {
     source: ''
@@ -19,19 +16,10 @@ export default function editorReducer(state, action) {
     }
     case CHANGE_SOURCE: {
       return {
-        source: preprocessSource(action.payload.source, action.payload.cursorLine)
+        source: action.payload.source
       };
     }
     default:
       return state;
   }
-}
-
-// exported for testing purposes
-export function preprocessSource(value, cursorLine) {
-  return value
-    .split(/\n/)
-    .map(classifyLines(cursorLine))
-    .map(autoNumber())
-    .join('\n');
 }
