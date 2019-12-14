@@ -26,6 +26,10 @@ import 'codemirror/addon/scroll/scrollpastend';
 import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/show-hint.css';
 
+import classifyLines from '../../store/reducers/editor/classify-lines';
+import autoNumber from '../../store/reducers/editor/auto-number';
+
+
 CodeMirror.commands.letteringBoldCommand = letteringBoldCommand;
 
 export default class CodeMirrorComponent extends Component {
@@ -109,12 +113,29 @@ export default class CodeMirrorComponent extends Component {
     this.cm.setSize('100%', '100%');
 
     this.cm.on('change', (cm, change) => {
-      if (change.origin === 'setValue') {
+      if (change.origin === 'setValue' || change.origin === 'preprocessing') {
         return;
       }
 
+      const oldLines = cm.getValue().split(/\n/);
+      const newLines = cm.getValue().split(/\n/)
+        .map(classifyLines(cm.getCursor().line))
+        .map(autoNumber());
+
+      this.cm.operation(() => {
+        newLines.forEach((newLine, index) => {
+          const oldLine = oldLines[index] || '';
+          if (newLine !== oldLine) {
+            const from = { line: index, ch: 0 };
+            const to = { line: index, ch: 10000 };
+
+            cm.replaceRange(newLine, from, to, 'preprocessing');
+          }
+        });
+      });
+
       this.props.onChange({
-        value: cm.getValue(),
+        value: newLines.join('\n'),
         cursorLine: cm.getCursor().line
       });
     });
