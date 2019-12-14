@@ -18,8 +18,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onSourceChange(event) {
-      const {source, cursorLine} = event;
-      dispatch(changeSource(source, cursorLine));
+      dispatch(changeSource(event.source));
     }
   };
 }

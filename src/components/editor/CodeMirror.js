@@ -114,8 +114,7 @@ export default class CodeMirrorComponent extends Component {
       });
 
       this.props.onChange({
-        value: newLines.join('\n'),
-        cursorLine: cm.getCursor().line
+        value: newLines.join('\n')
       });
     });
 
