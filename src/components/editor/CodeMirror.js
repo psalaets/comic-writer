@@ -5,6 +5,8 @@ import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
 import './CodeMirror.css';
 
+import { preprocessLines } from '../../preprocessor';
+
 import { MODE, THEME } from '../../codemirror/comic-writer-mode';
 import {
   ID as WORD_COUNTS,
@@ -47,25 +49,9 @@ export default class CodeMirrorComponent extends Component {
     const valueChanged = prevProps.value !== this.props.value;
     const statsChanged = prevProps.stats !== this.props.stats;
 
-    if (valueChanged) {
-      if (!this.cm.getValue()) {
-        this.cm.setValue(this.props.value);
-      } else {
-        const oldLines = this.cm.getValue().split('\n');
-        const newLines = this.props.value.split('\n');
-
-        this.cm.operation(() => {
-          newLines.forEach((newLine, index) => {
-            const oldLine = oldLines[index] || '';
-            if (newLine !== oldLine) {
-              const from = { line: index, ch: 0 };
-              const to = { line: index, ch: 10000 };
-
-              this.cm.replaceRange(newLine, from, to, 'setValue');
-            }
-          });
-        });
-      }
+    // initial value
+    if (valueChanged && !this.cm.getValue()) {
+      this.cm.setValue(this.props.value);
     }
 
     if (statsChanged) {
@@ -109,13 +95,27 @@ export default class CodeMirrorComponent extends Component {
     this.cm.setSize('100%', '100%');
 
     this.cm.on('change', (cm, change) => {
-      if (change.origin === 'setValue') {
+      if (change.origin === 'setValue' || change.origin === 'preprocessing') {
         return;
       }
 
+      const oldLines = cm.getValue().split(/\n/);
+      const newLines = preprocessLines(oldLines, cm.getCursor().line);
+
+      this.cm.operation(() => {
+        newLines.forEach((newLine, index) => {
+          const oldLine = oldLines[index] || '';
+          if (newLine !== oldLine) {
+            const from = { line: index, ch: 0 };
+            const to = { line: index, ch: 10000 };
+
+            cm.replaceRange(newLine, from, to, 'preprocessing');
+          }
+        });
+      });
+
       this.props.onChange({
-        value: cm.getValue(),
-        cursorLine: cm.getCursor().line
+        value: newLines.join('\n')
       });
     });
 
@@ -125,10 +125,6 @@ export default class CodeMirrorComponent extends Component {
 
   getCharacterNames() {
     return this.props.characters;
-  }
-
-  componentWillUnmount() {
-
   }
 }
 

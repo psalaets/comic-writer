@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`preprocessLines panels adding another panel to second page 1`] = `
+Array [
+  "Page 1",
+  "Panel 1",
+  "this is panel 1 info",
+  "Page 2",
+  "Panel 1",
+  "Panel 2",
+]
+`;
+
+exports[`preprocessLines panels adding panel at start 1`] = `
+Array [
+  "Page 1",
+  "this is page 1 info",
+  "Panel 1",
+  "Panel 2",
+  "this is panel 1 info",
+]
+`;
+
+exports[`preprocessLines panels adding panel in middle 1`] = `
+Array [
+  "Page 1",
+  "Panel 1",
+  "this is panel 1 info",
+  "Panel 2",
+  "Panel 3",
+  "this is panel 2 info",
+]
+`;
+
+exports[`preprocessLines panels adding panel to page 1`] = `
+Array [
+  "Page 1",
+  "this is page 1 info",
+  "Panel 1",
+]
+`;
+
+exports[`preprocessLines panels adding panel to second page 1`] = `
+Array [
+  "Page 1",
+  "Panel 1",
+  "this is panel 1 info",
+  "Page 2",
+  "Panel 1",
+]
+`;
+
+exports[`preprocessLines panels adding second panel to page 1`] = `
+Array [
+  "Page 1",
+  "this is page 1 info",
+  "Panel 1",
+  "Panel 2",
+]
+`;
+
+exports[`preprocessLines panels inserting panel at start 1`] = `
+Array [
+  "Page 1",
+  "this is page 1 info",
+  "Panel 1",
+  "Panel 2",
+  "this is panel 1 info",
+]
+`;
+
+exports[`preprocessLines panels inserting panel in middle 1`] = `
+Array [
+  "Page 1",
+  "Panel 1",
+  "this is panel 1 info",
+  "Panel 2",
+  "Panel 3",
+  "this is panel 2 info",
+]
+`;
+
+exports[`preprocessLines panels removing panel from middle 1`] = `
+Array [
+  "Page 1",
+  "Panel 1",
+  "this is panel 1 info",
+  "Panel 2",
+  "this is panel 3 info",
+]
+`;
+
+exports[`preprocessLines panels removing panel from start 1`] = `
+Array [
+  "Page 1",
+  "Panel 1",
+  "this is panel 2 info",
+]
+`;
+
+exports[`preprocessLines single page adding page at end 1`] = `
+Array [
+  "Page 1",
+  "this is page 1 info",
+  "Page 2",
+]
+`;
+
+exports[`preprocessLines single page adding page at start 1`] = `
+Array [
+  "Page 1",
+  "Page 2",
+  "this is page 1 info",
+]
+`;
+
+exports[`preprocessLines single page adding page in the middle 1`] = `
+Array [
+  "Page 1",
+  "this is page 1 info",
+  "Page 2",
+  "Page 3",
+  "this is page 2 info",
+]
+`;
+
+exports[`preprocessLines single page first page 1`] = `
+Array [
+  "Page 1",
+]
+`;
+
+exports[`preprocessLines single page inserting content with page count in double digits 1`] = `
+Array [
+  "Page 1",
+  "Page 2",
+  "Page 3",
+  "Page 4",
+  "Page 5",
+  "Page 6",
+  "Page 7",
+  "Page 8",
+  "Page 9",
+  "Page 10",
+  "Page 11",
+]
+`;
+
+exports[`preprocessLines single page inserting page at end 1`] = `
+Array [
+  "Page 1",
+  "this is page 2 info",
+  "Page 2",
+  "this is page 1 info",
+]
+`;
+
+exports[`preprocessLines single page inserting page at start 1`] = `
+Array [
+  "Page 1",
+  "this is page 3 info",
+  "Page 2",
+  "this is page 1 info",
+  "Page 3",
+  "this is page 2 info",
+]
+`;
+
+exports[`preprocessLines single page inserting page in middle 1`] = `
+Array [
+  "Page 1",
+  "this is page 1 info",
+  "Page 2",
+  "this is page 3 info",
+  "Page 3",
+  "this is page 2 info",
+]
+`;
+
+exports[`preprocessLines single page remove page from middle 1`] = `
+Array [
+  "Page 1",
+  "this is page 1 info",
+  "Page 2",
+  "this is page 3 info",
+]
+`;
+
+exports[`preprocessLines single page remove page from start 1`] = `
+Array [
+  "Page 1",
+  "this is page 2 info",
+  "Page 2",
+  "this is page 3 info",
+]
+`;
