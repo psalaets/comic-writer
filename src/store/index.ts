@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import debounce from 'lodash/debounce';
 import { saveScript } from './actions';
 
-import rootReducer from './reducers';
+import { rootReducer } from './reducers';
 import sourceSelector from './selectors/source';
 
 const store = createStore(
@@ -16,7 +16,9 @@ saveSourceOnChange(store);
 export default store;
 
 function saveSourceOnChange(store) {
-  const debouncedSaveScript = debounce(source => store.dispatch(saveScript(source)), 1000);
+  const debouncedSaveScript = debounce((source: string) => {
+    store.dispatch(saveScript(source));
+  }, 1000);
 
   const NOT_SET_YET = null;
   let oldSource = NOT_SET_YET;
