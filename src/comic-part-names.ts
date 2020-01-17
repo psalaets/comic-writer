@@ -1,3 +1,5 @@
+// names of the various parts of a comic script
+
 export const SPREAD = 'spread';
 export const PANEL = 'panel';
 export const PARAGRAPH = 'paragraph';

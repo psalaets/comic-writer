@@ -1,3 +1,5 @@
+import * as parts from '../comic-part-names';
+
 /** Anything that can appear anywhere in a comic. */
 export type ComicNode = Spread | Panel | Lettering | Metadata | Paragraph | LetteringContentChunk;
 
@@ -6,14 +8,14 @@ export type ComicChild = Spread | Panel | Metadata | Paragraph;
 
 export interface Paragraph {
   id: string;
-  type: 'paragraph';
+  type: typeof parts.PARAGRAPH;
   content: string;
   startingLine: number;
 }
 
 export interface Metadata {
   id: string;
-  type: 'metadata';
+  type: typeof parts.METADATA;
   name: string;
   value: string;
   startingLine: number;
@@ -21,7 +23,7 @@ export interface Metadata {
 
 export interface Spread {
   id: string;
-  type: 'spread';
+  type: typeof parts.SPREAD;
   label: string;
   content: SpreadChild[];
   pageCount: number;
@@ -40,7 +42,7 @@ export type SpreadChild = Panel | Lettering | Paragraph;
 
 export interface Panel {
   id: string;
-  type: 'panel';
+  type: typeof parts.PANEL;
   number: number;
   content: PanelChild[];
 
@@ -60,7 +62,7 @@ export type Lettering = Dialogue | Caption | Sfx;
 
 export interface Dialogue {
   id: string;
-  type: 'dialogue';
+  type: typeof parts.DIALOGUE;
   number: number;
   speaker: string;
   modifier: string | null;
@@ -71,7 +73,7 @@ export interface Dialogue {
 
 export interface Caption {
   id: string;
-  type: 'caption';
+  type: typeof parts.CAPTION;
   number: number;
   modifier: string | null;
   content: LetteringContentChunk[];
@@ -81,7 +83,7 @@ export interface Caption {
 
 export interface Sfx {
   id: string;
-  type: 'sfx';
+  type: typeof parts.SFX;
   number: number;
   modifier: string | null;
   content: string;
@@ -89,6 +91,6 @@ export interface Sfx {
 }
 
 export interface LetteringContentChunk {
-  type: 'text' | 'lettering-bold';
+  type: typeof parts.TEXT | typeof parts.LETTERING_BOLD;
   content: string;
 }

@@ -1,6 +1,6 @@
 // sends a visitor object through the parse tree that was returned by parse()
 
-import * as types from '../types';
+import * as parts from '../comic-part-names';
 import {
   ComicNode,
   ComicChild,
@@ -19,25 +19,25 @@ export default function visit(nodes: ComicNode[], visitor: Visitor) {
 
 function visitNode(node: ComicNode, visitor: Visitor) {
   switch (node.type) {
-    case types.SPREAD:
+    case parts.SPREAD:
       visitSpread(node, visitor);
       break;
-    case types.PANEL:
+    case parts.PANEL:
       visitPanel(node, visitor);
       break;
-    case types.DIALOGUE:
+    case parts.DIALOGUE:
       visitDialogue(node, visitor);
       break;
-    case types.SFX:
+    case parts.SFX:
       visitSfx(node, visitor);
       break;
-    case types.CAPTION:
+    case parts.CAPTION:
       visitCaption(node, visitor);
       break;
-    case types.METADATA:
+    case parts.METADATA:
       visitMetadata(node, visitor);
       break;
-    case types.PARAGRAPH:
+    case parts.PARAGRAPH:
       visitParagraph(node, visitor);
       break;
     default:

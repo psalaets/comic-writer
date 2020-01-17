@@ -1,16 +1,19 @@
 import { createSelector } from 'reselect';
 
 import visit from '../../parser/visit';
-import * as types from '../../types';
 import parseResultSelector from './parse-result';
+import { ComicChild } from '../../parser/parse-types';
+
+import { SPREAD, PANEL, DIALOGUE, CAPTION } from '../../comic-part-names';
+import { ComicStats } from './stat-types';
 
 export default createSelector(
   parseResultSelector,
   parseResult => extractStats(parseResult)
 );
 
-function extractStats(parseResult) {
-  const stats = [];
+function extractStats(parseResult: ComicChild[]): ComicStats[] {
+  const stats: ComicStats[] = [];
   let panelsSeen = 0;
 
   visit(parseResult, {
@@ -19,7 +22,7 @@ function extractStats(parseResult) {
     },
     exitSpread(spread) {
       stats.push({
-        type: types.SPREAD,
+        type: SPREAD,
         lineNumber: spread.startingLine,
         wordCount: spread.dialogueWordCount + spread.captionWordCount,
         panelCount: panelsSeen,
@@ -30,21 +33,21 @@ function extractStats(parseResult) {
       panelsSeen += 1;
 
       stats.push({
-        type: types.PANEL,
+        type: PANEL,
         lineNumber: panel.startingLine,
         wordCount: panel.dialogueWordCount + panel.captionWordCount
       });
     },
     enterDialogue(dialogue) {
       stats.push({
-        type: types.DIALOGUE,
+        type: DIALOGUE,
         lineNumber: dialogue.startingLine,
         wordCount: dialogue.wordCount
       });
     },
     enterCaption(caption) {
       stats.push({
-        type: types.CAPTION,
+        type: CAPTION,
         lineNumber: caption.startingLine,
         wordCount: caption.wordCount
       });
