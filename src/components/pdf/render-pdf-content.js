@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text } from '@react-pdf/renderer';
 
-import * as types from '../../types';
+import * as types from '../../comic-part-names';
 
 import Spread from './Spread';
 import FrontPage from './FrontPage';

@@ -1,4 +1,4 @@
-import * as types from '../../types';
+import { SPREAD } from '../../comic-part-names';
 export const ID = 'word-counts';
 
 export function create(cm) {
@@ -22,7 +22,7 @@ export function create(cm) {
 function element(tuple) {
   const span = document.createElement('span');
 
-  if (tuple.type === types.SPREAD) {
+  if (tuple.type === SPREAD) {
     span.classList.add('word-count--page');
   }
 

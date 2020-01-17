@@ -23,7 +23,7 @@ function saveSourceOnChange(store: StoreType) {
     store.dispatch(saveScript(source));
   }, 1000);
 
-  const NOT_SET_YET = null;
+  const NOT_SET_YET = '__NOT_SET__';
   let oldSource = NOT_SET_YET;
 
   store.subscribe(() => {
