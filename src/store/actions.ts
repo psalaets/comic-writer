@@ -5,7 +5,7 @@ import {
   LOAD_SCRIPT_STARTED,
   LOAD_SCRIPT_COMPLETED,
   EditorActionTypes,
-  AppThunk
+  ThunkResult
 } from './types';
 
 import localstorage from '../localstorage';
@@ -19,7 +19,7 @@ export function changeSource(source: string): EditorActionTypes {
   };
 }
 
-export function saveScript(source: string): AppThunk {
+export function saveScript(source: string): ThunkResult {
   return function saveScriptThunk(dispatch) {
     dispatch(saveScriptStarted());
 
@@ -40,7 +40,7 @@ function saveScriptCompleted(): EditorActionTypes {
   };
 }
 
-export function loadScript(): AppThunk {
+export function loadScript(): ThunkResult {
   return function loadScriptThunk(dispatch) {
     dispatch(loadScriptStarted());
 

@@ -61,9 +61,9 @@ export interface RootState {
   editor: EditorState
 }
 
-export type AppThunk<ReturnType = void> = ThunkAction<
+export type ThunkResult<ReturnType = void> = ThunkAction<
   ReturnType,
   RootState,
-  null,
-  Action<string>
+  undefined,
+  EditorActionTypes
 >

@@ -1,21 +1,24 @@
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import thunk, { ThunkMiddleware } from 'redux-thunk';
 import debounce from 'lodash/debounce';
 import { saveScript } from './actions';
 
 import { rootReducer } from './reducers';
 import sourceSelector from './selectors/source';
+import { RootState, EditorActionTypes } from './types';
 
 const store = createStore(
   rootReducer,
-  applyMiddleware(thunk)
+  applyMiddleware(thunk as ThunkMiddleware<RootState, EditorActionTypes>)
 );
 
 saveSourceOnChange(store);
 
 export default store;
 
-function saveSourceOnChange(store) {
+type StoreType = typeof store;
+
+function saveSourceOnChange(store: StoreType) {
   const debouncedSaveScript = debounce((source: string) => {
     store.dispatch(saveScript(source));
   }, 1000);
