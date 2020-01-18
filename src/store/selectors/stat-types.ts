@@ -31,4 +31,8 @@ export interface CaptionStats {
   wordCount: number
 }
 
+export function isSpreadStats(stats: ComicStats): stats is SpreadStats {
+  return stats.type === SPREAD;
+}
+
 export type ComicStats = SpreadStats | PanelStats | DialogueStats | CaptionStats;

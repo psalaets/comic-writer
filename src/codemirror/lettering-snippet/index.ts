@@ -1,13 +1,13 @@
-import CodeMirror from 'codemirror';
+import CodeMirror, { Editor, KeyMap } from 'codemirror';
 
 const SUBJECT_PLACEHOLDER = 'subject';
 
-export function letteringSnippet(cm, getCharacterNames) {
+export function letteringSnippet(cm: Editor, getCharacterNames: () => string[]) {
   const lineNumber = cm.getCursor().line;
   let stepIndex = -1;
   const steps = makeSteps(getCharacterNames);
 
-  const keyMap = {
+  const keyMap: KeyMap = {
     Tab() {
       next();
     },
@@ -57,7 +57,7 @@ export function letteringSnippet(cm, getCharacterNames) {
     cm.removeKeyMap(keyMap);
   }
 
-  function handleCursorActivity(cm) {
+  function handleCursorActivity(cm: Editor) {
     // Exit if it seems like user is trying to get out of snippet
 
     // moved to different line
@@ -72,9 +72,9 @@ export function letteringSnippet(cm, getCharacterNames) {
   }
 }
 
-function makeSteps(getCharacterNames) {
+function makeSteps(getCharacterNames: () => string[]) {
   return [
-    function metadataState(cm) {
+    function metadataState(cm: Editor) {
       const cursor = cm.getCursor();
       cm.replaceRange(`\t${SUBJECT_PLACEHOLDER}: content`, cursor);
 

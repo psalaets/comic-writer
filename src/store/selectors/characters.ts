@@ -1,16 +1,13 @@
 import { createSelector } from 'reselect';
-import { SPREAD } from '../../comic-part-names';
+import { ComicStats, SpreadStats, isSpreadStats } from './stat-types';
 import statsSelector from './stats';
-
-import { ComicStats, SpreadStats } from './stat-types';
 
 export default createSelector(
   statsSelector,
   stats => {
     const allSpeakers = stats
-      .filter((stat: ComicStats) => stat.type === SPREAD)
-      .reduce<string[]>((speakers, stats) => {
-        const spreadStats = stats as SpreadStats;
+      .filter(isSpreadStats)
+      .reduce<string[]>((speakers, spreadStats) => {
         return speakers.concat(spreadStats.speakers);
       }, []);
 
