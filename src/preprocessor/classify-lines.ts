@@ -1,3 +1,5 @@
+import { LineClassification } from './types';
+
 const PAGE_EXPANSION_PATTERN = /^page *$/i;
 const PAGES_EXPANSION_PATTERN = /^pages *$/i;
 const SPREAD_EXPANSION_PATTERN = /^spread$/i;
@@ -7,8 +9,8 @@ const SINGLE_PAGE_PATTERN = /^pages? +\d{1,}$/i;
 const PAGE_RANGE_PATTERN = /^pages? +(\d{1,})-(\d{1,})$/i;
 const PARTIAL_PAGE_RANGE_PATTERN = /^pages? \d{1,}-$/i;
 
-export default function classifyLines(cursorLine) {
-  return function classify(line, lineNumber) {
+export default function classifyLines(cursorLine: number) {
+  return function classify(line: string, lineNumber: number): LineClassification {
     const cursorOnThisLine = lineNumber === cursorLine;
 
     if (line.match(PAGE_EXPANSION_PATTERN)) {
@@ -61,22 +63,22 @@ export default function classifyLines(cursorLine) {
   };
 }
 
-function isValidPageRange(start, end) {
+function isValidPageRange(start: number, end: number): boolean {
   return start < end;
 }
 
-function isInvertedPageRange(start, end) {
+function isInvertedPageRange(start: number, end: number): boolean {
   return start > end;
 }
 
-function regularLine(line) {
+function regularLine(line: string): LineClassification {
   return {
     type: 'regular',
     line
   };
 }
 
-function singlePageLine(line) {
+function singlePageLine(line: string): LineClassification {
   return {
     type: 'single-page',
     count: 1,
@@ -84,7 +86,7 @@ function singlePageLine(line) {
   };
 }
 
-function multiPageLine(line, count) {
+function multiPageLine(line: string, count: number): LineClassification {
   return {
     type: 'multi-page',
     count,
@@ -93,7 +95,7 @@ function multiPageLine(line, count) {
 }
 
 // startPage and a dash but no endPage
-function partialPageRangeLine(line) {
+function partialPageRangeLine(line: string): LineClassification {
   return {
     type: 'partial-page-range',
     line
@@ -101,14 +103,14 @@ function partialPageRangeLine(line) {
 }
 
 // startPage >= endPage
-function invalidPageRangeLine(line) {
+function invalidPageRangeLine(line: string): LineClassification {
   return {
     type: 'invalid-page-range',
     line
   };
 }
 
-function panelLine(line) {
+function panelLine(line: string): LineClassification {
   return {
     type: 'panel',
     line
