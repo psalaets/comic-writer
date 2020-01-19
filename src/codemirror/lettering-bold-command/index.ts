@@ -1,11 +1,22 @@
+import CodeMirror from 'codemirror';
 import { toggle } from './toggle';
 
-export function letteringBoldCommand(cm) {
+interface TokensByUse {
+  meta: Array<CodeMirror.Token>,
+  content: Array<CodeMirror.Token>
+}
+
+interface Selection {
+  anchor: CodeMirror.Position,
+  head: CodeMirror.Position
+}
+
+export function letteringBoldCommand(cm: CodeMirror.Editor) {
   const cursor = cm.getCursor();
 
   // split up line's tokens by their use: meta vs the actual content
   const {meta, content} = cm.getLineTokens(cursor.line)
-    .reduce((obj, current) => {
+    .reduce<TokensByUse>((obj, current) => {
       if (current.type && current.type.includes('lettering-content')) {
         obj.content.push(current);
       } else {
@@ -16,7 +27,7 @@ export function letteringBoldCommand(cm) {
     }, {meta: [], content: []});
 
   const selection = normalizeSelection(cm.listSelections()[0]);
-  const result = toggle(content, selection.start, selection.end);
+  const result = toggle(content, selection.anchor, selection.head);
 
   // re-construct line with toggled content tokens
   const metaString = meta
@@ -45,39 +56,39 @@ export function letteringBoldCommand(cm) {
   );
 }
 
-// returns object with start and end, start is never to the right of end
-function normalizeSelection(selection) {
+// returns Selection where anchor is never to the right of head
+function normalizeSelection(selection: Selection): Selection {
   const { anchor, head } = selection;
 
   // on different lines
   if (anchor.line < head.line) {
     return {
-      start: anchor,
-      end: head
+      anchor: anchor,
+      head: head
     };
   } else if (head.line < anchor.line) {
     return {
-      start: head,
-      end: anchor
+      anchor: head,
+      head: anchor
     };
   }
 
   // on same line
   if (anchor.ch < head.ch) {
     return {
-      start: anchor,
-      end: head
+      anchor: anchor,
+      head: head
     };
   } else if (head.ch < anchor.ch) {
     return {
-      start: head,
-      end: anchor
+      anchor: head,
+      head: anchor
     };
   }
 
   // at same exact spot
   return {
-    start: anchor,
-    end: head
+    anchor: anchor,
+    head: head
   };
 }

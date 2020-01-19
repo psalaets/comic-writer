@@ -2,7 +2,21 @@
  * A piece of a string in lettering.
  */
 export default class Chunk {
-  constructor(string, bold, start, selected) {
+  whitespace: boolean;
+  string: string;
+  bold: boolean;
+  start: number;
+  end: number;
+
+  selected: boolean;
+
+  containsSelectionStart = false;
+  containsSelectionEnd = false;
+
+  relativeSelectionStart = -1;
+  relativeSelectionEnd = -1;
+
+  constructor(string: string, bold: boolean, start:  number, selected: boolean) {
     this.whitespace = bold
       ? /^(\*\*)?\s+(\*\*)?$/.test(string)
       : /^\s+$/.test(string);
@@ -13,12 +27,6 @@ export default class Chunk {
     this.end = start + string.length;
 
     this.selected = selected;
-
-    this.containsSelectionStart = false;
-    this.containsSelectionEnd = false;
-
-    this.relativeSelectionStart = null;
-    this.relativeSelectionEnd = null;
   }
 
   /**
@@ -27,7 +35,7 @@ export default class Chunk {
    * @param {Number} relativePosition - Relative position to split at
    * @returns Array of resulting chunks
    */
-  insertEmptyBoldAt(relativePosition) {
+  insertEmptyBoldAt(relativePosition: number): Array<Chunk> {
     const before = this.string.slice(0, relativePosition);
     const after = this.string.slice(relativePosition);
 
@@ -50,7 +58,7 @@ export default class Chunk {
    * @param {Chunk} other - Chunk to merge into this, must be same weight as this
    * @returns Chunk that results from the merge
    */
-  merge(other) {
+  merge(other: Chunk): Chunk {
     if (this.bold !== other.bold) {
       throw new Error('cannot merge chunks of different weights');
     }
@@ -85,7 +93,7 @@ export default class Chunk {
    *
    * @returns Chunk that results from wrapping with stars.
    */
-  addBoldStars() {
+  addBoldStars(): Chunk {
     if (this.bold) {
       const newChunk = new Chunk(
         '**' + this.string + '**',
@@ -117,7 +125,7 @@ export default class Chunk {
    * @param {Number} selectionEnd - Position of selecton end
    * @returns Chunks that results from removing the bold stars
    */
-  removeBoldStars(selectionStart, selectionEnd) {
+  removeBoldStars(selectionStart: number, selectionEnd: number): Chunk {
     let newString = this.string;
 
     let newSelectionStart = selectionStart;
@@ -182,7 +190,7 @@ export default class Chunk {
    *
    * @returns Chunk that results from the toggle.
    */
-  toggle() {
+  toggle(): Chunk {
     return this.bold ? this.toNonBold() : this.toBold();
   }
 
@@ -191,7 +199,7 @@ export default class Chunk {
    *
    * @returns Bold chunk
    */
-  toBold() {
+  toBold(): Chunk {
     if (this.bold) {
       return this;
     } else {
@@ -206,7 +214,7 @@ export default class Chunk {
    *
    * @returns Non-bold chunk
    */
-  toNonBold() {
+  toNonBold(): Chunk {
     if (this.bold) {
       const chunk = this.clone();
       chunk.bold = false;
@@ -221,7 +229,7 @@ export default class Chunk {
    *
    * @returns copy
    */
-  clone() {
+  clone(): Chunk {
     const chunk = new Chunk(this.string, this.bold, this.start, this.selected);
 
     chunk.containsSelectionStart = this.containsSelectionStart;
@@ -247,7 +255,13 @@ export default class Chunk {
    * @param {Number} selectionEnd
    * @returns New chunk
    */
-  static create(string, bold, start, selectionStart, selectionEnd) {
+  static create(
+    string: string,
+    bold: boolean,
+    start: number,
+    selectionStart: number,
+    selectionEnd: number
+  ): Chunk {
     const end = start + string.length;
     const chunk = new Chunk(
       string,
@@ -277,28 +291,46 @@ export default class Chunk {
   }
 }
 
-function selected(start, end, selectionStart, selectionEnd) {
+function selected(
+  start: number,
+  end: number,
+  selectionStart: number,
+  selectionEnd: number
+): boolean {
   return selectionContainsStart(start, selectionStart, selectionEnd)
     || selectionContainsEnd(end, selectionStart, selectionEnd)
     || containsSelection(start, end, selectionStart, selectionEnd);
 }
 
-function selectionContainsStart(start, selectionStart, selectionEnd) {
+function selectionContainsStart(
+  start: number,
+  selectionStart: number,
+  selectionEnd: number
+): boolean {
   return start >= selectionStart && start < selectionEnd;
 }
 
-function selectionContainsEnd(end, selectionStart, selectionEnd) {
+function selectionContainsEnd(
+  end: number,
+  selectionStart: number,
+  selectionEnd: number
+): boolean {
   return end > selectionStart && end <= selectionEnd;
 }
 
-function containsSelection(start, end, selectionStart, selectionEnd) {
+function containsSelection(
+  start: number,
+  end: number,
+  selectionStart: number,
+  selectionEnd: number
+): boolean {
   return selectionStart >= start && end > selectionEnd;
 }
 
-function startsWithStars(string) {
+function startsWithStars(string: string): boolean {
   return /^\*\*/.test(string);
 }
 
-function endsWithStars(string) {
+function endsWithStars(string: string): boolean {
   return /\*\*$/.test(string);
 }

@@ -1,7 +1,5 @@
 import * as CodeMirror from 'codemirror';
 import 'codemirror/addon/hint/show-hint';
-// this is just for types
-import 'codemirror/codemirror-showhint';
 import 'codemirror/addon/hint/show-hint.css';
 
 const SUBJECT_PLACEHOLDER = 'subject';

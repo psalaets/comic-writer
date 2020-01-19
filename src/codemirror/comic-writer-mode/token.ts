@@ -1,3 +1,6 @@
+import { StringStream } from 'codemirror';
+import { ComicWriterModeState } from './types';
+
 // these values become css classes so keep them synced with theme file
 const PAGE = 'page';
 const PANEL = 'panel';
@@ -13,7 +16,10 @@ const SFX_LINE = 'line-cm-sfx';
 const CAPTION_LINE = 'line-cm-caption';
 const DIALOGUE_LINE = 'line-cm-dialogue';
 
-export default function token(stream, state) {
+export default function token(
+  stream: StringStream,
+  state: ComicWriterModeState
+): string | null {
   if (stream.sol()) {
     resetState(state);
 
@@ -136,7 +142,7 @@ export default function token(stream, state) {
   return null;
 }
 
-function resetState(state) {
+function resetState(state: ComicWriterModeState) {
   state.inLettering = false;
   state.allowsBoldInContent = false;
   state.subjectDone = false;
@@ -152,7 +158,7 @@ function resetState(state) {
  * @param {Object} stream - Stream from codemirror
  * @returns {String} tokens
  */
-function tokenLetteringText(stream) {
+function tokenLetteringText(stream: StringStream): string {
   const tokens = [LETTERING_CONTENT];
 
   // stream is currently at double star

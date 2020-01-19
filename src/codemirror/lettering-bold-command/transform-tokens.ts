@@ -1,10 +1,15 @@
+import { Token, Position } from 'codemirror';
 import {
   LETTERING_BOLD,
 } from '../comic-writer-mode/token';
 
 import Chunk from './chunk';
 
-export default function transformTokens(tokens, selectionStart, selectionEnd) {
+export default function transformTokens(
+  tokens: Array<Token>,
+  selectionStart: number,
+  selectionEnd: number
+): Array<Chunk> {
   let chunks = toChunks(tokens, selectionStart, selectionEnd);
 
   // reconstruct bold whitespace
@@ -40,7 +45,11 @@ export default function transformTokens(tokens, selectionStart, selectionEnd) {
   return chunks;
 }
 
-function transform(chunks, selectionStart, selectionEnd) {
+function transform(
+  chunks: Array<Chunk>,
+  selectionStart: number,
+  selectionEnd: number
+): Array<Chunk> {
   const selected = chunks.filter(c => c.selected);
 
   if (hasMultipleWeights(selected)) {
@@ -57,7 +66,7 @@ function transform(chunks, selectionStart, selectionEnd) {
 }
 
 // change whitespace weight based on weights of its neighbors
-function cleanUpWhitespace(chunks) {
+function cleanUpWhitespace(chunks: Array<Chunk>): Array<Chunk> {
   return chunks
     .map((chunk, index, array) => {
       if (chunk.whitespace) {
@@ -83,9 +92,9 @@ function cleanUpWhitespace(chunks) {
 
 // bold next to bold becomes one bold
 // non-bold next to non-bold becomes one non-bold
-function mergeSameWeightNeighbors(chunks) {
+function mergeSameWeightNeighbors(chunks: Array<Chunk>): Array<Chunk> {
   return chunks
-    .reduce((arr, current) => {
+    .reduce<Array<Chunk>>((arr, current) => {
       if (arr.length > 0) {
         const last = arr[arr.length - 1];
         // merge adjacent chunks of same weight
@@ -102,12 +111,12 @@ function mergeSameWeightNeighbors(chunks) {
     }, []);
 }
 
-function addBoldStars(chunks) {
+function addBoldStars(chunks: Array<Chunk>) {
   return chunks.map(chunk => chunk.addBoldStars());
 }
 
 // readjust start and end of every chunk
-function recalculateBoundaries(chunks) {
+function recalculateBoundaries(chunks: Array<Chunk>): Array<Chunk> {
   let position = chunks[0].start;
   chunks.forEach(chunk => {
     chunk.start = position;
@@ -117,7 +126,7 @@ function recalculateBoundaries(chunks) {
   return chunks;
 }
 
-function isOneNonBoldWhitespace(chunks) {
+function isOneNonBoldWhitespace(chunks: Array<Chunk>): boolean {
   if (chunks.length === 1) {
     const loneChunk = chunks[0];
     return !loneChunk.bold && loneChunk.whitespace;
@@ -125,24 +134,26 @@ function isOneNonBoldWhitespace(chunks) {
   return false;
 }
 
-function hasMultipleWeights(chunks) {
+function hasMultipleWeights(chunks: Array<Chunk>): boolean {
   return chunks.some(c => c.bold) && chunks.some(c => !c.bold);
 }
 
-function toggleSelected(chunks) {
+function toggleSelected(chunks: Array<Chunk>): Array<Chunk> {
   return transformSelected(chunks, chunk => chunk.toggle());
 }
 
-function boldSelected(chunks) {
+function boldSelected(chunks: Array<Chunk>): Array<Chunk> {
   return transformSelected(chunks, chunk => chunk.toBold());
 }
 
-function splitSelectedWithEmptyBold(chunks, relativePosition) {
+function splitSelectedWithEmptyBold(chunks: Array<Chunk>, relativePosition: number): Array<Chunk> {
   return transformSelected(chunks, chunk => chunk.insertEmptyBoldAt(relativePosition));
 }
 
-function transformSelected(chunks, fn) {
-  return flatMap(chunks, chunk => {
+type ChunkTransformer = (chunk: Chunk) => Chunk | Array<Chunk>;
+
+function transformSelected(chunks: Array<Chunk>, fn: ChunkTransformer) {
+  return chunks.flatMap(chunk => {
     return chunk.selected ? fn(chunk) : chunk;
   });
 }
@@ -153,12 +164,17 @@ function transformSelected(chunks, fn) {
  * @param {Token[]} tokens - Array of {start, end, string, type}
  * @returns {Chunk[]}
  */
-function toChunks(tokens, selectionStart, selectionEnd) {
-  const chunks = flatMap(tokens, token => {
+function toChunks(
+  tokens: Array<Token>,
+  selectionStart: number,
+  selectionEnd: number
+): Array<Chunk> {
+  const chunks = tokens.flatMap(token => {
     let position = token.start;
 
     return token.string
       .split(/(\s+)/g)
+      // discard empty strings
       .filter(part => part)
       .map(part => {
         const start = position;
@@ -221,25 +237,25 @@ function toChunks(tokens, selectionStart, selectionEnd) {
   return chunks;
 }
 
-function isBold(token) {
-  return Boolean(token.type) && token.type.includes(LETTERING_BOLD);
+function isBold(token: Token): boolean {
+  const type = token.type || '';
+  return type.includes(LETTERING_BOLD);
 }
 
 /**
  * Removes bold stars from chunks
- *
- * @param {*} chunks
- * @param {*} selectionStart
- * @param {*} selectionEnd
- * @returns chunks
  */
-function removeBoldStarsFromChunks(chunks, selectionStart, selectionEnd) {
+function removeBoldStarsFromChunks(
+  chunks: Array<Chunk>,
+  selectionStart: number,
+  selectionEnd: number
+): Array<Chunk> {
   return chunks
     .map(chunk => chunk.removeBoldStars(selectionStart, selectionEnd));
 }
 
-function cleanUpBoldFragments(chunks) {
-  return chunks.reduce((array, current) => {
+function cleanUpBoldFragments(chunks: Array<Chunk>): Array<Chunk> {
+  return chunks.reduce<Array<Chunk>>((array, current) => {
     if (array.length > 0) {
       const last = array[array.length - 1];
 
@@ -256,18 +272,4 @@ function cleanUpBoldFragments(chunks) {
 
     return array;
   }, []);
-}
-
-function flatMap(array, fn) {
-  return array
-    .map(fn)
-    .reduce((result, current) => {
-      if (Array.isArray(current)) {
-        result.push(...current);
-      } else {
-        result.push(current);
-      }
-
-      return result;
-    }, []);
 }
