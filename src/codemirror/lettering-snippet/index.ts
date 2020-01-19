@@ -1,13 +1,17 @@
-import CodeMirror, { Editor, KeyMap } from 'codemirror';
+import * as CodeMirror from 'codemirror';
+import 'codemirror/addon/hint/show-hint';
+// this is just for types
+import 'codemirror/codemirror-showhint';
+import 'codemirror/addon/hint/show-hint.css';
 
 const SUBJECT_PLACEHOLDER = 'subject';
 
-export function letteringSnippet(cm: Editor, getCharacterNames: () => string[]) {
+export function letteringSnippet(cm: CodeMirror.Editor, getCharacterNames: () => string[]) {
   const lineNumber = cm.getCursor().line;
   let stepIndex = -1;
   const steps = makeSteps(getCharacterNames);
 
-  const keyMap: KeyMap = {
+  const keyMap: CodeMirror.KeyMap = {
     Tab() {
       next();
     },
@@ -57,7 +61,7 @@ export function letteringSnippet(cm: Editor, getCharacterNames: () => string[]) 
     cm.removeKeyMap(keyMap);
   }
 
-  function handleCursorActivity(cm: Editor) {
+  function handleCursorActivity(cm: CodeMirror.Editor) {
     // Exit if it seems like user is trying to get out of snippet
 
     // moved to different line
@@ -74,7 +78,7 @@ export function letteringSnippet(cm: Editor, getCharacterNames: () => string[]) 
 
 function makeSteps(getCharacterNames: () => string[]) {
   return [
-    function metadataState(cm: Editor) {
+    function metadataState(cm: CodeMirror.Editor) {
       const cursor = cm.getCursor();
       cm.replaceRange(`\t${SUBJECT_PLACEHOLDER}: content`, cursor);
 
@@ -100,7 +104,7 @@ function makeSteps(getCharacterNames: () => string[]) {
         completeSingle: false,
       });
     },
-    function contentState(cm) {
+    function contentState(cm: CodeMirror.Editor) {
       const cursor = cm.getCursor();
       const lineText = cm.getLine(cursor.line);
       const lastColonIndex = lineText.lastIndexOf(':');
@@ -119,8 +123,8 @@ function makeSteps(getCharacterNames: () => string[]) {
   ];
 }
 
-function makeHinter(characterNames) {
-  function hinter(cm) {
+function makeHinter(characterNames: string[]) {
+  function hinter(cm: CodeMirror.Editor) {
     const cursor = cm.getCursor();
     const token = cm.getTokenAt(cursor);
 

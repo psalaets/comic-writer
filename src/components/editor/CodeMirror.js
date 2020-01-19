@@ -25,9 +25,6 @@ import '../../codemirror/theme.css';
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/addon/scroll/scrollpastend';
 
-import 'codemirror/addon/hint/show-hint';
-import 'codemirror/addon/hint/show-hint.css';
-
 CodeMirror.commands.letteringBoldCommand = letteringBoldCommand;
 
 export default class CodeMirrorComponent extends Component {
