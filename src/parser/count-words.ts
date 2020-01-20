@@ -1,7 +1,7 @@
 import wordcount from 'wordcount';
 
 type TextChunk = string | { content: string };
-type Joinable = TextChunk | TextChunk[];
+type Joinable = TextChunk | Array<TextChunk>;
 
 export default function countWords(tree: Joinable) {
   let text = joinText(tree);

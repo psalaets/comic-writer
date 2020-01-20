@@ -10,7 +10,7 @@ export interface SpreadStats {
   lineNumber: number,
   wordCount: number,
   panelCount: number,
-  speakers: string[]
+  speakers: Array<string>
 }
 
 export interface PanelStats {

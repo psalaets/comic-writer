@@ -23,15 +23,15 @@ const DIALOGUE_REGEX  = /^\t(.+?) ?(\(.+\))?: ?(.+)/;
 const METADATA_REGEX  = /^(.+): ?(.+)/;
 const PARAGRAPH_REGEX = /^.+/;
 
-export default function parse(source: string): ComicChild[] {
+export default function parse(source: string): Array<ComicChild> {
   const lines = lineStream(source);
   const state = createParserState();
 
   return parseScript(lines, state);
 }
 
-function parseScript(lines: LineStream, state: ParserState): ComicChild[] {
-  const script: ComicChild[] = [];
+function parseScript(lines: LineStream, state: ParserState): Array<ComicChild> {
+  const script: Array<ComicChild> = [];
 
   while (lines.hasMore()) {
     if (lines.nextIsSpreadStart()) {
@@ -54,7 +54,7 @@ function parseSpread(lines: LineStream, state: ParserState): Spread {
   if (!lines.nextIsSpreadStart()) throw new Error('parsing spread but next isnt spread start');
 
   const spreadStart = lines.consume();
-  const matchResult = SPREAD_REGEX.exec(spreadStart) as string[];
+  const matchResult = SPREAD_REGEX.exec(spreadStart) as Array<string>;
 
   const startPage = Number(matchResult[1]);
   const endPage = matchResult[3] != null ? Number(matchResult[3]) : startPage;
@@ -65,7 +65,7 @@ function parseSpread(lines: LineStream, state: ParserState): Spread {
   const startingLine = lines.lineNumber;
   const content = parseSpreadContent(lines, state);
 
-  const panels = content.filter(node => node.type === types.PANEL) as Panel[];
+  const panels = content.filter(node => node.type === types.PANEL) as Array<Panel>;
 
   return {
     id: state.currentSpreadLabel,
@@ -74,7 +74,7 @@ function parseSpread(lines: LineStream, state: ParserState): Spread {
     pageCount,
     content,
     panelCount: panels.length,
-    speakers: panels.reduce<string[]>((speakers, panel) => speakers.concat(panel.speakers), []),
+    speakers: panels.reduce<Array<string>>((speakers, panel) => speakers.concat(panel.speakers), []),
     dialogueCount: panels.reduce<number>((total, p) => total + p.dialogueCount, 0),
     captionCount: panels.reduce<number>((total, p) => total + p.captionCount, 0),
     sfxCount: panels.reduce<number>((total, p) => total + p.sfxCount, 0),
@@ -96,8 +96,11 @@ function countPages(startPage: number, endPage?: number): number {
   }
 }
 
-function parseSpreadContent(lines: LineStream, state: ParserState): SpreadChild[] {
-  const content: SpreadChild[] = [];
+function parseSpreadContent(
+  lines: LineStream,
+  state: ParserState
+): Array<SpreadChild> {
+  const content: Array<SpreadChild> = [];
 
   while (!lines.nextIsSpreadEnd()) {
     if (lines.nextIsPanelStart()) {
@@ -124,14 +127,14 @@ function parsePanel(lines: LineStream, state: ParserState): Panel {
   state.startNewPanel();
 
   const panelStart = lines.consume();
-  const [, number] = PANEL_REGEX.exec(panelStart) as string[];
+  const [, number] = PANEL_REGEX.exec(panelStart) as Array<string>;
   const startingLine = lines.lineNumber;
 
   const content = parsePanelContent(lines, state);
 
-  const dialogues = content.filter(node => node.type === types.DIALOGUE) as Dialogue[];
-  const captions = content.filter(node => node.type === types.CAPTION) as Caption[];
-  const sfxs = content.filter(node => node.type === types.SFX) as Sfx[];
+  const dialogues = content.filter(node => node.type === types.DIALOGUE) as Array<Dialogue>;
+  const captions = content.filter(node => node.type === types.CAPTION) as Array<Caption>;
+  const sfxs = content.filter(node => node.type === types.SFX) as Array<Sfx>;
 
   return {
     id: state.currentPanelId,
@@ -148,8 +151,11 @@ function parsePanel(lines: LineStream, state: ParserState): Panel {
   };
 }
 
-function parsePanelContent(lines: LineStream, state: ParserState): PanelChild[] {
-  const content: PanelChild[] = [];
+function parsePanelContent(
+  lines: LineStream,
+  state: ParserState
+): Array<PanelChild> {
+  const content: Array<PanelChild> = [];
 
   while (!lines.nextIsPanelEnd()) {
     if (lines.nextIsCaption()) {
@@ -183,7 +189,7 @@ function parseParagraph(lines: LineStream, state: ParserState): Paragraph {
 
 function parseMetadata(lines: LineStream, state: ParserState): Metadata {
   const line = lines.consume();
-  const [, name, value] = METADATA_REGEX.exec(line) as string[];
+  const [, name, value] = METADATA_REGEX.exec(line) as Array<string>;
 
   state.startNewMetadata();
 
@@ -200,7 +206,7 @@ function parseDialogue(lines: LineStream, state: ParserState): Dialogue {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as string[];
+  const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as Array<string>;
   const startingLine = lines.lineNumber;
 
   const parseTree = parseLetteringContent(content);
@@ -221,7 +227,7 @@ function parseSfx(lines: LineStream, state: ParserState): Sfx {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [, modifier, content] = SFX_REGEX.exec(line) as string[];
+  const [, modifier, content] = SFX_REGEX.exec(line) as Array<string>;
 
   return {
     id: state.currentLetteringId,
@@ -237,7 +243,7 @@ function parseCaption(lines: LineStream, state: ParserState): Caption {
   state.startNewLettering();
 
   const line = lines.consume();
-  const [, modifier, content] = CAPTION_REGEX.exec(line) as string[];
+  const [, modifier, content] = CAPTION_REGEX.exec(line) as Array<string>;
   const parseTree = parseLetteringContent(content);
 
   return {
@@ -251,9 +257,9 @@ function parseCaption(lines: LineStream, state: ParserState): Caption {
   };
 }
 
-function parseLetteringContent(content: string): LetteringContentChunk[] {
+function parseLetteringContent(content: string): Array<LetteringContentChunk> {
   const boldRegex = /\*\*(.+?)\*\*(?!\*)/;
-  const parts: LetteringContentChunk[] = [];
+  const parts: Array<LetteringContentChunk> = [];
 
   let index = 0;
   let result = null;

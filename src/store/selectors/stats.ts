@@ -12,8 +12,8 @@ export default createSelector(
   parseResult => extractStats(parseResult)
 );
 
-function extractStats(parseResult: ComicChild[]): ComicStats[] {
-  const stats: ComicStats[] = [];
+function extractStats(parseResult: Array<ComicChild>): Array<ComicStats> {
+  const stats: Array<ComicStats> = [];
   let panelsSeen = 0;
 
   visit(parseResult, {

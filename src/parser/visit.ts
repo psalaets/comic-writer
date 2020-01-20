@@ -13,7 +13,7 @@ import {
   Paragraph
 } from './parse-types';
 
-export default function visit(nodes: ComicNode[], visitor: Visitor) {
+export default function visit(nodes: Array<ComicNode>, visitor: Visitor) {
   nodes.forEach(node => visitNode(node, visitor));
 }
 

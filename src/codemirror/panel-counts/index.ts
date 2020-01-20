@@ -2,10 +2,10 @@ import { Editor, LineWidget } from 'codemirror';
 import { ComicStats, SpreadStats, isSpreadStats } from '../../store/selectors/stat-types';
 
 export function create(cm: Editor) {
-  let widgets: LineWidget[] = [];
+  let widgets: Array<LineWidget> = [];
 
   return {
-    update(stats: ComicStats[]) {
+    update(stats: Array<ComicStats>) {
       cm.operation(() => {
         // clear existing widgets
         widgets.forEach(widget => widget.clear());

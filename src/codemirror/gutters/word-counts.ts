@@ -4,7 +4,7 @@ export const ID = 'word-counts';
 
 export function create(cm: Editor) {
   return {
-    update(stats: ComicStats[]) {
+    update(stats: Array<ComicStats>) {
       cm.operation(() => {
         // clear
         cm.clearGutter(ID);

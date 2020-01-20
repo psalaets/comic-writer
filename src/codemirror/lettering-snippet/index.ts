@@ -4,7 +4,10 @@ import 'codemirror/addon/hint/show-hint.css';
 
 const SUBJECT_PLACEHOLDER = 'subject';
 
-export function letteringSnippet(cm: CodeMirror.Editor, getCharacterNames: () => string[]) {
+export function letteringSnippet(
+  cm: CodeMirror.Editor,
+  getCharacterNames: () => Array<string>
+) {
   const lineNumber = cm.getCursor().line;
   let stepIndex = -1;
   const steps = makeSteps(getCharacterNames);
@@ -74,7 +77,7 @@ export function letteringSnippet(cm: CodeMirror.Editor, getCharacterNames: () =>
   }
 }
 
-function makeSteps(getCharacterNames: () => string[]) {
+function makeSteps(getCharacterNames: () => Array<string>) {
   return [
     function metadataState(cm: CodeMirror.Editor) {
       const cursor = cm.getCursor();
@@ -121,7 +124,7 @@ function makeSteps(getCharacterNames: () => string[]) {
   ];
 }
 
-function makeHinter(characterNames: string[]) {
+function makeHinter(characterNames: Array<string>) {
   function hinter(cm: CodeMirror.Editor) {
     const cursor = cm.getCursor();
     const token = cm.getTokenAt(cursor);

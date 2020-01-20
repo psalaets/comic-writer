@@ -7,7 +7,7 @@ export default createSelector(
   stats => {
     const allSpeakers = stats
       .filter(isSpreadStats)
-      .reduce<string[]>((speakers, spreadStats) => {
+      .reduce < Array<string>>((speakers, spreadStats) => {
         return speakers.concat(spreadStats.speakers);
       }, []);
 

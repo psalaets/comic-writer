@@ -25,10 +25,10 @@ export interface Spread {
   id: string;
   type: typeof parts.SPREAD;
   label: string;
-  content: SpreadChild[];
+  content: Array<SpreadChild>;
   pageCount: number;
   panelCount: number;
-  speakers: string[];
+  speakers: Array<string>;
   dialogueCount: number;
   captionCount: number;
   sfxCount: number;
@@ -44,9 +44,9 @@ export interface Panel {
   id: string;
   type: typeof parts.PANEL;
   number: number;
-  content: PanelChild[];
+  content: Array<PanelChild>;
 
-  speakers: string[];
+  speakers: Array<string>;
   dialogueCount: number;
   captionCount: number;
   sfxCount: number;
@@ -66,7 +66,7 @@ export interface Dialogue {
   number: number;
   speaker: string;
   modifier: string | null;
-  content: LetteringContentChunk[];
+  content: Array<LetteringContentChunk>;
   wordCount: number;
   startingLine: number;
 }
@@ -76,7 +76,7 @@ export interface Caption {
   type: typeof parts.CAPTION;
   number: number;
   modifier: string | null;
-  content: LetteringContentChunk[];
+  content: Array<LetteringContentChunk>;
   wordCount: number;
   startingLine: number;
 }

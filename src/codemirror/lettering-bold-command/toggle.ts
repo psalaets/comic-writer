@@ -9,7 +9,7 @@ interface ToggleResult {
 }
 
 export function toggle(
-  tokens: Token[],
+  tokens: Array<Token>,
   selectionStart: Position,
   selectionEnd: Position
 ): ToggleResult {
