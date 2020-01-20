@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
+import { SpreadStats } from '../../store/selectors/stat-types';
 import CodeMirror from './CodeMirror';
 
-export default class Editor extends Component {
-  constructor(props) {
+type Props = {
+  value: string;
+  stats: Array<SpreadStats>;
+  characters: Array<string>;
+  onChange: (event: EditorChangeEvent) => void;
+}
+
+export interface EditorChangeEvent {
+  value: string;
+}
+
+export default class Editor extends Component<Props> {
+  constructor(props: Props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
@@ -22,14 +32,7 @@ export default class Editor extends Component {
     )
   }
 
-  handleChange(event) {
+  handleChange(event: EditorChangeEvent): void {
     this.props.onChange(event);
   }
 }
-
-Editor.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  stats: PropTypes.array.isRequired,
-  characters: PropTypes.arrayOf(PropTypes.string).isRequired
-};
