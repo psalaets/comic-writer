@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { SpreadStats } from '../../store/selectors/stat-types';
+import { ComicStats } from '../../store/selectors/stat-types';
 import CodeMirror from './CodeMirror';
 
 type Props = {
   value: string;
-  stats: Array<SpreadStats>;
+  stats: Array<ComicStats>;
   characters: Array<string>;
   onChange: (event: EditorChangeEvent) => void;
 }

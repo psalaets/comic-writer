@@ -4,7 +4,7 @@ import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
 import './CodeMirror.css';
 
-import { SpreadStats } from '../../store/selectors/stat-types';
+import { ComicStats } from '../../store/selectors/stat-types';
 import { EditorChangeEvent } from './Editor';
 
 import { preprocessLines } from '../../preprocessor';
@@ -30,13 +30,13 @@ import 'codemirror/addon/scroll/scrollpastend';
 type Props = {
   value: string;
   editorWidth: number;
-  stats: Array<SpreadStats>;
+  stats: Array<ComicStats>;
   characters: Array<string>;
   onChange: (event: EditorChangeEvent) => void;
 }
 
 type StatsPlugin = {
-  update: (stats: Array<SpreadStats>) => void;
+  update: (stats: Array<ComicStats>) => void;
 }
 
 export default class CodeMirrorComponent extends Component<Props> {
@@ -82,7 +82,7 @@ export default class CodeMirrorComponent extends Component<Props> {
     return this.cm;
   }
 
-  updateWordCounts(stats: Array<SpreadStats>): void {
+  updateWordCounts(stats: Array<ComicStats>): void {
     if (this.wordCounts == null) {
       throw new Error('wordCounts is not initialized yet');
     }
@@ -90,7 +90,7 @@ export default class CodeMirrorComponent extends Component<Props> {
     this.wordCounts.update(stats);
   }
 
-  updatePanelCounts(stats: Array<SpreadStats>): void {
+  updatePanelCounts(stats: Array<ComicStats>): void {
     if (this.panelCounts == null) {
       throw new Error('panelCounts is not initialized yet?');
     }

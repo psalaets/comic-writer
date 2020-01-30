@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './Writer.css';
 
-import Editor from '../editor/Editor';
+import Editor, { EditorChangeEvent } from '../editor/Editor';
+import { ComicStats } from '../../store/selectors/stat-types';
 
-export default class Writer extends Component {
-  constructor(props) {
+export interface SourceChangeEvent {
+  source: string;
+}
+
+type WriterProps = {
+  source: string;
+  onSourceChange: (event: SourceChangeEvent) => void;
+  stats: Array<ComicStats>;
+  characters: Array<string>;
+};
+
+export default class Writer extends Component<WriterProps, {}> {
+  constructor(props: WriterProps) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
+  handleChange(event: EditorChangeEvent) {
     this.props.onSourceChange({
       source: event.value
     });
@@ -32,10 +43,3 @@ export default class Writer extends Component {
     );
   }
 }
-
-Writer.propTypes = {
-  source: PropTypes.string.isRequired,
-  onSourceChange: PropTypes.func.isRequired,
-  stats: PropTypes.array.isRequired,
-  characters: PropTypes.arrayOf(PropTypes.string).isRequired
-};

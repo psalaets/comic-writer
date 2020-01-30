@@ -3,7 +3,7 @@ import './Settings.css';
 
 import Form from '../form/Form'
 
-const Settings = props => (
+const Settings = () => (
   <Form.Root>
     <Form.Fieldset title="Accessibility">
       <label htmlFor="Simple-Editor">
