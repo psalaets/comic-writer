@@ -9,14 +9,28 @@ import Modal from './components/modal/Modal';
 import Drawer from './components/drawer/Drawer';
 import ModalTypes from './components/modal/ModalTypes'
 
-class App extends Component {
-  constructor(props) {
+type AppState = {
+  drawerIsOpen: boolean;
+  modalActive: boolean;
+  modalContent: React.ReactNode;
+  modalTitle: string;
+}
+
+type ModalParts = {
+  modalTitle: string;
+  modalContent: React.ReactNode
+}
+
+class App extends Component<{}, AppState> {
+  state: AppState;
+
+  constructor(props: {}) {
     super(props);
 
     this.state = {
       modalActive: false,
-      modalContent: false,
-      modalTitle: false,
+      modalContent: null,
+      modalTitle: '',
       drawerIsOpen: false
     };
 
@@ -29,7 +43,7 @@ class App extends Component {
   }
 
   // Modal Handlers
-  activateModal = ({modalTitle, modalContent}) => () => {
+  activateModal = ({ modalTitle, modalContent }: ModalParts) => () => {
     this.setState({
       modalActive: true,
       modalContent: modalContent,
@@ -40,8 +54,8 @@ class App extends Component {
   deactivateModal = () => {
     this.setState({
       modalActive: false,
-      modalContent: false,
-      modalTitle: false
+      modalContent: null,
+      modalTitle: ''
      });
   };
 
@@ -76,15 +90,24 @@ class App extends Component {
             </Drawer>
           </div>
         </div>
+        {this.renderModal()}
+      </>
+    );
+  }
+
+  renderModal() {
+    if (this.state.modalActive) {
+      return (
         <Modal
-          modalActive={this.state.modalActive}
           closeButtonOnClick={this.deactivateModal}
           title={this.state.modalTitle}
         >
           {this.state.modalContent}
         </Modal>
-      </>
-    );
+      );
+    } else {
+      return null;
+    }
   }
 }
 
