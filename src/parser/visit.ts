@@ -3,7 +3,6 @@
 import * as parts from '../comic-part-names';
 import {
   ComicNode,
-  ComicChild,
   Spread,
   Panel,
   Dialogue,

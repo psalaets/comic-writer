@@ -7,7 +7,14 @@ export default function create(config: EditorConfiguration): Mode<ComicWriterMod
     startState() {
       return {
         isInCaptionText: false,
-        isInDialogueText: false
+        isInDialogueText: false,
+        inLettering: false,
+        subjectDone: false,
+        allowsBoldInContent: false,
+        modifierDone: false,
+        inModifier: false,
+        contentDone: false,
+        inContent: false
       };
     },
     indent: () => 0,

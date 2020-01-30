@@ -1,4 +1,4 @@
-import { Token, Position } from 'codemirror';
+import { Token } from 'codemirror';
 import {
   LETTERING_BOLD,
 } from '../comic-writer-mode/token';

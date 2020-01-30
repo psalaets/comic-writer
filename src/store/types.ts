@@ -1,4 +1,3 @@
-import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 
 export const CHANGE_SOURCE = 'CHANGE_SOURCE';

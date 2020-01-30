@@ -1,4 +1,9 @@
-const FormattingGuideData = [
+export interface GuideItem {
+  title: string;
+  code: string;
+}
+
+const FormattingGuideData: Array<GuideItem> = [
   {
     title: 'Metadata',
     code: 'title: The Comic Title'

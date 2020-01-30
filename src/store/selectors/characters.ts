@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { ComicStats, SpreadStats, isSpreadStats } from './stat-types';
+import { isSpreadStats } from './stat-types';
 import statsSelector from './stats';
 
 export default createSelector(
