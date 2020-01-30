@@ -34,6 +34,7 @@
     "@types/lodash": "^4.14.149",
     "@types/node": "^12.12.15",
     "@types/react": "^16.9.16",
+    "@types/react-aria-modal": "^4.0.1",
     "@types/react-dom": "^16.9.4",
     "plop": "^2.4.0",
     "react-test-renderer": "^16.9.0",

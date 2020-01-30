@@ -4,12 +4,19 @@ import './Modal.css';
 import Button from '../button/Button'
 import AriaModal from 'react-aria-modal';
 
-const Modal = props => props.modalActive ?
+type ModalProps = {
+  modalActive: boolean;
+  title: string;
+  closeButtonOnClick: () => void;
+  children: React.ReactNode;
+};
+
+const Modal = (props: ModalProps) => props.modalActive ?
   <AriaModal
     titleText={props.title}
     onExit={props.closeButtonOnClick}
     initialFocus="#close-modal"
-    getApplicationNode={document.getElementById('app')}
+    applicationNode={document.getElementById('app') as HTMLElement}
     underlayClass="c-modal"
     dialogClass="c-modal__dialouge"
   >

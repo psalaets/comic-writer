@@ -2,7 +2,6 @@ import React from 'react';
 import './Button.css';
 
 const defaultProps = {
-  id: null,
   block: false,
   transparent: false,
   isActive: false
