@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ComicStats } from '../../store/selectors/stat-types';
+import { ComicStats } from '../../stats/types';
 import CodeMirror from './CodeMirror';
 
 type Props = {

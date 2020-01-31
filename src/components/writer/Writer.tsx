@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Writer.css';
 
 import Editor, { EditorChangeEvent } from '../editor/Editor';
-import { ComicStats } from '../../store/selectors/stat-types';
+import { ComicStats } from '../../stats/types';
 
 export interface SourceChangeEvent {
   source: string;

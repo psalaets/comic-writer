@@ -4,7 +4,7 @@ import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
 import './CodeMirror.css';
 
-import { ComicStats } from '../../store/selectors/stat-types';
+import { ComicStats } from '../../stats/types';
 import { EditorChangeEvent } from './Editor';
 
 import { preprocessLines } from '../../preprocessor';
