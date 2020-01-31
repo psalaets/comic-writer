@@ -10,7 +10,7 @@ import {
   Caption,
   Metadata,
   Paragraph
-} from './parse-types';
+} from './types';
 
 export default function visit(nodes: Array<ComicNode>, visitor: Visitor) {
   nodes.forEach(node => visitNode(node, visitor));

@@ -1,4 +1,4 @@
-import { ComicChild } from '../parser/parse-types';
+import { ComicChild } from '../parser/types';
 import visit from '../parser/visit';
 import { SPREAD, PANEL, DIALOGUE, CAPTION } from '../comic-part-names';
 import { ComicStats } from './types';

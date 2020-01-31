@@ -13,7 +13,7 @@ import {
   Caption,
   Sfx,
   LetteringContentChunk
-} from './parse-types';
+} from './types';
 
 const SPREAD_REGEX    = /^pages? (\d+)(-(\d+)?)?/i;
 const PANEL_REGEX     = /^panel (\d+)/i;
