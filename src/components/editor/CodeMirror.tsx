@@ -17,7 +17,7 @@ import {
 
 import {
   create as createPanelCounts
-} from '../../codemirror/panel-counts';
+} from '../../codemirror/line-widgets/panel-counts';
 
 import { letteringSnippet } from '../../codemirror/lettering-snippet';
 import { letteringBoldCommand } from '../../codemirror/lettering-bold-command';
