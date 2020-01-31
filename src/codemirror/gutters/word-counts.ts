@@ -1,5 +1,5 @@
 import { Editor } from 'codemirror';
-import { isSpreadStats, ComicStats } from '../../store/selectors/stat-types';
+import { isSpreadStats, ComicStats } from '../../stats/types';
 export const ID = 'word-counts';
 
 export function create(cm: Editor) {

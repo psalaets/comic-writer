@@ -1,5 +1,5 @@
 import { Editor, LineWidget } from 'codemirror';
-import { ComicStats, SpreadStats, isSpreadStats } from '../../store/selectors/stat-types';
+import { ComicStats, SpreadStats, isSpreadStats } from '../../stats/types';
 
 export function create(cm: Editor) {
   let widgets: Array<LineWidget> = [];

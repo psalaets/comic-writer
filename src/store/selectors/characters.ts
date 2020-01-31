@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { isSpreadStats } from './stat-types';
+import { isSpreadStats } from '../../stats/types';
 import statsSelector from './stats';
 
 export default createSelector(
