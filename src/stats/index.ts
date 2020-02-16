@@ -1,6 +1,6 @@
 import { ComicChild } from '../parser/types';
 import visit from '../parser/visit';
-import { SPREAD, PANEL, DIALOGUE, CAPTION } from '../comic-part-names';
+import { SPREAD, PANEL, DIALOGUE, CAPTION } from '../comic-part-types';
 import { ComicStats } from './types';
 
 export function extractStats(parseResult: Array<ComicChild>): Array<ComicStats> {

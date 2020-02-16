@@ -1,6 +1,6 @@
 // sends a visitor object through the parse tree that was returned by parse()
 
-import * as parts from '../comic-part-names';
+import * as parts from '../comic-part-types';
 import {
   ComicNode,
   Spread,

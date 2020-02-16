@@ -1,4 +1,4 @@
-import * as parts from '../comic-part-names';
+import * as parts from '../comic-part-types';
 
 /** Anything that can appear anywhere in a comic. */
 export type ComicNode = Spread | Panel | Lettering | Metadata | Paragraph | LetteringContentChunk;

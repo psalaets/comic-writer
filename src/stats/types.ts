@@ -3,7 +3,7 @@ import {
   PANEL,
   DIALOGUE,
   CAPTION
-} from '../comic-part-names';
+} from '../comic-part-types';
 
 export interface SpreadStats {
   type: typeof SPREAD,

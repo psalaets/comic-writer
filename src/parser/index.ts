@@ -1,4 +1,4 @@
-import * as types from '../comic-part-names';
+import * as types from '../comic-part-types';
 import countWords from './count-words';
 import { create as createParserState, ParserState } from './state';
 import {
