@@ -53,7 +53,7 @@ export default function token(
         state.subjectDone = true;
         state.allowsBoldInContent = true;
 
-        const subject = [];
+        const subject: Array<string> = [];
 
         // inch forward until getting to end of subject
         let eaten;
