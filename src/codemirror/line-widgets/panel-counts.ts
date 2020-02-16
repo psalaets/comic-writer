@@ -1,6 +1,11 @@
 import { Editor, LineWidget } from 'codemirror';
 import { ComicStats, SpreadStats, isSpreadStats } from '../../stats/types';
 
+/**
+ * Creates an object that shows a spread's panel count in a line widget.
+ *
+ * @param cm CodeMirror Editor
+ */
 export function create(cm: Editor) {
   let widgets: Array<LineWidget> = [];
 

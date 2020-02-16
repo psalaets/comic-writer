@@ -210,7 +210,7 @@ export default class Chunk {
   }
 
   /**
-   * Convert this chunks to non-bold.
+   * Convert this chunk to non-bold.
    *
    * @returns Non-bold chunk
    */

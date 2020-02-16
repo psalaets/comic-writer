@@ -3,6 +3,11 @@ import visit from '../parser/visit';
 import { SPREAD, PANEL, DIALOGUE, CAPTION } from '../comic-part-types';
 import { ComicStats } from './types';
 
+/**
+ * Pulls some stats out of a comic writer script parse result.
+ *
+ * @param parseResult
+ */
 export function extractStats(parseResult: Array<ComicChild>): Array<ComicStats> {
   const stats: Array<ComicStats> = [];
   let panelsSeen = 0;

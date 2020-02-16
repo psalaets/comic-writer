@@ -2,6 +2,12 @@ import { Editor } from 'codemirror';
 import { isSpreadStats, ComicStats } from '../../stats/types';
 export const ID = 'word-counts';
 
+/**
+ * Creates an object that updates the word counts gutter in the CodeMirror
+ * Editor.
+ *
+ * @param cm CodeMirror Editor
+ */
 export function create(cm: Editor) {
   return {
     update(stats: Array<ComicStats>) {

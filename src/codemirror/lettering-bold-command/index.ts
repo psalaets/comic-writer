@@ -11,6 +11,12 @@ interface Selection {
   head: CodeMirror.Position
 }
 
+/**
+ * CodeMirror command that toggles text in comic lettering to/from bold. No
+ * matter what the user's text selection is, this tries to do the Right Thing.
+ *
+ * @param cm CodeMirror Editor
+ */
 export function letteringBoldCommand(cm: CodeMirror.Editor) {
   const cursor = cm.getCursor();
 

@@ -4,6 +4,12 @@ import 'codemirror/addon/hint/show-hint.css';
 
 const SUBJECT_PLACEHOLDER = 'subject';
 
+/**
+ * A code-editor style snippet for creating dialogue/caption/sfx.
+ *
+ * @param cm CodeMirror Editor
+ * @param getCharacterNames
+ */
 export function letteringSnippet(
   cm: CodeMirror.Editor,
   getCharacterNames: () => Array<string>
