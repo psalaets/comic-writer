@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/react-redux": "^7.1.7",
     "codemirror": "^5.49.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
@@ -34,6 +33,7 @@
     "@types/react": "^16.9.16",
     "@types/react-aria-modal": "^4.0.1",
     "@types/react-dom": "^16.9.4",
+    "@types/react-redux": "^7.1.7",
     "plop": "^2.4.0",
     "react-test-renderer": "^16.9.0",
     "stylelint": "^9.10.1",
