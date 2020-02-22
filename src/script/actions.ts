@@ -1,5 +1,6 @@
+import debounce from 'lodash/debounce';
 
-import { ThunkResult } from '../store/types';
+import { ThunkResult, ThunkCompatibleDispatch } from '../store/types';
 import {
   CHANGE_SOURCE,
   SAVE_SCRIPT_STARTED,
@@ -11,7 +12,18 @@ import {
 
 import localstorage from '../localstorage';
 
-export function changeSource(source: string): ScriptActionTypes {
+const debouncedSaveScript = debounce((source: string, dispatch: ThunkCompatibleDispatch) => {
+  dispatch(saveScript(source));
+}, 1000);
+
+export function changeSource(source: string): ThunkResult {
+  return function changeSourceThunk(dispatch, getState) {
+    dispatch(changeSourceInternal(source));
+    debouncedSaveScript(source, dispatch);
+  };
+}
+
+function changeSourceInternal(source: string): ScriptActionTypes {
   return {
     type: CHANGE_SOURCE,
     payload: {
@@ -20,12 +32,15 @@ export function changeSource(source: string): ScriptActionTypes {
   };
 }
 
-export function saveScript(source: string): ThunkResult {
+function saveScript(source: string): ThunkResult {
   return function saveScriptThunk(dispatch) {
     dispatch(saveScriptStarted());
 
     localstorage.set('comic-writer.script', source)
-      .then(() => dispatch(saveScriptCompleted()));
+      .then(() => {
+        dispatch(saveScriptCompleted())
+        console.log('save script completed');
+      });
   };
 }
 

@@ -1,6 +1,7 @@
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { EditorState } from '../editor/types';
 import { ScriptState, ScriptActionTypes } from '../script/types';
+import { Action } from 'redux';
 
 /**
  * Defines the state shape of the whole store.
@@ -27,3 +28,19 @@ export type ThunkResult<ReturnType = void> = ThunkAction<
   undefined,
   AppActionTypes
 >
+
+/**
+ * Helper type for the dispatch function passed to mapPropsToDispatch when
+ * creating a react-redux connected component.
+ *
+ * Example usage:
+ *
+ * function mapDispatchToProps(dispatch: ThunkCompatibleDispatch) {
+ *   return {
+ *     onChange(event: SomeEvent) {
+ *       dispatch(actions.blah(event.value));
+ *     }
+ *   };
+ * }
+ */
+export type ThunkCompatibleDispatch = ThunkDispatch<RootState, undefined, Action>;

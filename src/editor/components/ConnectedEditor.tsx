@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 
 import Editor from './Editor';
 
 import { selectors, actions } from '../../script';
 
 import { EditorChangeEvent } from '../types';
-import { RootState } from '../../store/types';
+import { RootState, ThunkCompatibleDispatch } from '../../store/types';
 
 function mapStateToProps(state: RootState) {
   return {
@@ -17,7 +16,7 @@ function mapStateToProps(state: RootState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
+function mapDispatchToProps(dispatch: ThunkCompatibleDispatch) {
   return {
     onChange(event: EditorChangeEvent) {
       dispatch(actions.changeSource(event.value));
