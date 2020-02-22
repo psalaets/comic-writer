@@ -81,13 +81,13 @@ class App extends Component<{}, AppState> {
             <ConnectedWriter/>
           </div>
           <div className="c-app__footer">
-            <Drawer title="Insights" isOpen={this.state.drawerIsOpen} propagateHeight={true}>
+            {/* <Drawer title="Insights" isOpen={this.state.drawerIsOpen} propagateHeight={true}>
               <Stats>
                 <ConnectedStats.PageCount/>
                 <ConnectedStats.DialougeLength/>
                 <ConnectedStats.PageHistogram/>
               </Stats>
-            </Drawer>
+            </Drawer> */}
           </div>
         </div>
         {this.renderModal()}

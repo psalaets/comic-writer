@@ -3,16 +3,15 @@ import {
   LOAD_SCRIPT_COMPLETED,
   EditorActionTypes,
   EditorState
-} from '../../types';
+} from './types';
 
 const initialState: EditorState = {
   source: ''
 };
 
-export default function editorReducer(
-  state = initialState,
-  action: EditorActionTypes
-): EditorState {
+export default reducer;
+
+function reducer(state = initialState, action: EditorActionTypes): EditorState {
   switch (action.type) {
     case LOAD_SCRIPT_COMPLETED: {
       return {

@@ -1,5 +1,5 @@
 import { Editor, LineWidget } from 'codemirror';
-import { ComicStats, SpreadStats, isSpreadStats } from '../../stats/types';
+import { PanelCount } from '../../../../editor/types';
 
 /**
  * Creates an object that shows a spread's panel count in a line widget.
@@ -10,16 +10,15 @@ export function create(cm: Editor) {
   let widgets: Array<LineWidget> = [];
 
   return {
-    update(stats: Array<ComicStats>) {
+    update(panelCounts: Array<PanelCount>) {
       cm.operation(() => {
         // clear existing widgets
         widgets.forEach(widget => widget.clear());
 
         // add new widgets
-        widgets = stats
-          .filter(isSpreadStats)
-          .filter(spread => spread.panelCount > 0)
-          .map(spread => cm.addLineWidget(spread.lineNumber - 1, node(spread)));
+        widgets = panelCounts
+          .filter(panelCount => panelCount.count > 0)
+          .map(panelCount => cm.addLineWidget(panelCount.lineNumber - 1, node(panelCount)));
       });
 
       cm.refresh();
@@ -27,14 +26,14 @@ export function create(cm: Editor) {
   };
 }
 
-function node(spreadStats: SpreadStats) {
-  const { panelCount } = spreadStats;
+function node(panelCount: PanelCount) {
+  const { count } = panelCount;
 
   const div = document.createElement('div');
   div.classList.add('panel-count');
 
-  const label = panelCount === 1 ? 'panel' : 'panels';
-  div.textContent = `(${panelCount} ${label})`;
+  const label = count === 1 ? 'panel' : 'panels';
+  div.textContent = `(${count} ${label})`;
 
   return div;
 }

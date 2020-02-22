@@ -1,26 +1,24 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import statsSelector from '../../store/selectors/stats';
-import charactersSelector from '../../store/selectors/characters';
-import sourceSelector from '../../store/selectors/source';
-import { changeSource } from '../../store/actions';
+import { selectors, actions } from '../../editor';
 import { RootState } from '../../store/types';
 
 import Writer, { SourceChangeEvent } from './Writer';
 
 function mapStateToProps(state: RootState) {
   return {
-    source: sourceSelector(state),
-    stats: statsSelector(state),
-    characters: charactersSelector(state),
+    source: selectors.getSource(state),
+    panelCounts: selectors.getPanelCounts(state),
+    wordCounts: selectors.getWordCounts(state),
+    characters: selectors.getSpeakers(state),
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     onSourceChange(event: SourceChangeEvent) {
-      dispatch(changeSource(event.source));
+      dispatch(actions.changeSource(event.source));
     }
   };
 }

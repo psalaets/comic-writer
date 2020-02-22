@@ -1,7 +1,7 @@
 import { Token } from 'codemirror';
 import {
   LETTERING_BOLD,
-} from '../comic-writer-mode/token';
+} from '../mode/token';
 
 import Chunk from './chunk';
 

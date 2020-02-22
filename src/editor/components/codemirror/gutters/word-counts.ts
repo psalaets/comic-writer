@@ -1,5 +1,5 @@
 import { Editor } from 'codemirror';
-import { isSpreadStats, ComicStats } from '../../stats/types';
+import { WordCount } from '../../../types';
 export const ID = 'word-counts';
 
 /**
@@ -10,29 +10,29 @@ export const ID = 'word-counts';
  */
 export function create(cm: Editor) {
   return {
-    update(stats: Array<ComicStats>) {
+    update(wordCounts: Array<WordCount>) {
       cm.operation(() => {
         // clear
         cm.clearGutter(ID);
 
         // set new counts
-        stats
-          .filter(stat => stat.wordCount > 0)
-          .forEach(stat => {
-            cm.setGutterMarker(stat.lineNumber - 1, ID, element(stat))
+        wordCounts
+          .filter(wordCount => wordCount.count > 0)
+          .forEach(wordCount => {
+            cm.setGutterMarker(wordCount.lineNumber - 1, ID, element(wordCount))
           });
       });
     }
   };
 }
 
-function element(stat: ComicStats) {
+function element(wordCount: WordCount) {
   const span = document.createElement('span');
 
-  if (isSpreadStats(stat)) {
+  if (wordCount.isSpread) {
     span.classList.add('word-count--page');
   }
 
-  span.textContent = String(stat.wordCount);
+  span.textContent = String(wordCount.count);
   return span;
 }

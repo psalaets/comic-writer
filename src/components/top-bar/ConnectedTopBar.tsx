@@ -2,11 +2,8 @@ import { connect } from 'react-redux';
 import TopBar from './TopBar';
 import { RootState } from '../../store/types';
 
-import parseResultSelector from '../../store/selectors/parse-result';
-
 function mapStateToProps(state: RootState) {
   return {
-    parseResult: parseResultSelector(state)
   };
 }
 

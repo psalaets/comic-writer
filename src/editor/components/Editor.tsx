@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-import { ComicStats } from '../../stats/types';
-import CodeMirror from './CodeMirror';
+import { PanelCount, WordCount, EditorChangeEvent } from '../types';
+import CodeMirror from './codemirror/CodeMirror';
 
 type Props = {
-  value: string;
-  stats: Array<ComicStats>;
-  characters: Array<string>;
-  onChange: (event: EditorChangeEvent) => void;
-}
-
-export interface EditorChangeEvent {
-  value: string;
+  value: string,
+  panelCounts: Array<PanelCount>,
+  wordCounts: Array<WordCount>,
+  characters: Array<string>,
+  onChange: (event: EditorChangeEvent) => void
 }
 
 export default class Editor extends Component<Props> {
@@ -25,7 +22,8 @@ export default class Editor extends Component<Props> {
       <CodeMirror
         editorWidth={80}
         value={this.props.value}
-        stats={this.props.stats}
+        panelCounts={this.props.panelCounts}
+        wordCounts={this.props.wordCounts}
         characters={this.props.characters}
         onChange={this.handleChange}
       />

@@ -1,49 +1,47 @@
 import React, { Component } from 'react';
 
 import CodeMirror from 'codemirror';
-import 'codemirror/lib/codemirror.css';
-import './CodeMirror.css';
-
-import { ComicStats } from '../../stats/types';
-import { EditorChangeEvent } from './Editor';
-
-import { preprocessLines } from '../../preprocessor';
-
-import { MODE, THEME } from '../../codemirror/comic-writer-mode';
-import {
-  ID as WORD_COUNTS,
-  create as createWordCounts
-} from '../../codemirror/gutters/word-counts';
-
-import {
-  create as createPanelCounts
-} from '../../codemirror/line-widgets/panel-counts';
-
-import { letteringSnippet } from '../../codemirror/lettering-snippet';
-import { letteringBoldCommand } from '../../codemirror/lettering-bold-command';
-
-import '../../codemirror/theme.css';
-
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/addon/scroll/scrollpastend';
 
+import 'codemirror/lib/codemirror.css';
+import './CodeMirror.css';
+import './theme.css';
+
+import { PanelCount, WordCount, EditorChangeEvent } from '../../types';
+
+import { preprocessLines } from './preprocessor';
+import { MODE, THEME } from './mode';
+import {
+  ID as WORD_COUNTS,
+  create as createWordCounts
+} from './gutters/word-counts';
+import { create as createPanelCounts } from './line-widgets/panel-counts';
+import { letteringSnippet } from './lettering-snippet';
+import { letteringBoldCommand } from './lettering-bold-command';
+
 type Props = {
-  value: string;
-  editorWidth: number;
-  stats: Array<ComicStats>;
-  characters: Array<string>;
-  onChange: (event: EditorChangeEvent) => void;
+  value: string,
+  editorWidth: number,
+  panelCounts: Array<PanelCount>,
+  wordCounts: Array<WordCount>,
+  characters: Array<string>,
+  onChange: (event: EditorChangeEvent) => void
 }
 
-type StatsPlugin = {
-  update: (stats: Array<ComicStats>) => void;
+type PanelCountsPlugin = {
+  update: (counts: Array<PanelCount>) => void;
+}
+
+type WordCountsPlugin = {
+  update: (counts: Array<WordCount>) => void;
 }
 
 export default class CodeMirrorComponent extends Component<Props> {
   rootRef = React.createRef<HTMLDivElement>();
   cm: CodeMirror.Editor | null = null;
-  wordCounts: StatsPlugin | null = null;
-  panelCounts: StatsPlugin | null = null;
+  wordCounts: WordCountsPlugin | null = null;
+  panelCounts: PanelCountsPlugin | null = null;
 
   constructor(props: Props) {
     super(props);
@@ -60,7 +58,8 @@ export default class CodeMirrorComponent extends Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     const valueChanged = prevProps.value !== this.props.value;
-    const statsChanged = prevProps.stats !== this.props.stats;
+    const panelCountsChanged = prevProps.panelCounts !== this.props.panelCounts;
+    const wordCountsChanged = prevProps.wordCounts !== this.props.wordCounts;
 
     // initial value
     const cm = this.getCodeMirrorInstance();
@@ -68,9 +67,12 @@ export default class CodeMirrorComponent extends Component<Props> {
       cm.setValue(this.props.value);
     }
 
-    if (statsChanged) {
-      this.updateWordCounts(this.props.stats);
-      this.updatePanelCounts(this.props.stats);
+    if (panelCountsChanged) {
+      this.updatePanelCounts(this.props.panelCounts);
+    }
+
+    if (wordCountsChanged) {
+      this.updateWordCounts(this.props.wordCounts);
     }
   }
 
@@ -82,20 +84,20 @@ export default class CodeMirrorComponent extends Component<Props> {
     return this.cm;
   }
 
-  updateWordCounts(stats: Array<ComicStats>): void {
+  updateWordCounts(counts: Array<WordCount>): void {
     if (this.wordCounts == null) {
       throw new Error('wordCounts is not initialized yet');
     }
 
-    this.wordCounts.update(stats);
+    this.wordCounts.update(counts);
   }
 
-  updatePanelCounts(stats: Array<ComicStats>): void {
+  updatePanelCounts(counts: Array<PanelCount>): void {
     if (this.panelCounts == null) {
       throw new Error('panelCounts is not initialized yet?');
     }
 
-    this.panelCounts.update(stats);
+    this.panelCounts.update(counts);
   }
 
   getRootElement(): HTMLElement {

@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import './Writer.css';
 
-import Editor, { EditorChangeEvent } from '../editor/Editor';
-import { ComicStats } from '../../stats/types';
+import { Editor } from '../../editor';
+import { EditorChangeEvent, PanelCount, WordCount } from '../../editor/types';
 
 export interface SourceChangeEvent {
   source: string;
 }
 
-type WriterProps = {
+interface WriterProps {
   source: string;
   onSourceChange: (event: SourceChangeEvent) => void;
-  stats: Array<ComicStats>;
+  panelCounts: Array<PanelCount>;
+  wordCounts: Array<WordCount>;
   characters: Array<string>;
 };
 
@@ -35,7 +36,8 @@ export default class Writer extends Component<WriterProps, {}> {
         <Editor
           key="editor"
           value={this.props.source}
-          stats={this.props.stats}
+          panelCounts={this.props.panelCounts}
+          wordCounts={this.props.wordCounts}
           characters={this.props.characters}
           onChange={this.handleChange}
         />

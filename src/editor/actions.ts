@@ -1,3 +1,6 @@
+// action creators
+
+import { ThunkResult } from '../store/types';
 import {
   CHANGE_SOURCE,
   SAVE_SCRIPT_STARTED,
@@ -5,7 +8,6 @@ import {
   LOAD_SCRIPT_STARTED,
   LOAD_SCRIPT_COMPLETED,
   EditorActionTypes,
-  ThunkResult
 } from './types';
 
 import localstorage from '../localstorage';
