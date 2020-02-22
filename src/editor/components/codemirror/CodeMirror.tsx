@@ -8,7 +8,8 @@ import 'codemirror/lib/codemirror.css';
 import './CodeMirror.css';
 import './theme.css';
 
-import { PanelCount, WordCount, EditorChangeEvent } from '../../types';
+import { EditorChangeEvent } from '../../types';
+import { PanelCount, WordCount } from '../../../script/types';
 
 import { preprocessLines } from './preprocessor';
 import { MODE, THEME } from './mode';

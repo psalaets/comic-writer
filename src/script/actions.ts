@@ -1,4 +1,3 @@
-// action creators
 
 import { ThunkResult } from '../store/types';
 import {
@@ -7,12 +6,12 @@ import {
   SAVE_SCRIPT_COMPLETED,
   LOAD_SCRIPT_STARTED,
   LOAD_SCRIPT_COMPLETED,
-  EditorActionTypes,
+  ScriptActionTypes,
 } from './types';
 
 import localstorage from '../localstorage';
 
-export function changeSource(source: string): EditorActionTypes {
+export function changeSource(source: string): ScriptActionTypes {
   return {
     type: CHANGE_SOURCE,
     payload: {
@@ -30,13 +29,13 @@ export function saveScript(source: string): ThunkResult {
   };
 }
 
-function saveScriptStarted(): EditorActionTypes {
+function saveScriptStarted(): ScriptActionTypes {
   return {
     type: SAVE_SCRIPT_STARTED
   };
 }
 
-function saveScriptCompleted(): EditorActionTypes {
+function saveScriptCompleted(): ScriptActionTypes {
   return {
     type: SAVE_SCRIPT_COMPLETED
   };
@@ -54,13 +53,13 @@ export function loadScript(): ThunkResult {
   };
 }
 
-function loadScriptStarted(): EditorActionTypes {
+function loadScriptStarted(): ScriptActionTypes {
   return {
     type: LOAD_SCRIPT_STARTED
   };
 }
 
-function loadScriptCompleted(source: string): EditorActionTypes {
+function loadScriptCompleted(source: string): ScriptActionTypes {
   return {
     type: LOAD_SCRIPT_COMPLETED,
     payload: {

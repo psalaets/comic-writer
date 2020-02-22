@@ -1,5 +1,5 @@
 import { Editor } from 'codemirror';
-import { WordCount } from '../../../types';
+import { WordCount } from '../../../../script/types';
 export const ID = 'word-counts';
 
 /**

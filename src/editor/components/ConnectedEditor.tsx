@@ -3,7 +3,7 @@ import { Dispatch } from 'redux';
 
 import Editor from './Editor';
 
-import { selectors, actions } from '../../editor';
+import { selectors, actions } from '../../script';
 
 import { EditorChangeEvent } from '../types';
 import { RootState } from '../../store/types';

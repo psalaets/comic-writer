@@ -1,5 +1,5 @@
 import { Editor, LineWidget } from 'codemirror';
-import { PanelCount } from '../../../../editor/types';
+import { PanelCount } from '../../../../script/types';
 
 /**
  * Creates an object that shows a spread's panel count in a line widget.

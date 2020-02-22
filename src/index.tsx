@@ -7,7 +7,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import store from './store';
-import { actions } from './editor';
+import { actions } from './script';
 
 store.dispatch(actions.loadScript());
 

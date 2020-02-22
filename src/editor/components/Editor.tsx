@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { PanelCount, WordCount, EditorChangeEvent } from '../types';
+import { EditorChangeEvent } from '../types';
+import { PanelCount, WordCount } from '../../script/types';
 import CodeMirror from './codemirror/CodeMirror';
 
 type Props = {

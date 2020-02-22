@@ -1,14 +1,19 @@
 import { ThunkAction } from 'redux-thunk';
-import { EditorState, EditorActionTypes } from '../editor/types';
+import { EditorState } from '../editor/types';
+import { ScriptState, ScriptActionTypes } from '../script/types';
 
 /**
  * Defines the state shape of the whole store.
  */
 export interface RootState {
-  editor: EditorState
+  editor: EditorState,
+  script: ScriptState
 }
 
-export type AppActionTypes = EditorActionTypes;
+/**
+ * Every action type in the app.
+ */
+export type AppActionTypes = ScriptActionTypes;
 
 /**
  * Helper type for using redux-thunk in our app.

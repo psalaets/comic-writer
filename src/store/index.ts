@@ -3,7 +3,7 @@ import thunk, { ThunkMiddleware } from 'redux-thunk';
 import debounce from 'lodash/debounce';
 
 import rootReducer from './root-reducer';
-import { selectors, actions } from '../editor';
+import { selectors, actions } from '../script';
 import { RootState, AppActionTypes } from './types';
 
 const store = createStore(
