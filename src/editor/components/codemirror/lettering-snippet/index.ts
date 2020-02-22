@@ -135,9 +135,14 @@ function makeHinter(characterNames: Array<string>) {
     const cursor = cm.getCursor();
     const token = cm.getTokenAt(cursor);
 
-    const suggestions = ['caption', 'sfx'].concat(characterNames)
-      .filter(name => {
-        return token.string === SUBJECT_PLACEHOLDER || name.startsWith(token.string);
+    const current = token.string.toLocaleUpperCase();
+
+    const suggestions = ['caption', 'sfx']
+      .concat(characterNames)
+      .map(suggestion => suggestion.toLocaleUpperCase())
+      .filter(suggestion => {
+        return current === SUBJECT_PLACEHOLDER.toLocaleUpperCase()
+          || suggestion.startsWith(current.toLocaleUpperCase());
       });
 
     return {

@@ -29,9 +29,14 @@ export const getSpeakers = createSelector(
       }
     });
 
-    return [...new Set(allSpeakers)].sort();
+    return dedupe(allSpeakers).sort();
   }
 );
+
+function dedupe(speakers: Array<string>): Array<string> {
+  const allCaps = speakers.map(speaker => speaker.toLocaleUpperCase());
+  return [...new Set(allCaps)];
+}
 
 export const getPanelCounts = createSelector(
   getParseResult,
