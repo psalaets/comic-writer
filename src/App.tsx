@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import ConnectedWriter from './components/writer/ConnectedWriter';
+import Writer from './components/writer/Writer';
 import Stats from './components/stats/Stats';
 import ConnectedStats from './components/stats/ConnectedStats';
 import ConnectedTopBar from './components/top-bar/ConnectedTopBar';
@@ -78,7 +78,7 @@ class App extends Component<{}, AppState> {
             />
           </div>
           <div className="c-app__writer">
-            <ConnectedWriter/>
+            <Writer />
           </div>
           <div className="c-app__footer">
             {/* <Drawer title="Insights" isOpen={this.state.drawerIsOpen} propagateHeight={true}>

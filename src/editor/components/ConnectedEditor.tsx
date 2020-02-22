@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { selectors, actions } from '../../editor';
-import { RootState } from '../../store/types';
+import Editor from './Editor';
 
-import Writer, { SourceChangeEvent } from './Writer';
+import { selectors, actions } from '../../editor';
+
+import { EditorChangeEvent } from '../types';
+import { RootState } from '../../store/types';
 
 function mapStateToProps(state: RootState) {
   return {
-    source: selectors.getSource(state),
+    value: selectors.getSource(state),
     panelCounts: selectors.getPanelCounts(state),
     wordCounts: selectors.getWordCounts(state),
     characters: selectors.getSpeakers(state),
@@ -17,15 +19,13 @@ function mapStateToProps(state: RootState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    onSourceChange(event: SourceChangeEvent) {
-      dispatch(actions.changeSource(event.source));
+    onChange(event: EditorChangeEvent) {
+      dispatch(actions.changeSource(event.value));
     }
   };
 }
 
-const ConnectedWriter = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Writer);
-
-export default ConnectedWriter;
+)(Editor);

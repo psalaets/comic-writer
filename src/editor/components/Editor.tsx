@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { PanelCount, WordCount, EditorChangeEvent } from '../types';
 import CodeMirror from './codemirror/CodeMirror';
 

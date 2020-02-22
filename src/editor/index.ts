@@ -2,7 +2,7 @@ import * as actions from './actions';
 import reducer from './reducer';
 import * as selectors from './selectors';
 
-export { default as Editor } from './components/Editor';
+export { default as ConnectedEditor } from './components/ConnectedEditor';
 
 export {
   actions,
