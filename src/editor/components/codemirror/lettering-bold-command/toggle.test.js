@@ -1,7 +1,7 @@
 import {
   LETTERING_CONTENT,
   LETTERING_BOLD,
-} from '../comic-writer-mode/token';
+} from '../mode/token';
 
 import { toggle } from './toggle';
 
