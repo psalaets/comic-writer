@@ -4,14 +4,12 @@ export interface ParserState {
   currentSpreadLabel: string;
   currentSpreadId: string;
   currentLetteringNumber: number;
-  currentPageId: string;
   currentPanelId: string;
   currentLetteringId: string;
   currentMetadataId: string;
   currentParagraphId: string;
 
   startNewSpread(pageCount: number): void;
-  startNewPage(): void;
   startNewPanel(): void;
   startNewLettering(): void;
   startNewMetadata(): void;
@@ -20,7 +18,6 @@ export interface ParserState {
 
 export function create(): ParserState {
   let pagesSeen = 0;
-  let pageNumber = 0;
   let panelNumber = 0;
   let letteringNumber = 0;
 
@@ -36,11 +33,6 @@ export function create(): ParserState {
         : `${pagesSeen + 1}-${pagesSeen + pageCount}`;
 
       pagesSeen += pageCount;
-      panelNumber = 0;
-      letteringNumber = 0;
-    },
-    startNewPage() {
-      pageNumber += 1;
       panelNumber = 0;
       letteringNumber = 0;
     },
@@ -64,9 +56,6 @@ export function create(): ParserState {
     },
     get currentLetteringNumber() {
       return letteringNumber;
-    },
-    get currentPageId() {
-      return String(pageNumber);
     },
     get currentPanelId() {
       return `${this.currentSpreadId}.${panelNumber}`;
