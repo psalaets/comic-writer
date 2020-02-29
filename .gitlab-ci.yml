@@ -33,7 +33,8 @@ lint_css:
 audit_js:
   stage: test
   script:
-    - npx auditjs --prod --report --suppressExitError
+    - mkdir reports
+    - npx auditjs npx auditjs ossi --xml > reports/scan_node_modules.xml
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     paths:
