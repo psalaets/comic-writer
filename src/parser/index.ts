@@ -158,7 +158,9 @@ function parsePanelContent(
   const content: Array<PanelChild> = [];
 
   while (!lines.nextIsPanelEnd()) {
-    if (lines.nextIsCaption()) {
+    if (lines.nextIsEmpty()) {
+      lines.consume();
+    } else if (lines.nextIsCaption()) {
       content.push(parseCaption(lines, state));
     } else if (lines.nextIsSfx()) {
       content.push(parseSfx(lines, state));
@@ -168,8 +170,6 @@ function parsePanelContent(
       content.push(parseMetadata(lines, state));
     } else if (lines.nextIsParagraph()) {
       content.push(parseParagraph(lines, state));
-    } else if (lines.nextIsEmpty()) {
-      lines.consume();
     }
   }
 
