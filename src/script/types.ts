@@ -63,11 +63,13 @@ export interface ScriptState {
 
 export interface PanelCount {
   count: number,
+  /** One-based line number */
   lineNumber: number
 }
 
 export interface WordCount {
   count: number,
+  /** One-based line number */
   lineNumber: number,
   isSpread: boolean
 }

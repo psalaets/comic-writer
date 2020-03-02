@@ -1,4 +1,4 @@
-import { Editor, LineWidget } from 'codemirror';
+import { Editor } from 'codemirror';
 import { PanelCount } from '../../../../script/types';
 
 /**
@@ -7,33 +7,36 @@ import { PanelCount } from '../../../../script/types';
  * @param cm CodeMirror Editor
  */
 export function create(cm: Editor) {
-  let widgets: Array<LineWidget> = [];
-
   return {
     update(panelCounts: Array<PanelCount>) {
       cm.operation(() => {
-        // clear existing widgets
-        widgets.forEach(widget => widget.clear());
+        panelCounts
+          .forEach(panelCount => {
+            const lineInfo = cm.lineInfo(panelCount.lineNumber - 1);
 
-        // add new widgets
-        widgets = panelCounts
-          .filter(panelCount => panelCount.count > 0)
-          .map(panelCount => cm.addLineWidget(panelCount.lineNumber - 1, node(panelCount)));
+            if (lineInfo.widgets && lineInfo.widgets[0]) {
+              // update widget
+              lineInfo.widgets[0].node.textContent = widgetText(panelCount.count);
+            } else {
+              // add new widget
+              cm.addLineWidget(panelCount.lineNumber - 1, node(panelCount.count));
+            }
+          });
       });
-
-      cm.refresh();
     }
   };
 }
 
-function node(panelCount: PanelCount) {
-  const { count } = panelCount;
-
+function node(count: number) {
   const div = document.createElement('div');
-  div.classList.add('panel-count');
 
-  const label = count === 1 ? 'panel' : 'panels';
-  div.textContent = `(${count} ${label})`;
+  div.classList.add('panel-count');
+  div.textContent = widgetText(count);
 
   return div;
+}
+
+function widgetText(count: number): string {
+  const label = count === 1 ? 'panel' : 'panels';
+  return `(${count} ${label})`;
 }
