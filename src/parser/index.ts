@@ -33,7 +33,7 @@ export default function parse(source: string): Array<ComicChild> {
 function parseScript(lines: LineStream, state: ParserState): Array<ComicChild> {
   const script: Array<ComicChild> = [];
 
-  while (lines.hasMore()) {
+  while (lines.hasMoreLines()) {
     if (lines.nextIsSpreadStart()) {
       script.push(parseSpread(lines, state));
     } else if (lines.nextIsPanelStart()) {
@@ -307,7 +307,7 @@ interface LineStream {
   nextIsEmpty(): boolean;
   consume(): string;
   peek(): string;
-  hasMore(): boolean;
+  hasMoreLines(): boolean;
   lineNumber: number;
 }
 
@@ -319,34 +319,34 @@ function lineStream(source: string): LineStream {
 
   return {
     nextIsSfx() {
-      return this.hasMore() && SFX_REGEX.test(this.peek());
+      return this.hasMoreLines() && SFX_REGEX.test(this.peek());
     },
     nextIsCaption() {
-      return this.hasMore() && CAPTION_REGEX.test(this.peek());
+      return this.hasMoreLines() && CAPTION_REGEX.test(this.peek());
     },
     nextIsDialogue() {
-      return this.hasMore() && DIALOGUE_REGEX.test(this.peek());
+      return this.hasMoreLines() && DIALOGUE_REGEX.test(this.peek());
     },
     nextIsMetadata() {
-      return this.hasMore() && METADATA_REGEX.test(this.peek());
+      return this.hasMoreLines() && METADATA_REGEX.test(this.peek());
     },
     nextIsParagraph() {
-      return this.hasMore() && PARAGRAPH_REGEX.test(this.peek());
+      return this.hasMoreLines() && PARAGRAPH_REGEX.test(this.peek());
     },
     nextIsPanelStart() {
-      return this.hasMore() && PANEL_REGEX.test(this.peek());
+      return this.hasMoreLines() && PANEL_REGEX.test(this.peek());
     },
     nextIsSpreadStart() {
-      return this.hasMore() && SPREAD_REGEX.test(this.peek());
+      return this.hasMoreLines() && SPREAD_REGEX.test(this.peek());
     },
     nextIsSpreadEnd() {
-      return !this.hasMore() || this.nextIsSpreadStart();
+      return !this.hasMoreLines() || this.nextIsSpreadStart();
     },
     nextIsPanelEnd() {
-      return !this.hasMore() || this.nextIsSpreadStart() || this.nextIsPanelStart();
+      return !this.hasMoreLines() || this.nextIsSpreadStart() || this.nextIsPanelStart();
     },
     nextIsEmpty() {
-      return this.hasMore() && this.peek().trim() === '';
+      return this.hasMoreLines() && this.peek().trim() === '';
     },
     consume() {
       const line = this.peek();
@@ -356,7 +356,7 @@ function lineStream(source: string): LineStream {
     peek() {
       return lines[currentLine];
     },
-    hasMore() {
+    hasMoreLines() {
       return currentLine < lines.length;
     },
     get lineNumber() {
