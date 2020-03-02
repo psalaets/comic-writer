@@ -27,7 +27,14 @@ export default function parse(source: string): Array<ComicChild> {
   const lines = lineStream(source);
   const state = createParserState();
 
-  return parseScript(lines, state);
+  performance.mark('start:parse-script');
+
+  const parseResult = parseScript(lines, state);
+
+  performance.mark('end:parse-script');
+  performance.measure('parse-script', 'start:parse-script', 'end:parse-script');
+
+  return parseResult;
 }
 
 function parseScript(lines: LineStream, state: ParserState): Array<ComicChild> {
