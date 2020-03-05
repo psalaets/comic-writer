@@ -35,7 +35,7 @@ type PanelCountsPlugin = {
 }
 
 type WordCountsPlugin = {
-  update: (counts: Array<WordCount>) => void;
+  update: (counts: Array<WordCount>, prev: Array<WordCount>) => void;
 }
 
 export default class CodeMirrorComponent extends Component<Props> {
@@ -58,22 +58,19 @@ export default class CodeMirrorComponent extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    const valueChanged = prevProps.value !== this.props.value;
-    const panelCountsChanged = prevProps.panelCounts !== this.props.panelCounts;
-    const wordCountsChanged = prevProps.wordCounts !== this.props.wordCounts;
-
     // initial value
+    const valueChanged = prevProps.value !== this.props.value;
     const cm = this.getCodeMirrorInstance();
     if (valueChanged && !cm.getValue()) {
       cm.setValue(this.props.value);
     }
 
-    if (panelCountsChanged) {
+    if (this.props.panelCounts !== prevProps.panelCounts) {
       this.updatePanelCounts(this.props.panelCounts);
     }
 
-    if (wordCountsChanged) {
-      this.updateWordCounts(this.props.wordCounts);
+    if (this.props.wordCounts !== prevProps.wordCounts) {
+      this.updateWordCounts(this.props.wordCounts, prevProps.wordCounts);
     }
   }
 
@@ -85,12 +82,17 @@ export default class CodeMirrorComponent extends Component<Props> {
     return this.cm;
   }
 
-  updateWordCounts(counts: Array<WordCount>): void {
+  updateWordCounts(counts: Array<WordCount>, prev: Array<WordCount>): void {
     if (this.wordCounts == null) {
       throw new Error('wordCounts is not initialized yet');
     }
 
-    this.wordCounts.update(counts);
+    performance.mark('start:update-word-counts');
+
+    this.wordCounts.update(counts, prev);
+
+    performance.mark('end:update-word-counts');
+    performance.measure('update-word-counts', 'start:update-word-counts', 'end:update-word-counts');
   }
 
   updatePanelCounts(counts: Array<PanelCount>): void {

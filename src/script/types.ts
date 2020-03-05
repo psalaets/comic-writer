@@ -68,6 +68,8 @@ export interface PanelCount {
 }
 
 export interface WordCount {
+  /** id of the comic node this count is for */
+  nodeId: string,
   count: number,
   /** One-based line number */
   lineNumber: number,

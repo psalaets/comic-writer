@@ -66,11 +66,12 @@ export const getPanelCounts = createSelector(
 export const getWordCounts = createSelector(
   getParseResult,
   parseResult => {
-    const wordCounts = [] as Array<WordCount>;
+    const wordCounts: Array<WordCount> = [];
 
     visit(parseResult, {
       exitSpread(spread) {
         wordCounts.push({
+          nodeId: spread.id,
           count: spread.captionWordCount + spread.dialogueWordCount,
           lineNumber: spread.startingLine,
           isSpread: true
@@ -78,6 +79,7 @@ export const getWordCounts = createSelector(
       },
       exitPanel(panel) {
         wordCounts.push({
+          nodeId: panel.id,
           count: panel.captionWordCount + panel.dialogueWordCount,
           lineNumber: panel.startingLine,
           isSpread: false
@@ -85,6 +87,7 @@ export const getWordCounts = createSelector(
       },
       exitCaption(caption) {
         wordCounts.push({
+          nodeId: caption.id,
           count: caption.wordCount,
           lineNumber: caption.startingLine,
           isSpread: false
@@ -92,6 +95,7 @@ export const getWordCounts = createSelector(
       },
       exitDialogue(dialogue) {
         wordCounts.push({
+          nodeId: dialogue.id,
           count: dialogue.wordCount,
           lineNumber: dialogue.startingLine,
           isSpread: false
