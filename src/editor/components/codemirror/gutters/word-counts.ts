@@ -17,8 +17,6 @@ export function create(cm: Editor) {
 function createUpdater(cm: Editor) {
   return function updateWordCounts(wordCounts: Array<WordCount>, prevCounts: Array<WordCount>) {
     cm.operation(() => {
-      performance.mark('start:updates');
-
       // the fast, easy, ideal and common case
       if (sameStructure(wordCounts, prevCounts)) {
         findDifferentCounts(wordCounts, prevCounts)
@@ -50,9 +48,6 @@ function createUpdater(cm: Editor) {
           }
         });
       }
-
-      performance.mark('end:updates');
-      performance.measure('updates', 'start:updates', 'end:updates');
     });
   };
 }

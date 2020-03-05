@@ -57,6 +57,11 @@ export default class CodeMirrorComponent extends Component<Props> {
     return <div className="c-codemirror" style={styles} ref={this.rootRef} />;
   }
 
+  shouldComponentUpdate() {
+    // CodeMirror and various plugins handle all updates
+    return false;
+  }
+
   componentDidUpdate(prevProps: Props) {
     // initial value
     const valueChanged = prevProps.value !== this.props.value;
