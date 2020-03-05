@@ -14,40 +14,25 @@ export function create(cm: Editor) {
   };
 }
 
+// updates and removes
+//    for every cached line handle
+//      if its line number has something in the new and word count is different than cached
+//        update it and cache new line handle
+//      else if line number doesn't have anything in new
+//        remove it
+//      end
+//    end
+//
+// adds
+//    for every incoming word count
+//      if that line didn't already have a thing added
+//        add it and cache line handle
+
+
 function createUpdater(cm: Editor) {
   return function updateWordCounts(wordCounts: Array<WordCount>, prevCounts: Array<WordCount>) {
     cm.operation(() => {
-      // the fast, easy, ideal and common case
-      if (sameStructure(wordCounts, prevCounts)) {
-        findDifferentCounts(wordCounts, prevCounts)
-          .forEach(wordCound => {
-            if (shouldHaveGutter(wordCound)) {
-              cm.setGutterMarker(wordCound.lineNumber - 1, ID, element(wordCound));
-            } else {
-              cm.setGutterMarker(wordCound.lineNumber - 1, ID, null);
-            }
-          });
-      }
-      // the slow and brute forcey case
-      else {
-        const currByLineNumber = wordCounts.reduce((byLine, count) => {
-          byLine[count.lineNumber] = count;
-          return byLine;
-        }, {} as { [id: number]: WordCount });
 
-        cm.eachLine(lineHandle => {
-          const lineInfo = cm.lineInfo(lineHandle);
-          const wordCount = currByLineNumber[lineInfo.line + 1];
-
-          if (shouldHaveGutter(wordCount)) {
-            cm.setGutterMarker(lineInfo.line, ID, element(wordCount));
-          } else {
-            if (hasGutter(lineInfo)) {
-              cm.setGutterMarker(lineInfo.line, ID, null);
-            }
-          }
-        });
-      }
     });
   };
 }
