@@ -87,12 +87,7 @@ export default class CodeMirrorComponent extends Component<Props> {
       throw new Error('wordCounts is not initialized yet');
     }
 
-    performance.mark('start:update-word-counts');
-
     this.wordCounts.update(counts, prev);
-
-    performance.mark('end:update-word-counts');
-    performance.measure('update-word-counts', 'start:update-word-counts', 'end:update-word-counts');
   }
 
   updatePanelCounts(counts: Array<PanelCount>): void {
