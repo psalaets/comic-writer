@@ -3,7 +3,16 @@ import { WordCount } from '../../../../script/types';
 export const ID = 'word-counts';
 
 type HandleTuple = {
+  /**
+   * The CodeMirror handle to the relevant line.
+   *
+   * Always use this to look up the line from an Editor. Looking up by line
+   * number seems good but it breaks once the line has moved.
+   */
   handle: LineHandle,
+  /**
+   * Contains the count that was last rendered for this line.
+   */
   wordCount: WordCount
 };
 
