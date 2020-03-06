@@ -52,7 +52,7 @@ function createUpdater(cm: Editor) {
             updatedLines.add(wordCount.lineNumber);
 
             // count changed so we actually need to update the gutter
-            if (wordCount.count !== tuple.wordCount.count) {
+            if (different(wordCount, tuple.wordCount)) {
               newHandles.push({
                 handle: cm.setGutterMarker(lineInfo.line, ID, element(wordCount)),
                 wordCount
@@ -86,6 +86,10 @@ function createUpdater(cm: Editor) {
       existingHandles = newHandles;
     });
   };
+}
+
+function different(countA: WordCount, countB: WordCount): boolean {
+  return countA.count !== countB.count || countA.isSpread !== countB.isSpread;
 }
 
 function shouldHaveGutter(wordCount: WordCount): boolean {
