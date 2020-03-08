@@ -24,7 +24,7 @@ const METADATA_REGEX  = /^(.+): ?(.+)/;
 const PARAGRAPH_REGEX = /^.+/;
 
 export default function parse(source: string): Array<ComicChild> {
-  const lines = lineStream(source);
+  const lines = new LineStream(source);
   const state = createParserState();
 
   performance.mark('start:parse-script');
@@ -301,73 +301,71 @@ function parseLetteringContent(content: string): Array<LetteringContentChunk> {
   return parts;
 }
 
-interface LineStream {
-  nextIsSfx(): boolean;
-  nextIsCaption(): boolean;
-  nextIsDialogue(): boolean;
-  nextIsMetadata(): boolean;
-  nextIsParagraph(): boolean;
-  nextIsPanelStart(): boolean;
-  nextIsSpreadStart(): boolean;
-  nextIsSpreadEnd(): boolean;
-  nextIsPanelEnd(): boolean;
-  nextIsEmpty(): boolean;
-  consume(): string;
-  peek(): string;
-  hasMoreLines(): boolean;
-  lineNumber: number;
-}
+class LineStream {
+  lines: Array<string>;
+  currentLine: number;
 
-function lineStream(source: string): LineStream {
-  const lines = (source || '')
-    .split('\n');
+  constructor(source: string) {
+    this.currentLine = 0;
+    this.lines = (source || '')
+      .split('\n');
+  }
 
-  let currentLine = 0;
+  get lineNumber() {
+    return this.currentLine;
+  }
 
-  return {
-    nextIsSfx() {
-      return this.hasMoreLines() && SFX_REGEX.test(this.peek());
-    },
-    nextIsCaption() {
-      return this.hasMoreLines() && CAPTION_REGEX.test(this.peek());
-    },
-    nextIsDialogue() {
-      return this.hasMoreLines() && DIALOGUE_REGEX.test(this.peek());
-    },
-    nextIsMetadata() {
-      return this.hasMoreLines() && METADATA_REGEX.test(this.peek());
-    },
-    nextIsParagraph() {
-      return this.hasMoreLines() && PARAGRAPH_REGEX.test(this.peek());
-    },
-    nextIsPanelStart() {
-      return this.hasMoreLines() && PANEL_REGEX.test(this.peek());
-    },
-    nextIsSpreadStart() {
-      return this.hasMoreLines() && SPREAD_REGEX.test(this.peek());
-    },
-    nextIsSpreadEnd() {
-      return !this.hasMoreLines() || this.nextIsSpreadStart();
-    },
-    nextIsPanelEnd() {
-      return !this.hasMoreLines() || this.nextIsSpreadStart() || this.nextIsPanelStart();
-    },
-    nextIsEmpty() {
-      return this.hasMoreLines() && this.peek().trim() === '';
-    },
-    consume() {
-      const line = this.peek();
-      currentLine += 1;
-      return line;
-    },
-    peek() {
-      return lines[currentLine];
-    },
-    hasMoreLines() {
-      return currentLine < lines.length;
-    },
-    get lineNumber() {
-      return currentLine;
-    }
-  };
+  nextIsSfx(): boolean {
+    return this.hasMoreLines() && SFX_REGEX.test(this.peek());
+  }
+
+  nextIsCaption(): boolean {
+    return this.hasMoreLines() && CAPTION_REGEX.test(this.peek());
+  }
+
+  nextIsDialogue(): boolean {
+    return this.hasMoreLines() && DIALOGUE_REGEX.test(this.peek());
+  }
+
+  nextIsMetadata(): boolean {
+    return this.hasMoreLines() && METADATA_REGEX.test(this.peek());
+  }
+
+  nextIsParagraph(): boolean {
+    return this.hasMoreLines() && PARAGRAPH_REGEX.test(this.peek());
+  }
+
+  nextIsPanelStart(): boolean {
+    return this.hasMoreLines() && PANEL_REGEX.test(this.peek());
+  }
+
+  nextIsSpreadStart(): boolean {
+    return this.hasMoreLines() && SPREAD_REGEX.test(this.peek());
+  }
+
+  nextIsSpreadEnd(): boolean {
+    return !this.hasMoreLines() || this.nextIsSpreadStart();
+  }
+
+  nextIsPanelEnd(): boolean {
+    return !this.hasMoreLines() || this.nextIsSpreadStart() || this.nextIsPanelStart();
+  }
+
+  nextIsEmpty(): boolean {
+    return this.hasMoreLines() && this.peek().trim() === '';
+  }
+
+  consume(): string {
+    const line = this.peek();
+    this.currentLine += 1;
+    return line;
+  }
+
+  peek(): string {
+    return this.lines[this.currentLine];
+  }
+
+  hasMoreLines(): boolean {
+    return this.currentLine < this.lines.length;
+  }
 }
