@@ -12,14 +12,14 @@ export function create(cm: Editor) {
       cm.operation(() => {
         panelCounts
           .forEach(panelCount => {
-            const lineInfo = cm.lineInfo(panelCount.lineNumber - 1);
+            const lineInfo = cm.lineInfo(panelCount.lineNumber);
 
             if (lineInfo.widgets && lineInfo.widgets[0]) {
               // update widget
               lineInfo.widgets[0].node.textContent = widgetText(panelCount.count);
             } else {
               // add new widget
-              cm.addLineWidget(panelCount.lineNumber - 1, node(panelCount.count));
+              cm.addLineWidget(panelCount.lineNumber, node(panelCount.count));
             }
           });
       });

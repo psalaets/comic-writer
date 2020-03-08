@@ -64,7 +64,7 @@ export interface ScriptState {
 
 export interface PanelCount {
   count: number,
-  /** One-based line number */
+  /** Zero-based line number */
   lineNumber: number
 }
 
@@ -72,7 +72,7 @@ export interface WordCount {
   /** id of the comic node this count is for */
   nodeId: string,
   count: number,
-  /** One-based line number */
+  /** Zero-based line number */
   lineNumber: number,
   isSpread: boolean
 }

@@ -54,7 +54,7 @@ function createUpdater(cm: Editor) {
           if (!lineInfo) return;
 
           // Look up the line's word count for this pass, if any
-          const wordCount = wordCountsByLineNumber[lineInfo.line + 1];
+          const wordCount = wordCountsByLineNumber[lineInfo.line];
 
           if (shouldHaveGutter(wordCount)) {
             // mark this line as: word count has been updated
@@ -86,7 +86,7 @@ function createUpdater(cm: Editor) {
         // show the count
         .forEach(wordCount => {
           newHandles.push({
-            handle: cm.setGutterMarker(wordCount.lineNumber - 1, ID, element(wordCount)),
+            handle: cm.setGutterMarker(wordCount.lineNumber, ID, element(wordCount)),
             wordCount
           });
         });

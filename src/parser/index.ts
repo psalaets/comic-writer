@@ -27,12 +27,12 @@ export default function parse(source: string): Array<ComicChild> {
   const lines = new LineStream(source);
   const state = createParserState();
 
-  performance.mark('start:parse-script');
+  // performance.mark('start:parse-script');
 
   const parseResult = parseScript(lines, state);
 
-  performance.mark('end:parse-script');
-  performance.measure('parse-script', 'start:parse-script', 'end:parse-script');
+  // performance.mark('end:parse-script');
+  // performance.measure('parse-script', 'start:parse-script', 'end:parse-script');
 
   return parseResult;
 }
@@ -60,6 +60,7 @@ function parseScript(lines: LineStream, state: ParserState): Array<ComicChild> {
 function parseSpread(lines: LineStream, state: ParserState): Spread {
   if (!lines.nextIsSpreadStart()) throw new Error('parsing spread but next isnt spread start');
 
+  const startingLine = lines.lineNumber;
   const spreadStart = lines.consume();
   const matchResult = SPREAD_REGEX.exec(spreadStart) as Array<string>;
 
@@ -69,9 +70,7 @@ function parseSpread(lines: LineStream, state: ParserState): Spread {
 
   state.startNewSpread(pageCount);
 
-  const startingLine = lines.lineNumber;
   const content = parseSpreadContent(lines, state);
-
   const panels = content.filter(node => node.type === types.PANEL) as Array<Panel>;
 
   return {
@@ -133,9 +132,9 @@ function parsePanel(lines: LineStream, state: ParserState): Panel {
 
   state.startNewPanel();
 
+  const startingLine = lines.lineNumber;
   const panelStart = lines.consume();
   const [, number] = PANEL_REGEX.exec(panelStart) as Array<string>;
-  const startingLine = lines.lineNumber;
 
   const content = parsePanelContent(lines, state);
 
@@ -186,35 +185,38 @@ function parsePanelContent(
 function parseParagraph(lines: LineStream, state: ParserState): Paragraph {
   state.startNewParagraph();
 
+  const startingLine = lines.lineNumber;
+
   return {
     id: state.currentParagraphId,
     type: types.PARAGRAPH,
     content: lines.consume(),
-    startingLine: lines.lineNumber,
+    startingLine
   };
 }
 
 function parseMetadata(lines: LineStream, state: ParserState): Metadata {
+  state.startNewMetadata();
+
+  const startingLine = lines.lineNumber;
   const line = lines.consume();
   const [, name, value] = METADATA_REGEX.exec(line) as Array<string>;
-
-  state.startNewMetadata();
 
   return {
     id: state.currentMetadataId,
     type: types.METADATA,
     name,
     value,
-    startingLine: lines.lineNumber,
+    startingLine
   };
 }
 
 function parseDialogue(lines: LineStream, state: ParserState): Dialogue {
   state.startNewLettering();
 
+  const startingLine = lines.lineNumber;
   const line = lines.consume();
   const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as Array<string>;
-  const startingLine = lines.lineNumber;
 
   const parseTree = parseLetteringContent(content);
 
@@ -233,6 +235,7 @@ function parseDialogue(lines: LineStream, state: ParserState): Dialogue {
 function parseSfx(lines: LineStream, state: ParserState): Sfx {
   state.startNewLettering();
 
+  const startingLine = lines.lineNumber;
   const line = lines.consume();
   const [, modifier, content] = SFX_REGEX.exec(line) as Array<string>;
 
@@ -242,13 +245,14 @@ function parseSfx(lines: LineStream, state: ParserState): Sfx {
     number: state.currentLetteringNumber,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content,
-    startingLine: lines.lineNumber,
+    startingLine
   };
 }
 
 function parseCaption(lines: LineStream, state: ParserState): Caption {
   state.startNewLettering();
 
+  const startingLine = lines.lineNumber;
   const line = lines.consume();
   const [, modifier, content] = CAPTION_REGEX.exec(line) as Array<string>;
   const parseTree = parseLetteringContent(content);
@@ -260,7 +264,7 @@ function parseCaption(lines: LineStream, state: ParserState): Caption {
     modifier: modifier ? modifier.slice(1, -1) : null,
     content: parseTree,
     wordCount: countWords(parseTree),
-    startingLine: lines.lineNumber,
+    startingLine
   };
 }
 
