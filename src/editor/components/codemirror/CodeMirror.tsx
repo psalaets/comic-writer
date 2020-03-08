@@ -147,10 +147,17 @@ export default class CodeMirrorComponent extends Component<Props> {
       const oldLines = cm.getValue().split(/\n/);
       const newLines = preprocessLines(oldLines, cm.getCursor().line);
 
+      const changedLines: Array<number> = [];
+      for (let i = change.from.line; i <= change.to.line; i++) {
+        changedLines.push(i);
+      }
+
       this.getCodeMirrorInstance().operation(() => {
         newLines.forEach((newLine, index) => {
           const oldLine = oldLines[index] || '';
           if (newLine !== oldLine) {
+            changedLines.push(index);
+
             const from = { line: index, ch: 0 };
             const to = { line: index, ch: 10000 };
 
@@ -160,7 +167,8 @@ export default class CodeMirrorComponent extends Component<Props> {
       });
 
       this.props.onChange({
-        value: newLines.join('\n')
+        value: newLines.join('\n'),
+        changedLines: cleanUpChangedLines(changedLines)
       });
     });
 
@@ -171,4 +179,12 @@ export default class CodeMirrorComponent extends Component<Props> {
   getCharacterNames(): Array<string> {
     return this.props.characters;
   }
+}
+
+// dedupe, make 1-based and sort ascending
+function cleanUpChangedLines(changedLines: Array<number>): Array<number> {
+  const noDupes = new Set<number>(changedLines);
+  return [...noDupes]
+    .map(i => i + 1)
+    .sort((a, b) => a - b);
 }
