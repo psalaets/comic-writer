@@ -183,6 +183,8 @@ export default class CodeMirrorComponent extends Component<Props> {
 
 // dedupe and sort ascending
 function cleanUpChangedLines(changedLines: Array<number>): Array<number> {
+  if (changedLines.length <= 1) return changedLines;
+
   const noDupes = new Set<number>(changedLines);
   return [...noDupes]
     .sort((a, b) => a - b);
