@@ -5,6 +5,7 @@
   "dependencies": {
     "codemirror": "^5.49.0",
     "lodash": "^4.17.15",
+    "marky": "^1.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-accessible-tooltip": "^2.0.3",
