@@ -21,6 +21,7 @@
     "downlevelIteration": true
   },
   "include": [
-    "src"
+    "src",
+    "3rd-party-types"
   ]
 }
