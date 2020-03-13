@@ -1,7 +1,6 @@
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { EditorState } from '../editor/types';
 import { ScriptState, ScriptActionTypes } from '../script/types';
-import { Action } from 'redux';
 
 /**
  * Defines the state shape of the whole store.
@@ -43,4 +42,4 @@ export type ThunkResult<ReturnType = void> = ThunkAction<
  *   };
  * }
  */
-export type ThunkCompatibleDispatch = ThunkDispatch<RootState, undefined, Action>;
+export type ThunkCompatibleDispatch = ThunkDispatch<RootState, undefined, AppActionTypes>;
