@@ -1,9 +1,9 @@
-import marky from 'marky';
+import { mark, stop } from 'marky';
 
 export function start(name: string) {
-  marky.mark(name);
+  mark(name);
 }
 
 export function end(name: string) {
-  marky.stop(name);
+  stop(name);
 }
