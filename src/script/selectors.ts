@@ -3,22 +3,21 @@ import { createSelector } from 'reselect';
 import parse from '../parser';
 import visit from '../parser/visit';
 
+import { wrap } from '../perf';
+
 import { RootState } from '../store/types';
 import { ScriptState, PanelCount, WordCount } from './types';
 
 const selectScriptState = (state: RootState): ScriptState => state.script;
 
-export const selectSource = createSelector(
-  selectScriptState,
-  script => script.source
-);
+export const selectSource = (state: RootState): string => selectScriptState(state).source;
 
-export const selectParseResult = createSelector(
+export const selectParseResult = wrap('selectParseResult', createSelector(
   selectSource,
   source => parse(source)
-);
+));
 
-export const selectSpeakers = createSelector(
+export const selectSpeakers = wrap('selectSpeakers', createSelector(
   selectParseResult,
   parseResult => {
     const allSpeakers = [] as Array<string>;
@@ -31,14 +30,14 @@ export const selectSpeakers = createSelector(
 
     return dedupe(allSpeakers).sort();
   }
-);
+));
 
 function dedupe(speakers: Array<string>): Array<string> {
   const allCaps = speakers.map(speaker => speaker.toLocaleUpperCase());
   return [...new Set(allCaps)];
 }
 
-export const selectPanelCounts = createSelector(
+export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
   selectParseResult,
   parseResult => {
     const spreadsWithPanels = [] as Array<PanelCount>;
@@ -61,9 +60,9 @@ export const selectPanelCounts = createSelector(
 
     return spreadsWithPanels;
   }
-);
+));
 
-export const selectWordCounts = createSelector(
+export const selectWordCounts = wrap('selectWordCounts', createSelector(
   selectParseResult,
   parseResult => {
     const wordCounts: Array<WordCount> = [];
@@ -105,4 +104,4 @@ export const selectWordCounts = createSelector(
 
     return wordCounts;
   }
-);
+));

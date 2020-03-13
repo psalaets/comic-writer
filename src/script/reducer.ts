@@ -4,12 +4,11 @@ import {
   ScriptActionTypes,
   ScriptState
 } from './types';
+import { wrap } from '../perf';
 
 const initialState: ScriptState = {
   source: ''
 };
-
-export default reducer;
 
 function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
   switch (action.type) {
@@ -27,3 +26,5 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
       return state;
   }
 }
+
+export default wrap('script-reducer', reducer);
