@@ -6,20 +6,20 @@ import visit from '../parser/visit';
 import { RootState } from '../store/types';
 import { ScriptState, PanelCount, WordCount } from './types';
 
-const getState = (state: RootState): ScriptState => state.script;
+const selectScriptState = (state: RootState): ScriptState => state.script;
 
-export const getSource = createSelector(
-  getState,
+export const selectSource = createSelector(
+  selectScriptState,
   script => script.source
 );
 
-export const getParseResult = createSelector(
-  getSource,
+export const selectParseResult = createSelector(
+  selectSource,
   source => parse(source)
 );
 
-export const getSpeakers = createSelector(
-  getParseResult,
+export const selectSpeakers = createSelector(
+  selectParseResult,
   parseResult => {
     const allSpeakers = [] as Array<string>;
 
@@ -38,8 +38,8 @@ function dedupe(speakers: Array<string>): Array<string> {
   return [...new Set(allCaps)];
 }
 
-export const getPanelCounts = createSelector(
-  getParseResult,
+export const selectPanelCounts = createSelector(
+  selectParseResult,
   parseResult => {
     const spreadsWithPanels = [] as Array<PanelCount>;
 
@@ -63,8 +63,8 @@ export const getPanelCounts = createSelector(
   }
 );
 
-export const getWordCounts = createSelector(
-  getParseResult,
+export const selectWordCounts = createSelector(
+  selectParseResult,
   parseResult => {
     const wordCounts: Array<WordCount> = [];
 
