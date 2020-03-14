@@ -74,7 +74,7 @@ function parseSpread(lines: LineStream, state: ParserState): Spread {
   const panels = content.filter(node => node.type === types.PANEL) as Array<Panel>;
 
   return {
-    id: state.currentSpreadLabel,
+    id: state.currentSpreadId,
     type: types.SPREAD,
     label: state.currentSpreadLabel,
     pageCount,

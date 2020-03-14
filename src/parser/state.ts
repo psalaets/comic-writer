@@ -2,11 +2,13 @@
 
 export class ParserState {
   pagesSeen = 0;
+  spreadLabel = '';
+
+  spreadNumber = 0;
   panelNumber = 0;
   letteringNumber = 0;
   metadataNumber = 0;
   paragraphNumber = 0;
-  spreadLabel = '';
 
   startNewSpread(pageCount: number): void {
     this.spreadLabel = pageCount === 1
@@ -14,6 +16,8 @@ export class ParserState {
       : `${this.pagesSeen + 1}-${this.pagesSeen + pageCount}`;
 
     this.pagesSeen += pageCount;
+
+    this.spreadNumber += 1;
     this.panelNumber = 0;
     this.letteringNumber = 0;
   }
@@ -38,20 +42,20 @@ export class ParserState {
     return this.spreadLabel;
   }
 
-  get currentSpreadId(): string {
-    return this.currentSpreadLabel;
-  }
-
   get currentLetteringNumber(): number {
     return this.letteringNumber;
   }
 
+  get currentSpreadId(): string {
+    return `spread-${this.spreadNumber}`;
+  }
+
   get currentPanelId(): string {
-    return `${this.currentSpreadId}.${this.panelNumber}`;
+    return `panel-${this.panelNumber}`;
   }
 
   get currentLetteringId(): string {
-    return `${this.currentPanelId}.${this.letteringNumber}`;
+    return `lettering-${this.letteringNumber}`;
   }
 
   get currentMetadataId(): string {
