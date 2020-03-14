@@ -58,17 +58,13 @@ export type ScriptActionTypes = ChangeSourceAction
 
 export interface ScriptState {
   source: string,
-  preSpreadLines: Array<string>,
-  spreadLines: Array<SpreadLines>
+  preSpread: Array<string>,
+  spreads: Array<SpreadContent>
 }
 
-export interface SpreadLines {
+export interface SpreadContent {
   /** The actual lines of the spread */
   lines: Array<string>;
-  /** First line of the spread */
-  fromLine: number;
-  /** One beyond the last line of the spread */
-  upToLine: number;
 }
 
 // stats related

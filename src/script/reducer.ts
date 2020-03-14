@@ -3,15 +3,15 @@ import {
   LOAD_SCRIPT_COMPLETED,
   ScriptActionTypes,
   ScriptState,
-  SpreadLines
+  SpreadContent
 } from './types';
 import { wrap } from '../perf';
 import { LineStream } from '../parser';
 
 const initialState: ScriptState = {
   source: '',
-  preSpreadLines: [],
-  spreadLines: []
+  preSpread: [],
+  spreads: []
 };
 
 export default wrap('script-reducer', reducer);
@@ -28,25 +28,30 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
       const lines = new LineStream(action.payload.source);
       const preSpread = lines.consumeUntilSpreadStart();
 
-      const chunks: Array<SpreadLines> = [];
-      let linesSeen = preSpread.length;
-
+      const spreads: Array<SpreadContent> = [];
       while (lines.hasMoreLines()) {
-        const linesOfSpread = lines.consumeNextSpread();
-
-        chunks.push({
-          lines: linesOfSpread,
-          fromLine: linesSeen,
-          upToLine: linesSeen + linesOfSpread.length
+        spreads.push({
+          lines: lines.consumeNextSpread()
         });
-
-        linesSeen += linesOfSpread.length;
       }
+
+      const updatedSpreads: Array<SpreadContent | null> = [];
+      for (let i = 0; i < Math.max(state.spreads.length, spreads.length); i++) {
+        updatedSpreads.push(update(state.spreads[i], spreads[i]));
+      }
+
+/**
+ * TODO
+ *
+ * - Add to parser: parseSpread(array string lines)
+ * - Add to parser: parsePreSpreadContent(lines)
+ * - change parse selector to work with this, might be time for reselect-map
+ */
 
       return {
         ...state,
-        preSpreadLines: preSpread,
-        spreadLines: chunks,
+        preSpread: updatePreSpread(state.preSpread, preSpread),
+        spreads: updatedSpreads.filter(chunk => chunk != null) as Array<SpreadContent>,
         source: action.payload.source
       };
     }
@@ -55,3 +60,34 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
   }
 }
 
+function updatePreSpread(oldLines: Array<string>, newLines: Array<string>): Array<string> {
+  if (oldLines.length !== newLines.length) {
+    return newLines;
+  }
+
+  const allLinesEqual = oldLines
+    .every((line, index) => {
+      return line === newLines[index];
+    });
+
+  return allLinesEqual ? oldLines : newLines;
+}
+
+function update(
+  oldSpread: SpreadContent,
+  newSpread: SpreadContent
+): SpreadContent | null {
+  if (oldSpread == null) return newSpread;
+  if (newSpread == null) return null;
+
+  if (oldSpread.lines.length !== newSpread.lines.length) {
+    return newSpread;
+  }
+
+  const allLinesEqual = oldSpread.lines
+    .every((oldLine, index) => {
+      return oldLine === newSpread.lines[index];
+    });
+
+  return allLinesEqual ? oldSpread : newSpread;
+}

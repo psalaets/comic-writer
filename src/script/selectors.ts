@@ -6,11 +6,23 @@ import visit from '../parser/visit';
 import { wrap } from '../perf';
 
 import { RootState } from '../store/types';
-import { ScriptState, PanelCount, WordCount } from './types';
+import { ScriptState, PanelCount, WordCount, SpreadContent } from './types';
 
-const selectScriptState = (state: RootState): ScriptState => state.script;
+function selectScriptState(state: RootState): ScriptState {
+  return state.script;
+}
 
-export const selectSource = (state: RootState): string => selectScriptState(state).source;
+export function selectSource(state: RootState): string {
+  return selectScriptState(state).source;
+}
+
+function selectPreSpreadLines(state: RootState): Array<string> {
+  return selectScriptState(state).preSpread;
+}
+
+function selectSpreadLines(state: RootState): Array<SpreadContent> {
+  return selectScriptState(state).spreads;
+}
 
 export const selectParseResult = wrap('selectParseResult', createSelector(
   selectSource,
