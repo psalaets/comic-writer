@@ -94,3 +94,74 @@ export interface LetteringContentChunk {
   type: typeof parts.TEXT | typeof parts.LETTERING_BOLD;
   content: string;
 }
+
+// comic parts without the pieces that require stateful parsing
+
+export type ParsedSpreadChild = ParsedPanel | ParsedLettering | ParsedParagraph;
+
+export type ParsedPanelChild = ParsedLettering | ParsedMetadata | ParsedParagraph;
+
+export type ParsedLettering = ParsedDialogue | ParsedCaption | ParsedSfx;
+
+export interface ParsedSpread {
+  type: typeof parts.SPREAD;
+  content: Array<ParsedSpreadChild>;
+
+  pageCount: number;
+  panelCount: number;
+  speakers: Array<string>;
+  dialogueCount: number;
+  captionCount: number;
+  sfxCount: number;
+  dialogueWordCount: number;
+  captionWordCount: number;
+}
+
+export interface ParsedPanel {
+  type: typeof parts.PANEL;
+  content: Array<ParsedPanelChild>;
+
+  speakers: Array<string>;
+  dialogueCount: number;
+  captionCount: number;
+  sfxCount: number;
+  dialogueWordCount: number;
+  captionWordCount: number;
+}
+
+export interface ParsedParagraph {
+  type: typeof parts.PARAGRAPH;
+  content: string;
+}
+
+export interface ParsedMetadata {
+  type: typeof parts.METADATA;
+  name: string;
+  value: string;
+}
+
+export interface ParsedDialogue {
+  type: typeof parts.DIALOGUE;
+  speaker: string;
+  modifier: string | null;
+  content: Array<ParsedLetteringContentChunk>;
+  wordCount: number;
+}
+
+export interface ParsedCaption {
+  type: typeof parts.CAPTION;
+  modifier: string | null;
+  content: Array<ParsedLetteringContentChunk>;
+  wordCount: number;
+}
+
+export interface ParsedSfx {
+  type: typeof parts.SFX;
+  modifier: string | null;
+  content: string;
+}
+
+export interface ParsedLetteringContentChunk {
+  type: typeof parts.TEXT | typeof parts.LETTERING_BOLD;
+  content: string;
+}

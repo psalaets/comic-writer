@@ -25,7 +25,7 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
       };
     }
     case CHANGE_SOURCE: {
-      const lines = new LineStream(action.payload.source);
+      const lines = LineStream.fromString(action.payload.source);
       const preSpread = lines.consumeUntilSpreadStart();
 
       const spreads: Array<SpreadContent> = [];
@@ -43,7 +43,7 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
 /**
  * TODO
  *
- * - Add to parser: parseSpread(array string lines)
+ * - add line offsets to pure parse result
  * - Add to parser: parsePreSpreadContent(lines)
  * - change parse selector to work with this, might be time for reselect-map
  */

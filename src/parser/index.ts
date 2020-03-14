@@ -16,16 +16,18 @@ import {
   LetteringContentChunk
 } from './types';
 
-const SPREAD_REGEX    = /^pages? (\d+)(-(\d+)?)?/i;
-const PANEL_REGEX     = /^panel (\d+)/i;
-const CAPTION_REGEX   = /^\tcaption ?(\(.+\))?: ?(.+)/i;
-const SFX_REGEX       = /^\tsfx ?(\(.+\))?: ?(.+)/i;
-const DIALOGUE_REGEX  = /^\t(.+?) ?(\(.+\))?: ?(.+)/;
-const METADATA_REGEX  = /^(.+): ?(.+)/;
-const PARAGRAPH_REGEX = /^.+/;
+import {
+  SPREAD_REGEX,
+  PANEL_REGEX,
+  CAPTION_REGEX,
+  SFX_REGEX,
+  DIALOGUE_REGEX,
+  METADATA_REGEX,
+  PARAGRAPH_REGEX,
+} from './regexes';
 
 export default function parse(source: string): Array<ComicChild> {
-  const lines = new LineStream(source);
+  const lines = LineStream.fromString(source);
   const state = new ParserState();
 
   perf.start('parse-script');
@@ -309,10 +311,17 @@ export class LineStream {
   lines: Array<string>;
   currentLine: number;
 
-  constructor(source: string) {
+  static fromString(source: string): LineStream {
+    return new LineStream((source || '').split('\n'));
+  }
+
+  static fromLines(lines: Array<string>): LineStream {
+    return new LineStream(lines);
+  }
+
+  private constructor(lines: Array<string>) {
     this.currentLine = 0;
-    this.lines = (source || '')
-      .split('\n');
+    this.lines = lines;
   }
 
   get lineNumber() {
