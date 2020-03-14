@@ -1,73 +1,64 @@
 // parser state - keeps track of stuff while parsing through script input
 
-export interface ParserState {
-  currentSpreadLabel: string;
-  currentSpreadId: string;
-  currentLetteringNumber: number;
-  currentPanelId: string;
-  currentLetteringId: string;
-  currentMetadataId: string;
-  currentParagraphId: string;
+export class ParserState {
+  pagesSeen = 0;
+  panelNumber = 0;
+  letteringNumber = 0;
+  metadataNumber = 0;
+  paragraphNumber = 0;
+  spreadLabel = '';
 
-  startNewSpread(pageCount: number): void;
-  startNewPanel(): void;
-  startNewLettering(): void;
-  startNewMetadata(): void;
-  startNewParagraph(): void;
-}
+  startNewSpread(pageCount: number): void {
+    this.spreadLabel = pageCount === 1
+      ? String(this.pagesSeen + 1)
+      : `${this.pagesSeen + 1}-${this.pagesSeen + pageCount}`;
 
-export function create(): ParserState {
-  let pagesSeen = 0;
-  let panelNumber = 0;
-  let letteringNumber = 0;
+    this.pagesSeen += pageCount;
+    this.panelNumber = 0;
+    this.letteringNumber = 0;
+  }
 
-  let metadataNumber = 0;
-  let paragraphNumber = 0;
+  startNewPanel(): void {
+    this.panelNumber += 1;
+  }
 
-  let spreadLabel = '';
+  startNewLettering(): void {
+    this.letteringNumber += 1;
+  }
 
-  return {
-    startNewSpread(pageCount) {
-      spreadLabel = pageCount === 1
-        ? String(pagesSeen + 1)
-        : `${pagesSeen + 1}-${pagesSeen + pageCount}`;
+  startNewMetadata(): void {
+    this.metadataNumber += 1;
+  }
 
-      pagesSeen += pageCount;
-      panelNumber = 0;
-      letteringNumber = 0;
-    },
-    startNewPanel() {
-      panelNumber += 1;
-    },
-    startNewLettering() {
-      letteringNumber += 1;
-    },
-    startNewMetadata() {
-      metadataNumber += 1;
-    },
-    startNewParagraph() {
-      paragraphNumber += 1;
-    },
-    get currentSpreadLabel() {
-      return spreadLabel;
-    },
-    get currentSpreadId() {
-      return this.currentSpreadLabel;
-    },
-    get currentLetteringNumber() {
-      return letteringNumber;
-    },
-    get currentPanelId() {
-      return `${this.currentSpreadId}.${panelNumber}`;
-    },
-    get currentLetteringId() {
-      return `${this.currentPanelId}.${letteringNumber}`;
-    },
-    get currentMetadataId() {
-      return `metadata-${metadataNumber}`;
-    },
-    get currentParagraphId() {
-      return `paragraph-${paragraphNumber}`;
-    }
-  };
+  startNewParagraph(): void {
+    this.paragraphNumber += 1;
+  }
+
+  get currentSpreadLabel(): string {
+    return this.spreadLabel;
+  }
+
+  get currentSpreadId(): string {
+    return this.currentSpreadLabel;
+  }
+
+  get currentLetteringNumber(): number {
+    return this.letteringNumber;
+  }
+
+  get currentPanelId(): string {
+    return `${this.currentSpreadId}.${this.panelNumber}`;
+  }
+
+  get currentLetteringId(): string {
+    return `${this.currentPanelId}.${this.letteringNumber}`;
+  }
+
+  get currentMetadataId(): string {
+    return `metadata-${this.metadataNumber}`;
+  }
+
+  get currentParagraphId(): string {
+    return `paragraph-${this.paragraphNumber}`;
+  }
 }

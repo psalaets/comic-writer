@@ -1,6 +1,6 @@
 import * as types from '../comic-part-types';
 import countWords from './count-words';
-import { create as createParserState, ParserState } from './state';
+import { ParserState } from './state';
 import * as perf from '../perf';
 import {
   ComicChild,
@@ -26,7 +26,7 @@ const PARAGRAPH_REGEX = /^.+/;
 
 export default function parse(source: string): Array<ComicChild> {
   const lines = new LineStream(source);
-  const state = createParserState();
+  const state = new ParserState();
 
   perf.start('parse-script');
 
