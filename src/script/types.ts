@@ -57,7 +57,18 @@ export type ScriptActionTypes = ChangeSourceAction
 // state shape
 
 export interface ScriptState {
-  source: string
+  source: string,
+  preSpreadLines: Array<string>,
+  spreadLines: Array<SpreadLines>
+}
+
+export interface SpreadLines {
+  /** The actual lines of the spread */
+  lines: Array<string>;
+  /** First line of the spread */
+  fromLine: number;
+  /** One beyond the last line of the spread */
+  upToLine: number;
 }
 
 // stats related

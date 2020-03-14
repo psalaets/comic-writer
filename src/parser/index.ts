@@ -305,7 +305,7 @@ function parseLetteringContent(content: string): Array<LetteringContentChunk> {
   return parts;
 }
 
-class LineStream {
+export class LineStream {
   lines: Array<string>;
   currentLine: number;
 
@@ -363,6 +363,31 @@ class LineStream {
     const line = this.peek();
     this.currentLine += 1;
     return line;
+  }
+
+  consumeUntilSpreadStart(): Array<string> {
+    const consumed: Array<string> = [];
+
+    while (this.hasMoreLines() && !this.nextIsSpreadStart()) {
+      consumed.push(this.consume());
+    }
+
+    return consumed;
+  }
+
+  consumeNextSpread(): Array<string> {
+    const consumed: Array<string> = [];
+
+    if (this.hasMoreLines()) {
+      if (this.nextIsSpreadStart()) {
+        consumed.push(this.consume());
+        consumed.push(...this.consumeUntilSpreadStart());
+      } else {
+        throw new Error('stream has not been advanced to a spread');
+      }
+    }
+
+    return consumed;
   }
 
   peek(): string {
