@@ -24,6 +24,7 @@ import {
   DIALOGUE_REGEX,
   METADATA_REGEX,
   PARAGRAPH_REGEX,
+  LETTERING_BOLD_REGEX
 } from './regexes';
 
 export default function parse(source: string): Array<ComicChild> {
@@ -271,14 +272,13 @@ function parseCaption(lines: LineStream, state: ParserState): Caption {
 }
 
 function parseLetteringContent(content: string): Array<LetteringContentChunk> {
-  const boldRegex = /\*\*(.+?)\*\*(?!\*)/;
   const parts: Array<LetteringContentChunk> = [];
 
   let index = 0;
   let result = null;
 
   // eslint-disable-next-line no-cond-assign
-  while (result = boldRegex.exec(content.slice(index))) {
+  while (result = LETTERING_BOLD_REGEX.exec(content.slice(index))) {
     const before = content.slice(index, index + result.index)
 
     if (before) {

@@ -8,6 +8,7 @@ import {
   DIALOGUE_REGEX,
   METADATA_REGEX,
   PARAGRAPH_REGEX,
+  LETTERING_BOLD_REGEX,
 } from '../regexes';
 
 import {
@@ -183,14 +184,13 @@ function parseParagraph(lines: LineStream): ParsedParagraph {
 }
 
 function parseLetteringContent(content: string): Array<ParsedLetteringContentChunk> {
-  const boldRegex = /\*\*(.+?)\*\*(?!\*)/;
   const chunks: Array<ParsedLetteringContentChunk> = [];
 
   let index = 0;
   let result = null;
 
   // eslint-disable-next-line no-cond-assign
-  while (result = boldRegex.exec(content.slice(index))) {
+  while (result = LETTERING_BOLD_REGEX.exec(content.slice(index))) {
     const before = content.slice(index, index + result.index)
 
     if (before) {
