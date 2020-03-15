@@ -1,5 +1,20 @@
-import countWords from '../count-words';
-import * as parts from '../../comic-part-types';
+import * as parts from '../comic-part-types';
+import countWords from './count-words';
+import * as perf from '../perf';
+import {
+  Spread,
+  Panel,
+  Paragraph,
+  Metadata,
+  Dialogue,
+  Caption,
+  Sfx,
+  SpreadChild,
+  PanelChild,
+  LetteringContentChunk,
+  PreSpreadChild
+} from './types';
+
 import {
   SPREAD_REGEX,
   PANEL_REGEX,
@@ -7,29 +22,15 @@ import {
   SFX_REGEX,
   DIALOGUE_REGEX,
   METADATA_REGEX,
-  LETTERING_BOLD_REGEX,
-} from '../regexes';
+  LETTERING_BOLD_REGEX
+} from './regexes';
 
-import {
-  ParsedSpread,
-  ParsedPanel,
-  ParsedParagraph,
-  ParsedMetadata,
-  ParsedDialogue,
-  ParsedCaption,
-  ParsedSfx,
-  ParsedSpreadChild,
-  ParsedPanelChild,
-  ParsedLetteringContentChunk,
-  ParsedPreSpreadChild
-} from '../types';
-
-import { LineStream } from '../index';
+import { LineStream } from './line-stream';
 
 
-export function parsePreSpread(preSpreadLines: Array<string>): Array<ParsedPreSpreadChild> {
+export function parsePreSpread(preSpreadLines: Array<string>): Array<PreSpreadChild> {
   const lines = LineStream.fromLines(preSpreadLines);
-  const content: Array<ParsedPreSpreadChild> = [];
+  const content: Array<PreSpreadChild> = [];
 
   while (lines.hasMoreLines()) {
     if (lines.nextIsEmpty()) {
@@ -44,7 +45,7 @@ export function parsePreSpread(preSpreadLines: Array<string>): Array<ParsedPreSp
   return content;
 }
 
-export function parseSpread(spreadLines: Array<string>): ParsedSpread {
+export function parseSpread(spreadLines: Array<string>): Spread {
   const lines = LineStream.fromLines(spreadLines);
 
   if (!lines.nextIsSpreadStart()) throw new Error('parsing spread but next isnt spread start');
@@ -57,7 +58,7 @@ export function parseSpread(spreadLines: Array<string>): ParsedSpread {
   const pageCount = countPages(startPage, endPage);
 
   const content = parseSpreadContent(lines);
-  const panels = content.filter(node => node.type === parts.PANEL) as Array<ParsedPanel>;
+  const panels = content.filter(node => node.type === parts.PANEL) as Array<Panel>;
 
   return {
     type: parts.SPREAD,
@@ -85,8 +86,8 @@ function countPages(startPage: number, endPage?: number): number {
   }
 }
 
-function parseSpreadContent(lines: LineStream): Array<ParsedSpreadChild> {
-  const content: Array<ParsedSpreadChild> = [];
+function parseSpreadContent(lines: LineStream): Array<SpreadChild> {
+  const content: Array<SpreadChild> = [];
 
   while (lines.hasMoreLines()) {
     if (lines.nextIsPanelStart()) {
@@ -107,7 +108,7 @@ function parseSpreadContent(lines: LineStream): Array<ParsedSpreadChild> {
   return content;
 }
 
-function parsePanel(lines: LineStream): ParsedPanel {
+function parsePanel(lines: LineStream): Panel {
   if (!lines.nextIsPanelStart()) throw new Error('parsing panel but next isnt panel start');
 
   const lineOffset = lines.lineNumber;
@@ -116,9 +117,9 @@ function parsePanel(lines: LineStream): ParsedPanel {
 
   const content = parsePanelContent(lines);
 
-  const dialogues = content.filter(node => node.type === parts.DIALOGUE) as Array<ParsedDialogue>;
-  const captions = content.filter(node => node.type === parts.CAPTION) as Array<ParsedCaption>;
-  const sfxs = content.filter(node => node.type === parts.SFX) as Array<ParsedSfx>;
+  const dialogues = content.filter(node => node.type === parts.DIALOGUE) as Array<Dialogue>;
+  const captions = content.filter(node => node.type === parts.CAPTION) as Array<Caption>;
+  const sfxs = content.filter(node => node.type === parts.SFX) as Array<Sfx>;
 
   return {
     type: parts.PANEL,
@@ -133,8 +134,8 @@ function parsePanel(lines: LineStream): ParsedPanel {
   };
 }
 
-function parsePanelContent(lines: LineStream): Array<ParsedPanelChild> {
-  const content: Array<ParsedPanelChild> = [];
+function parsePanelContent(lines: LineStream): Array<PanelChild> {
+  const content: Array<PanelChild> = [];
 
   while (!lines.nextIsPanelEnd()) {
     if (lines.nextIsEmpty()) {
@@ -155,7 +156,7 @@ function parsePanelContent(lines: LineStream): Array<ParsedPanelChild> {
   return content;
 }
 
-function parseCaption(lines: LineStream): ParsedCaption {
+function parseCaption(lines: LineStream): Caption {
   const lineOffset = lines.lineNumber;
   const line = lines.consume();
   const [, modifier, content] = CAPTION_REGEX.exec(line) as Array<string>;
@@ -170,7 +171,7 @@ function parseCaption(lines: LineStream): ParsedCaption {
   };
 }
 
-function parseSfx(lines: LineStream): ParsedSfx {
+function parseSfx(lines: LineStream): Sfx {
   const lineOffset = lines.lineNumber;
   const line = lines.consume();
   const [, modifier, content] = SFX_REGEX.exec(line) as Array<string>;
@@ -183,7 +184,7 @@ function parseSfx(lines: LineStream): ParsedSfx {
   };
 }
 
-function parseDialogue(lines: LineStream): ParsedDialogue {
+function parseDialogue(lines: LineStream): Dialogue {
   const lineOffset = lines.lineNumber;
   const line = lines.consume();
   const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as Array<string>;
@@ -200,7 +201,7 @@ function parseDialogue(lines: LineStream): ParsedDialogue {
   };
 }
 
-function parseParagraph(lines: LineStream): ParsedParagraph {
+function parseParagraph(lines: LineStream): Paragraph {
   const lineOffset = lines.lineNumber;
 
   return {
@@ -210,8 +211,8 @@ function parseParagraph(lines: LineStream): ParsedParagraph {
   };
 }
 
-function parseLetteringContent(content: string): Array<ParsedLetteringContentChunk> {
-  const chunks: Array<ParsedLetteringContentChunk> = [];
+function parseLetteringContent(content: string): Array<LetteringContentChunk> {
+  const chunks: Array<LetteringContentChunk> = [];
 
   let index = 0;
   let result = null;
@@ -246,7 +247,7 @@ function parseLetteringContent(content: string): Array<ParsedLetteringContentChu
   return chunks;
 }
 
-function parseMetadata(lines: LineStream): ParsedMetadata {
+function parseMetadata(lines: LineStream): Metadata {
   const lineOffset = lines.lineNumber;
   const line = lines.consume();
   const [, name, value] = METADATA_REGEX.exec(line) as Array<string>;

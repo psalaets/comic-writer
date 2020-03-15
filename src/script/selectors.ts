@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import parse from '../parser';
-import visit from '../parser/visit';
+import { ComicNode } from '../parser/types';
+import { parseSpread, parsePreSpread, visit } from '../parser';
 
 import { wrap } from '../perf';
 
@@ -24,11 +24,26 @@ function selectSpreadLines(state: RootState): Array<SpreadContent> {
   return selectScriptState(state).spreads;
 }
 
-export const selectParseResult = wrap('selectParseResult', createSelector(
-  selectSource,
-  source => parse(source)
-));
+const selectSpreadNodes = createSelector(
+  selectSpreadLines,
+  spreadLines => spreadLines.map(spread => parseSpread(spread.lines))
+);
 
+const selectPreSpreadNodes = createSelector(
+  selectPreSpreadLines,
+  preSpreadLines => parsePreSpread(preSpreadLines)
+)
+
+export const selectParseResult = wrap('selectParseResult', createSelector(
+  [selectPreSpreadNodes, selectSpreadNodes],
+  (preSpreadNodes, spreads) => {
+    return [
+      ...preSpreadNodes,
+      ...spreads
+    ] as Array<ComicNode>;
+  }
+));
+/*
 export const selectSpeakers = wrap('selectSpeakers', createSelector(
   selectParseResult,
   parseResult => {
@@ -117,3 +132,4 @@ export const selectWordCounts = wrap('selectWordCounts', createSelector(
     return wordCounts;
   }
 ));
+*/

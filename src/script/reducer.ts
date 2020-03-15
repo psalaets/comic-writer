@@ -40,13 +40,6 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
         updatedSpreads.push(update(state.spreads[i], spreads[i]));
       }
 
-/**
- * TODO
- *
- * - Add to parser: parsePreSpreadContent(lines)
- * - change parse selector to work with this, might be time for reselect-map
- */
-
       return {
         ...state,
         preSpread: updatePreSpread(state.preSpread, preSpread),

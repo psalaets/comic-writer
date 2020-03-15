@@ -10,9 +10,9 @@ import { RootState, ThunkCompatibleDispatch } from '../../store/types';
 const mapStateToProps = wrap('Editor [mapStateToProps]', (state: RootState) => {
   return {
     value: selectors.selectSource(state),
-    panelCounts: selectors.selectPanelCounts(state),
-    wordCounts: selectors.selectWordCounts(state),
-    characters: selectors.selectSpeakers(state),
+    panelCounts: [],//selectors.selectPanelCounts(state),
+    wordCounts: [],//selectors.selectWordCounts(state),
+    characters: []//selectors.selectSpeakers(state),
   };
 });
 
