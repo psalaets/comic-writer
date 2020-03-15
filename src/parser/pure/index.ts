@@ -7,7 +7,6 @@ import {
   SFX_REGEX,
   DIALOGUE_REGEX,
   METADATA_REGEX,
-  PARAGRAPH_REGEX,
   LETTERING_BOLD_REGEX,
 } from '../regexes';
 
@@ -21,18 +20,35 @@ import {
   ParsedSfx,
   ParsedSpreadChild,
   ParsedPanelChild,
-  ParsedLetteringContentChunk
+  ParsedLetteringContentChunk,
+  ParsedPreSpreadChild
 } from '../types';
 
 import { LineStream } from '../index';
 
+
+export function parsePreSpread(preSpreadLines: Array<string>): Array<ParsedPreSpreadChild> {
+  const lines = LineStream.fromLines(preSpreadLines);
+  const content: Array<ParsedPreSpreadChild> = [];
+
+  while (lines.hasMoreLines()) {
+    if (lines.nextIsEmpty()) {
+      lines.consume();
+    } else if (lines.nextIsMetadata()) {
+      content.push(parseMetadata(lines));
+    } else if (lines.nextIsParagraph()) {
+      content.push(parseParagraph(lines));
+    }
+  }
+
+  return content;
+}
 
 export function parseSpread(spreadLines: Array<string>): ParsedSpread {
   const lines = LineStream.fromLines(spreadLines);
 
   if (!lines.nextIsSpreadStart()) throw new Error('parsing spread but next isnt spread start');
 
-  const lineOffset = lines.lineNumber;
   const spreadStart = lines.consume();
   const matchResult = SPREAD_REGEX.exec(spreadStart) as Array<string>;
 

@@ -97,6 +97,8 @@ export interface LetteringContentChunk {
 
 // comic parts without the pieces that require stateful parsing
 
+export type ParsedPreSpreadChild = ParsedMetadata | ParsedParagraph;
+
 export type ParsedSpreadChild = ParsedPanel | ParsedLettering | ParsedParagraph;
 
 export type ParsedPanelChild = ParsedLettering | ParsedMetadata | ParsedParagraph;
