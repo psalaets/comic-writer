@@ -119,6 +119,8 @@ export interface ParsedSpread {
 
 export interface ParsedPanel {
   type: typeof parts.PANEL;
+  /** How many lines away this is from its spread's start line */
+  lineOffset: number;
   content: Array<ParsedPanelChild>;
 
   speakers: Array<string>;
@@ -131,17 +133,23 @@ export interface ParsedPanel {
 
 export interface ParsedParagraph {
   type: typeof parts.PARAGRAPH;
+  /** How many lines away this is from its spread's start line */
+  lineOffset: number;
   content: string;
 }
 
 export interface ParsedMetadata {
   type: typeof parts.METADATA;
+  /** How many lines away this is from its spread's start line */
+  lineOffset: number;
   name: string;
   value: string;
 }
 
 export interface ParsedDialogue {
   type: typeof parts.DIALOGUE;
+  /** How many lines away this is from its spread's start line */
+  lineOffset: number;
   speaker: string;
   modifier: string | null;
   content: Array<ParsedLetteringContentChunk>;
@@ -150,6 +158,8 @@ export interface ParsedDialogue {
 
 export interface ParsedCaption {
   type: typeof parts.CAPTION;
+  /** How many lines away this is from its spread's start line */
+  lineOffset: number;
   modifier: string | null;
   content: Array<ParsedLetteringContentChunk>;
   wordCount: number;
@@ -157,6 +167,8 @@ export interface ParsedCaption {
 
 export interface ParsedSfx {
   type: typeof parts.SFX;
+  /** How many lines away this is from its spread's start line */
+  lineOffset: number;
   modifier: string | null;
   content: string;
 }

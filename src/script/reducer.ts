@@ -43,7 +43,6 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
 /**
  * TODO
  *
- * - add line offsets to pure parse result
  * - Add to parser: parsePreSpreadContent(lines)
  * - change parse selector to work with this, might be time for reselect-map
  */

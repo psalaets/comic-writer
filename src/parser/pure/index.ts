@@ -32,6 +32,7 @@ export function parseSpread(spreadLines: Array<string>): ParsedSpread {
 
   if (!lines.nextIsSpreadStart()) throw new Error('parsing spread but next isnt spread start');
 
+  const lineOffset = lines.lineNumber;
   const spreadStart = lines.consume();
   const matchResult = SPREAD_REGEX.exec(spreadStart) as Array<string>;
 
@@ -93,6 +94,7 @@ function parseSpreadContent(lines: LineStream): Array<ParsedSpreadChild> {
 function parsePanel(lines: LineStream): ParsedPanel {
   if (!lines.nextIsPanelStart()) throw new Error('parsing panel but next isnt panel start');
 
+  const lineOffset = lines.lineNumber;
   const panelStart = lines.consume();
   const [, number] = PANEL_REGEX.exec(panelStart) as Array<string>;
 
@@ -104,6 +106,7 @@ function parsePanel(lines: LineStream): ParsedPanel {
 
   return {
     type: parts.PANEL,
+    lineOffset,
     content,
     speakers: dialogues.map(d => d.speaker),
     dialogueCount: dialogues.length,
@@ -137,11 +140,13 @@ function parsePanelContent(lines: LineStream): Array<ParsedPanelChild> {
 }
 
 function parseCaption(lines: LineStream): ParsedCaption {
+  const lineOffset = lines.lineNumber;
   const line = lines.consume();
   const [, modifier, content] = CAPTION_REGEX.exec(line) as Array<string>;
   const parseTree = parseLetteringContent(content);
 
   return {
+    lineOffset,
     type: parts.CAPTION,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content: parseTree,
@@ -150,11 +155,12 @@ function parseCaption(lines: LineStream): ParsedCaption {
 }
 
 function parseSfx(lines: LineStream): ParsedSfx {
-  const startingLine = lines.lineNumber;
+  const lineOffset = lines.lineNumber;
   const line = lines.consume();
   const [, modifier, content] = SFX_REGEX.exec(line) as Array<string>;
 
   return {
+    lineOffset,
     type: parts.SFX,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content,
@@ -162,12 +168,14 @@ function parseSfx(lines: LineStream): ParsedSfx {
 }
 
 function parseDialogue(lines: LineStream): ParsedDialogue {
+  const lineOffset = lines.lineNumber;
   const line = lines.consume();
   const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as Array<string>;
 
   const parseTree = parseLetteringContent(content);
 
   return {
+    lineOffset,
     type: parts.DIALOGUE,
     speaker,
     modifier: modifier ? modifier.slice(1, -1) : null,
@@ -177,7 +185,10 @@ function parseDialogue(lines: LineStream): ParsedDialogue {
 }
 
 function parseParagraph(lines: LineStream): ParsedParagraph {
+  const lineOffset = lines.lineNumber;
+
   return {
+    lineOffset,
     type: parts.PARAGRAPH,
     content: lines.consume()
   };
@@ -220,10 +231,12 @@ function parseLetteringContent(content: string): Array<ParsedLetteringContentChu
 }
 
 function parseMetadata(lines: LineStream): ParsedMetadata {
+  const lineOffset = lines.lineNumber;
   const line = lines.consume();
   const [, name, value] = METADATA_REGEX.exec(line) as Array<string>;
 
   return {
+    lineOffset,
     type: parts.METADATA,
     name,
     value,
