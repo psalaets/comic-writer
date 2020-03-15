@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parsePreSpread() empty 1`] = `Array []`;
+
+exports[`parsePreSpread() metadata and paragraphs 1`] = `
+Array [
+  Object {
+    "lineOffset": 0,
+    "name": "title",
+    "type": "metadata",
+    "value": "My comic",
+  },
+  Object {
+    "lineOffset": 1,
+    "name": "issue",
+    "type": "metadata",
+    "value": "1",
+  },
+  Object {
+    "lineOffset": 2,
+    "name": "by",
+    "type": "metadata",
+    "value": "me",
+  },
+  Object {
+    "lineOffset": 3,
+    "name": "for",
+    "type": "metadata",
+    "value": "my art team",
+  },
+  Object {
+    "content": "This is first paragraph",
+    "lineOffset": 5,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "This is second paragraph",
+    "lineOffset": 6,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "Third paragraph",
+    "lineOffset": 8,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "Final paragraph",
+    "lineOffset": 10,
+    "type": "paragraph",
+  },
+]
+`;
+
+exports[`parsePreSpread() only metadata 1`] = `
+Array [
+  Object {
+    "lineOffset": 0,
+    "name": "title",
+    "type": "metadata",
+    "value": "test",
+  },
+  Object {
+    "lineOffset": 2,
+    "name": "issue",
+    "type": "metadata",
+    "value": "1",
+  },
+  Object {
+    "lineOffset": 4,
+    "name": "by",
+    "type": "metadata",
+    "value": "the author",
+  },
+]
+`;
+
+exports[`parsePreSpread() only paragraphs 1`] = `
+Array [
+  Object {
+    "content": "This is the first paragraph.",
+    "lineOffset": 0,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "This is second paragraph",
+    "lineOffset": 1,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "Third paragraph",
+    "lineOffset": 3,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "Final paragraph",
+    "lineOffset": 5,
+    "type": "paragraph",
+  },
+]
+`;
+
+exports[`parsePreSpread() starts with blanks 1`] = `
+Array [
+  Object {
+    "lineOffset": 3,
+    "name": "title",
+    "type": "metadata",
+    "value": "My comic",
+  },
+  Object {
+    "lineOffset": 4,
+    "name": "issue",
+    "type": "metadata",
+    "value": "1",
+  },
+  Object {
+    "lineOffset": 5,
+    "name": "by",
+    "type": "metadata",
+    "value": "me",
+  },
+  Object {
+    "lineOffset": 6,
+    "name": "for",
+    "type": "metadata",
+    "value": "my art team",
+  },
+  Object {
+    "content": "This is first paragraph",
+    "lineOffset": 8,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "This is second paragraph",
+    "lineOffset": 9,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "Third paragraph",
+    "lineOffset": 11,
+    "type": "paragraph",
+  },
+  Object {
+    "content": "Final paragraph",
+    "lineOffset": 13,
+    "type": "paragraph",
+  },
+]
+`;
