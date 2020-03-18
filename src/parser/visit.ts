@@ -9,11 +9,13 @@ import {
   Sfx,
   Caption,
   Metadata,
-  Paragraph
+  Paragraph,
+  Script
 } from './types';
 
-export default function visit(nodes: Array<ComicNode>, visitor: Visitor) {
-  nodes.forEach(node => visitNode(node, visitor));
+export default function visit(script: Script, visitor: Visitor) {
+  script.preSpread.forEach(node => visitNode(node, visitor));
+  script.spreads.forEach(node => visitNode(node, visitor));
 }
 
 function visitNode(node: ComicNode, visitor: Visitor) {
@@ -48,7 +50,7 @@ function visitNode(node: ComicNode, visitor: Visitor) {
 function visitSpread(spread: Spread, visitor: Visitor) {
   if (visitor.enterSpread) visitor.enterSpread(spread);
 
-  visit(spread.content, visitor);
+  spread.content.forEach(child => visitNode(child, visitor));
 
   if (visitor.exitSpread) visitor.exitSpread(spread);
 }
@@ -56,7 +58,7 @@ function visitSpread(spread: Spread, visitor: Visitor) {
 function visitPanel(panel: Panel, visitor: Visitor) {
   if (visitor.enterPanel) visitor.enterPanel(panel);
 
-  visit(panel.content, visitor);
+  panel.content.forEach(child => visitNode(child, visitor));
 
   if (visitor.exitPanel) visitor.exitPanel(panel);
 }

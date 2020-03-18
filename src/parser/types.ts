@@ -11,6 +11,11 @@ export type PanelChild = Lettering | Metadata | Paragraph;
 /** The various types of lettering */
 export type Lettering = Dialogue | Caption | Sfx;
 
+export interface Script {
+  preSpread: Array<PreSpreadChild>;
+  spreads: Array<Spread>;
+}
+
 export interface Spread {
   type: typeof parts.SPREAD;
   content: Array<SpreadChild>;

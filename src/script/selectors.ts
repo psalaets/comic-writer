@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { ComicNode } from '../parser/types';
+import { Script } from '../parser/types';
 import { parseSpread, parsePreSpread, visit } from '../parser';
 
 import { wrap } from '../perf';
@@ -36,14 +36,14 @@ const selectPreSpreadNodes = createSelector(
 
 export const selectParseResult = wrap('selectParseResult', createSelector(
   [selectPreSpreadNodes, selectSpreadNodes],
-  (preSpreadNodes, spreads) => {
-    return [
-      ...preSpreadNodes,
-      ...spreads
-    ] as Array<ComicNode>;
+  (preSpreadNodes, spreads): Script => {
+    return {
+      preSpread: preSpreadNodes,
+      spreads
+    };
   }
 ));
-/*
+
 export const selectSpeakers = wrap('selectSpeakers', createSelector(
   selectParseResult,
   parseResult => {
@@ -64,6 +64,7 @@ function dedupe(speakers: Array<string>): Array<string> {
   return [...new Set(allCaps)];
 }
 
+/*
 export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
   selectParseResult,
   parseResult => {

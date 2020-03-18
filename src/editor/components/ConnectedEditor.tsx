@@ -12,7 +12,7 @@ const mapStateToProps = wrap('Editor [mapStateToProps]', (state: RootState) => {
     value: selectors.selectSource(state),
     panelCounts: [],//selectors.selectPanelCounts(state),
     wordCounts: [],//selectors.selectWordCounts(state),
-    characters: []//selectors.selectSpeakers(state),
+    characters: selectors.selectSpeakers(state),
   };
 });
 
