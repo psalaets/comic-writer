@@ -1,13 +1,13 @@
 import * as parts from '../comic-part-types';
 
 /** Anything that can be in a script */
-export type ComicNode = Spread | Panel | Lettering | Metadata | Paragraph;
+export type ComicNode = Spread | Panel | Lettering | Metadata | Paragraph | BlankLine;
 /** Anything that can be in the pre-spread part of the script */
-export type PreSpreadChild = Metadata | Paragraph;
+export type PreSpreadChild = Metadata | Paragraph | BlankLine;
 /** Anything that can be directly under a spread */
-export type SpreadChild = Panel | Lettering | Paragraph;
+export type SpreadChild = Panel | Lettering | Paragraph | BlankLine;
 /** Anything that can be directly under a panel */
-export type PanelChild = Lettering | Metadata | Paragraph;
+export type PanelChild = Lettering | Metadata | Paragraph | BlankLine;
 /** The various types of lettering */
 export type Lettering = Dialogue | Caption | Sfx;
 
@@ -32,8 +32,6 @@ export interface Spread {
 
 export interface Panel {
   type: typeof parts.PANEL;
-  /** How many lines away this is from its spread's start line */
-  lineOffset: number;
   content: Array<PanelChild>;
 
   speakers: Array<string>;
@@ -46,23 +44,17 @@ export interface Panel {
 
 export interface Paragraph {
   type: typeof parts.PARAGRAPH;
-  /** How many lines away this is from its spread's start line */
-  lineOffset: number;
   content: string;
 }
 
 export interface Metadata {
   type: typeof parts.METADATA;
-  /** How many lines away this is from its spread's start line */
-  lineOffset: number;
   name: string;
   value: string;
 }
 
 export interface Dialogue {
   type: typeof parts.DIALOGUE;
-  /** How many lines away this is from its spread's start line */
-  lineOffset: number;
   speaker: string;
   modifier: string | null;
   content: Array<LetteringContentChunk>;
@@ -71,8 +63,6 @@ export interface Dialogue {
 
 export interface Caption {
   type: typeof parts.CAPTION;
-  /** How many lines away this is from its spread's start line */
-  lineOffset: number;
   modifier: string | null;
   content: Array<LetteringContentChunk>;
   wordCount: number;
@@ -80,8 +70,6 @@ export interface Caption {
 
 export interface Sfx {
   type: typeof parts.SFX;
-  /** How many lines away this is from its spread's start line */
-  lineOffset: number;
   modifier: string | null;
   content: string;
 }
@@ -89,4 +77,8 @@ export interface Sfx {
 export interface LetteringContentChunk {
   type: typeof parts.TEXT | typeof parts.LETTERING_BOLD;
   content: string;
+}
+
+export interface BlankLine {
+  type: typeof parts.BLANK;
 }

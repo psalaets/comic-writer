@@ -9,3 +9,4 @@ export const SFX = 'sfx';
 export const TEXT = 'text';
 export const LETTERING_BOLD = 'lettering-bold';
 export const METADATA = 'metadata';
+export const BLANK = 'blank';

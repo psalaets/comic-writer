@@ -48,8 +48,8 @@ export const DIALOGUE_REGEX = /^\t(.+?) ?(\(.+\))?: ?(.+)/;
  */
 export const METADATA_REGEX = /^(.+): ?(.+)/;
 /**
- * Matches a paragraph line. This matches everything so it should be checked
- * only after all other possible matches have failed.
+ * Matches a paragraph line. This matches everything except blank lines so it
+ * should be checked only after all other more interesting matches have failed.
  *
  * No capture groups.
  */

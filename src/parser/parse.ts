@@ -1,6 +1,7 @@
 import * as parts from '../comic-part-types';
 import countWords from './count-words';
 import * as perf from '../perf';
+import * as classifiers from './line-classifiers';
 import {
   Spread,
   Panel,
@@ -12,7 +13,9 @@ import {
   SpreadChild,
   PanelChild,
   LetteringContentChunk,
-  PreSpreadChild
+  PreSpreadChild,
+  BlankLine,
+  ComicNode
 } from './types';
 
 import {
@@ -26,7 +29,6 @@ import {
 } from './regexes';
 
 import { LineStream } from './line-stream';
-
 
 export function parsePreSpread(preSpreadLines: Array<string>): Array<PreSpreadChild> {
   const lines = LineStream.fromLines(preSpreadLines);
