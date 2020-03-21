@@ -49,7 +49,7 @@ export function parseLine(line: string): ComicNode {
   return parseParagraph(line);
 }
 
-function parseSpread(line: string): any {
+function parseSpread(line: string): Spread {
   const matchResult = SPREAD_REGEX.exec(line) as Array<string>;
 
   const startPage = Number(matchResult[1]);
@@ -74,7 +74,7 @@ function countPages(startPage: number, endPage?: number): number {
   }
 }
 
-function parsePanel(line: string): any {
+function parsePanel(line: string): Panel {
   const [, number] = PANEL_REGEX.exec(line) as Array<string>;
 
   return {

@@ -18,28 +18,28 @@ export interface Script {
 
 export interface Spread {
   type: typeof parts.SPREAD;
-  content: Array<SpreadChild>;
+  // content: Array<SpreadChild>;
 
   pageCount: number;
-  panelCount: number;
-  speakers: Array<string>;
-  dialogueCount: number;
-  captionCount: number;
-  sfxCount: number;
-  dialogueWordCount: number;
-  captionWordCount: number;
+  // panelCount: number;
+  // speakers: Array<string>;
+  // dialogueCount: number;
+  // captionCount: number;
+  // sfxCount: number;
+  // dialogueWordCount: number;
+  // captionWordCount: number;
 }
 
 export interface Panel {
   type: typeof parts.PANEL;
-  content: Array<PanelChild>;
+  // content: Array<PanelChild>;
 
-  speakers: Array<string>;
-  dialogueCount: number;
-  captionCount: number;
-  sfxCount: number;
-  dialogueWordCount: number;
-  captionWordCount: number;
+  // speakers: Array<string>;
+  // dialogueCount: number;
+  // captionCount: number;
+  // sfxCount: number;
+  // dialogueWordCount: number;
+  // captionWordCount: number;
 }
 
 export interface Paragraph {
