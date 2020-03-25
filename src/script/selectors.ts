@@ -1,12 +1,14 @@
 import { createSelector } from 'reselect';
 
-import { Script } from '../parser/types';
-import { parseSpread, parsePreSpread, visit } from '../parser';
+import { Script, ComicNode } from '../parser/types';
+import { parseLines } from '../parser';
 
 import { wrap } from '../perf';
 
 import { RootState } from '../store/types';
-import { ScriptState, PanelCount, WordCount, SpreadContent } from './types';
+import { ScriptState, PanelCount, WordCount, SpreadChunk, LocatedComicNode } from './types';
+import * as parts from '../comic-part-types';
+import { iterator } from './iterator';
 
 function selectScriptState(state: RootState): ScriptState {
   return state.script;
@@ -20,30 +22,105 @@ function selectPreSpreadLines(state: RootState): Array<string> {
   return selectScriptState(state).preSpread;
 }
 
-function selectSpreadLines(state: RootState): Array<SpreadContent> {
+function selectSpreadChunks(state: RootState): Array<SpreadChunk> {
   return selectScriptState(state).spreads;
 }
 
-const selectSpreadNodes = createSelector(
-  selectSpreadLines,
-  spreadLines => spreadLines.map(spread => parseSpread(spread.lines))
+export const selectNodesBySpread = createSelector(
+  selectSpreadChunks,
+  spreads => spreads.map(spread => parseLines(spread.lines))
 );
 
-const selectPreSpreadNodes = createSelector(
+export const selectPreSpreadNodes = createSelector(
   selectPreSpreadLines,
-  preSpreadLines => parsePreSpread(preSpreadLines)
+  preSpreadLines => parseLines(preSpreadLines)
 )
 
-export const selectParseResult = wrap('selectParseResult', createSelector(
-  [selectPreSpreadNodes, selectSpreadNodes],
-  (preSpreadNodes, spreads): Script => {
-    return {
-      preSpread: preSpreadNodes,
-      spreads
-    };
-  }
-));
+const selectPreSpreadLineCount = createSelector(
+  selectPreSpreadLines,
+  lines => lines.length
+);
 
+export const selectLocatedPreSpreadNodes = createSelector(
+  selectPreSpreadNodes,
+  (nodes): Array<LocatedComicNode> => {
+    return nodes.map((node, lineNumber) => ({node, lineNumber}));
+  }
+);
+
+export const selectLocatedNodesBySpread = createSelector(
+  [selectPreSpreadLineCount, selectNodesBySpread],
+  (preSpreadLineCount, nodesBySpread): Array<Array<LocatedComicNode>> => {
+    let lineNumber = preSpreadLineCount;
+
+    return nodesBySpread.map(nodes => {
+      return nodes.map(node => {
+        return {
+          node,
+          lineNumber: lineNumber++
+        };
+      });
+    });
+  }
+);
+
+export const selectSpreadRollups = createSelector(
+  [selectLocatedPreSpreadNodes, selectLocatedNodesBySpread],
+  (preSpreadNodes, nodesBySpread) => {
+    const spreads: any = {};
+    let currentSpread = {
+      lineNumber: 0,
+      panelCount: 0,
+      speakers: [] as Array<string>,
+      dialogueCount: 0,
+      captionCount: 0,
+      sfxCount: 0,
+      dialogueWordCount: 0,
+      captionWordCount: 0
+    };
+
+    for (const located of iterator(preSpreadNodes, nodesBySpread)) {
+      switch (located.node.type) {
+        case parts.SPREAD: {
+          spreads[located.lineNumber] = currentSpread = {
+            lineNumber: located.lineNumber,
+            panelCount: 0,
+            speakers: [],
+            dialogueCount: 0,
+            captionCount: 0,
+            sfxCount: 0,
+            dialogueWordCount: 0,
+            captionWordCount: 0
+          };
+          break;
+        }
+        case parts.CAPTION: {
+          currentSpread.captionCount += 1;
+          currentSpread.captionWordCount += located.node.wordCount;
+          break;
+        }
+        case parts.DIALOGUE: {
+          currentSpread.dialogueCount += 1;
+          currentSpread.dialogueWordCount += located.node.wordCount;
+          currentSpread.speakers.push(located.node.speaker);
+          break;
+        }
+        case parts.SFX: {
+          currentSpread.sfxCount += 1;
+          break;
+        }
+        case parts.PANEL: {
+          currentSpread.panelCount += 1;
+          break;
+        }
+      }
+    }
+
+    return spreads;
+  }
+)
+
+/*
 export const selectSpeakers = wrap('selectSpeakers', createSelector(
   selectParseResult,
   parseResult => {

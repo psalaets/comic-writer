@@ -32,13 +32,19 @@ const BLANK_LINE: BlankLine = {
   type: parts.BLANK
 };
 
+export function parseLines(lines: Array<string>): Array<ComicNode> {
+  return lines.map(line => parseLine(line));
+}
+
 export function parseLine(line: string): ComicNode {
   // scripts are about 1/2 blank lines so this should be first
   if (classifiers.isBlank(line)) return BLANK_LINE;
 
-  if (classifiers.isDialogue(line)) return parseDialogue(line);
   if (classifiers.isCaption(line)) return parseCaption(line);
   if (classifiers.isSfx(line)) return parseSfx(line);
+  // dialogue has to be checked after sfx/caption, otherwise we get balloons
+  // where the speaker is "caption" and "sfx"
+  if (classifiers.isDialogue(line)) return parseDialogue(line);
 
   if (classifiers.isPanel(line)) return parsePanel(line);
   if (classifiers.isSpread(line)) return parseSpread(line);

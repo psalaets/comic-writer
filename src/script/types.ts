@@ -1,3 +1,5 @@
+import { ComicNode } from '../parser/types';
+
 // action type strings
 export const CHANGE_SOURCE = 'CHANGE_SOURCE';
 
@@ -59,10 +61,10 @@ export type ScriptActionTypes = ChangeSourceAction
 export interface ScriptState {
   source: string,
   preSpread: Array<string>,
-  spreads: Array<SpreadContent>
+  spreads: Array<SpreadChunk>
 }
 
-export interface SpreadContent {
+export interface SpreadChunk {
   /** The actual lines of the spread */
   lines: Array<string>;
 }
@@ -82,4 +84,11 @@ export interface WordCount {
   /** Zero-based line number */
   lineNumber: number,
   isSpread: boolean
+}
+
+export interface LocatedComicNode {
+  /** Zero based line number */
+  lineNumber: number;
+  /** The comic node at this line */
+  node: ComicNode;
 }

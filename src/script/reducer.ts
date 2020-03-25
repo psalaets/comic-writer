@@ -3,7 +3,7 @@ import {
   LOAD_SCRIPT_COMPLETED,
   ScriptActionTypes,
   ScriptState,
-  SpreadContent
+  SpreadChunk
 } from './types';
 import { wrap } from '../perf';
 import { LineStream } from '../parser';
@@ -28,14 +28,14 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
       const lines = LineStream.fromString(action.payload.source);
       const preSpread = lines.consumeUntilSpreadStart();
 
-      const spreads: Array<SpreadContent> = [];
+      const spreads: Array<SpreadChunk> = [];
       while (lines.hasMoreLines()) {
         spreads.push({
           lines: lines.consumeNextSpread()
         });
       }
 
-      const updatedSpreads: Array<SpreadContent | null> = [];
+      const updatedSpreads: Array<SpreadChunk | null> = [];
       for (let i = 0; i < Math.max(state.spreads.length, spreads.length); i++) {
         updatedSpreads.push(update(state.spreads[i], spreads[i]));
       }
@@ -43,7 +43,7 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
       return {
         ...state,
         preSpread: updatePreSpread(state.preSpread, preSpread),
-        spreads: updatedSpreads.filter(chunk => chunk != null) as Array<SpreadContent>,
+        spreads: updatedSpreads.filter(chunk => chunk != null) as Array<SpreadChunk>,
         source: action.payload.source
       };
     }
@@ -66,9 +66,9 @@ function updatePreSpread(oldLines: Array<string>, newLines: Array<string>): Arra
 }
 
 function update(
-  oldSpread: SpreadContent,
-  newSpread: SpreadContent
-): SpreadContent | null {
+  oldSpread: SpreadChunk,
+  newSpread: SpreadChunk
+): SpreadChunk | null {
   if (oldSpread == null) return newSpread;
   if (newSpread == null) return null;
 
