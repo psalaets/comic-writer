@@ -32,22 +32,47 @@ const BLANK_LINE: BlankLine = {
   type: parts.BLANK
 };
 
-export function parseLines(lines: Array<string>): Array<ComicNode> {
-  return lines.map(line => parseLine(line));
+interface LetteringNumbering {
+  nextLetteringNumber(): number;
 }
 
-export function parseLine(line: string): ComicNode {
+export function parseSpreadLines(lines: Array<string>): Array<ComicNode> {
+  const numbering = {
+    letteringNumber: 1,
+    nextLetteringNumber(): number {
+      return this.letteringNumber++;
+    }
+  };
+
+  return lines.map(line => parseSpreadLine(line, numbering));
+}
+
+function parseSpreadLine(line: string, numbering: LetteringNumbering): ComicNode {
   // scripts are about 1/2 blank lines so this should be first
   if (classifiers.isBlank(line)) return BLANK_LINE;
 
-  if (classifiers.isCaption(line)) return parseCaption(line);
-  if (classifiers.isSfx(line)) return parseSfx(line);
+  if (classifiers.isCaption(line)) return parseCaption(line, numbering);
+  if (classifiers.isSfx(line)) return parseSfx(line, numbering);
   // dialogue has to be checked after sfx/caption, otherwise we get balloons
   // where the speaker is "caption" and "sfx"
-  if (classifiers.isDialogue(line)) return parseDialogue(line);
+  if (classifiers.isDialogue(line)) return parseDialogue(line, numbering);
 
   if (classifiers.isPanel(line)) return parsePanel(line);
   if (classifiers.isSpread(line)) return parseSpread(line);
+
+  if (classifiers.isMetadata(line)) return parseMetadata(line);
+
+  // any non-blank line can be a paragraph so it goes last
+  return parseParagraph(line);
+}
+
+export function parsePreSpreadLines(lines: Array<string>): Array<ComicNode> {
+  return lines.map(line => parsePreSpreadLine(line));
+}
+
+function parsePreSpreadLine(line: string): ComicNode {
+  // scripts are about 1/2 blank lines so this should be first
+  if (classifiers.isBlank(line)) return BLANK_LINE;
 
   if (classifiers.isMetadata(line)) return parseMetadata(line);
 
@@ -84,7 +109,8 @@ function parsePanel(line: string): Panel {
   const [, number] = PANEL_REGEX.exec(line) as Array<string>;
 
   return {
-    type: parts.PANEL
+    type: parts.PANEL,
+    number: Number(number)
   };
 }
 
@@ -105,13 +131,14 @@ function parseParagraph(line: string): Paragraph {
   };
 }
 
-function parseDialogue(line: string): Dialogue {
+function parseDialogue(line: string, numbering: LetteringNumbering): Dialogue {
   const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as Array<string>;
 
   const parseTree = parseLetteringContent(content);
 
   return {
     type: parts.DIALOGUE,
+    number: numbering.nextLetteringNumber(),
     speaker,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content: parseTree,
@@ -119,23 +146,25 @@ function parseDialogue(line: string): Dialogue {
   };
 }
 
-function parseCaption(line: string): Caption {
+function parseCaption(line: string, numbering: LetteringNumbering): Caption {
   const [, modifier, content] = CAPTION_REGEX.exec(line) as Array<string>;
   const parseTree = parseLetteringContent(content);
 
   return {
     type: parts.CAPTION,
+    number: numbering.nextLetteringNumber(),
     modifier: modifier ? modifier.slice(1, -1) : null,
     content: parseTree,
     wordCount: countWords(parseTree)
   };
 }
 
-function parseSfx(line: string): Sfx {
+function parseSfx(line: string, numbering: LetteringNumbering): Sfx {
   const [, modifier, content] = SFX_REGEX.exec(line) as Array<string>;
 
   return {
     type: parts.SFX,
+    number: numbering.nextLetteringNumber(),
     modifier: modifier ? modifier.slice(1, -1) : null,
     content,
   };

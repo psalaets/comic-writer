@@ -32,6 +32,7 @@ export interface Spread {
 
 export interface Panel {
   type: typeof parts.PANEL;
+  number: number;
   // content: Array<PanelChild>;
 
   // speakers: Array<string>;
@@ -55,6 +56,7 @@ export interface Metadata {
 
 export interface Dialogue {
   type: typeof parts.DIALOGUE;
+  number: number;
   speaker: string;
   modifier: string | null;
   content: Array<LetteringContentChunk>;
@@ -63,6 +65,7 @@ export interface Dialogue {
 
 export interface Caption {
   type: typeof parts.CAPTION;
+  number: number;
   modifier: string | null;
   content: Array<LetteringContentChunk>;
   wordCount: number;
@@ -70,6 +73,7 @@ export interface Caption {
 
 export interface Sfx {
   type: typeof parts.SFX;
+  number: number;
   modifier: string | null;
   content: string;
 }
