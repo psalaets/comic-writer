@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { Script, ComicNode } from '../parser/types';
+import { ComicNode } from '../parser/types';
 import { parsePreSpreadLines, parseSpreadLines } from '../parser';
 
 import { wrap } from '../perf';
@@ -63,62 +63,6 @@ export const selectLocatedNodesBySpread = createSelector(
     });
   }
 );
-
-export const selectSpreadRollups = createSelector(
-  [selectLocatedPreSpreadNodes, selectLocatedNodesBySpread],
-  (preSpreadNodes, nodesBySpread) => {
-    const spreads: any = {};
-    let currentSpread = {
-      lineNumber: 0,
-      panelCount: 0,
-      speakers: [] as Array<string>,
-      dialogueCount: 0,
-      captionCount: 0,
-      sfxCount: 0,
-      dialogueWordCount: 0,
-      captionWordCount: 0
-    };
-
-    for (const located of iterator(preSpreadNodes, nodesBySpread)) {
-      switch (located.node.type) {
-        case parts.SPREAD: {
-          spreads[located.lineNumber] = currentSpread = {
-            lineNumber: located.lineNumber,
-            panelCount: 0,
-            speakers: [],
-            dialogueCount: 0,
-            captionCount: 0,
-            sfxCount: 0,
-            dialogueWordCount: 0,
-            captionWordCount: 0
-          };
-          break;
-        }
-        case parts.CAPTION: {
-          currentSpread.captionCount += 1;
-          currentSpread.captionWordCount += located.node.wordCount;
-          break;
-        }
-        case parts.DIALOGUE: {
-          currentSpread.dialogueCount += 1;
-          currentSpread.dialogueWordCount += located.node.wordCount;
-          currentSpread.speakers.push(located.node.speaker);
-          break;
-        }
-        case parts.SFX: {
-          currentSpread.sfxCount += 1;
-          break;
-        }
-        case parts.PANEL: {
-          currentSpread.panelCount += 1;
-          break;
-        }
-      }
-    }
-
-    return spreads;
-  }
-)
 
 /*
 export const selectSpeakers = wrap('selectSpeakers', createSelector(

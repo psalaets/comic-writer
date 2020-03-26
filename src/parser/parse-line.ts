@@ -9,12 +9,10 @@ import {
   Dialogue,
   Caption,
   Sfx,
-  SpreadChild,
-  PanelChild,
   LetteringContentChunk,
-  PreSpreadChild,
   BlankLine,
-  ComicNode
+  ComicNode,
+  SpreadChild
 } from './types';
 
 import {
@@ -37,17 +35,77 @@ interface LetteringNumbering {
 }
 
 export function parseSpreadLines(lines: Array<string>): Array<ComicNode> {
+  const children = panelRollups(parseSpreadChildren(lines.slice(1)));
+  const spread = spreadRollups(parseSpread(lines[0]), children);
+
+  return [spread, ...children];
+}
+
+function spreadRollups(spread: Spread, children: Array<SpreadChild>): Spread {
+  return children.reduce((spread, child) => {
+    if (child.type === parts.PANEL) {
+      spread.panelCount += 1;
+      spread.captionCount += child.captionCount;
+      spread.captionWordCount += child.captionCount;
+      spread.dialogueCount += child.dialogueCount;
+      spread.dialogueWordCount += child.dialogueWordCount;
+      spread.speakers.push(...child.speakers);
+      spread.sfxCount += child.sfxCount;
+    }
+    return spread;
+  }, spread);
+}
+
+function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
+  let letteringNumber = 1;
+
   const numbering = {
-    letteringNumber: 1,
     nextLetteringNumber(): number {
-      return this.letteringNumber++;
+      return letteringNumber++;
     }
   };
 
-  return lines.map(line => parseSpreadLine(line, numbering));
+  return lines
+    .map(line => parseSpreadChild(line, numbering));
 }
 
-function parseSpreadLine(line: string, numbering: LetteringNumbering): ComicNode {
+function panelRollups(children: Array<SpreadChild>): Array<SpreadChild> {
+  let lastPanel: Panel;
+
+  children.forEach(child => {
+    switch (child.type) {
+      case parts.PANEL: {
+        lastPanel = child;
+        break;
+      }
+      case parts.CAPTION: {
+        if (lastPanel) {
+          lastPanel.captionCount += 1;
+          lastPanel.captionWordCount += child.wordCount;
+        }
+        break;
+      }
+      case parts.DIALOGUE: {
+        if (lastPanel) {
+          lastPanel.dialogueCount += 1;
+          lastPanel.dialogueWordCount += child.wordCount;
+          lastPanel.speakers.push(child.speaker);
+        }
+        break;
+      }
+      case parts.SFX: {
+        if (lastPanel) {
+          lastPanel.sfxCount += 1;
+        }
+        break;
+      }
+    }
+  });
+
+  return children;
+}
+
+function parseSpreadChild(line: string, numbering: LetteringNumbering): SpreadChild {
   // scripts are about 1/2 blank lines so this should be first
   if (classifiers.isBlank(line)) return BLANK_LINE;
 
@@ -58,7 +116,6 @@ function parseSpreadLine(line: string, numbering: LetteringNumbering): ComicNode
   if (classifiers.isDialogue(line)) return parseDialogue(line, numbering);
 
   if (classifiers.isPanel(line)) return parsePanel(line);
-  if (classifiers.isSpread(line)) return parseSpread(line);
 
   if (classifiers.isMetadata(line)) return parseMetadata(line);
 
@@ -89,7 +146,16 @@ function parseSpread(line: string): Spread {
 
   return {
     type: parts.SPREAD,
-    pageCount
+    pageCount,
+
+    // these start with default values, rollups need to be done later
+    panelCount: 0,
+    speakers: [],
+    dialogueCount: 0,
+    captionCount: 0,
+    sfxCount: 0,
+    dialogueWordCount: 0,
+    captionWordCount: 0
   };
 }
 
@@ -110,7 +176,15 @@ function parsePanel(line: string): Panel {
 
   return {
     type: parts.PANEL,
-    number: Number(number)
+    number: Number(number),
+
+    // these start with default values, rollups need to be done later
+    speakers: [],
+    dialogueCount: 0,
+    captionCount: 0,
+    sfxCount: 0,
+    dialogueWordCount: 0,
+    captionWordCount: 0,
   };
 }
 

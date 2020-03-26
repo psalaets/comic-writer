@@ -1,46 +1,44 @@
 import * as parts from '../comic-part-types';
 
 /** Anything that can be in a script */
-export type ComicNode = Spread | Panel | Lettering | Metadata | Paragraph | BlankLine;
-/** Anything that can be in the pre-spread part of the script */
-export type PreSpreadChild = Metadata | Paragraph | BlankLine;
-/** Anything that can be directly under a spread */
-export type SpreadChild = Panel | Lettering | Paragraph | BlankLine;
-/** Anything that can be directly under a panel */
-export type PanelChild = Lettering | Metadata | Paragraph | BlankLine;
-/** The various types of lettering */
-export type Lettering = Dialogue | Caption | Sfx;
+export type ComicNode = Container | Leaf;
 
-export interface Script {
-  preSpread: Array<PreSpreadChild>;
-  spreads: Array<Spread>;
-}
+export type SpreadChild = Panel | Leaf;
+
+/** Nodes that contain other nodes */
+type Container = Spread | Panel;
+/** Lettering nodes */
+type Lettering = Dialogue | Caption | Sfx;
+/** Nodes that don't contain other nodes */
+type Leaf = Lettering | Metadata | Paragraph | BlankLine;
 
 export interface Spread {
+  // core spread properties
   type: typeof parts.SPREAD;
-  // content: Array<SpreadChild>;
-
   pageCount: number;
-  // panelCount: number;
-  // speakers: Array<string>;
-  // dialogueCount: number;
-  // captionCount: number;
-  // sfxCount: number;
-  // dialogueWordCount: number;
-  // captionWordCount: number;
+
+  // properties that require looking at the spread's children
+  panelCount: number;
+  speakers: Array<string>;
+  dialogueCount: number;
+  captionCount: number;
+  sfxCount: number;
+  dialogueWordCount: number;
+  captionWordCount: number;
 }
 
 export interface Panel {
+  // core panel properties
   type: typeof parts.PANEL;
   number: number;
-  // content: Array<PanelChild>;
 
-  // speakers: Array<string>;
-  // dialogueCount: number;
-  // captionCount: number;
-  // sfxCount: number;
-  // dialogueWordCount: number;
-  // captionWordCount: number;
+  // properties that require looking at the panel's children
+  speakers: Array<string>;
+  dialogueCount: number;
+  captionCount: number;
+  sfxCount: number;
+  dialogueWordCount: number;
+  captionWordCount: number;
 }
 
 export interface Paragraph {
