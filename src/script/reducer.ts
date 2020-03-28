@@ -48,16 +48,9 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
 }
 
 function updatePreSpread(oldLines: Array<string>, newLines: Array<string>): Array<string> {
-  if (oldLines.length !== newLines.length) {
-    return newLines;
-  }
-
-  const allLinesEqual = oldLines
-    .every((line, index) => {
-      return line === newLines[index];
-    });
-
-  return allLinesEqual ? oldLines : newLines;
+  return allLinesEqual(oldLines, newLines)
+    ? oldLines
+    : newLines;
 }
 
 function update(
@@ -67,14 +60,22 @@ function update(
   if (oldSpread == null) return newSpread;
   if (newSpread == null) return null;
 
-  if (oldSpread.lines.length !== newSpread.lines.length) {
-    return newSpread;
+  return allLinesEqual(oldSpread.lines, newSpread.lines)
+    ? oldSpread
+    : newSpread;
+}
+
+function allLinesEqual(oldLines: Array<string>, newLines: Array<string>): boolean {
+  if (oldLines.length !== newLines.length) {
+    return false;
   }
 
-  const allLinesEqual = oldSpread.lines
-    .every((oldLine, index) => {
-      return oldLine === newSpread.lines[index];
-    });
+  // using old school for loop here for speed
+  for (let i = 0; i < oldLines.length; i++) {
+    if (oldLines[i] !== newLines[i]) {
+      return false;
+    }
+  }
 
-  return allLinesEqual ? oldSpread : newSpread;
+  return true;
 }
