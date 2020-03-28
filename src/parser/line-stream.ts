@@ -16,10 +16,6 @@ export class LineStream {
     this.lines = lines;
   }
 
-  get lineNumber() {
-    return this.currentLine;
-  }
-
   nextIsSpreadStart(): boolean {
     return this.hasMoreLines() && SPREAD_REGEX.test(this.peek());
   }
