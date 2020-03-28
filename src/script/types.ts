@@ -25,8 +25,7 @@ export const LOAD_SCRIPT_ERRORED = 'LOAD_SCRIPT_ERRORED';
 interface ChangeSourceAction {
   type: typeof CHANGE_SOURCE,
   payload: {
-    source: string,
-    changedLines: Array<number>
+    source: string
   }
 }
 

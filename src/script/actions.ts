@@ -16,19 +16,18 @@ const debouncedSaveScript = debounce((source: string, dispatch: ThunkCompatibleD
   dispatch(saveScript(source));
 }, 1000);
 
-export function changeSource(source: string, changedLines: Array<number>): ThunkResult {
+export function changeSource(source: string): ThunkResult {
   return function changeSourceThunk(dispatch, getState) {
-    dispatch(changeSourceInternal(source, changedLines));
+    dispatch(changeSourceInternal(source));
     debouncedSaveScript(source, dispatch);
   };
 }
 
-function changeSourceInternal(source: string, changedLines: Array<number>): ScriptActionTypes {
+function changeSourceInternal(source: string): ScriptActionTypes {
   return {
     type: CHANGE_SOURCE,
     payload: {
-      source,
-      changedLines
+      source
     }
   };
 }
