@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import { ComicNode } from '../parser/types';
+import { Dialogue } from '../parser/types';
 import { parsePreSpreadLines, parseSpreadLines } from '../parser';
 
 import { wrap } from '../perf';
@@ -41,14 +41,14 @@ const selectPreSpreadLineCount = createSelector(
   lines => lines.length
 );
 
-export const selectLocatedPreSpreadNodes = createSelector(
+const selectLocatedPreSpreadNodes = createSelector(
   selectPreSpreadNodes,
   (nodes): Array<LocatedComicNode> => {
     return nodes.map((node, lineNumber) => ({node, lineNumber}));
   }
 );
 
-export const selectLocatedNodesBySpread = createSelector(
+const selectLocatedNodesBySpread = createSelector(
   [selectPreSpreadLineCount, selectNodesBySpread],
   (preSpreadLineCount, nodesBySpread): Array<Array<LocatedComicNode>> => {
     let lineNumber = preSpreadLineCount;
@@ -64,94 +64,75 @@ export const selectLocatedNodesBySpread = createSelector(
   }
 );
 
-/*
-export const selectSpeakers = wrap('selectSpeakers', createSelector(
-  selectParseResult,
-  parseResult => {
-    const allSpeakers = [] as Array<string>;
+const selectDialogues = wrap('selectDialogues', createSelector(
+  [selectPreSpreadNodes, selectNodesBySpread],
+  (preSpreadNodes, nodesBySpread) => {
+    const dialogues: Array<Dialogue> = [];
 
-    visit(parseResult, {
-      enterSpread(spread) {
-        allSpeakers.push(...spread.speakers);
+    for (const node of iterator(preSpreadNodes, nodesBySpread)) {
+      if (node.type === parts.DIALOGUE) {
+        dialogues.push(node);
       }
-    });
+    }
 
-    return dedupe(allSpeakers).sort();
+    return dialogues;
   }
 ));
 
+export const selectSpeakers = wrap('selectSpeakers', createSelector(
+  [selectDialogues],
+  dialogues => {
+    const speakers = dialogues
+      .map(dialogue => dialogue.speaker.toUpperCase());
+
+    return dedupe(speakers).sort();
+  }
+));
+
+
 function dedupe(speakers: Array<string>): Array<string> {
-  const allCaps = speakers.map(speaker => speaker.toLocaleUpperCase());
-  return [...new Set(allCaps)];
+  return [...new Set(speakers)];
 }
 
-/*
 export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
-  selectParseResult,
-  parseResult => {
-    const spreadsWithPanels = [] as Array<PanelCount>;
+  [selectLocatedPreSpreadNodes, selectLocatedNodesBySpread],
+  (preSpreadNodes, nodesBySpread) => {
+    const panelCounts = [] as Array<PanelCount>;
 
-    let panelsSeen = 0;
-
-    visit(parseResult, {
-      exitSpread(spread) {
-        spreadsWithPanels.push({
-          lineNumber: spread.startingLine,
-          count: panelsSeen
+    for (const located of iterator(preSpreadNodes, nodesBySpread)) {
+      if (located.node.type === parts.SPREAD && located.node.panelCount > 0) {
+        panelCounts.push({
+          lineNumber: located.lineNumber,
+          count: located.node.panelCount
         });
-
-        panelsSeen = 0;
-      },
-      enterPanel(panel) {
-        panelsSeen += 1;
       }
-    });
+    }
 
-    return spreadsWithPanels;
+    return panelCounts;
   }
 ));
 
 export const selectWordCounts = wrap('selectWordCounts', createSelector(
-  selectParseResult,
-  parseResult => {
+  [selectLocatedPreSpreadNodes, selectLocatedNodesBySpread],
+  (preSpreadNodes, nodesBySpread) => {
     const wordCounts: Array<WordCount> = [];
 
-    visit(parseResult, {
-      exitSpread(spread) {
+    for (const located of iterator(preSpreadNodes, nodesBySpread)) {
+      if (located.node.type === parts.DIALOGUE || located.node.type === parts.CAPTION) {
         wordCounts.push({
-          nodeId: spread.id,
-          count: spread.captionWordCount + spread.dialogueWordCount,
-          lineNumber: spread.startingLine,
-          isSpread: true
-        });
-      },
-      exitPanel(panel) {
-        wordCounts.push({
-          nodeId: panel.id,
-          count: panel.captionWordCount + panel.dialogueWordCount,
-          lineNumber: panel.startingLine,
+          count: located.node.wordCount,
+          lineNumber: located.lineNumber,
           isSpread: false
         });
-      },
-      exitCaption(caption) {
+      } else if (located.node.type === parts.PANEL || located.node.type === parts.SPREAD) {
         wordCounts.push({
-          nodeId: caption.id,
-          count: caption.wordCount,
-          lineNumber: caption.startingLine,
-          isSpread: false
-        });
-      },
-      exitDialogue(dialogue) {
-        wordCounts.push({
-          nodeId: dialogue.id,
-          count: dialogue.wordCount,
-          lineNumber: dialogue.startingLine,
-          isSpread: false
+          count: located.node.dialogueWordCount + located.node.captionWordCount,
+          lineNumber: located.lineNumber,
+          isSpread: located.node.type === parts.SPREAD
         });
       }
-    });
+    }
 
     return wordCounts;
   }
 ));
-*/

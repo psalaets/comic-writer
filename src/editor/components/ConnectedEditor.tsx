@@ -8,13 +8,11 @@ import { EditorChangeEvent } from '../types';
 import { RootState, ThunkCompatibleDispatch } from '../../store/types';
 
 const mapStateToProps = wrap('Editor [mapStateToProps]', (state: RootState) => {
-  console.log(selectors.selectSpreadRollups(state));
-
   return {
     value: selectors.selectSource(state),
-    panelCounts: [],//selectors.selectPanelCounts(state),
-    wordCounts: [],//selectors.selectWordCounts(state),
-    characters: [],//selectors.selectSpeakers(state),
+    panelCounts: selectors.selectPanelCounts(state),
+    wordCounts: selectors.selectWordCounts(state),
+    characters: selectors.selectSpeakers(state),
   };
 });
 

@@ -6,8 +6,8 @@ export function* iterator<T>(
     yield node;
   }
 
-  for (const nodesOfSpread of nodesBySpread) {
-    for (const node of nodesOfSpread) {
+  for (const nodes of nodesBySpread) {
+    for (const node of nodes) {
       yield node;
     }
   }
