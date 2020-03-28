@@ -9,8 +9,15 @@ const SINGLE_PAGE_PATTERN = /^pages? +\d{1,}$/i;
 const PAGE_RANGE_PATTERN = /^pages? +(\d{1,})-(\d{1,})$/i;
 const PARTIAL_PAGE_RANGE_PATTERN = /^pages? \d{1,}-$/i;
 
+// if line doesn't start with one of these, it's a regular line
+const classifiablePrefixes = ['p', 'P', 's', 'S'];
+
 export default function classifyLines(cursorLine: number) {
   return function classify(line: string, lineNumber: number): LineClassification {
+    if (!classifiablePrefixes.includes(line[0])) {
+      return regularLine(line);
+    }
+
     const cursorOnThisLine = lineNumber === cursorLine;
 
     if (line.match(PAGE_EXPANSION_PATTERN)) {

@@ -81,6 +81,9 @@ describe('classify lines', () => {
         ['pagea', 'regular', undefined],
         ['pagesa', 'regular', undefined],
         ['asdf', 'regular', undefined],
+        ['\tCAPTION: We lived that day.', 'regular', undefined],
+        ['', 'regular', undefined],
+        [' ', 'regular', undefined],
       ]
         .map(testCase => testCase.concat([3, 3]))
         .forEach(defineTestCase);
