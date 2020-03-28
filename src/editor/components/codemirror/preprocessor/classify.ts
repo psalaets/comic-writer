@@ -29,16 +29,20 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
 
     const cursorOnThisLine = lineNumber + lineOffset === cursorLine;
 
+    if (PANEL_PATTERN.test(line)) {
+      return panelLine(line);
+    }
+
+    if (SINGLE_PAGE_PATTERN.test(line)) {
+      return singlePageLine(line);
+    }
+
     if (PAGE_EXPANSION_PATTERN.test(line)) {
       return cursorOnThisLine ? regularLine(line) : singlePageLine(line);
     }
 
     if (PAGES_EXPANSION_PATTERN.test(line)) {
       return cursorOnThisLine ? regularLine(line) : multiPageLine(line, 2);
-    }
-
-    if (SINGLE_PAGE_PATTERN.test(line)) {
-      return singlePageLine(line);
     }
 
     const pageRange = line.match(PAGE_RANGE_PATTERN);
@@ -65,10 +69,6 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
       return cursorOnThisLine
         ? partialPageRangeLine(line)
         : singlePageLine(line);
-    }
-
-    if (PANEL_PATTERN.test(line)) {
-      return panelLine(line);
     }
 
     if (SPREAD_EXPANSION_PATTERN.test(line)) {
