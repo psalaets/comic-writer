@@ -1,4 +1,13 @@
-import { ComicNode } from '../parser/types';
+import {
+  Spread,
+  Panel,
+  Dialogue,
+  Caption,
+  Sfx,
+  Metadata,
+  Paragraph,
+  BlankLine,
+} from '../parser/types';
 
 // action type strings
 export const CHANGE_SOURCE = 'CHANGE_SOURCE';
@@ -88,9 +97,25 @@ export interface WordCount {
   isSpread: boolean
 }
 
-export interface LocatedComicNode {
+interface ScriptLocation {
   /** Zero based line number */
   lineNumber: number;
-  /** The comic node at this line */
-  node: ComicNode;
 }
+
+export type LocatedSpread = Spread & ScriptLocation;
+export type LocatedPanel = Panel & ScriptLocation;
+export type LocatedDialogue = Dialogue & ScriptLocation;
+export type LocatedCaption = Caption & ScriptLocation;
+export type LocatedSfx = Sfx & ScriptLocation;
+export type LocatedMetadata = Metadata & ScriptLocation;
+export type LocatedParagraph = Paragraph & ScriptLocation;
+export type LocatedBlankLine = BlankLine & ScriptLocation;
+
+export type LocatedComicNode = LocatedSpread
+  | LocatedPanel
+  | LocatedDialogue
+  | LocatedCaption
+  | LocatedSfx
+  | LocatedMetadata
+  | LocatedParagraph
+  | LocatedBlankLine;

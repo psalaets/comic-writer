@@ -41,14 +41,14 @@ const selectPreSpreadLineCount = createSelector(
   lines => lines.length
 );
 
-const selectLocatedPreSpreadNodes = createSelector(
+const selectLocatedPreSpreadNodes = wrap('selectLocatedPreSpreadNodes', createSelector(
   selectPreSpreadNodes,
   (nodes): Array<LocatedComicNode> => {
-    return nodes.map((node, lineNumber) => ({node, lineNumber}));
+    return nodes.map((node, lineNumber) => ({...node, lineNumber}));
   }
-);
+));
 
-const selectLocatedNodesBySpread = createSelector(
+const selectLocatedNodesBySpread = wrap('selectLocatedNodesBySpread', createSelector(
   [selectPreSpreadLineCount, selectNodesBySpread],
   (preSpreadLineCount, nodesBySpread): Array<Array<LocatedComicNode>> => {
     let lineNumber = preSpreadLineCount;
@@ -56,13 +56,13 @@ const selectLocatedNodesBySpread = createSelector(
     return nodesBySpread.map(nodes => {
       return nodes.map(node => {
         return {
-          node,
+          ...node,
           lineNumber: lineNumber++
         };
       });
     });
   }
-);
+));
 
 const selectDialogues = wrap('selectDialogues', createSelector(
   [selectPreSpreadNodes, selectNodesBySpread],
@@ -99,11 +99,11 @@ export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
   (preSpreadNodes, nodesBySpread) => {
     const panelCounts = [] as Array<PanelCount>;
 
-    for (const located of iterator(preSpreadNodes, nodesBySpread)) {
-      if (located.node.type === parts.SPREAD && located.node.panelCount > 0) {
+    for (const node of iterator(preSpreadNodes, nodesBySpread)) {
+      if (node.type === parts.SPREAD && node.panelCount > 0) {
         panelCounts.push({
-          lineNumber: located.lineNumber,
-          count: located.node.panelCount
+          lineNumber: node.lineNumber,
+          count: node.panelCount
         });
       }
     }
@@ -117,18 +117,18 @@ export const selectWordCounts = wrap('selectWordCounts', createSelector(
   (preSpreadNodes, nodesBySpread) => {
     const wordCounts: Array<WordCount> = [];
 
-    for (const located of iterator(preSpreadNodes, nodesBySpread)) {
-      if (located.node.type === parts.DIALOGUE || located.node.type === parts.CAPTION) {
+    for (const node of iterator(preSpreadNodes, nodesBySpread)) {
+      if (node.type === parts.DIALOGUE || node.type === parts.CAPTION) {
         wordCounts.push({
-          count: located.node.wordCount,
-          lineNumber: located.lineNumber,
+          count: node.wordCount,
+          lineNumber: node.lineNumber,
           isSpread: false
         });
-      } else if (located.node.type === parts.PANEL || located.node.type === parts.SPREAD) {
+      } else if (node.type === parts.PANEL || node.type === parts.SPREAD) {
         wordCounts.push({
-          count: located.node.dialogueWordCount + located.node.captionWordCount,
-          lineNumber: located.lineNumber,
-          isSpread: located.node.type === parts.SPREAD
+          count: node.dialogueWordCount + node.captionWordCount,
+          lineNumber: node.lineNumber,
+          isSpread: node.type === parts.SPREAD
         });
       }
     }
