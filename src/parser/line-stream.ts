@@ -1,12 +1,4 @@
-import {
-  SPREAD_REGEX,
-  PANEL_REGEX,
-  CAPTION_REGEX,
-  SFX_REGEX,
-  DIALOGUE_REGEX,
-  METADATA_REGEX,
-  PARAGRAPH_REGEX,
-} from './regexes';
+import { SPREAD_REGEX } from './regexes';
 
 /**
  * Wrapper around some lines in the script.
@@ -19,10 +11,6 @@ export class LineStream {
     return new LineStream((source || '').split('\n'));
   }
 
-  static fromLines(lines: Array<string>): LineStream {
-    return new LineStream(lines);
-  }
-
   private constructor(lines: Array<string>) {
     this.currentLine = 0;
     this.lines = lines;
@@ -32,44 +20,8 @@ export class LineStream {
     return this.currentLine;
   }
 
-  nextIsSfx(): boolean {
-    return this.hasMoreLines() && SFX_REGEX.test(this.peek());
-  }
-
-  nextIsCaption(): boolean {
-    return this.hasMoreLines() && CAPTION_REGEX.test(this.peek());
-  }
-
-  nextIsDialogue(): boolean {
-    return this.hasMoreLines() && DIALOGUE_REGEX.test(this.peek());
-  }
-
-  nextIsMetadata(): boolean {
-    return this.hasMoreLines() && METADATA_REGEX.test(this.peek());
-  }
-
-  nextIsParagraph(): boolean {
-    return this.hasMoreLines() && PARAGRAPH_REGEX.test(this.peek());
-  }
-
-  nextIsPanelStart(): boolean {
-    return this.hasMoreLines() && PANEL_REGEX.test(this.peek());
-  }
-
   nextIsSpreadStart(): boolean {
     return this.hasMoreLines() && SPREAD_REGEX.test(this.peek());
-  }
-
-  nextIsSpreadEnd(): boolean {
-    return !this.hasMoreLines() || this.nextIsSpreadStart();
-  }
-
-  nextIsPanelEnd(): boolean {
-    return !this.hasMoreLines() || this.nextIsSpreadStart() || this.nextIsPanelStart();
-  }
-
-  nextIsEmpty(): boolean {
-    return this.hasMoreLines() && this.peek().trim() === '';
   }
 
   consume(): string {
