@@ -6,7 +6,7 @@ import { parsePreSpreadLines, parseSpreadLines } from '../parser';
 import { wrap } from '../perf';
 
 import { RootState } from '../store/types';
-import { ScriptState, PanelCount, WordCount, SpreadChunk, LocatedComicNode } from './types';
+import { ScriptState, PanelCount, WordCount, SpreadLines, LocatedComicNode } from './types';
 import * as parts from '../comic-part-types';
 import { iterator } from './iterator';
 
@@ -22,12 +22,12 @@ function selectPreSpreadLines(state: RootState): Array<string> {
   return selectScriptState(state).preSpread;
 }
 
-function selectSpreadChunks(state: RootState): Array<SpreadChunk> {
+function selectSpreadLines(state: RootState): Array<SpreadLines> {
   return selectScriptState(state).spreads;
 }
 
 export const selectNodesBySpread = createSelector(
-  selectSpreadChunks,
+  selectSpreadLines,
   spreads => spreads.map(spread => parseSpreadLines(spread.lines))
 );
 

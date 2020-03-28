@@ -61,15 +61,19 @@ export type ScriptActionTypes = ChangeSourceAction
 export interface ScriptState {
   source: string,
   preSpread: Array<string>,
-  spreads: Array<SpreadChunk>
+  spreads: Array<SpreadLines>
 }
 
-export interface SpreadChunk {
+/**
+ * Container for the script lines that are part of one spread, including the
+ * line that starts the spread itself.
+ */
+export interface SpreadLines {
   /** The actual lines of the spread */
   lines: Array<string>;
 }
 
-// stats related
+// selectors
 
 export interface PanelCount {
   count: number,

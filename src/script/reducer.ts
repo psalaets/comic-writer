@@ -3,7 +3,7 @@ import {
   LOAD_SCRIPT_COMPLETED,
   ScriptActionTypes,
   ScriptState,
-  SpreadChunk
+  SpreadLines
 } from './types';
 import { wrap } from '../perf';
 import { LineStream } from '../parser';
@@ -18,24 +18,19 @@ export default wrap('script-reducer', reducer);
 
 function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
   switch (action.type) {
-    case LOAD_SCRIPT_COMPLETED: {
-      return {
-        ...state,
-        source: action.payload.source
-      };
-    }
+    case LOAD_SCRIPT_COMPLETED: // fall thru
     case CHANGE_SOURCE: {
       const lines = LineStream.fromString(action.payload.source);
       const preSpread = lines.consumeUntilSpreadStart();
 
-      const spreads: Array<SpreadChunk> = [];
+      const spreads: Array<SpreadLines> = [];
       while (lines.hasMoreLines()) {
         spreads.push({
           lines: lines.consumeNextSpread()
         });
       }
 
-      const updatedSpreads: Array<SpreadChunk | null> = [];
+      const updatedSpreads: Array<SpreadLines | null> = [];
       for (let i = 0; i < Math.max(state.spreads.length, spreads.length); i++) {
         updatedSpreads.push(update(state.spreads[i], spreads[i]));
       }
@@ -43,7 +38,7 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
       return {
         ...state,
         preSpread: updatePreSpread(state.preSpread, preSpread),
-        spreads: updatedSpreads.filter(chunk => chunk != null) as Array<SpreadChunk>,
+        spreads: updatedSpreads.filter(chunk => chunk != null) as Array<SpreadLines>,
         source: action.payload.source
       };
     }
@@ -66,9 +61,9 @@ function updatePreSpread(oldLines: Array<string>, newLines: Array<string>): Arra
 }
 
 function update(
-  oldSpread: SpreadChunk,
-  newSpread: SpreadChunk
-): SpreadChunk | null {
+  oldSpread: SpreadLines,
+  newSpread: SpreadLines
+): SpreadLines | null {
   if (oldSpread == null) return newSpread;
   if (newSpread == null) return null;
 
