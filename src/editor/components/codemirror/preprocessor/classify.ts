@@ -29,15 +29,15 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
 
     const cursorOnThisLine = lineNumber + lineOffset === cursorLine;
 
-    if (line.match(PAGE_EXPANSION_PATTERN)) {
+    if (PAGE_EXPANSION_PATTERN.test(line)) {
       return cursorOnThisLine ? regularLine(line) : singlePageLine(line);
     }
 
-    if (line.match(PAGES_EXPANSION_PATTERN)) {
+    if (PAGES_EXPANSION_PATTERN.test(line)) {
       return cursorOnThisLine ? regularLine(line) : multiPageLine(line, 2);
     }
 
-    if (line.match(SINGLE_PAGE_PATTERN)) {
+    if (SINGLE_PAGE_PATTERN.test(line)) {
       return singlePageLine(line);
     }
 
@@ -61,17 +61,17 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
         : singlePageLine(line);
     }
 
-    if (line.match(PARTIAL_PAGE_RANGE_PATTERN)) {
+    if (PARTIAL_PAGE_RANGE_PATTERN.test(line)) {
       return cursorOnThisLine
         ? partialPageRangeLine(line)
         : singlePageLine(line);
     }
 
-    if (line.match(PANEL_PATTERN)) {
+    if (PANEL_PATTERN.test(line)) {
       return panelLine(line);
     }
 
-    if (line.match(SPREAD_EXPANSION_PATTERN)) {
+    if (SPREAD_EXPANSION_PATTERN.test(line)) {
       return cursorOnThisLine ? regularLine(line) : multiPageLine(line, 2);
     }
 
