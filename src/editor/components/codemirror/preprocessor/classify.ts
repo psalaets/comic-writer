@@ -9,16 +9,25 @@ const SINGLE_PAGE_PATTERN = /^pages? +\d{1,}$/i;
 const PAGE_RANGE_PATTERN = /^pages? +(\d{1,})-(\d{1,})$/i;
 const PARTIAL_PAGE_RANGE_PATTERN = /^pages? \d{1,}-$/i;
 
-// if line doesn't start with one of these, it's a regular line
+// If line doesn't start with one of these, it's a "regular" line. This only
+// works because we know what the regexes look like (above).
 const classifiablePrefixes = ['p', 'P', 's', 'S'];
 
-export default function classifyLines(cursorLine: number) {
+/**
+ * Create a line classifier for purposes of pre-processing the script.
+ *
+ * @param cursorLine Zero based line number that the cursor is on. This affects
+ *                   how the classifier will treat certain partial lines.
+ * @param lineOffset When the classifier receives line number values, this is
+ *                   how far they are from their true line position.
+ */
+export default function createClassifier(cursorLine: number, lineOffset: number) {
   return function classify(line: string, lineNumber: number): LineClassification {
     if (!classifiablePrefixes.includes(line[0])) {
       return regularLine(line);
     }
 
-    const cursorOnThisLine = lineNumber === cursorLine;
+    const cursorOnThisLine = lineNumber + lineOffset === cursorLine;
 
     if (line.match(PAGE_EXPANSION_PATTERN)) {
       return cursorOnThisLine ? regularLine(line) : singlePageLine(line);

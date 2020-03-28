@@ -5,7 +5,7 @@ describe('preprocessLines', () => {
     it('first page', () => {
       const input = [`page`];
 
-      const result = preprocessLines(input, 1);
+      const result = preprocessLines(input, 1, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -17,7 +17,7 @@ describe('preprocessLines', () => {
         'this is page 1 info'
       ];
 
-      const result = preprocessLines(input, 1);
+      const result = preprocessLines(input, 1, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -29,7 +29,7 @@ describe('preprocessLines', () => {
         'page'
       ];
 
-      const result = preprocessLines(input, 3);
+      const result = preprocessLines(input, 3, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -43,7 +43,7 @@ describe('preprocessLines', () => {
         'this is page 2 info'
       ];
 
-      const result = preprocessLines(input, 3);
+      const result = preprocessLines(input, 3, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -58,7 +58,7 @@ describe('preprocessLines', () => {
         'this is page 2 info'
       ];
 
-      const result = preprocessLines(input, 0);
+      const result = preprocessLines(input, 0, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -71,7 +71,7 @@ describe('preprocessLines', () => {
         'this is page 1 info'
       ];
 
-      const result = preprocessLines(input, 2);
+      const result = preprocessLines(input, 2, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -86,7 +86,7 @@ describe('preprocessLines', () => {
         'this is page 2 info'
       ];
 
-      const result = preprocessLines(input, 2);
+      const result = preprocessLines(input, 2, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -99,7 +99,7 @@ describe('preprocessLines', () => {
         'this is page 3 info'
       ];
 
-      const result = preprocessLines(input, 0);
+      const result = preprocessLines(input, 0, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -112,7 +112,7 @@ describe('preprocessLines', () => {
         'this is page 3 info'
       ];
 
-      const result = preprocessLines(input, 2);
+      const result = preprocessLines(input, 2, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -121,7 +121,7 @@ describe('preprocessLines', () => {
       const tenPages = Array.from(new Array(10), (_, i) => `Page ${i + 1}`);
       const input = tenPages.concat(['page']);
 
-      const result = preprocessLines(input, 11);
+      const result = preprocessLines(input, 1, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -135,7 +135,7 @@ describe('preprocessLines', () => {
         'panel'
       ];
 
-      const result = preprocessLines(input, 2);
+      const result = preprocessLines(input, 2, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -148,7 +148,7 @@ describe('preprocessLines', () => {
         'panel'
       ];
 
-      const result = preprocessLines(input, 3);
+      const result = preprocessLines(input, 3, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -162,7 +162,7 @@ describe('preprocessLines', () => {
         'this is panel 1 info'
       ];
 
-      const result = preprocessLines(input, 2);
+      const result = preprocessLines(input, 2, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -177,7 +177,7 @@ describe('preprocessLines', () => {
         'this is panel 2 info'
       ];
 
-      const result = preprocessLines(input, 3);
+      const result = preprocessLines(input, 3, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -191,7 +191,7 @@ describe('preprocessLines', () => {
         'panel'
       ];
 
-      const result = preprocessLines(input, 4);
+      const result = preprocessLines(input, 4, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -206,7 +206,7 @@ describe('preprocessLines', () => {
         'panel'
       ];
 
-      const result = preprocessLines(input, 5);
+      const result = preprocessLines(input, 5, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -220,7 +220,7 @@ describe('preprocessLines', () => {
         'this is panel 1 info'
       ];
 
-      const result = preprocessLines(input, 2);
+      const result = preprocessLines(input, 2, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -235,7 +235,7 @@ describe('preprocessLines', () => {
         'this is panel 2 info'
       ];
 
-      const result = preprocessLines(input, 3);
+      const result = preprocessLines(input, 3, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -247,7 +247,7 @@ describe('preprocessLines', () => {
         'this is panel 2 info'
       ];
 
-      const result = preprocessLines(input, 1);
+      const result = preprocessLines(input, 1, 0);
 
       expect(result).toMatchSnapshot();
     });
@@ -261,7 +261,7 @@ describe('preprocessLines', () => {
         'this is panel 3 info'
       ];
 
-      const result = preprocessLines(input, 3);
+      const result = preprocessLines(input, 3, 0);
 
       expect(result).toMatchSnapshot();
     });

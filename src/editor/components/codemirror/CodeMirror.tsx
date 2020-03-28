@@ -145,7 +145,11 @@ export default class CodeMirrorComponent extends Component<Props> {
       }
 
       const oldLines = cm.getValue().split(/\n/);
-      const newLines = preprocessLines(oldLines, cm.getCursor().line);
+      const newLines = preprocessLines(
+        oldLines,
+        cm.getCursor().line,
+        change.from.line
+      );
 
       const changedLines: Array<number> = [];
       for (let i = change.from.line; i <= change.to.line; i++) {

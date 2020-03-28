@@ -1,5 +1,5 @@
-import * as perf from '../../../../perf';
-import classifyLines from './classify-lines';
+import { wrap } from '../../../../perf';
+import createClassifier from './classify';
 import autoNumber from './auto-number';
 
 /**
@@ -7,18 +7,22 @@ import autoNumber from './auto-number';
  *
  * @param lines Lines of the script
  * @param cursorLine What line the cursor is on
+ * @param fromLine First line that could have a change
  */
-export function preprocessLines(
-  lines: Array<string>,
-  cursorLine: number
-): Array<string> {
-  perf.start('preprocess-source');
+export const preprocessLines = wrap('preprocessLines', preprocess);
 
-  const processedLines = lines
-    .map(classifyLines(cursorLine))
+function preprocess(
+  lines: Array<string>,
+  cursorLine: number,
+  fromLine: number
+): Array<string> {
+  const needsProcessing = lines.slice(fromLine);
+  const lineOffset = fromLine;
+
+  const processedLines = needsProcessing
+    .map(createClassifier(cursorLine, lineOffset))
     .map(autoNumber());
 
-  perf.end('preprocess-source');
-
-  return processedLines;
+  const unchanged = lines.slice(0, fromLine);
+  return unchanged.concat(processedLines);
 }
