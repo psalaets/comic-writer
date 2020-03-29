@@ -15,6 +15,7 @@ import {
 } from './types';
 import * as parts from '../comic-part-types';
 import * as iterators from './iterator';
+import { memoizeResult } from './memoize-result';
 
 function selectScriptState(state: RootState): ScriptState {
   return state.script;
@@ -102,27 +103,43 @@ function dedupe(speakers: Array<string>): Array<string> {
   return [...new Set(speakers)];
 }
 
-export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
+export const selectPanelCounts = createSelector(
   selectLocatedNodesBySpread,
-  allLocatedSpreadNodes => {
-    const panelCounts: Array<PanelCount> = [];
+  memoizeResult(allLocatedSpreadNodes => {
+    const newCounts: Array<PanelCount> = [];
 
     for (const spread of iterators.onlySpreads(allLocatedSpreadNodes)) {
       if (spread.panelCount > 0) {
-        panelCounts.push({
+        newCounts.push({
           lineNumber: spread.lineNumber,
           count: spread.panelCount
         });
       }
     }
 
-    return panelCounts;
-  }
-));
+    return newCounts;
+  }, (oldCounts, newCounts) => {
+    if (oldCounts == null) return newCounts == null;
+
+    if (oldCounts.length !== newCounts.length) {
+      return false;
+    }
+
+    for (let i = 0; i < oldCounts.length; i++) {
+      const oldCount = oldCounts[i];
+      const newCount = newCounts[i];
+
+      if (oldCount.count !== newCount.count) return false;
+      if (oldCount.lineNumber !== newCount.lineNumber) return false;
+    }
+
+    return true;
+  })
+);
 
 export const selectWordCounts = wrap('selectWordCounts', createSelector(
   selectLocatedNodesBySpread,
-  allLocatedSpreadNodes => {
+  memoizeResult(allLocatedSpreadNodes => {
     const wordCounts: Array<WordCount> = [];
 
     for (const node of iterators.spreadsAndChildren(allLocatedSpreadNodes)) {
@@ -142,5 +159,22 @@ export const selectWordCounts = wrap('selectWordCounts', createSelector(
     }
 
     return wordCounts;
-  }
+  }, (oldCounts, newCounts) => {
+    if (oldCounts == null) return newCounts == null;
+
+    if (oldCounts.length !== newCounts.length) {
+      return false;
+    }
+
+    for (let i = 0; i < oldCounts.length; i++) {
+      const oldCount = oldCounts[i];
+      const newCount = newCounts[i];
+
+      if (oldCount.count !== newCount.count) return false;
+      if (oldCount.lineNumber !== newCount.lineNumber) return false;
+      if (oldCount.isSpread !== newCount.isSpread) return false;
+    }
+
+    return true;
+  })
 ));
