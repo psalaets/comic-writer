@@ -11,8 +11,7 @@ import {
   ScriptState,
   PanelCount,
   WordCount,
-  LocatedSpreadNodes,
-  LocatedSpread
+  LocatedSpreadNodes
 } from './types';
 import * as parts from '../comic-part-types';
 import * as iterators from './iterator';
@@ -54,18 +53,21 @@ const selectLocatedNodesBySpread = wrap('selectLocatedNodesBySpread', createSele
     let lineNumber = preSpreadLineCount;
 
     return allSpreadNodes.map(spreadNodes => {
-      const locatedSpread: LocatedSpread = {
-        ...spreadNodes.spread,
-        lineNumber: lineNumber++
-      };
+      // using Object.assign instead of object spread here because I can't
+      // figure out how to get rid of the object spread polyfill
+      const locatedSpread = Object.assign({ lineNumber: lineNumber++ }, spreadNodes.spread);
 
       const locatedChildren = spreadNodes.children
-        .map(child => ({ ...child, lineNumber: lineNumber++ }));
+        .map(child => {
+          // using Object.assign instead of object spread here because I can't
+          // figure out how to get rid of the object spread polyfill
+          return Object.assign({ lineNumber: lineNumber++ }, child);
+        });
 
       return {
         spread: locatedSpread,
         children: locatedChildren
-      }
+      };
     });
   }
 ));
