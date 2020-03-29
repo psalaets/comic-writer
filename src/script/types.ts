@@ -7,7 +7,7 @@ import {
   Metadata,
   Paragraph,
   BlankLine,
-  SpreadLines,
+  RawSpreadChunk,
   SpreadChunk
 } from '../parser/types';
 
@@ -71,7 +71,7 @@ export type ScriptActionTypes = ChangeSourceAction
 export interface ScriptState {
   source: string,
   preSpread: Array<string>,
-  spreads: Array<SpreadLines>
+  spreads: Array<RawSpreadChunk>
 }
 
 // selectors
@@ -116,4 +116,4 @@ export type LocatedSpreadChild = LocatedPanel
   | LocatedParagraph
   | LocatedBlankLine;
 
-export type LocatedSpreadNodes = SpreadChunk<LocatedSpreadChild, LocatedSpread>;
+export type LocatedSpreadChunk = SpreadChunk<LocatedSpreadChild, LocatedSpread>;

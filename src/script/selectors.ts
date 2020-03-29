@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { createArraySelector } from 'reselect-map';
 
-import { Dialogue, SpreadLines } from '../parser/types';
+import { Dialogue, RawSpreadChunk } from '../parser/types';
 import { parsePreSpreadLines, parseSpreadLines } from '../parser';
 
 import { wrap } from '../perf';
@@ -11,7 +11,7 @@ import {
   ScriptState,
   PanelCount,
   WordCount,
-  LocatedSpreadNodes
+  LocatedSpreadChunk
 } from './types';
 import * as parts from '../comic-part-types';
 import * as iterators from './iterator';
@@ -29,7 +29,7 @@ function selectPreSpreadLines(state: RootState): Array<string> {
   return selectScriptState(state).preSpread;
 }
 
-function selectSpreadLines(state: RootState): Array<SpreadLines> {
+function selectSpreadLines(state: RootState): Array<RawSpreadChunk> {
   return selectScriptState(state).spreads;
 }
 
@@ -50,7 +50,7 @@ const selectPreSpreadLineCount = createSelector(
 
 const selectLocatedNodesBySpread = wrap('selectLocatedNodesBySpread', createSelector(
   [selectPreSpreadLineCount, selectSpreadNodes],
-  (preSpreadLineCount, allSpreadNodes): Array<LocatedSpreadNodes> => {
+  (preSpreadLineCount, allSpreadNodes): Array<LocatedSpreadChunk> => {
     let lineNumber = preSpreadLineCount;
     let pageNumber = 1;
 

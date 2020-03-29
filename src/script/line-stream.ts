@@ -1,4 +1,4 @@
-import { SpreadLines } from '../parser/types';
+import { RawSpreadChunk } from '../parser/types';
 import { isSpread } from '../parser';
 
 /**
@@ -45,7 +45,7 @@ export class LineStream {
     return consumed;
   }
 
-  consumeNextSpread(): SpreadLines {
+  consumeNextSpread(): RawSpreadChunk {
     if (this.nextIsSpreadStart()) {
       return {
         spread: this.consume(),
@@ -56,8 +56,8 @@ export class LineStream {
     }
   }
 
-  consumeAllSpreads(): Array<SpreadLines> {
-    const spreads: Array<SpreadLines> = [];
+  consumeAllSpreads(): Array<RawSpreadChunk> {
+    const spreads: Array<RawSpreadChunk> = [];
 
     while (this.hasMoreLines()) {
       spreads.push(this.consumeNextSpread());

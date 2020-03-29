@@ -102,8 +102,8 @@ export interface SpreadChunk<ChildType, SpreadType = ChildType> {
 /**
  * A spread line and all the child lines in the spread.
  */
-export type SpreadLines = SpreadChunk<string>;
+export type RawSpreadChunk = SpreadChunk<string>;
 /**
  * A spread node and all the child nodes in the spread.
  */
-export type SpreadNodes = SpreadChunk<SpreadChild, Spread>;
+export type ParsedSpreadChunk = SpreadChunk<SpreadChild, Spread>;

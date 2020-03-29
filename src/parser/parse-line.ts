@@ -13,8 +13,8 @@ import {
   BlankLine,
   ComicNode,
   SpreadChild,
-  SpreadLines,
-  SpreadNodes
+  RawSpreadChunk,
+  ParsedSpreadChunk
 } from './types';
 
 import {
@@ -36,7 +36,7 @@ interface LetteringNumbering {
   nextLetteringNumber(): number;
 }
 
-export function parseSpreadLines(lines: SpreadLines): SpreadNodes {
+export function parseSpreadLines(lines: RawSpreadChunk): ParsedSpreadChunk {
   const spreadLine = lines.spread;
   const childLines = lines.children;
 

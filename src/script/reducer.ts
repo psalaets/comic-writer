@@ -6,7 +6,7 @@ import {
 } from './types';
 import { wrap } from '../perf';
 import { LineStream } from './line-stream';
-import { SpreadLines } from '../parser/types';
+import { RawSpreadChunk } from '../parser/types';
 
 const initialState: ScriptState = {
   source: '',
@@ -35,7 +35,7 @@ function computeNextState(currentState: ScriptState, lines: LineStream): ScriptS
   const preSpread = lines.consumeUntilSpreadStart();
   const spreads = lines.consumeAllSpreads();
 
-  const updatedSpreads: Array<SpreadLines> = [];
+  const updatedSpreads: Array<RawSpreadChunk> = [];
 
   for (let i = 0; i < Math.max(currentState.spreads.length, spreads.length); i++) {
     const updated = update(currentState.spreads[i], spreads[i]);
@@ -60,9 +60,9 @@ function updatePreSpread(oldLines: Array<string>, newLines: Array<string>): Arra
 }
 
 function update(
-  oldSpread: SpreadLines,
-  newSpread: SpreadLines
-): SpreadLines | null {
+  oldSpread: RawSpreadChunk,
+  newSpread: RawSpreadChunk
+): RawSpreadChunk | null {
   if (oldSpread == null) return newSpread;
   if (newSpread == null) return null;
 
