@@ -164,7 +164,7 @@ export default class CodeMirrorComponent extends Component<Props> {
       });
 
       this.props.onChange({
-        value: newLines.join('\n')
+        lines: newLines
       });
     });
 

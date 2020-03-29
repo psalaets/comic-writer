@@ -12,22 +12,22 @@ import {
 
 import localstorage from '../localstorage';
 
-const debouncedSaveScript = debounce((source: string, dispatch: ThunkCompatibleDispatch) => {
-  dispatch(saveScript(source));
+const debouncedSaveScript = debounce((lines: Array<string>, dispatch: ThunkCompatibleDispatch) => {
+  dispatch(saveScript(lines.join('\n')));
 }, 1000);
 
-export function changeSource(source: string): ThunkResult {
+export function changeSource(lines: Array<string>): ThunkResult {
   return function changeSourceThunk(dispatch, getState) {
-    dispatch(changeSourceInternal(source));
-    debouncedSaveScript(source, dispatch);
+    dispatch(changeSourceInternal(lines));
+    debouncedSaveScript(lines, dispatch);
   };
 }
 
-function changeSourceInternal(source: string): ScriptActionTypes {
+function changeSourceInternal(lines: Array<string>): ScriptActionTypes {
   return {
     type: CHANGE_SOURCE,
     payload: {
-      source
+      lines
     }
   };
 }

@@ -19,7 +19,7 @@ const mapStateToProps = wrap('Editor [mapStateToProps]', (state: RootState) => {
 function mapDispatchToProps(dispatch: ThunkCompatibleDispatch) {
   return {
     onChange(event: EditorChangeEvent) {
-      dispatch(actions.changeSource(event.value));
+      dispatch(actions.changeSource(event.lines));
     }
   };
 }

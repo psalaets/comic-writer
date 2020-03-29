@@ -8,5 +8,5 @@ export interface EditorState {
 
 export interface EditorChangeEvent {
   /** New contents of the editor */
-  value: string;
+  lines: Array<string>;
 }

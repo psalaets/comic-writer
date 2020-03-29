@@ -18,32 +18,39 @@ export default wrap('script-reducer', reducer);
 
 function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
   switch (action.type) {
-    case LOAD_SCRIPT_COMPLETED: // fall thru
-    case CHANGE_SOURCE: {
+    case LOAD_SCRIPT_COMPLETED: {
       const lines = LineStream.fromString(action.payload.source);
-      const preSpread = lines.consumeUntilSpreadStart();
-      const spreads = lines.consumeAllSpreads();
-
-      const updatedSpreads: Array<SpreadLines> = [];
-
-      for (let i = 0; i < Math.max(state.spreads.length, spreads.length); i++) {
-        const updated = update(state.spreads[i], spreads[i]);
-
-        if (updated != null) {
-          updatedSpreads.push(updated);
-        }
-      }
-
-      return {
-        ...state,
-        preSpread: updatePreSpread(state.preSpread, preSpread),
-        spreads: updatedSpreads,
-        source: action.payload.source
-      };
+      return computeNextState(state, lines);
+    }
+    case CHANGE_SOURCE: {
+      const lines = LineStream.fromLines(action.payload.lines);
+      return computeNextState(state, lines);
     }
     default:
       return state;
   }
+}
+
+function computeNextState(currentState: ScriptState, lines: LineStream): ScriptState {
+  const preSpread = lines.consumeUntilSpreadStart();
+  const spreads = lines.consumeAllSpreads();
+
+  const updatedSpreads: Array<SpreadLines> = [];
+
+  for (let i = 0; i < Math.max(currentState.spreads.length, spreads.length); i++) {
+    const updated = update(currentState.spreads[i], spreads[i]);
+
+    if (updated != null) {
+      updatedSpreads.push(updated);
+    }
+  }
+
+  return {
+    ...currentState,
+    preSpread: updatePreSpread(currentState.preSpread, preSpread),
+    spreads: updatedSpreads,
+    source: lines.toString()
+  };
 }
 
 function updatePreSpread(oldLines: Array<string>, newLines: Array<string>): Array<string> {

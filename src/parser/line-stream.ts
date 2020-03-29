@@ -8,6 +8,10 @@ export class LineStream {
   lines: Array<string>;
   currentLine: number;
 
+  static fromLines(lines: Array<string>): LineStream {
+    return new LineStream(lines);
+  }
+
   static fromString(source: string): LineStream {
     return new LineStream((source || '').split('\n'));
   }
@@ -15,6 +19,10 @@ export class LineStream {
   private constructor(lines: Array<string>) {
     this.currentLine = 0;
     this.lines = lines;
+  }
+
+  toString(): string {
+    return this.lines.join('\n');
   }
 
   nextIsSpreadStart(): boolean {
