@@ -125,8 +125,6 @@ function parseSpreadChild(line: string, numbering: LetteringNumbering): SpreadCh
 
   if (classifiers.isPanel(line)) return parsePanel(line);
 
-  if (classifiers.isMetadata(line)) return parseMetadata(line);
-
   // any non-blank line can be a paragraph so it goes last
   return parseParagraph(line);
 }
