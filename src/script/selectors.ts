@@ -52,11 +52,24 @@ const selectLocatedNodesBySpread = wrap('selectLocatedNodesBySpread', createSele
   [selectPreSpreadLineCount, selectSpreadNodes],
   (preSpreadLineCount, allSpreadNodes): Array<LocatedSpreadNodes> => {
     let lineNumber = preSpreadLineCount;
+    let pageNumber = 1;
 
     return allSpreadNodes.map(spreadNodes => {
+      const spread = spreadNodes.spread;
+
       // using Object.assign instead of object spread here because I can't
       // figure out how to get rid of the object spread polyfill
-      const locatedSpread = Object.assign({ lineNumber: lineNumber++ }, spreadNodes.spread);
+      const locatedSpread = Object.assign(
+        {
+          lineNumber: lineNumber++,
+          startPage: pageNumber,
+          endPage: pageNumber + (spread.pageCount - 1)
+        },
+        spread
+      );
+
+      // advance page number to next available page
+      pageNumber += spread.pageCount;
 
       const locatedChildren = spreadNodes.children
         .map(child => {

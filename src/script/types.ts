@@ -94,7 +94,12 @@ interface ScriptLocation {
   lineNumber: number;
 }
 
-export type LocatedSpread = Spread & ScriptLocation;
+interface SpreadPages {
+  startPage: number;
+  endPage: number;
+}
+
+export type LocatedSpread = Spread & SpreadPages & ScriptLocation;
 export type LocatedPanel = Panel & ScriptLocation;
 export type LocatedDialogue = Dialogue & ScriptLocation;
 export type LocatedCaption = Caption & ScriptLocation;
@@ -103,8 +108,7 @@ export type LocatedMetadata = Metadata & ScriptLocation;
 export type LocatedParagraph = Paragraph & ScriptLocation;
 export type LocatedBlankLine = BlankLine & ScriptLocation;
 
-export type LocatedComicNode = LocatedSpread
-  | LocatedPanel
+export type LocatedSpreadChild = LocatedPanel
   | LocatedDialogue
   | LocatedCaption
   | LocatedSfx
@@ -112,4 +116,4 @@ export type LocatedComicNode = LocatedSpread
   | LocatedParagraph
   | LocatedBlankLine;
 
-export type LocatedSpreadNodes = SpreadChunk<LocatedComicNode, LocatedSpread>;
+export type LocatedSpreadNodes = SpreadChunk<LocatedSpreadChild, LocatedSpread>;

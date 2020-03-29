@@ -106,4 +106,4 @@ export type SpreadLines = SpreadChunk<string>;
 /**
  * A spread node and all the child nodes in the spread.
  */
-export type SpreadNodes = SpreadChunk<ComicNode, Spread>;
+export type SpreadNodes = SpreadChunk<SpreadChild, Spread>;
