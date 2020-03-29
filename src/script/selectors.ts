@@ -32,15 +32,15 @@ function selectSpreadLines(state: RootState): Array<SpreadLines> {
   return selectScriptState(state).spreads;
 }
 
-export const selectSpreadNodes = createSelector(
+export const selectSpreadNodes = wrap('selectSpreadNodes', createSelector(
   selectSpreadLines,
   spreads => spreads.map(spread => parseSpreadLines(spread))
-);
+));
 
-export const selectPreSpreadNodes = createSelector(
+export const selectPreSpreadNodes = wrap('selectPreSpreadNodes', createSelector(
   selectPreSpreadLines,
   preSpreadLines => parsePreSpreadLines(preSpreadLines)
-)
+));
 
 const selectPreSpreadLineCount = createSelector(
   selectPreSpreadLines,
