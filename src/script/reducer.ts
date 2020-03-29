@@ -66,6 +66,10 @@ function update(
   if (oldSpread == null) return newSpread;
   if (newSpread == null) return null;
 
+  if (oldSpread.spread !== newSpread.spread) {
+    return newSpread;
+  }
+
   return allLinesEqual(oldSpread.children, newSpread.children)
     ? oldSpread
     : newSpread;
