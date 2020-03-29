@@ -5,7 +5,7 @@ import {
   ScriptState,
 } from './types';
 import { wrap } from '../perf';
-import { LineStream } from '../parser';
+import { LineStream } from './line-stream';
 import { SpreadLines } from '../parser/types';
 
 const initialState: ScriptState = {

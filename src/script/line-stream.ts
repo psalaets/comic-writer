@@ -1,5 +1,5 @@
-import { SPREAD_REGEX } from './regexes';
-import { SpreadLines } from './types';
+import { SpreadLines } from '../parser/types';
+import { isSpread } from '../parser';
 
 /**
  * Wrapper around some lines in the script.
@@ -26,7 +26,7 @@ export class LineStream {
   }
 
   nextIsSpreadStart(): boolean {
-    return this.hasMoreLines() && SPREAD_REGEX.test(this.peek());
+    return this.hasMoreLines() && isSpread(this.peek());
   }
 
   consume(): string {
