@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { createArraySelector } from 'reselect-map';
 
 import { Dialogue, SpreadLines } from '../parser/types';
 import { parsePreSpreadLines, parseSpreadLines } from '../parser';
@@ -32,9 +33,9 @@ function selectSpreadLines(state: RootState): Array<SpreadLines> {
   return selectScriptState(state).spreads;
 }
 
-export const selectSpreadNodes = wrap('selectSpreadNodes', createSelector(
+export const selectSpreadNodes = wrap('selectSpreadNodes', createArraySelector(
   selectSpreadLines,
-  spreads => spreads.map(spread => parseSpreadLines(spread))
+  spread => parseSpreadLines(spread)
 ));
 
 export const selectPreSpreadNodes = wrap('selectPreSpreadNodes', createSelector(
