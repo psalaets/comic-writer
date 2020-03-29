@@ -7,6 +7,8 @@ import {
   Metadata,
   Paragraph,
   BlankLine,
+  SpreadLines,
+  SpreadChunk
 } from '../parser/types';
 
 // action type strings
@@ -72,15 +74,6 @@ export interface ScriptState {
   spreads: Array<SpreadLines>
 }
 
-/**
- * Container for the script lines that are part of one spread, including the
- * line that starts the spread itself.
- */
-export interface SpreadLines {
-  /** The actual lines of the spread */
-  lines: Array<string>;
-}
-
 // selectors
 
 export interface PanelCount {
@@ -118,3 +111,5 @@ export type LocatedComicNode = LocatedSpread
   | LocatedMetadata
   | LocatedParagraph
   | LocatedBlankLine;
+
+export type LocatedSpreadNodes = SpreadChunk<LocatedComicNode, LocatedSpread>;

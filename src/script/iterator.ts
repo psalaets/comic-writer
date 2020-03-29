@@ -1,14 +1,21 @@
-export function* iterator<T>(
-  preSpreadNodes: Array<T>,
-  nodesBySpread: Array<Array<T>>
-) {
-  for (const node of preSpreadNodes) {
-    yield node;
-  }
+import { SpreadChunk } from '../parser/types';
 
-  for (const nodes of nodesBySpread) {
-    for (const node of nodes) {
-      yield node;
+export function* spreadsAndChildren<NodeType, SpreadType>(
+  spreadChunks: Array<SpreadChunk<NodeType, SpreadType>>
+) {
+  for (const chunk of spreadChunks) {
+    yield chunk.spread;
+
+    for (const child of chunk.children) {
+      yield child;
     }
+  }
+}
+
+export function* onlySpreads<NodeType, SpreadType>(
+  spreadChunks: Array<SpreadChunk<NodeType, SpreadType>>
+) {
+  for (const chunk of spreadChunks) {
+    yield chunk.spread;
   }
 }

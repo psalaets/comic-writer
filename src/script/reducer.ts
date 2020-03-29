@@ -3,10 +3,10 @@ import {
   LOAD_SCRIPT_COMPLETED,
   ScriptActionTypes,
   ScriptState,
-  SpreadLines
 } from './types';
 import { wrap } from '../perf';
 import { LineStream } from '../parser';
+import { SpreadLines } from '../parser/types';
 
 const initialState: ScriptState = {
   source: '',
@@ -22,23 +22,22 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
     case CHANGE_SOURCE: {
       const lines = LineStream.fromString(action.payload.source);
       const preSpread = lines.consumeUntilSpreadStart();
+      const spreads = lines.consumeAllSpreads();
 
-      const spreads: Array<SpreadLines> = [];
-      while (lines.hasMoreLines()) {
-        spreads.push({
-          lines: lines.consumeNextSpread()
-        });
-      }
+      const updatedSpreads: Array<SpreadLines> = [];
 
-      const updatedSpreads: Array<SpreadLines | null> = [];
       for (let i = 0; i < Math.max(state.spreads.length, spreads.length); i++) {
-        updatedSpreads.push(update(state.spreads[i], spreads[i]));
+        const updated = update(state.spreads[i], spreads[i]);
+
+        if (updated != null) {
+          updatedSpreads.push(updated);
+        }
       }
 
       return {
         ...state,
         preSpread: updatePreSpread(state.preSpread, preSpread),
-        spreads: updatedSpreads.filter(chunk => chunk != null) as Array<SpreadLines>,
+        spreads: updatedSpreads,
         source: action.payload.source
       };
     }
@@ -60,7 +59,7 @@ function update(
   if (oldSpread == null) return newSpread;
   if (newSpread == null) return null;
 
-  return allLinesEqual(oldSpread.lines, newSpread.lines)
+  return allLinesEqual(oldSpread.children, newSpread.children)
     ? oldSpread
     : newSpread;
 }

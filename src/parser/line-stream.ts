@@ -1,4 +1,5 @@
 import { SPREAD_REGEX } from './regexes';
+import { SpreadLines } from './types';
 
 /**
  * Wrapper around some lines in the script.
@@ -36,19 +37,25 @@ export class LineStream {
     return consumed;
   }
 
-  consumeNextSpread(): Array<string> {
-    const consumed: Array<string> = [];
+  consumeNextSpread(): SpreadLines {
+    if (this.nextIsSpreadStart()) {
+      return {
+        spread: this.consume(),
+        children: this.consumeUntilSpreadStart()
+      };
+    } else {
+      throw new Error('stream has not been advanced to a spread line');
+    }
+  }
 
-    if (this.hasMoreLines()) {
-      if (this.nextIsSpreadStart()) {
-        consumed.push(this.consume());
-        consumed.push(...this.consumeUntilSpreadStart());
-      } else {
-        throw new Error('stream has not been advanced to a spread');
-      }
+  consumeAllSpreads(): Array<SpreadLines> {
+    const spreads: Array<SpreadLines> = [];
+
+    while (this.hasMoreLines()) {
+      spreads.push(this.consumeNextSpread());
     }
 
-    return consumed;
+    return spreads;
   }
 
   peek(): string {

@@ -12,7 +12,9 @@ import {
   LetteringContentChunk,
   BlankLine,
   ComicNode,
-  SpreadChild
+  SpreadChild,
+  SpreadLines,
+  SpreadNodes
 } from './types';
 
 import {
@@ -34,11 +36,17 @@ interface LetteringNumbering {
   nextLetteringNumber(): number;
 }
 
-export function parseSpreadLines(lines: Array<string>): Array<ComicNode> {
-  const children = panelRollups(parseSpreadChildren(lines.slice(1)));
-  const spread = spreadRollups(parseSpread(lines[0]), children);
+export function parseSpreadLines(lines: SpreadLines): SpreadNodes {
+  const spreadLine = lines.spread;
+  const childLines = lines.children;
 
-  return [spread, ...children];
+  const children = panelRollups(parseSpreadChildren(childLines));
+  const spread = spreadRollups(parseSpread(spreadLine), children);
+
+  return {
+    spread,
+    children
+  };
 }
 
 function spreadRollups(spread: Spread, children: Array<SpreadChild>): Spread {

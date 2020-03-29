@@ -84,3 +84,26 @@ export interface LetteringContentChunk {
 export interface BlankLine {
   type: typeof parts.BLANK;
 }
+
+/**
+ * A spread and all of its children.
+ */
+export interface SpreadChunk<ChildType, SpreadType = ChildType> {
+  /**
+   * The spread.
+   */
+  spread: SpreadType,
+  /**
+   * The children of this spread.
+   */
+  children: Array<ChildType>
+}
+
+/**
+ * A spread line and all the child lines in the spread.
+ */
+export type SpreadLines = SpreadChunk<string>;
+/**
+ * A spread node and all the child nodes in the spread.
+ */
+export type SpreadNodes = SpreadChunk<ComicNode, Spread>;

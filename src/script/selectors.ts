@@ -1,14 +1,20 @@
 import { createSelector } from 'reselect';
 
-import { Dialogue } from '../parser/types';
+import { Dialogue, SpreadLines } from '../parser/types';
 import { parsePreSpreadLines, parseSpreadLines } from '../parser';
 
 import { wrap } from '../perf';
 
 import { RootState } from '../store/types';
-import { ScriptState, PanelCount, WordCount, SpreadLines, LocatedComicNode } from './types';
+import {
+  ScriptState,
+  PanelCount,
+  WordCount,
+  LocatedSpreadNodes,
+  LocatedSpread
+} from './types';
 import * as parts from '../comic-part-types';
-import { iterator } from './iterator';
+import * as iterators from './iterator';
 
 function selectScriptState(state: RootState): ScriptState {
   return state.script;
@@ -26,9 +32,9 @@ function selectSpreadLines(state: RootState): Array<SpreadLines> {
   return selectScriptState(state).spreads;
 }
 
-export const selectNodesBySpread = createSelector(
+export const selectSpreadNodes = createSelector(
   selectSpreadLines,
-  spreads => spreads.map(spread => parseSpreadLines(spread.lines))
+  spreads => spreads.map(spread => parseSpreadLines(spread))
 );
 
 export const selectPreSpreadNodes = createSelector(
@@ -41,35 +47,34 @@ const selectPreSpreadLineCount = createSelector(
   lines => lines.length
 );
 
-const selectLocatedPreSpreadNodes = wrap('selectLocatedPreSpreadNodes', createSelector(
-  selectPreSpreadNodes,
-  (nodes): Array<LocatedComicNode> => {
-    return nodes.map((node, lineNumber) => ({...node, lineNumber}));
-  }
-));
-
 const selectLocatedNodesBySpread = wrap('selectLocatedNodesBySpread', createSelector(
-  [selectPreSpreadLineCount, selectNodesBySpread],
-  (preSpreadLineCount, nodesBySpread): Array<Array<LocatedComicNode>> => {
+  [selectPreSpreadLineCount, selectSpreadNodes],
+  (preSpreadLineCount, allSpreadNodes): Array<LocatedSpreadNodes> => {
     let lineNumber = preSpreadLineCount;
 
-    return nodesBySpread.map(nodes => {
-      return nodes.map(node => {
-        return {
-          ...node,
-          lineNumber: lineNumber++
-        };
-      });
+    return allSpreadNodes.map(spreadNodes => {
+      const locatedSpread: LocatedSpread = {
+        ...spreadNodes.spread,
+        lineNumber: lineNumber++
+      };
+
+      const locatedChildren = spreadNodes.children
+        .map(child => ({ ...child, lineNumber: lineNumber++ }));
+
+      return {
+        spread: locatedSpread,
+        children: locatedChildren
+      }
     });
   }
 ));
 
 const selectDialogues = wrap('selectDialogues', createSelector(
-  [selectPreSpreadNodes, selectNodesBySpread],
-  (preSpreadNodes, nodesBySpread) => {
+  selectSpreadNodes,
+  allSpreadNodes => {
     const dialogues: Array<Dialogue> = [];
 
-    for (const node of iterator(preSpreadNodes, nodesBySpread)) {
+    for (const node of iterators.spreadsAndChildren(allSpreadNodes)) {
       if (node.type === parts.DIALOGUE) {
         dialogues.push(node);
       }
@@ -80,7 +85,7 @@ const selectDialogues = wrap('selectDialogues', createSelector(
 ));
 
 export const selectSpeakers = wrap('selectSpeakers', createSelector(
-  [selectDialogues],
+  selectDialogues,
   dialogues => {
     const speakers = dialogues
       .map(dialogue => dialogue.speaker.toUpperCase());
@@ -95,15 +100,15 @@ function dedupe(speakers: Array<string>): Array<string> {
 }
 
 export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
-  [selectLocatedPreSpreadNodes, selectLocatedNodesBySpread],
-  (preSpreadNodes, nodesBySpread) => {
-    const panelCounts = [] as Array<PanelCount>;
+  selectLocatedNodesBySpread,
+  allLocatedSpreadNodes => {
+    const panelCounts: Array<PanelCount> = [];
 
-    for (const node of iterator(preSpreadNodes, nodesBySpread)) {
-      if (node.type === parts.SPREAD && node.panelCount > 0) {
+    for (const spread of iterators.onlySpreads(allLocatedSpreadNodes)) {
+      if (spread.panelCount > 0) {
         panelCounts.push({
-          lineNumber: node.lineNumber,
-          count: node.panelCount
+          lineNumber: spread.lineNumber,
+          count: spread.panelCount
         });
       }
     }
@@ -113,11 +118,11 @@ export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
 ));
 
 export const selectWordCounts = wrap('selectWordCounts', createSelector(
-  [selectLocatedPreSpreadNodes, selectLocatedNodesBySpread],
-  (preSpreadNodes, nodesBySpread) => {
+  selectLocatedNodesBySpread,
+  allLocatedSpreadNodes => {
     const wordCounts: Array<WordCount> = [];
 
-    for (const node of iterator(preSpreadNodes, nodesBySpread)) {
+    for (const node of iterators.spreadsAndChildren(allLocatedSpreadNodes)) {
       if (node.type === parts.DIALOGUE || node.type === parts.CAPTION) {
         wordCounts.push({
           count: node.wordCount,
