@@ -7,7 +7,9 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 1, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+      ]);
     });
 
     it('adding page at start', () => {
@@ -19,7 +21,11 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 1, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "Page 2",
+        "this is page 1 info",
+      ]);
     });
 
     it('adding page at end', () => {
@@ -31,7 +37,11 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 3, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Page 2",
+      ]);
     });
 
     it('adding page in the middle', () => {
@@ -45,7 +55,13 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 3, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Page 2",
+        "Page 3",
+        "this is page 2 info",
+      ]);
     });
 
     it('inserting page at start', () => {
@@ -60,7 +76,14 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 0, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 3 info",
+        "Page 2",
+        "this is page 1 info",
+        "Page 3",
+        "this is page 2 info",
+      ]);
     });
 
     it('inserting page at end', () => {
@@ -73,7 +96,12 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 2, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 2 info",
+        "Page 2",
+        "this is page 1 info",
+      ]);
     });
 
     it('inserting page in middle', () => {
@@ -88,7 +116,14 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 2, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Page 2",
+        "this is page 3 info",
+        "Page 3",
+        "this is page 2 info",
+      ]);
     });
 
     it('remove page from start', () => {
@@ -101,7 +136,12 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 0, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 2 info",
+        "Page 2",
+        "this is page 3 info",
+      ]);
     });
 
     it('remove page from middle', () => {
@@ -114,7 +154,12 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 2, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Page 2",
+        "this is page 3 info",
+      ]);
     });
 
     it('inserting content with page count in double digits', () => {
@@ -123,7 +168,19 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 1, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "Page 2",
+        "Page 3",
+        "Page 4",
+        "Page 5",
+        "Page 6",
+        "Page 7",
+        "Page 8",
+        "Page 9",
+        "Page 10",
+        "Page 11",
+      ]);
     });
   });
 
@@ -137,7 +194,11 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 2, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Panel 1",
+      ]);
     });
 
     it('adding second panel to page', () => {
@@ -150,7 +211,12 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 3, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Panel 1",
+        "Panel 2",
+      ]);
     });
 
     it('adding panel at start', () => {
@@ -164,7 +230,13 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 2, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Panel 1",
+        "Panel 2",
+        "this is panel 1 info",
+      ]);
     });
 
     it('adding panel in middle', () => {
@@ -179,7 +251,14 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 3, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        "this is panel 1 info",
+        "Panel 2",
+        "Panel 3",
+        "this is panel 2 info",
+      ]);
     });
 
     it('adding panel to second page', () => {
@@ -193,7 +272,13 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 4, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        "this is panel 1 info",
+        "Page 2",
+        "Panel 1",
+      ]);
     });
 
     it('adding another panel to second page', () => {
@@ -208,7 +293,14 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 5, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        "this is panel 1 info",
+        "Page 2",
+        "Panel 1",
+        "Panel 2",
+      ]);
     });
 
     it('inserting panel at start', () => {
@@ -222,7 +314,13 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 2, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Panel 1",
+        "Panel 2",
+        "this is panel 1 info",
+      ]);
     });
 
     it('inserting panel in middle', () => {
@@ -237,7 +335,14 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 3, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        "this is panel 1 info",
+        "Panel 2",
+        "Panel 3",
+        "this is panel 2 info",
+      ]);
     });
 
     it('removing panel from start', () => {
@@ -249,7 +354,11 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 1, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        "this is panel 2 info",
+      ]);
     });
 
     it('removing panel from middle', () => {
@@ -263,7 +372,13 @@ describe('preprocessLines', () => {
 
       const result = preprocessLines(input, 3, 0);
 
-      expect(result).toMatchSnapshot();
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        "this is panel 1 info",
+        "Panel 2",
+        "this is panel 3 info",
+      ]);
     });
   });
 });
