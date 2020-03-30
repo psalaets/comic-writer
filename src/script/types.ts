@@ -117,6 +117,7 @@ export type LocatedSpreadChild = LocatedPanel
   | LocatedBlankLine;
 
 /**
- * A located spread and all the located child nodes in the spread.
+ * A spread chunk where the children are of type LocatedSpreadChild and the
+ * spread is a LocatedSpread.
  */
 export type LocatedSpreadChunk = SpreadChunk<LocatedSpreadChild, LocatedSpread>;

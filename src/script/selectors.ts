@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { createArraySelector } from 'reselect-map';
 
 import { Dialogue, RawSpreadChunk } from '../parser/types';
-import { parsePreSpreadLines, parseSpreadLines as parseRawSpreadChunk } from '../parser';
+import { parsePreSpreadLines, parseRawSpreadChunk } from '../parser';
 
 import { wrap } from '../perf';
 

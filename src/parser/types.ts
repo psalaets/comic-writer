@@ -87,6 +87,9 @@ export interface BlankLine {
 
 /**
  * A spread and all of its children.
+ *
+ * @type ChildType - Type of each spread child
+ * @type SpreadType - Type of the spread value
  */
 export interface SpreadChunk<ChildType, SpreadType = ChildType> {
   /**
@@ -100,10 +103,12 @@ export interface SpreadChunk<ChildType, SpreadType = ChildType> {
 }
 
 /**
- * A spread line and all the child lines in the spread.
+ * A spread chunk where the children are strings and the spread is a string as
+ * well.
  */
 export type RawSpreadChunk = SpreadChunk<string>;
 /**
- * A spread node and all the child nodes in the spread.
+ * A spread chunk where the children are of type SpreadChild and the spread is
+ * of type Spread.
  */
 export type ParsedSpreadChunk = SpreadChunk<SpreadChild, Spread>;
