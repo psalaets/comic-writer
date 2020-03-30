@@ -57,13 +57,13 @@ export class LineStream {
   }
 
   consumeAllSpreads(): Array<RawSpreadChunk> {
-    const spreads: Array<RawSpreadChunk> = [];
+    const chunks: Array<RawSpreadChunk> = [];
 
     while (this.hasMoreLines()) {
-      spreads.push(this.consumeNextSpread());
+      chunks.push(this.consumeNextSpread());
     }
 
-    return spreads;
+    return chunks;
   }
 
   peek(): string {

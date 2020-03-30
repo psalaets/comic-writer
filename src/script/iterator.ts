@@ -1,9 +1,9 @@
 import { SpreadChunk } from '../parser/types';
 
 export function* spreadsAndChildren<NodeType, SpreadType>(
-  spreadChunks: Array<SpreadChunk<NodeType, SpreadType>>
+  chunks: Array<SpreadChunk<NodeType, SpreadType>>
 ) {
-  for (const chunk of spreadChunks) {
+  for (const chunk of chunks) {
     yield chunk.spread;
 
     for (const child of chunk.children) {
@@ -13,9 +13,9 @@ export function* spreadsAndChildren<NodeType, SpreadType>(
 }
 
 export function* onlySpreads<NodeType, SpreadType>(
-  spreadChunks: Array<SpreadChunk<NodeType, SpreadType>>
+  chunks: Array<SpreadChunk<NodeType, SpreadType>>
 ) {
-  for (const chunk of spreadChunks) {
+  for (const chunk of chunks) {
     yield chunk.spread;
   }
 }

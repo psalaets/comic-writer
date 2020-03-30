@@ -33,22 +33,23 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
 
 function computeNextState(currentState: ScriptState, lines: LineStream): ScriptState {
   const preSpread = lines.consumeUntilSpreadStart();
-  const spreads = lines.consumeAllSpreads();
+  const incomingChunks = lines.consumeAllSpreads();
 
-  const updatedSpreads: Array<RawSpreadChunk> = [];
+  const currentChunks = currentState.spreads;
+  const nextChunks: Array<RawSpreadChunk> = [];
 
-  for (let i = 0; i < Math.max(currentState.spreads.length, spreads.length); i++) {
-    const updated = update(currentState.spreads[i], spreads[i]);
+  for (let i = 0; i < Math.max(currentChunks.length, incomingChunks.length); i++) {
+    const updated = updateChunk(currentChunks[i], incomingChunks[i]);
 
     if (updated != null) {
-      updatedSpreads.push(updated);
+      nextChunks.push(updated);
     }
   }
 
   return {
     ...currentState,
     preSpread: updatePreSpread(currentState.preSpread, preSpread),
-    spreads: updatedSpreads,
+    spreads: nextChunks,
     source: lines.toString()
   };
 }
@@ -59,20 +60,20 @@ function updatePreSpread(oldLines: Array<string>, newLines: Array<string>): Arra
     : newLines;
 }
 
-function update(
-  oldSpread: RawSpreadChunk,
-  newSpread: RawSpreadChunk
+function updateChunk(
+  currentChunk: RawSpreadChunk,
+  incomingChunk: RawSpreadChunk
 ): RawSpreadChunk | null {
-  if (oldSpread == null) return newSpread;
-  if (newSpread == null) return null;
+  if (currentChunk == null) return incomingChunk;
+  if (incomingChunk == null) return null;
 
-  if (oldSpread.spread !== newSpread.spread) {
-    return newSpread;
+  if (currentChunk.spread !== incomingChunk.spread) {
+    return incomingChunk;
   }
 
-  return allLinesEqual(oldSpread.children, newSpread.children)
-    ? oldSpread
-    : newSpread;
+  return allLinesEqual(currentChunk.children, incomingChunk.children)
+    ? currentChunk
+    : incomingChunk;
 }
 
 function allLinesEqual(oldLines: Array<string>, newLines: Array<string>): boolean {

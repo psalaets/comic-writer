@@ -36,9 +36,9 @@ interface LetteringNumbering {
   nextLetteringNumber(): number;
 }
 
-export function parseSpreadLines(lines: RawSpreadChunk): ParsedSpreadChunk {
-  const spreadLine = lines.spread;
-  const childLines = lines.children;
+export function parseSpreadLines(chunk: RawSpreadChunk): ParsedSpreadChunk {
+  const spreadLine = chunk.spread;
+  const childLines = chunk.children;
 
   const children = panelRollups(parseSpreadChildren(childLines));
   const spread = spreadRollups(parseSpread(spreadLine), children);

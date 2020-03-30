@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { createArraySelector } from 'reselect-map';
 
 import { Dialogue, RawSpreadChunk } from '../parser/types';
-import { parsePreSpreadLines, parseSpreadLines } from '../parser';
+import { parsePreSpreadLines, parseSpreadLines as parseRawSpreadChunk } from '../parser';
 
 import { wrap } from '../perf';
 
@@ -29,13 +29,13 @@ function selectPreSpreadLines(state: RootState): Array<string> {
   return selectScriptState(state).preSpread;
 }
 
-function selectSpreadLines(state: RootState): Array<RawSpreadChunk> {
+function selectRawSpreadChunks(state: RootState): Array<RawSpreadChunk> {
   return selectScriptState(state).spreads;
 }
 
-export const selectSpreadNodes = wrap('selectSpreadNodes', createArraySelector(
-  selectSpreadLines,
-  spread => parseSpreadLines(spread)
+export const selectParsedSpreadChunks = wrap('selectParsedSpreadChunks', createArraySelector(
+  selectRawSpreadChunks,
+  rawChunk => parseRawSpreadChunk(rawChunk)
 ));
 
 export const selectPreSpreadNodes = wrap('selectPreSpreadNodes', createSelector(
@@ -48,14 +48,14 @@ const selectPreSpreadLineCount = createSelector(
   lines => lines.length
 );
 
-const selectLocatedNodesBySpread = wrap('selectLocatedNodesBySpread', createSelector(
-  [selectPreSpreadLineCount, selectSpreadNodes],
-  (preSpreadLineCount, allSpreadNodes): Array<LocatedSpreadChunk> => {
+const selectLocatedSpreadChunks = wrap('selectLocatedSpreadChunks', createSelector(
+  [selectPreSpreadLineCount, selectParsedSpreadChunks],
+  (preSpreadLineCount, parsedChunks): Array<LocatedSpreadChunk> => {
     let lineNumber = preSpreadLineCount;
     let pageNumber = 1;
 
-    return allSpreadNodes.map(spreadNodes => {
-      const spread = spreadNodes.spread;
+    return parsedChunks.map(chunk => {
+      const spread = chunk.spread;
 
       // using Object.assign instead of object spread here because I can't
       // figure out how to get rid of the object spread polyfill
@@ -71,7 +71,7 @@ const selectLocatedNodesBySpread = wrap('selectLocatedNodesBySpread', createSele
       // advance page number to next available page
       pageNumber += spread.pageCount;
 
-      const locatedChildren = spreadNodes.children
+      const locatedChildren = chunk.children
         .map(child => {
           // using Object.assign instead of object spread here because I can't
           // figure out how to get rid of the object spread polyfill
@@ -87,11 +87,11 @@ const selectLocatedNodesBySpread = wrap('selectLocatedNodesBySpread', createSele
 ));
 
 const selectDialogues = wrap('selectDialogues', createSelector(
-  selectSpreadNodes,
-  allSpreadNodes => {
+  selectParsedSpreadChunks,
+  parsedChunks => {
     const dialogues: Array<Dialogue> = [];
 
-    for (const node of iterators.spreadsAndChildren(allSpreadNodes)) {
+    for (const node of iterators.spreadsAndChildren(parsedChunks)) {
       if (node.type === parts.DIALOGUE) {
         dialogues.push(node);
       }
@@ -117,11 +117,11 @@ function dedupe(speakers: Array<string>): Array<string> {
 }
 
 export const selectPanelCounts = createSelector(
-  selectLocatedNodesBySpread,
-  memoizeResult(allLocatedSpreadNodes => {
+  selectLocatedSpreadChunks,
+  memoizeResult(locatedChunks => {
     const newCounts: Array<PanelCount> = [];
 
-    for (const spread of iterators.onlySpreads(allLocatedSpreadNodes)) {
+    for (const spread of iterators.onlySpreads(locatedChunks)) {
       if (spread.panelCount > 0) {
         newCounts.push({
           lineNumber: spread.lineNumber,
@@ -151,11 +151,11 @@ export const selectPanelCounts = createSelector(
 );
 
 export const selectWordCounts = wrap('selectWordCounts', createSelector(
-  selectLocatedNodesBySpread,
-  memoizeResult(allLocatedSpreadNodes => {
+  selectLocatedSpreadChunks,
+  memoizeResult(locatedChunks => {
     const wordCounts: Array<WordCount> = [];
 
-    for (const node of iterators.spreadsAndChildren(allLocatedSpreadNodes)) {
+    for (const node of iterators.spreadsAndChildren(locatedChunks)) {
       if (node.type === parts.DIALOGUE || node.type === parts.CAPTION) {
         wordCounts.push({
           count: node.wordCount,
