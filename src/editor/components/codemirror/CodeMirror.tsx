@@ -11,7 +11,7 @@ import './theme.css';
 import { EditorChangeEvent } from '../../types';
 import { PanelCount, WordCount } from '../../../script/types';
 
-import { preprocessLines } from './preprocessor';
+import { createPreprocessor, LinePreprocessor } from './preprocessor';
 import { MODE, THEME } from './mode';
 import {
   ID as WORD_COUNTS,
@@ -43,6 +43,7 @@ export default class CodeMirrorComponent extends Component<Props> {
   cm: CodeMirror.Editor | null = null;
   wordCounts: WordCountsPlugin | null = null;
   panelCounts: PanelCountsPlugin | null = null;
+  preprocessLines: LinePreprocessor = createPreprocessor();
 
   constructor(props: Props) {
     super(props);
@@ -145,7 +146,7 @@ export default class CodeMirrorComponent extends Component<Props> {
       }
 
       const oldLines = cm.getValue().split(/\n/);
-      const newLines = preprocessLines(
+      const newLines = this.preprocessLines(
         oldLines,
         cm.getCursor().line,
         change.from.line

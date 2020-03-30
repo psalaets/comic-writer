@@ -1,10 +1,11 @@
-import { preprocessLines } from './index';
+import { createPreprocessor } from './index';
 
 describe('preprocessLines', () => {
   describe('single page', () => {
     it('first page', () => {
       const input = [`page`];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 1, 0);
 
       expect(result).toEqual([
@@ -19,6 +20,7 @@ describe('preprocessLines', () => {
         'this is page 1 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 1, 0);
 
       expect(result).toEqual([
@@ -35,6 +37,7 @@ describe('preprocessLines', () => {
         'page'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 3, 0);
 
       expect(result).toEqual([
@@ -53,6 +56,7 @@ describe('preprocessLines', () => {
         'this is page 2 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 3, 0);
 
       expect(result).toEqual([
@@ -74,6 +78,7 @@ describe('preprocessLines', () => {
         'this is page 2 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 0, 0);
 
       expect(result).toEqual([
@@ -94,6 +99,7 @@ describe('preprocessLines', () => {
         'this is page 1 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 2, 0);
 
       expect(result).toEqual([
@@ -114,6 +120,7 @@ describe('preprocessLines', () => {
         'this is page 2 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 2, 0);
 
       expect(result).toEqual([
@@ -134,6 +141,7 @@ describe('preprocessLines', () => {
         'this is page 3 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 0, 0);
 
       expect(result).toEqual([
@@ -152,6 +160,7 @@ describe('preprocessLines', () => {
         'this is page 3 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 2, 0);
 
       expect(result).toEqual([
@@ -166,6 +175,7 @@ describe('preprocessLines', () => {
       const tenPages = Array.from(new Array(10), (_, i) => `Page ${i + 1}`);
       const input = tenPages.concat(['page']);
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 1, 0);
 
       expect(result).toEqual([
@@ -192,6 +202,7 @@ describe('preprocessLines', () => {
         'panel'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 2, 0);
 
       expect(result).toEqual([
@@ -209,6 +220,7 @@ describe('preprocessLines', () => {
         'panel'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 3, 0);
 
       expect(result).toEqual([
@@ -228,6 +240,7 @@ describe('preprocessLines', () => {
         'this is panel 1 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 2, 0);
 
       expect(result).toEqual([
@@ -249,6 +262,7 @@ describe('preprocessLines', () => {
         'this is panel 2 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 3, 0);
 
       expect(result).toEqual([
@@ -270,6 +284,7 @@ describe('preprocessLines', () => {
         'panel'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 4, 0);
 
       expect(result).toEqual([
@@ -291,6 +306,7 @@ describe('preprocessLines', () => {
         'panel'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 5, 0);
 
       expect(result).toEqual([
@@ -312,6 +328,7 @@ describe('preprocessLines', () => {
         'this is panel 1 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 2, 0);
 
       expect(result).toEqual([
@@ -333,6 +350,7 @@ describe('preprocessLines', () => {
         'this is panel 2 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 3, 0);
 
       expect(result).toEqual([
@@ -352,6 +370,7 @@ describe('preprocessLines', () => {
         'this is panel 2 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 1, 0);
 
       expect(result).toEqual([
@@ -370,6 +389,7 @@ describe('preprocessLines', () => {
         'this is panel 3 info'
       ];
 
+      const preprocessLines = createPreprocessor();
       const result = preprocessLines(input, 3, 0);
 
       expect(result).toEqual([
@@ -380,5 +400,41 @@ describe('preprocessLines', () => {
         "this is panel 3 info",
       ]);
     });
+  });
+
+  describe('fromLine is not the first line', () => {
+    // This scenario should not happen in real usage, fromLine should never be
+    // after lines that actually changed. This test is just to check that
+    // fromLine is used.
+    it('doesnt process lines before the fromLine', () => {
+      const firstLines = [
+        'Page 1',
+        'Page 2',
+        'this is page 2 info'
+      ];
+
+      const preprocessLines = createPreprocessor();
+      const firstResult = preprocessLines(firstLines, 3, 0);
+
+      expect(firstResult).toEqual([
+        'Page 1',
+        'Page 2',
+        'this is page 2 info'
+      ]);
+
+      const secondLines = [
+        'blah', // this will have no effect
+        'Page 2',
+        'this is page 2 info'
+      ];
+
+      const secondResult = preprocessLines(secondLines, 3, 1);
+
+      expect(secondResult).toEqual([
+        'Page 1', // this line wasn't changed between 1st and 2nd call because it's before fromLine
+        'Page 2',
+        'this is page 2 info'
+      ]);
+    })
   });
 });

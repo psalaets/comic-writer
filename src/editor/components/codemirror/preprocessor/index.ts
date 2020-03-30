@@ -3,42 +3,48 @@ import createClassifier from './classify';
 import autoNumber from './auto-number';
 import { LineClassification } from './types';
 
-/**
- * Performs auto-numbering and keyword expansion on the script source.
- *
- * @param lines Lines of the script
- * @param cursorLine What line number the cursor is on
- * @param fromLine Line number of first line in the script that has a change
- */
-export const preprocessLines = perf.wrap('preprocessLines', preprocess);
+export interface LinePreprocessor {
+  (lines: Array<string>, cursorLine: number, fromLine: number): Array<string>;
+}
 
-let lastClassifications: Array<LineClassification> = [];
+export function createPreprocessor(): LinePreprocessor {
+  let lastClassifications: Array<LineClassification> = [];
 
-function preprocess(
-  lines: Array<string>,
-  cursorLine: number,
-  fromLine: number
-): Array<string> {
+  return perf.wrap('preprocessLines', preprocess);
 
-  perf.start('classify-lines');
+  /**
+   * Performs auto-numbering and keyword expansion on the script source.
+   *
+   * @param lines Lines of the script
+   * @param cursorLine What line number the cursor is on
+   * @param fromLine Line number of first line in the script that has a change
+   */
+  function preprocess(
+    lines: Array<string>,
+    cursorLine: number,
+    fromLine: number
+  ): Array<string> {
 
-  const unchangedClassifications = lastClassifications.slice(0, fromLine);
-  const changedLines = lines.slice(unchangedClassifications.length);
+    perf.start('classify-lines');
 
-  const changedClassifications = changedLines
-    .map(createClassifier(cursorLine, fromLine));
+    const unchangedClassifications = lastClassifications.slice(0, fromLine);
+    const changedLines = lines.slice(unchangedClassifications.length);
 
-  const allClassifications
-    = lastClassifications
-    = unchangedClassifications.concat(changedClassifications);
+    const changedClassifications = changedLines
+      .map(createClassifier(cursorLine, fromLine));
 
-  perf.end('classify-lines');
-  perf.start('number-lines');
+    const allClassifications
+      = lastClassifications
+      = unchangedClassifications.concat(changedClassifications);
 
-  const numberedLines = allClassifications
-    .map(autoNumber());
+    perf.end('classify-lines');
+    perf.start('number-lines');
 
-  perf.end('number-lines');
+    const numberedLines = allClassifications
+      .map(autoNumber());
 
-  return numberedLines;
+    perf.end('number-lines');
+
+    return numberedLines;
+  };
 }
