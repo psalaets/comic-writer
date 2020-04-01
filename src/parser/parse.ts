@@ -51,7 +51,7 @@ function spreadRollups(spread: Spread, children: Array<SpreadChild>): Spread {
     if (child.type === parts.PANEL) {
       spread.panelCount += 1;
       spread.captionCount += child.captionCount;
-      spread.captionWordCount += child.captionCount;
+      spread.captionWordCount += child.captionWordCount;
       spread.dialogueCount += child.dialogueCount;
       spread.dialogueWordCount += child.dialogueWordCount;
       spread.speakers.push(...child.speakers);
