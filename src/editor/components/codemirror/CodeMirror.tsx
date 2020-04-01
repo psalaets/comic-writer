@@ -11,6 +11,8 @@ import './theme.css';
 import { EditorChangeEvent } from '../../types';
 import { PanelCount, WordCount } from '../../../script/types';
 
+import * as perf from '../../../perf';
+
 import { createPreprocessor, LinePreprocessor } from './preprocessor';
 import { MODE, THEME } from './mode';
 import {
@@ -61,7 +63,15 @@ export default class CodeMirrorComponent extends Component<Props> {
   componentDidUpdate(prevProps: Props) {
     // initial value
     const valueChanged = prevProps.value !== this.props.value;
+
     const cm = this.getCodeMirrorInstance();
+
+    // end of a "source change round trip"
+    if (valueChanged && cm.getValue()) {
+      perf.end('change-round-trip');
+    }
+
+    // set initial value
     if (valueChanged && !cm.getValue()) {
       cm.setValue(this.props.value);
     }
@@ -144,6 +154,9 @@ export default class CodeMirrorComponent extends Component<Props> {
       if (change.origin === 'setValue' || change.origin === 'preprocessing') {
         return;
       }
+
+      // this is the start of a "source change round trip"
+      perf.start('change-round-trip');
 
       const oldLines = cm.getValue().split(/\n/);
       const newLines = this.preprocessLines(
