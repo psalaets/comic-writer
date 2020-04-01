@@ -14,7 +14,8 @@ import {
   ComicNode,
   SpreadChild,
   RawSpreadChunk,
-  ParsedSpreadChunk
+  ParsedSpreadChunk,
+  LetteringNumbering
 } from './types';
 
 import {
@@ -31,10 +32,6 @@ import {
 const BLANK_LINE: BlankLine = {
   type: parts.BLANK
 };
-
-interface LetteringNumbering {
-  nextLetteringNumber(): number;
-}
 
 export function parseRawSpreadChunk(chunk: RawSpreadChunk): ParsedSpreadChunk {
   const spreadLine = chunk.spread;
@@ -143,7 +140,7 @@ function parsePreSpreadLine(line: string): ComicNode {
   return parseParagraph(line);
 }
 
-function parseSpread(line: string): Spread {
+export function parseSpread(line: string): Spread {
   const matchResult = SPREAD_REGEX.exec(line) as Array<string>;
 
   const startPage = Number(matchResult[1]);
@@ -177,7 +174,7 @@ function countPages(startPage: number, endPage?: number): number {
   }
 }
 
-function parsePanel(line: string): Panel {
+export function parsePanel(line: string): Panel {
   const [, number] = PANEL_REGEX.exec(line) as Array<string>;
 
   return {
@@ -194,7 +191,7 @@ function parsePanel(line: string): Panel {
   };
 }
 
-function parseMetadata(line: string): Metadata {
+export function parseMetadata(line: string): Metadata {
   const [, name, value] = METADATA_REGEX.exec(line) as Array<string>;
 
   return {
@@ -204,14 +201,14 @@ function parseMetadata(line: string): Metadata {
   };
 }
 
-function parseParagraph(line: string): Paragraph {
+export function parseParagraph(line: string): Paragraph {
   return {
     type: parts.PARAGRAPH,
     content: line
   };
 }
 
-function parseDialogue(line: string, numbering: LetteringNumbering): Dialogue {
+export function parseDialogue(line: string, numbering: LetteringNumbering): Dialogue {
   const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as Array<string>;
 
   const parseTree = parseLetteringContent(content);
@@ -226,7 +223,7 @@ function parseDialogue(line: string, numbering: LetteringNumbering): Dialogue {
   };
 }
 
-function parseCaption(line: string, numbering: LetteringNumbering): Caption {
+export function parseCaption(line: string, numbering: LetteringNumbering): Caption {
   const [, modifier, content] = CAPTION_REGEX.exec(line) as Array<string>;
   const parseTree = parseLetteringContent(content);
 
@@ -239,7 +236,7 @@ function parseCaption(line: string, numbering: LetteringNumbering): Caption {
   };
 }
 
-function parseSfx(line: string, numbering: LetteringNumbering): Sfx {
+export function parseSfx(line: string, numbering: LetteringNumbering): Sfx {
   const [, modifier, content] = SFX_REGEX.exec(line) as Array<string>;
 
   return {

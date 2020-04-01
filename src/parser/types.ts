@@ -112,3 +112,10 @@ export type RawSpreadChunk = SpreadChunk<string>;
  * of type Spread.
  */
 export type ParsedSpreadChunk = SpreadChunk<SpreadChild, Spread>;
+
+/**
+ * Internal parser state.
+ */
+export interface LetteringNumbering {
+  nextLetteringNumber(): number;
+}
