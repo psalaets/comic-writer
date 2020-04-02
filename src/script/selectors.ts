@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { createArraySelector } from 'reselect-map';
 
-import { Dialogue, RawSpreadChunk } from '../parser/types';
+import { RawSpreadChunk } from '../parser/types';
 import { parsePreSpreadLines, parseRawSpreadChunk } from '../parser';
 
 import { wrap } from '../perf';
@@ -9,7 +9,6 @@ import { wrap } from '../perf';
 import { RootState } from '../store/types';
 import {
   ScriptState,
-  PanelCount,
   WordCount,
   LocatedSpreadChunk
 } from './types';
@@ -86,51 +85,37 @@ const selectLocatedSpreadChunks = wrap('selectLocatedSpreadChunks', createSelect
   }
 ));
 
-const selectDialogues = wrap('selectDialogues', createSelector(
-  selectParsedSpreadChunks,
-  parsedChunks => {
-    const dialogues: Array<Dialogue> = [];
-
-    for (const node of iterators.spreadsAndChildren(parsedChunks)) {
-      if (node.type === parts.DIALOGUE) {
-        dialogues.push(node);
-      }
-    }
-
-    return dialogues;
+const selectLocatedSpreads = wrap('selectLocatedSpreads', createSelector(
+  selectLocatedSpreadChunks,
+  locatedChunks => {
+    return [...iterators.onlySpreads(locatedChunks)];
   }
 ));
 
 export const selectSpeakers = wrap('selectSpeakers', createSelector(
-  selectDialogues,
-  dialogues => {
-    const speakers = dialogues
-      .map(dialogue => dialogue.speaker.toUpperCase());
+  selectLocatedSpreads,
+  spreads => {
+    const speakers = new Set<string>();
 
-    return dedupe(speakers).sort();
-  }
-));
-
-
-function dedupe(speakers: Array<string>): Array<string> {
-  return [...new Set(speakers)];
-}
-
-export const selectPanelCounts = createSelector(
-  selectLocatedSpreadChunks,
-  memoizeResult(locatedChunks => {
-    const newCounts: Array<PanelCount> = [];
-
-    for (const spread of iterators.onlySpreads(locatedChunks)) {
-      if (spread.panelCount > 0) {
-        newCounts.push({
-          lineNumber: spread.lineNumber,
-          count: spread.panelCount
-        });
+    for (const spread of spreads) {
+      for (const speaker of spread.speakers) {
+        speakers.add(speaker.toUpperCase());
       }
     }
 
-    return newCounts;
+    return [...speakers].sort();
+  }
+));
+
+export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
+  selectLocatedSpreads,
+  memoizeResult(spreads => {
+    return spreads
+      .filter(spread => spread.panelCount > 0)
+      .map(spread => ({
+        lineNumber: spread.lineNumber,
+        count: spread.panelCount
+      }));
   }, (oldCounts, newCounts) => {
     if (oldCounts == null) return newCounts == null;
 
@@ -148,7 +133,7 @@ export const selectPanelCounts = createSelector(
 
     return true;
   })
-);
+));
 
 export const selectWordCounts = wrap('selectWordCounts', createSelector(
   selectLocatedSpreadChunks,
