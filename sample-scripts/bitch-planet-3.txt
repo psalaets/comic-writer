@@ -1,0 +1,907 @@
+Title: BITCH PLANET
+Issue: 3
+Subtitle: Too Big To Fail
+
+Prepared for: Lauren Sankovitch & Robert Wilson IV
+By: Kelly Sue DeConnick
+
+Draft: 1.0
+Date: 1/14/15
+
+Dear Robert,
+Thanks for your patience, and apologies that we're having to do this in chunks.  The pages that follow are not marching orders.  The metaphor I usually go to is that these are not blue prints--if you change something, the whole building won't collapse; they're a map.  And if you see a better way to get where we're going, please GOD, let me know.  As long as we get we're going, I don't mind changing routes.  Give me a heads up because there might be a reason I've called for something that's not immediately obvious, but, you know, in all likelihood, it'll be fine.  Now that I've beaten that metaphor into the ground, let me mention a couple of other things:
+
+1) I'm trying to break the habit of the white default, so unless I specify that a character is white, they're not.  Our default is black -- though mixed race, Asian or Latin are also fine choices for characters whose ethnicity is not specified.  For crowd scenes, the higher the status, the lighter the skin.
+
+2) All dialogue is provisional. I edit after art comes in, before lettering.
+
+3) THANK YOU for your patience.  It's been a weird year.
+
+4) EEEEE!
+
+5) I'm thinking about boxes and prisons and the tension between containment and freedom.  I'm wondering about reflecting those ideas in visual arrangements.
+
+6) For this issue specifically, I'm thinking about WEIGHT and VISIBILITY.
+
+7) Feel free to make jokes in the backgrounds.
+
+8) You may want to channel your inner Jim Starlin for some of this.  Or not.
+
+9) I just came across this.  I'm passing it on not as a HERE USE THIS order, but just as a HEY, COOL! I'M FASCINATED BY THIS, MAYBE YOU WILL BE TOO thing. 
+
+http://www.makingcomics.com/2014/05/07/panel-layout-golden-ratio/  David Aja does a lot of this sort of thing with his layouts.  My feel-ings won't be hurt if you find this yawn inducing. 
+
+10) 10! 10! For everything! Everything!
+
+Cheers,
+Kelly Sue
+
+Page 1
+Panel 1
+Splash. Adult Penny Rolle, in a jumpsuit of some kind that is NOT the NC Bitch Planet uniform. Something akin to scrubs, I'm thinking? She's a huge woman -- fat, fat, fat -- with a swathe of curls on the left side of her head and otherwise bald.  She is not shackled -- her arms hang at her sides.  Let's have a good look at her.  Don't apologize for the rolls.
+
+This is her last hearing before she gets sent to Bitch Planet. If she's nervous (and she is) she doesn't let us see it.
+
+The room she's standing in isn't particularly large -- about 15-20 feet in either direction.  The walls are covered with screens.  Have you seen Black Mirror?  Like this --
+
+http://educarencomunicacion.com/wp-content/uploads/2012/04/15mi-ll2.png
+
+http://fishsticktheatre.com/TV/BlackMirror/1x02/images/BlackMir-ror1x02_0011.jpg
+
+http://flamingolondon.com/wp-content/uploads/2011/12/pic4.png
+
+...but the room itself is a bit larger.  At the moment, the screens are white, though the grid lines are visible.  Later, every one of those squares will have a judge in it -- like the Brady Bunch.
+
+http://cdn3.whatculture.com/wp-content/uploads/2013/12/Brady-Bunch-Grid.jpg
+
+Two guards stand behind Penny on either side of a door that we can barely make out because it is also covered with screens.
+
+	CAPTION (PENNY ROLLE): I can't see you, but I feel you...
+
+Panel 2
+Inset detail: pop out a panel of just her eyes.  Her brow is furrowed in anger.
+
+	CAPTION (PENNY ROLLE): Judging me.
+
+Note: Robert, we'll be using these detail inserts throughout and they are important not only in how they are literal representations of our WOMEN IN BOXES and WOMEN AS PARTS themes, but also we're going to end this issue on a pop out of Penny smiling. It will be our punchline.
+
+Page 2
+Page layout suggestion:
+First tier: two panels.
+Second tier: two panels.
+Third tier: wide single panel with detail floating inset.
+
+Panel 1
+One screen. Some kind of static line indicating it is coming on-line.
+
+No, this doesn't actually make sense with current technology and it would make even less sense for advanced technology, but it's a shorthand we understand for a device turning on. In other words: we're cheating. Don't bother me with logic on this one.
+
+	SFX: TSST
+
+Panel 2
+FATHER DAVIDSON pops up on the screen. We've never seen him be-fore, so he's yours to design. He's white, middle aged, he looks like a congressman.  He's got a clear glass iPad-like device in his hand and he's looking down at it as he slips his reading glasses on.
+
+	father davidson: Next case: Penelope Leona Rolle, age: 25, District 42. Habitual offender...
+
+Panel 3
+Glasses on now, he puffs his cheeks out as he reads her list of offenses.
+
+	FATHER DAVIDSON: Insubordination, assault, assault, AS-SAULT, repeated citations for aesthetic offenses, capillary disfigurement and...
+
+Panel 4
+Father Davidson looks at camera/Penny.  He looks utterly and completely disgusted -- like he might vomit.
+
+	FATHER DAVIDSON: **...WANTON OBESITY.**
+
+	father davidson: Good **GOD,** woman.
+
+Panel 5
+Move the camera back so we're now behind Penny's head and we see all the judges on all the screens -- they're all disgusted/hor-rified. I'll lay in
+
+With the exception of Father Davidson, I'm going to just refer to them by numbers.  You may design them however you like, but adhere to the rules of the world:
+
+1) Men may appear however they like and have status -- fat, tall, short, conventionally attractive or not.  It doesn't mat-ter;
+
+2) More men have high status than women so there should be very few, if any, women judges... In fact, fuck it, let's say no women judges all men;
+
+3) Lighter skin tones have higher status than darker skin tones, so most of the judges should be white.
+
+4) Some of them may be wearing the tech monocles that Gene and Schiti wear.  Remember this is the FEW-CHA.
+
+	FATHER DAVIDSON: What have you done to yourself?
+
+Panel 6
+Inset detail: Penny's angry eyes.
+
+Page 3
+It would be cool if we could get a disorienting effect here -- if the Judges are arranged so we feel the room spinning as each speaks.  The only way I can think do to this is to make Penny the axis for every panel.  Feel free to riff on that if you have another idea.
+
+Panel 1
+Judge #2 chimes in. Look on his face is both pity and disgust.
+
+	judge 2: Penelope...
+
+	JUDGE 2: Do you know why you're here?
+
+Panel 2
+Penny grits her teeth, flairs her nostrils.  No reply.  (Depend-ing on your page design -- if you want to pop this panel out into a series of details on her eyes, her jaw, her fists, what-ever -- that's fine.)  If there are judges visible in the back-ground, they look impatient, annoyed.
+
+	penny: ...
+
+Panel 3
+Judge #3 has things to do today and isn't going to be held up.
+
+	judge 3: You're being given **CHANCE,** Penelope. A 'thank you' would be nice.
+
+Panel 4
+Father Davidson, trying the "good cop" approach.
+
+	FATHER DAVIDSON: Penelope, your Fathers **LOVE** you. It PAINS us to see you like this.
+
+Panel 5
+Penny remains stoic. The judge in the panel closest to her ear speaks.
+
+	judge 4: All we want to do is **HELP** you.
+
+Panel 6
+Tighter on Penny. She closes her eyes.
+
+	CAPTION (PENNY ROLLE): Help.
+
+Page 4
+Flashback.  Cris, you might want to do something with the colors here -- warm things up a bit.
+
+Panel 1
+We're in a kitchen -- it's still the future, but it's a conven-tional kitchen, just a few years ahead of where we are right now, and clearly not the kitchen belonging to a family of means.  We are looking at two female figures -- 8 year old Penny and her GRANDMOTHER -- from behind as they stand at the counter over a mixing bowl. Penny stands on a stool so that she's tall enough to stir.
+
+Both gals are heavy, pear-shaped, and have gigantic butts.  Penny comes by her weight "honestly," as my mother would say. It can be comical as their butts are smushed up against each other.  This is a happy memory.  Or... This part of it is, anyway.  Penny's got a full head of gorgeous black curls.  Penny is light skinned, her grandmother is a bit darker, but even from behind we can tell they are CLEARLY related.  
+
+They've been at this for hours, so there are muffins and cakes and cookies cooling on every flat surface in the kitchen. We should wish this panel was scratch-n-sniff.
+
+There's at least one window in the kitchen--probably over the sink--and even though it's clearly day time the light curtains are drawn. We don't want to call attention to it at the moment, but Grandmas is hiding Penny from the outside world.
+
+	CAPTION (PENNY ROLLE): ...Help.
+
+	grandma: Your arm tired? You need Grandma's help?
+
+	little penny: I can do it.
+
+	GRANDMA: Well, if it ain't broke, don't fix it. But it's okay if you want some help.
+
+Panel 2
+Reverse. Big smiles on both gals.  Penny's taking a second, moving her stirring arm around to work out a cramp. Grandma is reaching for the spatula.
+
+	LITTLE PENNY: Maybe you could do the rest of this **ONE.**
+
+	grandma: Mm-hm.
+
+	LITTLE PENNY: I'm pretty strong though.
+
+Panel 3
+Grandma, looks up at Penny while she stirs.
+
+	GRANDMA: You are **VERY** strong, Penny. You keep working as hard as you do and big and strong as an oak. Like your DADDY.
+
+Panel 4
+Penny is leaning over another cake pan that has just been filled with uncooked batter.  She's making it look like she's getting batter off the edge, but what she's really doing is looking to get a bit on her finger to taste.  She does NOT look at grandma/us here.
+
+	LITTLE PENNY: My mom is strong.
+
+Panel 5
+Grandma stops stirring for a moment, and her face drops into something sad.
+
+	GRANDMA: ...
+
+	GRANDMA (SMALL): That she is.
+
+Page 5
+Panel 1
+Same as previous, but Grandma's eye are wide now, her face animated.
+
+	GRANDMA: Penny, your curls!!
+
+Panel 2
+Reverse. Penny is leaned over the cake pan, turned to face her grandma with her finger in her mouth. Because of the angle she's turned at, her curls are totally in the cake batter.
+
+She just looks busted.
+
+	LITTLE PENNY: ?
+
+Panel 3
+Penny bolts upright, slinging cake batter all over the kitchen. Grandma walks right into it.
+
+	LITTLE PENNY: I'm sorry!
+
+	GRANDMA: No, hold still--
+
+Panel 4
+Penny spins more, and we're looking right at Grandma now as she gets a spray of batter to the face.
+
+	GRANDMA: AHHHH!
+
+	GRANDMA: Baby girl, you're making it **WORSE!!**
+
+Page 6
+Panel 1
+Penny is standing on her stool still, batter dripping from her hair, covering her mouth with both hands as she tries not to die laughing.
+
+	LITTLE PENNY: **HEE HEE HEE HEE HEE**
+
+Panel 2
+Smiling a bit herself, Grandma cocks her head to the side and puts her hands on her hips.  She might still be holding that spatula or a dishtowel or both. There's batter everywhere.
+
+There's a pan of muffins within arm's reach.
+
+	GRANDMA: Oh, you think this is **FUNNY?**
+
+Panel 3
+On a pan of muffins that are ruined because they've got raw batter splattered across them now, as Grandma reaches for one.
+
+	GRANDMA: Reeeeeeaaaaalll funny...
+
+Panel 4
+Penny moves her hands from her mouth. Her jaw is open, like "no way...!"  Be careful with her expression here -- she's not afraid, just as Grandma is not angry -- this scene should be funny.
+
+	GRANDMA (OFF): Reeaaaaalll funny, little miss...
+
+Panel 5
+Large. Food fight.
+
+CLAYTON -- your call as to whether you want these in balloons or as SFX.  Whatever looks right to you.
+
+	LITTLE PENNY & GRANDMA: **HA HA HA HA HA HA HA**
+
+Page 7
+Panel 1
+Penny is off her stool, the kitchen is a DISASTER, Penny is smearing batter in her Grandma's face.  They're both laughing hysterically.  There's no dog in the room.
+
+	GRANDMA: AHH!! Stop it! Stop it! Stop it!
+
+	GRANDMA: I give up!
+
+	SFX (DOG): ARF ARF ARF ARF ARF
+
+Panel 2
+Grandma opens the kitchen door.
+
+	GRANDMA: What are you barking at, Dufus?
+
+Panel 3
+Grandma is stooped down in the doorway talking to the dog, who is clearly agitated.
+
+	GRANDMA: You want to come help clean this up?
+
+	dufus: ARF ARF ARF ARF
+
+Panel 4
+On Grandma as she looks up, and the blood drains out of her face.  Ideally, Penny is visible behind her.  Penny is smiling, no idea something is wrong.
+
+	GRANDMA: Penny...
+
+Panel 5
+Reverse. We see what Grandma is looking at -- men in whatever the future equivalent of S.W.A.T. Gear is, with guns, headed for their door.
+
+	CAPTION (GRANDMA): **...RUN.**
+
+Page 8
+Back in the judgment room.
+
+Panel 1
+Bring us back to the present with a shot of the moment after P3pnl6. Penny has lifted her chin and opened her eyes.
+
+Panel 2
+Father Davidson scrolls up on the document he's looking over.
+
+	FATHER DAVIDSON: You were adopted by the state when you were... **NINE--**
+
+	PENNY (OFF): --Eight.
+
+Panel 3
+She stares straight at Davidson. (It doesn't have to be Judge 3 specifically, if his placement doesn't work. But some Judge who can be framed in the same panel with a shot of Penny.  He is exasperated.)
+
+	judge on the left: She **SPEAKS!** Hallelujah.
+
+	PENNY: I was **EIGHT YEARS OLD** when they took me.
+
+Panel 4
+On Judge 4, pleading.
+
+	judge with eye piece: Took you IN. Penelope, everything your fathers have done has been for your PROTECTION. You were a CHILD. The woman who birthed you--
+
+Panel 5
+Largest panel on the page is the most important beat: Penny's temper gets the better of her for a moment.
+
+The fathers on the screens around her are taken aback -- aghast.  Stunned silent.
+
+	PENNY: --You're talking about **MY MOTHER!**
+
+Panel 6
+Tight on Father Davidson who genuinely feels sorry for Penny at the moment.  I want to say he's covering his mouth with his hand, brow furrowed.
+
+	FATHER DAVIDSON: ...Mm.
+
+Page 9
+Five Full-Tier panels. To give this scene rhythm, I'm going to suggest you consider not making them each the same height.  Not a demand, though, just a thing to try.
+
+Panel 1
+Father Davidson, cropped close. Almost like he's her face whispering this.
+
+	FATHER DAVIDSON: Your **MOTHER...**
+
+	FATHER DAVIDSON: Was a very sad case, Penelope. A VERY sad case.
+
+Panel 2
+Father David's screen and a partial screen of the Father right next to him. It doesn't have to be the same man who was Judge 2 before.
+
+	FATHER DAVIDSON: She was delusional, and **DANGEROUS.** She refused to see the truth before her.
+
+	FATHER DAVIDSON: And **QUITE FRANKLY,** we are concerned that you are too far gone down that same path.
+
+	judge in vest: Are you **HAPPY,** Penelope?
+
+Panel 3
+The camera shifts out and to his left (panel right) so now we see a sliver of Father Davidson's panel on the left, and a sliv-er of another judge's panel on the right, but we're centered on the Judge to Davidson's left. I think it might be funny to do a Brady Bunch thing so Father Davidson is actually turned to look toward the screen to his left, even though we know that makes no sense in individual studio settings.
+
+	bald judge: All we want is to help you be **HAPPY.**
+
+	BALD JUDGE: Why do you **INSIST** on making your own life so **DIFFICULT?**
+
+Panel 4
+Repeat the pattern, pulling out and to the left.  All the judges look at this judge, Brady Bunch-style.
+
+	BALD JUDGE: Why must you be so **ANGRY...?**
+
+Panel 5
+Penny stares straight ahead.
+
+	CAPTION (MOTHER SIEBERTLING): Penelope!
+
+Page 10
+
+Flashback.
+
+Panel 1
+Large. Do what you can with the framing of this panel to tie it to the previous panel to help us with the transition.  (Ie, Put her in the same approximate place in the panel, same expression, etc.)
+
+Now we see Penny as a teen. She's taller, slimmer, more conventionally attractive, but still on the chubby side.  Her curls are longer and in loose ringlets -- a lot of time has obviously been spent training her hair.  There's a group of students slightly behind and around her. They are mostly white, though there could be a few asian or latino kids in there too. Everybody's light skinned and looks like they stepped out of an advert for some Proctor and Gamble product. They are all SHOCKED at what they see before them. 
+
+Penny's standing over a boy her own age who she has just DECKED. He's got blood on his nose, she's got blood on her hand.  Her eyes are cast down, looking at him.
+
+Mother Siebertling screams from off panel. 
+
+	MOTHER SIEBERTLING (OFF): **PENELOPE!!**
+
+Panel 2
+Reverse. On Mother Siebertling.  She's white. It's tempting to make her look like Nurse Ratched, but let's not.  Let's make her more like Betty Draper.  Overly soft, put a barrette in the side of her hair.
+
+	MOTHER SIEBERTLING: In my office **NOW!**
+
+Panel 3
+Floating over those panels is a shot of Penny's face, setting her jaw.  Resolute.  Eyes up now.
+
+The composition of the bottom part of the page is meant to mirror the judgement scene previous.
+
+Panel 4
+On the bottom of the page, we're going to echo the judges on screens from the previous scene with a series of headshot of the kids faces looking satisfied that Penny's going to get in trouble.  In my head, there are 8 of these in two rows, but there may not be room and the number frankly doesn't matter.
+
+Page 11
+Panel 1
+In Mother Siebertling's office -- which is uncomfortably person-al in its decor -- more like an office in a sorority house than an institution -- Penny sits in a chair in front of Mother's desk.  Mother leans against her desk in front of her, arms crossed.  Her expression is more disappointed than angry.
+
+Penny looks at the floor.
+
+	MOTHER SIEBERTLING: You **STRUCK** that boy.
+
+	PENNY: Yes.
+
+	MOTHER SIEBERTLING: You could be charged as an adult with **ASSAULT** for that.
+
+	PENNY: Yes.
+
+	MOTHER SIEBERTLING: Penny, **WHY?** Why can you not control these violent impulses of yours?
+
+Panel 2
+Penny looks up. Two ways to go here -- angry or hurt.  Probably the more interesting choice to go with hurt. We've beaten the point about Penny's anger into the ground.  Let's make this one vulnerable.
+
+	PENNY: He was talking about my grandma.
+
+Panel 3
+Mother winces.  Penny is not in the frame.
+
+	MOTHER SIEBERTLING: Ahhhh.  Mrs. Chester Alexander rears her fat ugly head once again.
+
+	PENNY (OFF): Bertha.
+
+Panel 4
+Adjust the framing to accommodate both Penny and Mother.  It's as though Penny is forcing us to see her.
+
+	MOTHER SIEBERTLING: What?
+
+	PENNY: Chester was my grandpa. Grandma's "Al-berta." She likes to be called "Bertha."
+
+	MOTHER SIEBERTLING: Yes, well...
+
+Panel 5
+And Mother exerts control again, forcing Penny out of frame. 
+
+	MOTHER SIEBERTLING: Once again, Mrs. Chester Alexander doesn't get what she wants.
+
+Page 12
+Panel 1
+Mother leans over and gets on Penny's level.
+
+	MOTHER SIEBERTLING: Penny, loyalty is an admirable trait, but BLIND loyalty... is the act of a fool.
+
+	MOTHER SIEBERTLING: You're not a fool... are you? 
+
+Panel 2
+Mother is walking around behind Penny. Penny is visibly uncomfortable. Maybe a little scared.
+
+	PENNY: No.
+
+	MOTHER SIEBERTLING: No. No, I've never thought so.
+
+Panel 3
+Mother Siebertling pulls rubber gloves, a hairbrush and a paddle out of a drawer or cabinet and lays them on a rolling tray.  It doesn't matter if we can identify what she's gotten.  It might be better if we can't.
+
+	MOTHER SIEBERTLING: I'd hoped to keep news of Mrs. Alexander's arrest from you.
+
+Panel 4
+Her back still to Penny, Mother pulls on the rubber gloves.
+
+	MOTHER SIEBERTLING: I'm sorry that I failed you.
+
+Panel 5
+Mother turns around with the hairbrush in hand. The paddle and box of gloves are on the rolling tray.  She has visibly brightened.
+
+	MOTHER SIEBERTLING: What are we going to do with this hair of yours, hm?
+
+Panel 6
+Penny's reaction.  Lots of ways to play this one.  Resigned might the most painful choice.
+
+	CAPTION (PENNY ROLLE): "If it ain't broke, don't fix it."
+
+Page 13
+Panel 1
+Mother stands behind Penny, brushing her hair.  She's pulling it into a ponytail.
+
+	PENNY: What's wrong with it?
+
+	MOTHER SIEBERTLING: There's nothing **WRONG,** sweetheart. It's just like YOU -- it refuses to behave.
+
+Panel 2
+Penny's head cocks to the side as Mother wraps the rubber band around her ponytail.
+
+	PENNY: What's it SUPPOSED to do...?
+
+	MOTHER SIEBERTLING: Either curl up or lay down, perhaps?
+
+Panel 3
+On a curl, as Mother pulls on it, trying to get it to spring back.  Mother's face is not visible in the panel.
+
+	MOTHER SIEBERTLING: It's not black or white, good or bad. Folks don't know what to make of it because they don't know what it IS.
+
+Panel 4
+Penny turns her head, again forcing her face into panel.
+
+	PENNY: Why folks got'a to say **WHAT** I am, Mother? Ain't it enough to know WHO I am?
+
+Panel 5
+Mother goes back to the tray and switches on a bright light fix-ture above it. She may adjust the dome around it as she does.  In my head, this is like a surgical light or something like  this: http://www.homedepot.com/p/HDX-150-Watt-Incandescent-Clamp-Light-CE-300PDQ/100354511
+
+In the moment we're catching here, she's looking back over her shoulder toward Penny, smiling at the silliness of Penny's statement.
+
+	MOTHER SIEBERTLING: No, Penny. It doesn't work like that. You need to learn to see yourself **THROUGH THE FATHERS' EYES.**
+
+Panel 6
+Detail: Mother's hand grips the paddle handle.
+
+I'd prefer it if this panel was floating or inset. Don't give it the weight of a full panel.
+
+If the page feels too crowded, we can cut this panel and I'll move the line.
+
+	MOTHER SIEBERTLING: And I will teach you, Penny. If it kills us both.
+
+Panel 7
+On Penny, with the shadow of Mother holding the paddle falling over her.
+
+	MOTHER SIEBERTLING: You know what comes next, don't you?
+
+	PENNY: Yes.
+
+End of scene
+
+Page 14
+Panel 1
+Back to the hearing room.  Two more guards have entered the room and Penny is being wired up like she was going for a sleep study or something (e.g. sleep study wiring). She is understandably wary.
+
+On this page, I've assigned the lines of dialogue to various judges, but as before, I don't really care who says these things. Use whoever is convenient to your shot and character casting.
+
+For instance, in the first panel, it might be best of it's somebody on the wall to the side of Penny so they're on the page responding to her, rather than Father Davidson, who I believe is right in front of her, making framing awkward.
+
+	PENNY: What's all this?
+
+	any judge: An experiment.
+
+	ANY JUDGE: Are you familiar with the **CEREBRAL ACTION-POTENTIAL INTEGRATION AND EXTRAPOLATION MATRIX?**
+
+Panel 2
+Back on Penny, still wary, still being wired up.  Maybe a restraint board is being set up directly behind her as well.
+
+	PENNY: No.
+
+Panel 3
+Smug as hell.
+
+	BALD JUDGE: Of course not...
+
+	BALD JUDGE: We're basically able to take readings of various **ELECTRICAL IMPULSES** in your body and, thorough a complicated series of **ALGRIFFINS--**
+
+Panel 4
+Judge 3 (or whoever) leans into panel. Judge 2 doesn't miss a beat.
+
+	JUDGE ON THE LEFT: Algorithms, Frank.
+
+	BALD JUDGE: Through a complicated series of **THOSE,** we are able to take what you "see" in your own mind and put it on the screen.
+
+Panel 5
+He leans in and makes the gesture that illustrates "mind blown."
+
+	BALD JUDGE: BOOM. Mind blown.
+
+	BALD JUDGE: Pretty exciting, huh?
+
+Panel 6
+Penny's look says she thinks all these men are fucking nuts.
+
+	PENNY: ...
+
+Page 15
+Panel 1
+Penny, suspicious.
+
+	PENNY: What pictures are you trying to get out of my head?
+
+Panel 2
+Judge is horrified at the implication.
+
+	left judfge: Nothing **PRIVATE,** of course.
+
+	right judge: We want to see how you see your **IDEAL** self.
+
+	LEFT JUDFGE: And then we'll compare you **IDEAL SELF** to your **ACTUAL SELF,** and this will give us a **ROAD MAP** for your treatment.
+
+Panel 3
+Father Davidson.
+
+	FATHER DAVIDSON: How long since you imagined what your life could be like if you were more **COMPLIANT,** Penelope? 
+
+Panel 4
+Penny is wired up now and they're putting a cloth covered mirror in front of her.
+
+	FATHER DAVIDSON (TAIL-LESS): How long since you **PRIORITIZED** how others see you?
+
+Panel 5
+On her face - not wistful, not sad. Still guarded.
+
+	PENNY: S'been a while.
+
+Page 16
+Panel 1
+Flashback. Full tier, we're over Penny's shoulder as she stands behind the counter of her bakery. The glass that separates her in her workspace from her customers is fogged up because she's just changed the hot wet towel over the rising dough on the counter.  Her reflection is visible in the cloudy glass.
+
+Here, Penny is an adult -- it's not all THAT long ago -- but she's pre-tattoo here and she has a full head of hair tucked under a kerchief -- a lock or two like the ones she's going to keep, poke out of the front.
+
+She's  probably not quite as big as she is today, but she's bigger than she was as a teen.  She doesn't like her reflection -- specifically the hair sticking out, so she's not smiling. Her hand, holding a cotton towel, is paused before the glass. She was about to clear the steam off the glass when she caught her reflection.
+
+Panel 2
+Still on the reflection. She tries to tuck the errant curl back up.
+
+Panel 3
+Inset detail box: the curl pops back out.  It will not behave.
+
+	sfx: POP
+
+Panel 4
+She wipes away the steam.
+
+Panel 5
+With the steam gone, there's a man's face on the other side of the glass, right where Penny's reflection used to be.  He's stooped over, trying to get her attention.  He's maybe a little too close to the glass.  We can't be startled by this because of the nature of comics and how we take in a full page at a time, but if you can think about how startling it might be for Penny to see this, that can inform your rendering.
+
+Howie's a white guy, little overweight.  He stopped in to get a pastry and some coffee and watch the news on his way to work.
+
+	howie: We need the feed.
+
+Panel 6
+Startled, Penny bolts upright and takes a step back. Don't give me SCARED, just startled -- in concrete terms, that means keep her eyebrows down.
+
+	PENNY: !
+
+Page 17
+Panel 1
+Okay, pull back and give us the establishing shot of the BORN BIG BAKERY.  It's not huge.  Small seating area with 6 or so small tables, and a glass barrier-topped counter between the customer area and the work/display area. For example: http://1.bp.blogspot.com/__5Ml5Z0gfrM/SJiQMpwsdiI/AAAAAAAAA20/N1jN58Yz-go0/s1600-h/saint-cupcake-interior.JPG
+
+There'll need to be a spot where there's no glass and the counter top is on a hinge, flipping up.  When Penny loses her shit in a bit, she's going to come out from behind the counter that way.
+
+For the moment, she's behind the counter in the in the "watch me work" sort of area. There are also muffins on the counter.
+
+Also in the bakery this morning: 
+
+- Howie's buddy, Rick. Another white guy. 
+- Adrian, Michelle and Maya, three grammar school-age girls. Adrian and Michelle are white. Michelle and Maya are seated. Adrian is in line behind Sarah.
+- An older white gentleman, eating alone.
+- Sarah, a white secretary, in line behind Howie.
+
+	HOWIE: The feed.
+
+	HOWIE: Sweetheart, it's ten past seven. You can't just keep people waiting.
+
+	PENNY: Right... Right. Sorry.
+
+	HOWIE: Second morning in a row. Lucky these muffins are so good or I'd talk to your old man about this.
+
+Panel 2
+Penny pulls a large square remote out from under the counter and looks for the right button. Howie thinks he's being cute.
+
+	PENNY: Heh.
+
+	PENNY: I'm state-sponsored.
+
+Panel 3
+Reaction shot of Howie. OF COURSE she's state sponsored.  
+
+	HOWIE: ...
+
+	HOWIE: All the more reason to be on the ball, all right? Feeds up by 7am.
+
+Panel 4
+Holographic screens pop up over every table, as well as on the wall of the bakery.  The MODEL is hosting a GOOD MORNING AMERICA-type show. She's more conservatively dressed than we've seen her before, but we know her from the pink and the creepy blue eyes.
+
+	model: **--MORE** on the **BREAKING STORY** once after **THESE** messages on **THE FEED!**
+
+Page 18
+Panel 1
+Thinking that Howie is out of ear shot, Sarah confides in Penny.  Howie does hear, though, and half turns back to her, wagging his finger.
+
+	sarah (SMALL): God forbid folks use their private screens and leave the rest of us in peace.
+
+	HOWIE: Private screens don't build **COMMUNITY.**  
+
+Panel 2
+Sarah takes her breakfast from the counter and rolls her eyes.  On the screens in the background, a yogurt commercial where one side of the screen shows an infographic of a stomach and intestines and the other side of the screen show's a woman who FUCKING LOVES YOGURT.
+
+	HOWIE: Did you just **ROLL YOUR EYES** at me? 
+
+Panel 3
+Penny shoves a muffin at Howie, so that Sarah can get away. Neutral face on Penny here. Don't make her look desperate.
+
+	PENNY: Free muffin! Grandma's recipe -- with thanks for the feed reminder.
+
+Panel 4
+As Howie walks away, we focus on the screen, the Model. 
+
+	MODEL: And we're **BACK.** Today's top stories--how **YOU** can try the parasitic worm diet that is **ALL THE RAGE** with today's tween celebs, **DUEMILA** scores AND--
+
+	MODEL: And we'll update a developing story on a terrorist arrest 16 YEARS in the making.
+
+Panel 5
+Penny's face. Annoyed. By Howie AND the Model. 
+
+Panel 6
+Adrian interrupts. Politely. 
+
+	adrian: One sugar-free, salt-free, gluten-free muffin and three plates, please.
+
+Page 19
+Panel 1
+Howie, back at his table with Rick. Behind Howie, we see Penny punching down dough.
+
+	HOWIE: No wonder she's state-sponsored, Christ. Look at her. Who wants to come home to **THAT?**
+
+Panel 2
+On Rick, sipping his coffee with a shit-eating grin. 
+
+	rick: Skins. They like 'em big like that. It's in their animal nature -- big asses, big lips.
+
+	RICK: You ever fuck a skin? **WILD.**  
+
+Panel 3
+Wide. A swathe of Penny's face -- eyebrows to lips. Penny's nos-tril's flared, eyes mean.
+
+Panel 4
+The Model interviews a vacuous expert.  Design the expert however it amuses you. Bubbly, vacuous.
+
+	MODEL: Joining us now, our expert on Celebrity Eating Habits, Mrs. Cecil Buffet.
+
+	mrs. buffet: Good morning! Have **YOU** ever wished you had a gastrointestinal parasite? Well, for a couple of today's tweensters, that dream has come **TRUE!**
+
+Panel 5
+Penny punches the dough hard as hell.
+
+Page 20
+Robert, I need you to increase the intensity of each subsequent even numbered panel. Two ways you can do this, either punch in closer on each on, or make each one bigger than the previous -- six bigger than four, four bigger than two. If you go with the latter, might be helpful to look at the first page of issue 1 for a composition suggestion.
+
+Panel 1
+Adrian, Michelle and Maya divvy up the muffin between them.  Scrawling calorie counts in their notebooks.
+
+	ADRIAN: Divided by three, that's 15 calories each.
+
+	maya: Did I tell you I evac'd 12 ounces two days in a row?
+
+	michelle: You **LIE.**
+
+	MAYA: My toilet scale doesn't.
+
+Panel 2
+Penny punches the dough. 
+
+	SFX: THUMP
+
+Panel 3
+Rick makes a gesture like grabbing an ass. 
+
+	RICK: Like a **BABOON.**
+
+Panel 4
+Penny punches the dough.
+
+	SFX: THUMP
+
+Panel 5
+Maya touches Adrian's smooth hair.
+
+	ADRIAN: I envy you your bowels.
+
+	MAYA: I'd trade them for your **HAIR.**
+
+Panel 6
+Penny punches the dough. The counter breaks.  
+
+	SFX: KRSHH
+
+Page 21
+Panel 1
+Penny, armed with a rolling pin, has busted through the counter/glass/whatever like the fucking Kool Aid man if the Kool Aid man were coming to kick your ass.  She's now burying that rolling pin in the wall screen, shattering it.  Important: it is still watchable, just shattered.  Rick and Howie have bolted upright and are covering themselves with their hands to protect from flying shards.
+
+The little girls have moved away too.
+
+	PENNY: Get ooooouttt!!
+
+	SFX: KRSHHHHHHH
+
+	RICK: **AHHH!!** The **HELL?!** Crazy bitch! 
+
+	ADRIAN: EEEE!!
+
+Panel 2
+Howie is scared shitless, fumbling to put his phone headpiece on.
+
+	HOWIE: I-I-I'm calling the cops on you!  Your life is **OVER!**
+
+Panel 3
+Penny bashes Rick across the jaw with the rolling pin.
+
+	PENNY: Good!
+
+Panel 4
+Penny stands over Rick, who is not dead, as indicated by the fact that he's curled up in the fetal position, shaking.
+
+	PENNY: I didn't much like this life anyway. 
+
+Page 22
+Panel 1
+Howie is GONE. The three girls are terrified, backed up against a wall.
+
+	MODEL: ...17 years...arrest...
+
+	MICHELLE: Oh my gosh oh my gosh oh my gosh
+
+Panel 2
+Penny looks up at the girls, blood dripping from the rolling pin.
+
+Behind her, on the shattered screen, the Model is delivering the news like a newscaster with footage of an arrest rolling behind her.  The arrestee is Penny's dad -- he's a white guy, big as an oak, just like grandma said. He's got blonde curls, pulled back in a ponytail. A lock of curls identical to Penny's sticks out in front.  This might be a starting place: http://www.junlong-hair.com/427/long-blonde-hairstyles-ideas/mens-hairstyles-long-blonde-hair/
+
+His hair won't behave either.
+
+	MODEL: ...authorities have identified 44 year old gender terrorist...
+
+	daddy rolle: Message to my daughter--!
+
+	PENNY: Get out.
+
+Panel 3
+The girls run at camera.  Penny, yells after them.
+
+	PENNY (LARGE): **AND TAKE THE MUFFINS!**
+
+Panel 4
+On the table screen, we see the Model reporting on Penny's dad's arrest.
+
+	MODEL: ROLLE, large man, injured seven in the course of his arrest and is expected to face additional charges...
+
+Panel 5
+Penny's face, looking vulnerable for the first time.  Her mouth is open as she watches the report and nearly cries.
+
+If there are screens over tables visible in the background (holograms or whatever) his face is on them.
+
+	MODEL (SMALL): ...described as "the size of an oak"... 
+
+	PENNY: Daddy...?
+
+Panel 6
+Same, but Penny unconsciously reaches up and touches her errant curl.  I will probably cut this line, but I'm putting it here just in case.
+
+	CAPTION (PENNY ROLLE): I wish you could see me.
+
+Page 23
+Panel 1
+Cut back to the hearing. Penny is strapped to the board and  wired up and some of the judges on the wall screens have now been replace with Penny's memory of the shattered screen with her daddy's face on it, some with her mother (who we've never seen before, but she'd be her grandmother's daughter, a black woman -- very dignified looking), some with her grandmother.
+
+We're not being subtle here: her judges have been replaced with the people who loved her.
+
+Her eyes are tearing up a little.
+
+	FATHER DAVIDSON (TAIL-LESS): It's **TIME,** Penelope.
+
+	FATHER DAVIDSON (TAIL-LESS): Once we've all seen a vision of **YOUR IDEAL SELF** we'll have a **GOAL.**
+
+Panel 2
+A guard is running a wire from Penny's board to the covered mirror and plugging it in the mirror. We're making this crystal clear here.
+
+	FATHER DAVIDSON (TAIL-LESS): Visualization is **KEY** to achieving our goals.
+
+Panel 3
+Worm's eye view up at Penny as she squirms to try and look away from the mirror.  Hopefully we can see Father Davidson on a screen in the background, but it's okay if we can't.  WE are positioned a bit behind the mirror as the cover is being pulled off.
+
+	PENNY: No!
+
+	FATHER DAVIDSON (TAIL-LESS): We are **TRYING** to **HELP YOU.**
+
+Panel 4
+Penny's face is turned away but her eyes look at the mirror. She's incredulous.
+
+	CAPTION (PENNY ROLLE): To see myself they way **YOU** want me to...
+
+Panel 5
+Same, but her face is turned to face the mirror now.  
+
+	CAPTION (PENNY ROLLE): My **IDEAL** self... The way I was **SUPPOSED** to be...
+
+Page 24
+Panel 1
+We're looking in the mirror with Penny and seeing... Penny.  Ex-actly as she is today.  Laughing her ass off.
+
+The mirror "dialogue" is just text that appears on the mirror.
+
+Judges in the background think there's been a mistake.  A guard is checking the wire to see if there's a fray.
+
+	mirror: Idealized actualization...ROLLE, PENELOPE
+
+	PENNY: HA HA HA HA HA HA HA HA
+
+	ANY JUDGE: There's got to be a mistake. Is the wire frayed?
+
+	any other judge: Send her to the outpost. This is a waste of time.
+
+Panel 2
+Penny's face. Grinning. She wins.
+
+	SFX (PENNY): HA HA HA HA
+
+	CAPTION (PENNY ROLLE): If it ain't broke, don't fix it.
+
+Panel 3
+Same framing. She blows the curl out of eyes.
+
+Clayton, I'm not sure this panel reads.  Can we do anything with SFX to make it clear?
+
+	CAPTION (PENNY ROLLE): I ain't broke.
+
+	SFX: WHFF
+
+Panel 4
+It flops back down right where it was.  She grins huge.
+
+	SFX (CURL): POP
+
+	CAPTION (PENNY ROLLE): ...And you ain't **NEVER** gonna break me.
