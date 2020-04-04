@@ -182,8 +182,18 @@ export default class CodeMirrorComponent extends Component<Props> {
       });
     });
 
+    if (process.env.NODE_ENV !== 'production') {
+      (window as any).cm = this.cm;
+    }
+
     this.wordCounts = createWordCounts(this.cm);
     this.panelCounts = createPanelCounts(this.cm);
+  }
+
+  componentWillUnmount() {
+    if (process.env.NODE_ENV !== 'production') {
+      (window as any).cm = null;
+    }
   }
 
   getCharacterNames(): Array<string> {
