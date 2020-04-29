@@ -19,7 +19,7 @@ export function create(cm: Editor) {
               lineInfo.widgets[0].node.textContent = widgetText(panelCount.count);
             } else {
               // add new widget
-              cm.addLineWidget(panelCount.lineNumber, node(panelCount.count));
+              cm.addLineWidget(panelCount.lineNumber, node(panelCount));
             }
           });
       });
@@ -27,9 +27,11 @@ export function create(cm: Editor) {
   };
 }
 
-function node(count: number) {
+function node(panelCount: PanelCount) {
+  const { count, lineNumber } = panelCount;
   const div = document.createElement('div');
 
+  div.dataset.line = String(lineNumber);
   div.classList.add('panel-count');
   div.textContent = widgetText(count);
 
