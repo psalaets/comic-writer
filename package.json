@@ -44,6 +44,7 @@
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-junit-formatter": "^0.2.2",
+    "testcafe": "^1.8.4",
     "typescript": "^3.7.3"
   },
   "homepage": "https://psalaets.gitlab.io/comic-writer",
