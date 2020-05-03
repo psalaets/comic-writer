@@ -75,6 +75,8 @@ test('remove the only panel from page', async t => {
 });
 
 test('panel counts are per page', async t => {
+  const panelCount = panelCountSelector(0);
+
   await t
     .typeText('[contenteditable=true]', 'page')
     .pressKey('enter')
@@ -82,13 +84,14 @@ test('panel counts are per page', async t => {
     .pressKey('enter')
     .typeText('[contenteditable=true]', 'panel')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'page')
+
+  await t.expect(panelCount.textContent).eql('(2 panels)');
+
+  await t.typeText('[contenteditable=true]', 'page')
     .pressKey('enter')
     // adding a panel to page 2 doesn't affect page 1's panel count
     .typeText('[contenteditable=true]', 'panel')
     .pressKey('enter')
-
-  const panelCount = panelCountSelector(0);
 
   await t.expect(panelCount.textContent).eql('(2 panels)');
 });
