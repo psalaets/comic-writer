@@ -134,6 +134,12 @@ function makeSteps(getCharacterNames: () => Array<string>) {
           ch: lastColonIndex + 100000
         }
       );
+    },
+    function exitState(cm: CodeMirror.Editor) {
+      cm.operation(() => {
+        cm.execCommand('goLineRight');
+        cm.execCommand('newlineAndIndent');
+      });
     }
   ];
 }

@@ -198,3 +198,32 @@ test('starts with placeholder content', async t => {
     '    SUBJECT: content'
   ]);
 });
+
+test('tab in content area exits lettering snippet and adds newline', async t => {
+  const snippet = selectors.activeLetteringSnippet();
+
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // select item from hint popup
+    .pressKey('enter')
+    // tab into content area
+    .pressKey('tab')
+    // tab out of content area
+    .pressKey('tab')
+
+  await t.expect(snippet.exists).notOk();
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION: content',
+    ''
+  ]);
+});
