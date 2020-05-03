@@ -2,7 +2,7 @@ import * as CodeMirror from 'codemirror';
 import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/show-hint.css';
 
-const SUBJECT_PLACEHOLDER = 'subject';
+const SUBJECT_PLACEHOLDER = 'SUBJECT';
 /**
  * css class applied to the line when lettering snippet is active.
  *
