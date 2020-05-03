@@ -3,6 +3,12 @@ import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/show-hint.css';
 
 const SUBJECT_PLACEHOLDER = 'subject';
+/**
+ * css class applied to the line when lettering snippet is active.
+ *
+ * Keep this synced with theme.css
+ */
+const LETTERING_SNIPPET_CLASS = 'lettering-snippet';
 
 /**
  * A code-editor style snippet for creating dialogue/caption/sfx.
@@ -50,6 +56,7 @@ export function letteringSnippet(
   function enter() {
     cm.addKeyMap(keyMap);
     cm.on('cursorActivity', handleCursorActivity);
+    cm.addLineClass(lineNumber, 'text', LETTERING_SNIPPET_CLASS);
   }
 
   function next() {
@@ -64,6 +71,7 @@ export function letteringSnippet(
   }
 
   function exit() {
+    cm.removeLineClass(lineNumber, 'text', LETTERING_SNIPPET_CLASS);
     cm.off('cursorActivity', handleCursorActivity);
     cm.removeKeyMap(keyMap);
   }

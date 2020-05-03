@@ -35,6 +35,13 @@
   text-transform: uppercase;
 }
 
+/* Style tab stops of lettering snippet */
+.lettering-snippet .cm-lettering-subject,
+.lettering-snippet .cm-lettering-modifier,
+.lettering-snippet .cm-lettering-content {
+  border: 1px solid var(--color-utility-dove);
+}
+
 .cm-s-comic-writer-light .cm-lettering-bold {
   font-weight: bold;
   text-decoration: underline;
