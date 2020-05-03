@@ -1,7 +1,13 @@
 import { StringStream } from 'codemirror';
 import { ComicWriterModeState } from './types';
 
-// these values become css classes so keep them synced with theme file
+/*
+ * These values become css classes so keep them synced with theme.css file.
+ * For more info, see https://codemirror.net/doc/manual.html#modeapi
+ */
+
+// Token classes. These are applied to individual tokens of a line.
+// CodeMirror adds a 'cm-' prefix to these before putting them in the dom.
 const PAGE = 'page';
 const PANEL = 'panel';
 const METADATA = 'metadata';
@@ -11,10 +17,16 @@ const LETTERING_MODIFIER = 'lettering-modifier';
 export const LETTERING_CONTENT = 'lettering-content';
 export const LETTERING_BOLD = 'lettering-bold';
 
+// Line classes. These are applied to entire lines.
+// CM removes the 'line-' prefix before putting them in the dom.
 const LETTERING_LINE = 'line-cm-lettering';
 const SFX_LINE = 'line-cm-sfx';
 const CAPTION_LINE = 'line-cm-caption';
 const DIALOGUE_LINE = 'line-cm-dialogue';
+/*
+ * End of values that become css classes
+ */
+
 
 export default function token(
   stream: StringStream,
