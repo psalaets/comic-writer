@@ -16,14 +16,14 @@ test('only using keyboard', async t => {
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'this is the caption content')
+    .typeText(selectors.editorContent(), 'caption content')
 
   const lines = await editorLines();
 
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: this is the caption content'
+    '    CAPTION: caption content'
   ]);
 });
 
@@ -40,14 +40,14 @@ test('with modifier, only using keyboard', async t => {
     .pressKey('shift+9')
     .typeText(selectors.editorContent(), 'BLAH')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'this is the caption content')
+    .typeText(selectors.editorContent(), 'caption content')
 
   const lines = await editorLines();
 
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION (BLAH): this is the caption content'
+    '    CAPTION (BLAH): caption content'
   ]);
 });
 

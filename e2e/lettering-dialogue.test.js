@@ -16,14 +16,14 @@ test('for new speaker, only using keyboard', async t => {
     .pressKey('tab')
     .typeText(selectors.editorContent(), 'bob')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'this is the dialogue content')
+    .typeText(selectors.editorContent(), 'dialogue content')
 
   const lines = await editorLines();
 
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob: this is the dialogue content'
+    '    bob: dialogue content'
   ]);
 });
 
@@ -40,14 +40,14 @@ test('with modifier for new speaker, only using keyboard', async t => {
     .pressKey('shift+9')
     .typeText(selectors.editorContent(), 'OFF')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'this is the dialogue content')
+    .typeText(selectors.editorContent(), 'dialogue content')
 
   const lines = await editorLines();
 
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob (OFF): this is the dialogue content'
+    '    bob (OFF): dialogue content'
   ]);
 });
 

@@ -17,14 +17,14 @@ test('only using keyboard', async t => {
     .pressKey('down')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'this is the sfx content')
+    .typeText(selectors.editorContent(), 'deet')
 
   const lines = await editorLines();
 
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SFX: this is the sfx content'
+    '    SFX: deet'
   ]);
 });
 
