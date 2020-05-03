@@ -52,3 +52,25 @@ test('with modifier, only using keyboard', async t => {
     '    SFX (DOOR): CREAK'
   ]);
 });
+
+test('filter down to a single option and select it', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // lettering starts here
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'sfx')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'BLAM')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    SFX: BLAM'
+  ]);
+});

@@ -151,3 +151,69 @@ test('speakers in popup are in abc order', async t => {
     '    ZZZ: third balloon',
   ]);
 });
+
+test('speakers in popup are filtered as you type', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // first balloon
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'janice')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'first balloon')
+    .pressKey('enter')
+    // second balloon
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'jonathan')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'second balloon')
+    .pressKey('enter')
+    // third balloon, filter so janice option is gone and arrow down once to jon
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'jo')
+    .pressKey('down')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'third balloon')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    janice: first balloon',
+    '    jonathan: second balloon',
+    '    JONATHAN: third balloon',
+  ]);
+});
+
+test('filter down to a single option and select it', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // first balloon
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'bob')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'first balloon')
+    .pressKey('enter')
+    // second balloon
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'bob')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'second balloon')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    bob: first balloon',
+    '    BOB: second balloon',
+  ]);
+});

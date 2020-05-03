@@ -140,7 +140,7 @@ test('moving to start of line (with no popup) exits lettering snippet', async t 
   await t.expect(snippet.exists).notOk();
 });
 
-test('hint popup wraps when arrowing up', async t => {
+test('hint popup selection wraps when arrowing up from first option', async t => {
   await t
     .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
@@ -160,7 +160,7 @@ test('hint popup wraps when arrowing up', async t => {
   ]);
 });
 
-test('hint popup wraps when arrowing down', async t => {
+test('hint popup selection wraps when arrowing down from last option', async t => {
   await t
     .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')

@@ -50,3 +50,25 @@ test('with modifier, only using keyboard', async t => {
     '    CAPTION (BLAH): this is the caption content'
   ]);
 });
+
+test('filter down to a single option and select it', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // lettering starts here
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'caption')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'caption content')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION: caption content'
+  ]);
+});
