@@ -111,7 +111,6 @@ export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
   selectLocatedSpreads,
   memoizeResult(spreads => {
     return spreads
-      .filter(spread => spread.panelCount > 0)
       .map(spread => ({
         lineNumber: spread.lineNumber,
         count: spread.panelCount
