@@ -3,8 +3,10 @@ import { LineClassification } from './types';
 const PAGE_EXPANSION_PATTERN = /^page *$/i;
 const PAGES_EXPANSION_PATTERN = /^pages *$/i;
 const SPREAD_EXPANSION_PATTERN = /^spread$/i;
+const PANEL_EXPANSION_PATTERN = /^panel/i;
 
-const PANEL_PATTERN = /^panel/i;
+const SINGLE_PANEL_PATTERN = /^panel +\d{1,}$/i;
+
 const SINGLE_PAGE_PATTERN = /^pages? +\d{1,}$/i;
 const PAGE_RANGE_PATTERN = /^pages? +(\d{1,})-(\d{1,})$/i;
 const PARTIAL_PAGE_RANGE_PATTERN = /^pages? \d{1,}-$/i;
@@ -29,8 +31,12 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
 
     const cursorOnThisLine = lineNumber + lineOffset === cursorLine;
 
-    if (PANEL_PATTERN.test(line)) {
+    if (SINGLE_PANEL_PATTERN.test(line)) {
       return panelLine(line);
+    }
+
+    if (PANEL_EXPANSION_PATTERN.test(line)) {
+      return cursorOnThisLine ? regularLine(line) : panelLine(line);
     }
 
     if (SINGLE_PAGE_PATTERN.test(line)) {

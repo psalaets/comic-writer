@@ -199,25 +199,8 @@ describe('preprocessLines', () => {
       const input = [
         'Page 1',
         'this is page 1 info',
-        'panel'
-      ];
-
-      const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 2, 0);
-
-      expect(result).toEqual([
-        "Page 1",
-        "this is page 1 info",
-        "Panel 1",
-      ]);
-    });
-
-    it('adding second panel to page', () => {
-      const input = [
-        'Page 1',
-        'this is page 1 info',
-        'Panel 1',
-        'panel'
+        'panel',
+        ''
       ];
 
       const preprocessLines = createPreprocessor();
@@ -227,7 +210,28 @@ describe('preprocessLines', () => {
         "Page 1",
         "this is page 1 info",
         "Panel 1",
+        ''
+      ]);
+    });
+
+    it('adding second panel to page', () => {
+      const input = [
+        'Page 1',
+        'this is page 1 info',
+        'Panel 1',
+        'panel',
+        ''
+      ];
+
+      const preprocessLines = createPreprocessor();
+      const result = preprocessLines(input, 4, 0);
+
+      expect(result).toEqual([
+        "Page 1",
+        "this is page 1 info",
+        "Panel 1",
         "Panel 2",
+        ''
       ]);
     });
 
@@ -241,7 +245,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 2, 0);
+      const result = preprocessLines(input, 3, 0);
 
       expect(result).toEqual([
         "Page 1",
@@ -263,7 +267,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 3, 0);
+      const result = preprocessLines(input, 4, 0);
 
       expect(result).toEqual([
         "Page 1",
@@ -281,29 +285,8 @@ describe('preprocessLines', () => {
         'Panel 1',
         'this is panel 1 info',
         'Page 2',
-        'panel'
-      ];
-
-      const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 4, 0);
-
-      expect(result).toEqual([
-        "Page 1",
-        "Panel 1",
-        "this is panel 1 info",
-        "Page 2",
-        "Panel 1",
-      ]);
-    });
-
-    it('adding another panel to second page', () => {
-      const input = [
-        'Page 1',
-        'Panel 1',
-        'this is panel 1 info',
-        'Page 2',
-        'Panel 1',
-        'panel'
+        'panel',
+        ''
       ];
 
       const preprocessLines = createPreprocessor();
@@ -315,7 +298,32 @@ describe('preprocessLines', () => {
         "this is panel 1 info",
         "Page 2",
         "Panel 1",
+        ''
+      ]);
+    });
+
+    it('adding another panel to second page', () => {
+      const input = [
+        'Page 1',
+        'Panel 1',
+        'this is panel 1 info',
+        'Page 2',
+        'Panel 1',
+        'panel',
+        ''
+      ];
+
+      const preprocessLines = createPreprocessor();
+      const result = preprocessLines(input, 6, 0);
+
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        "this is panel 1 info",
+        "Page 2",
+        "Panel 1",
         "Panel 2",
+        ''
       ]);
     });
 
