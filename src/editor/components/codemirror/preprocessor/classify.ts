@@ -25,11 +25,22 @@ const classifiablePrefixes = ['p', 'P', 's', 'S'];
  */
 export default function createClassifier(cursorLine: number, lineOffset: number) {
   return function classify(line: string, lineNumber: number): LineClassification {
-    if (!classifiablePrefixes.includes(line[0])) {
+    // Early bailout for obvious regular lines to save us from ping ponging
+    // through all the regexes below, only to find out it's a regular line.
+    if (isDefinitelyRegularLine(line)) {
       return regularLine(line);
     }
 
     const cursorOnThisLine = lineNumber + lineOffset === cursorLine;
+
+    /**
+     * Order matters in here for 2 reasons:
+     *
+     *   - Need to check against more specific patterns first because a more
+     *     general pattern could take all the matches.
+     *   - Matching more likely patterns first means higher chances of matching
+     *     sooner which is good for performance.
+     */
 
     if (SINGLE_PANEL_PATTERN.test(line)) {
       return panelLine(line);
@@ -83,6 +94,10 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
 
     return regularLine(line);
   };
+}
+
+function isDefinitelyRegularLine(line: string): boolean {
+  return !classifiablePrefixes.includes(line[0]);
 }
 
 function isValidPageRange(start: number, end: number): boolean {
