@@ -17,8 +17,7 @@ type HandleTuple = {
 };
 
 /**
- * Creates an object that updates the word counts gutter in the CodeMirror
- * Editor.
+ * Creates a "plugin" that shows word counts in the Editor.
  *
  * @param cm CodeMirror Editor
  */

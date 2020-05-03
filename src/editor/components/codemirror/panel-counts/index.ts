@@ -3,7 +3,7 @@ import { PanelCount } from '../../../../script/types';
 import { updatePanelCount } from './update-panel-count';
 
 /**
- * Creates an object that shows a spread's panel count in a line widget.
+ * Creates a "plugin" that shows panel counts in the editor.
  *
  * @param cm CodeMirror Editor
  */
