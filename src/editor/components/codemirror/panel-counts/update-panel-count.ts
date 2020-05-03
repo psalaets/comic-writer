@@ -17,32 +17,24 @@ interface LineInfo {
 }
 
 /**
- * Helper class for managing panel count line widgets.
+ * Helper for updating panel counts in the editor.
  */
-export class LineWrapper {
-  lineNumber: number;
-  cm: Editor;
+export function updatePanelCount(panelCount: PanelCount, cm: Editor): void {
+  const lineNumber = panelCount.lineNumber;
+  const lineInfo = cm.lineInfo(lineNumber) as LineInfo;
+  const widget = lineInfo.widgets && lineInfo.widgets[0];
 
-  constructor(lineNumber: number, cm: Editor) {
-    this.lineNumber = lineNumber;
-    this.cm = cm;
-  }
+  const shouldShowCount = panelCount.count > 0;
 
-  setPanelCount(panelCount: PanelCount): void {
-    const shouldShowCount = panelCount.count > 0;
-    const lineInfo = this.cm.lineInfo(this.lineNumber) as LineInfo;
-    const widget = lineInfo.widgets && lineInfo.widgets[0];
-
-    if (widget) {
-      if (shouldShowCount) {
-        updateNode(widget.node, panelCount);
-      } else {
-        widget.clear();
-      }
+  if (widget) {
+    if (shouldShowCount) {
+      updateNode(widget.node, panelCount);
     } else {
-      if (shouldShowCount) {
-        this.cm.addLineWidget(this.lineNumber, node(panelCount));
-      }
+      widget.clear();
+    }
+  } else {
+    if (shouldShowCount) {
+      cm.addLineWidget(lineNumber, node(panelCount));
     }
   }
 }
