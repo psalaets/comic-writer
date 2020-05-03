@@ -1,7 +1,10 @@
-import { Selector } from 'testcafe';
+import * as selectors from './selectors';
 
+/**
+ * Get all lines from the editor.
+ */
 export async function editorLines() {
-  const lineElements = Selector('.CodeMirror-line')
+  const lineElements = selectors.editorLine();
   const count = await lineElements.count;
 
   const lines = [];
@@ -14,20 +17,4 @@ export async function editorLines() {
     // CodeMirror uses zero-width space to represent blank lines.
     // Convert those into empty strings so assertions will be simpler.
     .map(line => line.replace(/\u{200B}/u, ''));
-}
-
-export function panelCountSelector(lineNumber) {
-  return Selector(`.panel-count[data-line="${lineNumber}"]`);
-}
-
-/**
- * Select a line in the editor. Warning: this doesn't handle virtual rendered
- * lines.
- *
- * @param {number} lineNumber - Zero based line number
- */
-export function editorLineSelector(lineNumber) {
-  return Selector('.CodeMirror-line')
-    .nth(lineNumber)
-    // .find('span[role="presentation"]')
 }

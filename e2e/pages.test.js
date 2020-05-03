@@ -1,5 +1,4 @@
-import { Selector } from 'testcafe';
-
+import * as selectors from './selectors';
 import { editorLines } from './helpers';
 
 fixture('pages')
@@ -7,7 +6,7 @@ fixture('pages')
 
 test('one page', async t => {
   await t
-    .typeText('[contenteditable=true]', 'page')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -18,9 +17,9 @@ test('one page', async t => {
 
 test('two pages', async t => {
   await t
-    .typeText('[contenteditable=true]', 'page')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'page')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -32,14 +31,14 @@ test('two pages', async t => {
 
 test('insert page between existing pages', async t => {
   await t
-    .typeText('[contenteditable=true]', 'page')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'page')
-    .pressKey('enter')
-    .pressKey('up')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
     .pressKey('up')
-    .typeText('[contenteditable=true]', 'page')
+    .pressKey('enter')
+    .pressKey('up')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -53,7 +52,7 @@ test('insert page between existing pages', async t => {
 
 test('one page range', async t => {
   await t
-    .typeText('[contenteditable=true]', 'pages')
+    .typeText(selectors.editorContent(), 'pages')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -64,9 +63,9 @@ test('one page range', async t => {
 
 test('two page ranges', async t => {
   await t
-    .typeText('[contenteditable=true]', 'pages')
+    .typeText(selectors.editorContent(), 'pages')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'pages')
+    .typeText(selectors.editorContent(), 'pages')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -78,14 +77,14 @@ test('two page ranges', async t => {
 
 test('insert page range between existing page ranges', async t => {
   await t
-    .typeText('[contenteditable=true]', 'pages')
+    .typeText(selectors.editorContent(), 'pages')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'pages')
-    .pressKey('enter')
-    .pressKey('up')
+    .typeText(selectors.editorContent(), 'pages')
     .pressKey('enter')
     .pressKey('up')
-    .typeText('[contenteditable=true]', 'pages')
+    .pressKey('enter')
+    .pressKey('up')
+    .typeText(selectors.editorContent(), 'pages')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -99,14 +98,14 @@ test('insert page range between existing page ranges', async t => {
 
 test('insert page range between existing single pages', async t => {
   await t
-    .typeText('[contenteditable=true]', 'page')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'page')
-    .pressKey('enter')
-    .pressKey('up')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
     .pressKey('up')
-    .typeText('[contenteditable=true]', 'pages')
+    .pressKey('enter')
+    .pressKey('up')
+    .typeText(selectors.editorContent(), 'pages')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([

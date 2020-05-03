@@ -1,5 +1,4 @@
-import { Selector } from 'testcafe';
-
+import * as selectors from './selectors';
 import { editorLines } from './helpers';
 
 fixture('panels')
@@ -7,9 +6,9 @@ fixture('panels')
 
 test('one panel', async t => {
   await t
-    .typeText('[contenteditable=true]', 'page')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'panel')
+    .typeText(selectors.editorContent(), 'panel')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -21,11 +20,11 @@ test('one panel', async t => {
 
 test('two panels', async t => {
   await t
-    .typeText('[contenteditable=true]', 'page')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'panel')
+    .typeText(selectors.editorContent(), 'panel')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'panel')
+    .typeText(selectors.editorContent(), 'panel')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -38,16 +37,16 @@ test('two panels', async t => {
 
 test('insert panel between existing panels', async t => {
   await t
-    .typeText('[contenteditable=true]', 'page')
+    .typeText(selectors.editorContent(), 'page')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'panel')
+    .typeText(selectors.editorContent(), 'panel')
     .pressKey('enter')
-    .typeText('[contenteditable=true]', 'panel')
-    .pressKey('enter')
-    .pressKey('up')
+    .typeText(selectors.editorContent(), 'panel')
     .pressKey('enter')
     .pressKey('up')
-    .typeText('[contenteditable=true]', 'panel')
+    .pressKey('enter')
+    .pressKey('up')
+    .typeText(selectors.editorContent(), 'panel')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
