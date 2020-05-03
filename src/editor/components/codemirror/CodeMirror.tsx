@@ -19,7 +19,7 @@ import {
   ID as WORD_COUNTS,
   create as createWordCounts
 } from './gutters/word-counts';
-import { create as createPanelCounts } from './line-widgets/panel-counts';
+import { create as createPanelCounts } from './panel-counts';
 import { letteringSnippet } from './lettering-snippet';
 import { letteringBoldCommand } from './lettering-bold-command';
 

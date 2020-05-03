@@ -16,7 +16,10 @@ interface LineInfo {
   widgets: any;
 }
 
-class LineWrapper {
+/**
+ * Helper class for managing panel count line widgets.
+ */
+export class LineWrapper {
   lineNumber: number;
   cm: Editor;
 
@@ -32,50 +35,30 @@ class LineWrapper {
 
     if (widget) {
       if (shouldShowCount) {
-        // update existing widget
-        widget.node.textContent = widgetText(panelCount.count);
-        widget.node.dataset.line = String(panelCount.lineNumber);
+        updateNode(widget.node, panelCount);
       } else {
-        // remove existing widget
         widget.clear();
       }
     } else {
       if (shouldShowCount) {
-        // add new widget
         this.cm.addLineWidget(this.lineNumber, node(panelCount));
       }
     }
   }
 }
 
-/**
- * Creates an object that shows a spread's panel count in a line widget.
- *
- * @param cm CodeMirror Editor
- */
-export function create(cm: Editor) {
-  return {
-    update(panelCounts: Array<PanelCount>) {
-      cm.operation(() => {
-        panelCounts
-          .forEach(panelCount => {
-            const lineWrapper = new LineWrapper(panelCount.lineNumber, cm);
-            lineWrapper.setPanelCount(panelCount);
-          });
-      });
-    }
-  };
-}
-
 function node(panelCount: PanelCount) {
-  const { count, lineNumber } = panelCount;
   const div = document.createElement('div');
-
-  div.dataset.line = String(lineNumber);
   div.classList.add('panel-count');
-  div.textContent = widgetText(count);
+
+  updateNode(div, panelCount);
 
   return div;
+}
+
+function updateNode(node: HTMLElement, panelCount: PanelCount): void {
+  node.textContent = widgetText(panelCount.count);
+  node.dataset.line = String(panelCount.lineNumber);
 }
 
 function widgetText(count: number): string {
