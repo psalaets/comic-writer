@@ -1,3 +1,4 @@
+import { ClientFunction } from 'testcafe';
 import * as selectors from './selectors';
 
 /**
@@ -18,3 +19,7 @@ export async function editorLines() {
     // Convert those into empty strings so assertions will be simpler.
     .map(line => line.replace(/\u{200B}/u, ''));
 }
+
+export const getSelectedText = ClientFunction(() => {
+  return window.getSelection().toString();
+});

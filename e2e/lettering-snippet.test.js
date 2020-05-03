@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import * as selectors from './selectors';
-import { editorLines } from './helpers';
+import { editorLines, getSelectedText } from './helpers';
 
 fixture('lettering snippet common behavior')
   .page('http://localhost:3000');
@@ -197,9 +197,25 @@ test('starts with placeholder content', async t => {
     'Panel 1',
     '    SUBJECT: content'
   ]);
+
+  await t.expect(getSelectedText()).eql('SUBJECT');
 });
 
-test('tab in content area exits lettering snippet and adds newline', async t => {
+test('selects placeholder content after tabbing into content area', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    .pressKey('enter')
+    .pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
+});
+
+test('tabbing in content area exits lettering snippet and adds newline', async t => {
   const snippet = selectors.activeLetteringSnippet();
 
   await t
