@@ -29,3 +29,17 @@ export function editorContent() {
 export function editorLine() {
   return Selector('.CodeMirror-line');
 }
+
+/**
+ * Select the lettering hints popup.
+ */
+export function letteringHintsPopup() {
+  return Selector('.CodeMirror-hints');
+}
+
+/**
+ * Select the line with the active lettering snippet.
+ */
+export function activeLetteringSnippet() {
+  return Selector('.lettering-snippet');
+}
