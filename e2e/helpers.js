@@ -15,3 +15,19 @@ export async function editorLines() {
     // Convert those into empty strings so assertions will be simpler.
     .map(line => line.replace(/\u{200B}/u, ''));
 }
+
+export function panelCountSelector(lineNumber) {
+  return Selector(`.panel-count[data-line="${lineNumber}"]`);
+}
+
+/**
+ * Select a line in the editor. Warning: this doesn't handle virtual rendered
+ * lines.
+ *
+ * @param {number} lineNumber - Zero based line number
+ */
+export function editorLineSelector(lineNumber) {
+  return Selector('.CodeMirror-line')
+    .nth(lineNumber)
+    // .find('span[role="presentation"]')
+}
