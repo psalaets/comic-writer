@@ -230,21 +230,7 @@ test('starts with placeholder content', async t => {
   await t.expect(getSelectedText()).eql('SUBJECT');
 });
 
-test('selects placeholder content after tabbing into content area', async t => {
-  await t
-    .typeText(selectors.editorContent(), 'page')
-    .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
-    .pressKey('enter')
-    // this is the start of the lettering stuff
-    .pressKey('tab')
-    .pressKey('enter')
-    .pressKey('tab')
-
-  await t.expect(getSelectedText()).eql('content');
-});
-
-test('tabbing in content area exits lettering snippet and adds newline', async t => {
+test('tabbing beyond content area exits lettering snippet and adds newline', async t => {
   const snippet = selectors.activeLetteringSnippet();
 
   await t
