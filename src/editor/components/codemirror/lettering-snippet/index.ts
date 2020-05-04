@@ -2,6 +2,12 @@ import * as CodeMirror from 'codemirror';
 import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/show-hint.css';
 
+import {
+  LETTERING_SUBJECT,
+  LETTERING_MODIFIER,
+  LETTERING_CONTENT
+} from '../mode/token';
+
 const SUBJECT_PLACEHOLDER = 'SUBJECT';
 /**
  * css class applied to the line when lettering snippet is active.
@@ -21,12 +27,15 @@ export function letteringSnippet(
   getCharacterNames: () => Array<string>
 ) {
   const lineNumber = cm.getCursor().line;
-  let stepIndex = -1;
-  const steps = makeSteps(getCharacterNames);
+  let stepIndex = 0;
+  const steps = makeSteps();
 
   const keyMap: CodeMirror.KeyMap = {
     Tab() {
       next();
+    },
+    'Shift-Tab'() {
+      prev();
     },
     Enter() {
       exit();
@@ -52,19 +61,37 @@ export function letteringSnippet(
 
   enter();
   next();
+  showHint();
 
   function enter() {
     cm.addKeyMap(keyMap);
     cm.on('cursorActivity', handleCursorActivity);
     cm.addLineClass(lineNumber, 'text', LETTERING_SNIPPET_CLASS);
+
+    cm.replaceRange(`\t${SUBJECT_PLACEHOLDER}: content`, cm.getCursor());
+  }
+
+  function prev() {
+    move(-1);
   }
 
   function next() {
-    stepIndex += 1;
+    move(1);
+  }
+
+  function move(delta: number) {
+    stepIndex += delta;
 
     const step = steps[stepIndex];
+
     if (step) {
-      step(cm);
+      const result = step(cm, delta);
+
+      if (result === 'next') {
+        next();
+      } else if (result === 'prev') {
+        prev();
+      }
     } else {
       exit();
     }
@@ -89,53 +116,87 @@ export function letteringSnippet(
       exit();
     }
   }
+
+  function showHint() {
+    cm.showHint({
+      hint: makeHinter(getCharacterNames()),
+      // don't auto select a single suggestion because use could be typing a
+      // new character name
+      completeSingle: false,
+    });
+  }
 }
 
-function makeSteps(getCharacterNames: () => Array<string>) {
+function makeSteps() {
   return [
-    function metadataState(cm: CodeMirror.Editor) {
-      const cursor = cm.getCursor();
-      cm.replaceRange(`\t${SUBJECT_PLACEHOLDER}: content`, cursor);
-
-      const lineText = cm.getLine(cursor.line);
-      const tabIndex = lineText.indexOf('\t');
-      const colonIndex = lineText.indexOf(':');
-
-      cm.setSelection(
-        {
-          line: cursor.line,
-          ch: tabIndex + 1
-        },
-        {
-          line: cursor.line,
-          ch: colonIndex
-        }
-      );
-
-      cm.showHint({
-        hint: makeHinter(getCharacterNames()),
-        // don't auto select a single suggestion because use could be typing a
-        // new character name
-        completeSingle: false,
+    function frontSentinel(cm: CodeMirror.Editor, stepDelta: number): any {
+      cm.operation(() => {
+        cm.execCommand('goLineLeft');
       });
     },
-    function contentState(cm: CodeMirror.Editor) {
+    function subjectState(cm: CodeMirror.Editor, stepDelta: number): any {
       const cursor = cm.getCursor();
-      const lineText = cm.getLine(cursor.line);
-      const lastColonIndex = lineText.lastIndexOf(':');
+      const subject = cm.getLineTokens(cursor.line)
+        .find(token => {
+          return token.type?.includes(LETTERING_SUBJECT);
+        });
 
-      cm.setSelection(
-        {
-          line: cursor.line,
-          ch: lastColonIndex + 2
-        },
-        {
-          line: cursor.line,
-          ch: lastColonIndex + 100000
-        }
-      );
+      if (subject) {
+        cm.setSelection(
+          {
+            line: cursor.line,
+            ch: subject.start
+          },
+          {
+            line: cursor.line,
+            ch: subject.end
+          }
+        );
+      }
     },
-    function exitState(cm: CodeMirror.Editor) {
+    function modifierState(cm: CodeMirror.Editor, stepDelta: number): any {
+      const cursor = cm.getCursor();
+      const modifier = cm.getLineTokens(cursor.line)
+        .find(token => {
+          return token.type?.includes(LETTERING_MODIFIER);
+        });
+
+      if (modifier) {
+        cm.setSelection(
+          {
+            line: cursor.line,
+            ch: modifier.start
+          },
+          {
+            line: cursor.line,
+            ch: modifier.end
+          }
+        );
+      } else {
+        return stepDelta > 0 ? 'next' : 'prev';
+      }
+    },
+    function contentState(cm: CodeMirror.Editor, stepDelta: number): any {
+      const cursor = cm.getCursor();
+      const content = cm.getLineTokens(cursor.line)
+        .find(token => {
+          return token.type?.includes(LETTERING_CONTENT);
+        });
+
+      if (content) {
+        cm.setSelection(
+          {
+            line: cursor.line,
+            ch: content.start
+          },
+          {
+            line: cursor.line,
+            ch: content.end
+          }
+        );
+      }
+    },
+    function backSentinel(cm: CodeMirror.Editor, stepDelta: number): any {
       cm.operation(() => {
         cm.execCommand('goLineRight');
         cm.execCommand('newlineAndIndent');
@@ -155,8 +216,8 @@ function makeHinter(characterNames: Array<string>) {
       .concat(characterNames)
       .map(suggestion => suggestion.toLocaleUpperCase())
       .filter(suggestion => {
-        return current === SUBJECT_PLACEHOLDER.toLocaleUpperCase()
-          || suggestion.startsWith(current.toLocaleUpperCase());
+        return current === SUBJECT_PLACEHOLDER
+          || suggestion.startsWith(current);
       });
 
     return {

@@ -12,8 +12,8 @@ const PAGE = 'page';
 const PANEL = 'panel';
 const METADATA = 'metadata';
 
-const LETTERING_SUBJECT = 'lettering-subject';
-const LETTERING_MODIFIER = 'lettering-modifier';
+export const LETTERING_SUBJECT = 'lettering-subject';
+export const LETTERING_MODIFIER = 'lettering-modifier';
 export const LETTERING_CONTENT = 'lettering-content';
 export const LETTERING_BOLD = 'lettering-bold';
 

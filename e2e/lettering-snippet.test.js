@@ -140,6 +140,35 @@ test('moving to start of line (with no popup) exits lettering snippet', async t 
   await t.expect(snippet.exists).notOk();
 });
 
+test('shift-tab from subject area (with no popup) exits lettering snippet', async t => {
+  const snippet = selectors.activeLetteringSnippet();
+
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // close popup
+    .pressKey('esc')
+
+  await t.expect(snippet.exists).ok();
+
+  await t
+    .pressKey('shift+tab')
+
+  await t.expect(snippet.exists).notOk();
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    SUBJECT: content'
+  ]);
+});
+
 test('hint popup selection wraps when arrowing up from first option', async t => {
   await t
     .typeText(selectors.editorContent(), 'page')
@@ -242,4 +271,85 @@ test('tabbing in content area exits lettering snippet and adds newline', async t
     '    CAPTION: content',
     ''
   ]);
+});
+
+test('text is selected when tabbing between subject and content', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // clear hint popup
+    .pressKey('esc')
+
+  await t.expect(getSelectedText()).eql('SUBJECT');
+
+  // tab into content area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
+
+  // back to subject area
+  await t.pressKey('shift+tab')
+
+  await t.expect(getSelectedText()).eql('SUBJECT');
+
+  // finally back to content area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
+});
+
+test('text is selected when tabbing between subject, modifier and content', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // clear hint popup
+    .pressKey('esc')
+
+  await t.expect(getSelectedText()).eql('SUBJECT');
+
+  await t
+    // move cursor to end of subject area
+    .pressKey('right')
+    // start adding modifier text
+    .typeText(selectors.editorContent(), ' ')
+    .pressKey('shift+9')
+    .typeText(selectors.editorContent(), 'OFF')
+
+  // tab into modifier area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('OFF');
+
+  // tab into subject area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
+
+  // back to modifier area
+  await t.pressKey('shift+tab')
+
+  await t.expect(getSelectedText()).eql('OFF');
+
+  // back to subject area
+  await t.pressKey('shift+tab')
+
+  await t.expect(getSelectedText()).eql('SUBJECT');
+
+  // back into modifier area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('OFF');
+
+  // finally back into subject area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
 });

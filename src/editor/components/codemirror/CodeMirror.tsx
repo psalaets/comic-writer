@@ -143,6 +143,9 @@ export default class CodeMirrorComponent extends Component<Props> {
             return CodeMirror.Pass;
           }
         },
+        'Shift-Tab'() {
+          // no-op to prevent the CodeMirror default action: reverse indent
+        },
         'Cmd-B': letteringBoldCommand,
         'Ctrl-B': letteringBoldCommand,
       }
