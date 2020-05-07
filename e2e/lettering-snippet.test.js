@@ -305,36 +305,118 @@ test('text is selected when tabbing between subject, modifier and content', asyn
     // move cursor to end of subject area
     .pressKey('right')
     // start adding modifier text
-    .typeText(selectors.editorContent(), ' ')
+    .pressKey('space')
     .pressKey('shift+9')
     .typeText(selectors.editorContent(), 'OFF')
 
-  // tab into modifier area
-  await t.pressKey('tab')
-
-  await t.expect(getSelectedText()).eql('OFF');
-
-  // tab into subject area
+  // tab into content area
   await t.pressKey('tab')
 
   await t.expect(getSelectedText()).eql('content');
 
-  // back to modifier area
+  // to modifier area
   await t.pressKey('shift+tab')
 
   await t.expect(getSelectedText()).eql('OFF');
 
-  // back to subject area
+  // to subject area
   await t.pressKey('shift+tab')
 
   await t.expect(getSelectedText()).eql('SUBJECT');
 
-  // back into modifier area
+  // into modifier area
   await t.pressKey('tab')
 
   await t.expect(getSelectedText()).eql('OFF');
 
   // finally back into subject area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
+});
+
+test('typing ( after selecting subject inserts modifier and moves to modifier tab stop', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // select first hint
+    .pressKey('enter')
+    .pressKey('shift+9')
+
+  await t.expect(getSelectedText()).eql('MODIFIER');
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION (MODIFIER): content'
+  ]);
+
+  // if we're in modifier tab stop, next tab goes into content area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
+});
+
+test('typing 1 space then ( after selecting subject inserts modifier and moves to modifier tab stop', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // select first hint
+    .pressKey('enter')
+    .pressKey('space')
+    .pressKey('shift+9')
+
+  await t.expect(getSelectedText()).eql('MODIFIER');
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION (MODIFIER): content'
+  ]);
+
+  // if we're in modifier tab stop, next tab goes into content area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
+});
+
+test('typing multiple spaces then ( after selecting subject inserts modifier and moves to modifier tab stop', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // select first hint
+    .pressKey('enter')
+    .pressKey('space')
+    .pressKey('space')
+    .pressKey('shift+9')
+
+  await t.expect(getSelectedText()).eql('MODIFIER');
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION  (MODIFIER): content'
+  ]);
+
+  // if we're in modifier tab stop, next tab goes into content area
   await t.pressKey('tab')
 
   await t.expect(getSelectedText()).eql('content');

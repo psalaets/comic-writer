@@ -48,14 +48,46 @@ export function letteringSnippet(
     // auto pair parens
     'Shift-9'(cm) {
       const cursor = cm.getCursor();
-      cm.replaceRange('()', {
-        line: cursor.line,
-        ch: cursor.ch
+
+      const lineTokens = cm.getLineTokens(cursor.line);
+
+      const modifierToken = lineTokens.find(token => {
+        return token.type?.includes(LETTERING_MODIFIER);
       });
-      cm.setCursor({
-        line: cursor.line,
-        ch: cursor.ch + 1
+
+      const subjectIndex = lineTokens.findIndex(token => {
+        return token.type?.includes(LETTERING_SUBJECT);
       });
+
+      const contentIndex = lineTokens.findIndex(token => {
+        return token.type?.includes(LETTERING_CONTENT);
+      });
+
+      const beforeContentToken = lineTokens[contentIndex - 1];
+
+      const subjectToken = lineTokens[subjectIndex];
+      const afterSubjectToken = lineTokens[subjectIndex + 1];
+
+      // if cursor between end of subject and colon
+      if (subjectToken && afterSubjectToken && !modifierToken) {
+        if (cursor.ch >= subjectToken.end && cursor.ch <= beforeContentToken.end) {
+
+          const placeholder = afterSubjectToken.string.startsWith(' ')
+            ? '(MODIFIER)'
+            : ' (MODIFIER)';
+
+          cm.replaceRange(placeholder, {
+            line: cursor.line,
+            ch: cursor.ch
+          });
+
+          next();
+        } else {
+          return CodeMirror.Pass;
+        }
+      } else {
+        return CodeMirror.Pass;
+      }
     }
   };
 
