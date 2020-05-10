@@ -6,11 +6,10 @@ import { Selector } from 'testcafe';
 /**
  * Panel count by its position among all other panel counts.
  *
- * @param {number} index - Zero-based index panel count number
+ * @param {number} index - Zero-based panel count number
  */
 export function panelCount(index) {
-  return Selector(`.panel-count`)
-    .nth(index);
+  return Selector(`.panel-count`).nth(index);
 }
 
 /**
@@ -44,8 +43,7 @@ export function letteringHintsPopup() {
  * @param {number} index Zero-based index
  */
 export function letteringHintsItem(index) {
-  return Selector('.CodeMirror-hint')
-    .nth(index);
+  return Selector('.CodeMirror-hint').nth(index);
 }
 
 /**
@@ -53,4 +51,13 @@ export function letteringHintsItem(index) {
  */
 export function activeLetteringSnippet() {
   return Selector('.lettering-snippet');
+}
+
+/**
+ * Word count by its position among all other word counts.
+ *
+ * @param {number} index - Zero-based word count number
+ */
+export function wordCount(index) {
+  return Selector('.word-count').nth(index);
 }

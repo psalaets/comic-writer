@@ -110,13 +110,13 @@ function hasGutter(lineInfo: any): boolean {
 
 function element(wordCount: WordCount) {
   const span = document.createElement('span');
-
-  span.dataset.line = String(wordCount.lineNumber);
+  span.classList.add('word-count');
 
   if (wordCount.isSpread) {
     span.classList.add('word-count--page');
   }
 
   span.textContent = String(wordCount.count);
+
   return span;
 }
