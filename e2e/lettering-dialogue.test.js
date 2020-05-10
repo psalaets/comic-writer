@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import * as selectors from './selectors';
-import { editorLines } from './helpers';
+import { editorLines, getSelectedText } from './helpers';
 
 fixture('dialogue')
   .page('http://localhost:3000');
@@ -216,4 +216,62 @@ test('filter down to a single option and select it', async t => {
     '    bob: first balloon',
     '    BOB: second balloon',
   ]);
+});
+
+
+test('selecting character option with arrows and tab', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // create a balloon to get a character name in the hint popup
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'bob')
+    .pressKey('tab')
+    .pressKey('tab')
+    // lettering starts here
+    .pressKey('tab')
+    .pressKey('down')
+    .pressKey('down')
+    .pressKey('tab')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    bob: content',
+    '    BOB: content'
+  ]);
+
+  await t.expect(getSelectedText()).eql('');
+});
+
+test('selecting character option with mouse', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // create a balloon to get a character name in the hint popup
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'bob')
+    .pressKey('tab')
+    .pressKey('tab')
+    // lettering starts here
+    .pressKey('tab')
+    // click character hint item
+    .click(selectors.letteringHintsItem(2))
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    bob: content',
+    '    BOB: content'
+  ]);
+
+  await t.expect(getSelectedText()).eql('');
 });

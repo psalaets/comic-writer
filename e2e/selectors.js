@@ -38,6 +38,16 @@ export function letteringHintsPopup() {
 }
 
 /**
+ * Select an individual hint item.
+ *
+ * @param {number} index Zero-based index
+ */
+export function letteringHintsItem(index) {
+  return Selector('.CodeMirror-hint')
+    .nth(index);
+}
+
+/**
  * Select the line with the active lettering snippet.
  */
 export function activeLetteringSnippet() {

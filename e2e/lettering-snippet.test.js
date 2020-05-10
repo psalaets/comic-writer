@@ -495,4 +495,3 @@ test('modifier placeholder is not re-inserted if there are parens containing onl
     '    CAPTION ( (): content'
   ]);
 });
-

@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import * as selectors from './selectors';
-import { editorLines } from './helpers';
+import { editorLines, getSelectedText } from './helpers';
 
 fixture('caption')
   .page('http://localhost:3000');
@@ -71,4 +71,48 @@ test('filter down to a single option and select it', async t => {
     'Panel 1',
     '    CAPTION: caption content'
   ]);
+});
+
+test('selecting caption option with arrows and tab', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // lettering starts here
+    .pressKey('tab')
+    .pressKey('tab')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION: content'
+  ]);
+
+  await t.expect(getSelectedText()).eql('');
+});
+
+
+test('selecting caption option with mouse', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // lettering starts here
+    .pressKey('tab')
+    // click caption hint item
+    .click(selectors.letteringHintsItem(0))
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION: content'
+  ]);
+
+  await t.expect(getSelectedText()).eql('');
 });
