@@ -4,12 +4,13 @@ import { Selector } from 'testcafe';
 // https://devexpress.github.io/testcafe/documentation/test-api/selecting-page-elements/selectors/
 
 /**
- * Panel count for a given line.
+ * Panel count by its position among all other panel counts.
  *
- * @param {number} lineNumber - Zero based
+ * @param {number} index - Zero-based index panel count number
  */
-export function panelCount(lineNumber) {
-  return Selector(`.panel-count[data-line="${lineNumber}"]`);
+export function panelCount(index) {
+  return Selector(`.panel-count`)
+    .nth(index);
 }
 
 /**

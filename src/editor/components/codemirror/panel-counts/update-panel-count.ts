@@ -50,7 +50,6 @@ function node(panelCount: PanelCount) {
 
 function updateNode(node: HTMLElement, panelCount: PanelCount): void {
   node.textContent = widgetText(panelCount.count);
-  node.dataset.line = String(panelCount.lineNumber);
 }
 
 function widgetText(count: number): string {
