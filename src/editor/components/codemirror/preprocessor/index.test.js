@@ -6,7 +6,7 @@ describe('preprocessLines', () => {
       const input = [`page`];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 1, 0);
+      const result = preprocessLines(input, 1, 0, 0);
 
       expect(result).toEqual([
         "Page 1",
@@ -21,7 +21,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 1, 0);
+      const result = preprocessLines(input, 1, 0, 0);
 
       expect(result).toEqual([
         "Page 1",
@@ -38,7 +38,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 3, 0);
+      const result = preprocessLines(input, 3, 2, 2);
 
       expect(result).toEqual([
         "Page 1",
@@ -57,7 +57,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 3, 0);
+      const result = preprocessLines(input, 3, 2, 2);
 
       expect(result).toEqual([
         "Page 1",
@@ -79,7 +79,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 0, 0);
+      const result = preprocessLines(input, 0, 0, 0);
 
       expect(result).toEqual([
         "Page 1",
@@ -100,7 +100,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 2, 0);
+      const result = preprocessLines(input, 2, 2, 3);
 
       expect(result).toEqual([
         "Page 1",
@@ -121,7 +121,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 2, 0);
+      const result = preprocessLines(input, 2, 2, 3);
 
       expect(result).toEqual([
         "Page 1",
@@ -142,7 +142,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 0, 0);
+      const result = preprocessLines(input, 0, 0, 0);
 
       expect(result).toEqual([
         "Page 1",
@@ -161,7 +161,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 2, 0);
+      const result = preprocessLines(input, 2, 2, 3);
 
       expect(result).toEqual([
         "Page 1",
@@ -176,7 +176,7 @@ describe('preprocessLines', () => {
       const input = tenPages.concat(['page']);
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 1, 0);
+      const result = preprocessLines(input, 1, 10, 10);
 
       expect(result).toEqual([
         "Page 1",
@@ -204,7 +204,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 3, 0);
+      const result = preprocessLines(input, 3, 2, 2);
 
       expect(result).toEqual([
         "Page 1",
@@ -224,7 +224,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 4, 0);
+      const result = preprocessLines(input, 4, 3, 3);
 
       expect(result).toEqual([
         "Page 1",
@@ -245,7 +245,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 3, 0);
+      const result = preprocessLines(input, 3, 2, 2);
 
       expect(result).toEqual([
         "Page 1",
@@ -267,7 +267,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 4, 0);
+      const result = preprocessLines(input, 4, 3, 3);
 
       expect(result).toEqual([
         "Page 1",
@@ -290,7 +290,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 5, 0);
+      const result = preprocessLines(input, 5, 4, 4);
 
       expect(result).toEqual([
         "Page 1",
@@ -314,7 +314,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 6, 0);
+      const result = preprocessLines(input, 6, 5, 5);
 
       expect(result).toEqual([
         "Page 1",
@@ -337,7 +337,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 2, 0);
+      const result = preprocessLines(input, 2, 2, 2);
 
       expect(result).toEqual([
         "Page 1",
@@ -359,7 +359,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 3, 0);
+      const result = preprocessLines(input, 3, 3, 3);
 
       expect(result).toEqual([
         "Page 1",
@@ -379,7 +379,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 1, 0);
+      const result = preprocessLines(input, 1, 1, 1);
 
       expect(result).toEqual([
         "Page 1",
@@ -398,7 +398,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const result = preprocessLines(input, 3, 0);
+      const result = preprocessLines(input, 3, 3, 3);
 
       expect(result).toEqual([
         "Page 1",
@@ -406,6 +406,42 @@ describe('preprocessLines', () => {
         "this is panel 1 info",
         "Panel 2",
         "this is panel 3 info",
+      ]);
+    });
+  });
+
+  describe('all caps in lettering metadata', () => {
+    it('with subject but no modifier', () => {
+      const input = [
+        'Page 1',
+        'Panel 1',
+        '\tblah: the content'
+      ];
+
+      const preprocessLines = createPreprocessor();
+      const result = preprocessLines(input, 2, 2, 2);
+
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        '\tBLAH: the content',
+      ]);
+    });
+
+    it('with both subject and modifier', () => {
+      const input = [
+        'Page 1',
+        'Panel 1',
+        '\tblah (off): the content'
+      ];
+
+      const preprocessLines = createPreprocessor();
+      const result = preprocessLines(input, 2, 2, 2);
+
+      expect(result).toEqual([
+        "Page 1",
+        "Panel 1",
+        '\tBLAH (OFF): the content',
       ]);
     });
   });
@@ -422,7 +458,7 @@ describe('preprocessLines', () => {
       ];
 
       const preprocessLines = createPreprocessor();
-      const firstResult = preprocessLines(firstLines, 3, 0);
+      const firstResult = preprocessLines(firstLines, 3, 0, 0);
 
       expect(firstResult).toEqual([
         'Page 1',
@@ -436,7 +472,7 @@ describe('preprocessLines', () => {
         'this is page 2 info'
       ];
 
-      const secondResult = preprocessLines(secondLines, 3, 1);
+      const secondResult = preprocessLines(secondLines, 3, 1, 1);
 
       expect(secondResult).toEqual([
         'Page 1', // this line wasn't changed between 1st and 2nd call because it's before fromLine

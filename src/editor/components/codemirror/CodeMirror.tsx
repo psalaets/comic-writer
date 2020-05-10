@@ -161,23 +161,35 @@ export default class CodeMirrorComponent extends Component<Props> {
       // this is the start of a "source change round trip"
       perf.start('change-round-trip');
 
+      const cursor = cm.getCursor();
+
       const oldLines = cm.getValue().split(/\n/);
       const newLines = this.preprocessLines(
         oldLines,
-        cm.getCursor().line,
-        change.from.line
+        cursor.line,
+        change.from.line,
+        change.to.line
       );
 
       this.getCodeMirrorInstance().operation(() => {
+        let replacements = 0;
+
         newLines.forEach((newLine, index) => {
           const oldLine = oldLines[index] || '';
           if (newLine !== oldLine) {
+            replacements += 1;
+
             const from = { line: index, ch: 0 };
             const to = { line: index, ch: 10000 };
 
             cm.replaceRange(newLine, from, to, 'preprocessing');
           }
         });
+
+        // replacements may cause cursor to move so put it back
+        if (replacements > 0 && !cm.somethingSelected()) {
+          cm.setCursor(cursor);
+        }
       });
 
       this.props.onChange({

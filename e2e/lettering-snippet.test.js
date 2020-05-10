@@ -495,3 +495,29 @@ test('modifier placeholder is not re-inserted if there are parens containing onl
     '    CAPTION ( (): content'
   ]);
 });
+
+test('auto capitalizes subject and modifier', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // lowercase subject
+    .typeText(selectors.editorContent(), 'bob')
+    .typeText(selectors.editorContent(), ' ')
+    .pressKey('shift+9')
+    // lowercase modifier
+    .typeText(selectors.editorContent(), 'off')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'dialogue content')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    BOB (OFF): dialogue content'
+  ]);
+});

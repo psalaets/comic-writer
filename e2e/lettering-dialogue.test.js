@@ -23,7 +23,7 @@ test('for new speaker, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob: dialogue content'
+    '    BOB: dialogue content'
   ]);
 });
 
@@ -47,7 +47,7 @@ test('with modifier for new speaker, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob (OFF): dialogue content'
+    '    BOB (OFF): dialogue content'
   ]);
 });
 
@@ -76,7 +76,7 @@ test('for existing speaker, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob: first balloon',
+    '    BOB: first balloon',
     '    BOB: second balloon',
   ]);
 });
@@ -109,7 +109,7 @@ test('with modifier for existing speaker, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob: first balloon',
+    '    BOB: first balloon',
     '    BOB (OFF): second balloon',
   ]);
 });
@@ -146,8 +146,8 @@ test('speakers in popup are in abc order', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    zzz: first balloon',
-    '    aaa: second balloon',
+    '    ZZZ: first balloon',
+    '    AAA: second balloon',
     '    ZZZ: third balloon',
   ]);
 });
@@ -183,8 +183,8 @@ test('speakers in popup are filtered as you type', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    janice: first balloon',
-    '    jonathan: second balloon',
+    '    JANICE: first balloon',
+    '    JONATHAN: second balloon',
     '    JONATHAN: third balloon',
   ]);
 });
@@ -213,7 +213,7 @@ test('filter down to a single option and select it', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob: first balloon',
+    '    BOB: first balloon',
     '    BOB: second balloon',
   ]);
 });
@@ -241,7 +241,7 @@ test('selecting character option with arrows and tab', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob: content',
+    '    BOB: content',
     '    BOB: content'
   ]);
 
@@ -269,7 +269,7 @@ test('selecting character option with mouse', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    bob: content',
+    '    BOB: content',
     '    BOB: content'
   ]);
 

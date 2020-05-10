@@ -4,7 +4,7 @@ import autoNumber from './auto-number';
 import { LineClassification } from './types';
 
 export interface LinePreprocessor {
-  (lines: Array<string>, cursorLine: number, fromLine: number): Array<string>;
+  (lines: Array<string>, cursorLine: number, fromLine: number, toLine: number): Array<string>;
 }
 
 export function createPreprocessor(): LinePreprocessor {
@@ -18,11 +18,13 @@ export function createPreprocessor(): LinePreprocessor {
    * @param lines Lines of the script
    * @param cursorLine What line number the cursor is on
    * @param fromLine Line number of first line in the script that has a change
+   * @param toLine Line number of last line in the script that has a change
    */
   function preprocess(
     lines: Array<string>,
     cursorLine: number,
-    fromLine: number
+    fromLine: number,
+    toLine: number
   ): Array<string> {
 
     perf.start('classify-lines');
@@ -44,7 +46,30 @@ export function createPreprocessor(): LinePreprocessor {
       .map(autoNumber());
 
     perf.end('number-lines');
+    perf.start('allcaps-lettering-metadata');
 
-    return numberedLines;
+    const needsAllCaps = numberedLines.slice(fromLine, toLine + 1);
+    const hasAllCaps = needsAllCaps
+      .map(line => {
+        if (line[0] === '\t') {
+          const colonIndex = line.indexOf(':');
+          if (colonIndex !== -1) {
+            return line.slice(0, colonIndex).toUpperCase() + line.slice(colonIndex);
+          } else {
+            return line;
+          }
+        } else {
+          return line;
+        }
+      });
+
+    const unchangedBefore = numberedLines.slice(0, fromLine);
+    const unchangedAfter = numberedLines.slice(toLine + 1);
+
+    const finalLines = unchangedBefore.concat(hasAllCaps).concat(unchangedAfter);
+
+    perf.end('allcaps-lettering-metadata');
+
+    return finalLines;
   };
 }
