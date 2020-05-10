@@ -421,3 +421,78 @@ test('typing multiple spaces then ( after selecting subject inserts modifier and
 
   await t.expect(getSelectedText()).eql('content');
 });
+
+test('modifier placeholder is not re-inserted if it is already there', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // select first hint
+    .pressKey('enter')
+    .pressKey('shift+9')
+    .pressKey('shift+9')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION ((): content'
+  ]);
+});
+
+test('modifier placeholder is not re-inserted if there are empty parens', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // select first hint
+    .pressKey('enter')
+    // trigger modifier placeholder
+    .pressKey('shift+9')
+    // clear modifier placeholder, but not parens
+    .pressKey('backspace')
+    // try another open paren
+    .pressKey('shift+9')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION ((): content'
+  ]);
+});
+
+test('modifier placeholder is not re-inserted if there are parens containing only whitespace', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // select first hint
+    .pressKey('enter')
+    // trigger modifier placeholder
+    .pressKey('shift+9')
+    // put a space between parens
+    .pressKey('space')
+    // try another open paren
+    .pressKey('shift+9')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION ( (): content'
+  ]);
+});
+
