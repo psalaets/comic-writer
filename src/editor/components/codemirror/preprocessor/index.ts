@@ -1,6 +1,7 @@
 import * as perf from '../../../../perf';
 import createClassifier from './classify';
 import autoNumber from './auto-number';
+import { capitalizeLetteringMetadata } from './capitalize-lettering-metadata';
 import { LineClassification } from './types';
 
 export interface LinePreprocessor {
@@ -50,23 +51,14 @@ export function createPreprocessor(): LinePreprocessor {
 
     const needsAllCaps = numberedLines.slice(fromLine, toLine + 1);
     const hasAllCaps = needsAllCaps
-      .map(line => {
-        if (line[0] === '\t') {
-          const colonIndex = line.indexOf(':');
-          if (colonIndex !== -1) {
-            return line.slice(0, colonIndex).toUpperCase() + line.slice(colonIndex);
-          } else {
-            return line;
-          }
-        } else {
-          return line;
-        }
-      });
+      .map(line => capitalizeLetteringMetadata(line));
 
     const unchangedBefore = numberedLines.slice(0, fromLine);
     const unchangedAfter = numberedLines.slice(toLine + 1);
 
-    const finalLines = unchangedBefore.concat(hasAllCaps).concat(unchangedAfter);
+    const finalLines = unchangedBefore
+      .concat(hasAllCaps)
+      .concat(unchangedAfter);
 
     perf.end('allcaps-lettering-metadata');
 
