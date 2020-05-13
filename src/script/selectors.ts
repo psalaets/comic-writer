@@ -94,7 +94,7 @@ const selectLocatedSpreads = wrap('selectLocatedSpreads', createSelector(
 
 export const selectSpeakers = wrap('selectSpeakers', createSelector(
   selectLocatedSpreads,
-  spreads => {
+  memoizeResult(spreads => {
     const speakers = new Set<string>();
 
     for (const spread of spreads) {
@@ -104,7 +104,18 @@ export const selectSpeakers = wrap('selectSpeakers', createSelector(
     }
 
     return [...speakers].sort();
-  }
+  }, (oldSpeakers, newSpeakers) => {
+    if (oldSpeakers == null) return false;
+    if (oldSpeakers.length !== newSpeakers.length) return false;
+
+    for (let i = 0; i < oldSpeakers.length; i++) {
+      if (oldSpeakers[i] !== newSpeakers[i]) {
+        return false;
+      }
+    }
+
+    return true;
+  })
 ));
 
 export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
