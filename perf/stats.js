@@ -8,7 +8,7 @@ export function perfStats(values) {
     // all: values
   };
 
-  console.log(stats)
+  return stats;
 }
 
 function median(values) {

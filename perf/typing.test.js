@@ -1,17 +1,21 @@
 const playwright = require('playwright');
-const perfStats = require('./stats').perfStats;
 const EditorObject = require('./editor-object').EditorObject;
 
 describe('typing performance', () => {
-  let page, browser;
+  let page, browser, editor;
 
   beforeEach(async () => {
-    const headless = true;
+    const headless = false;
     browser = await playwright.chromium.launch({ headless });
     const context = await browser.newContext();
 
     page = await context.newPage();
+
+    editor = new EditorObject(page);
+
     await page.goto('http://localhost:3000');
+    await editor.preLoadBitchPlanet();
+    await page.reload();
   });
 
   afterEach(async () => {
@@ -19,23 +23,15 @@ describe('typing performance', () => {
 
     page = null;
     browser = null;
+    editor = null;
   });
 
   test('typing into script', async () => {
-    const editor = new EditorObject(page);
-    await editor.loadBitchPlanet();
+    await editor.type('1234'.repeat(20), 5)
 
-    await editor.type('blah!'.repeat(20), 5, 10)
+    // await page.waitFor(1000);
 
-    await page.waitFor(1000);
-
-    const durations = await page.evaluate(() => {
-      return performance.getEntriesByName('change-round-trip')
-        .map(entry => entry.duration);
-    });
-
-    // await page.screenshot({path: 'screenie.png'})
-
-    perfStats(durations);
+    const stats = await editor.getStats('change-round-trip');
+    console.log(stats);
   });
 });

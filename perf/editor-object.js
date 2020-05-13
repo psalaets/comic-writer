@@ -1,4 +1,6 @@
+const path = require('path');
 const fs = require('fs');
+const perfStats = require('./stats').perfStats;
 
 export class EditorObject {
   constructor(page) {
@@ -12,10 +14,6 @@ export class EditorObject {
     }
 
     return this.contentEditableHandle;
-  }
-
-  async focus() {
-    await this.goTo(0, 0);
   }
 
   async getLine(line) {
@@ -56,20 +54,36 @@ export class EditorObject {
     await lineElement.type(text, {delay: 167});
   }
 
-  async setValue(text) {
-    await this.page.evaluate(text => window.cm.setValue(text), text);
+  async preLoadBitchPlanet() {
+    await this.preLoadScript('sample-scripts/bitch-planet-3.txt');
   }
 
-  async loadBitchPlanet() {
-    await this.loadScript('sample-scripts/bitch-planet-3.txt');
+  async preLoadTet() {
+    await this.preLoadScript('sample-scripts/tet-1.txt');
   }
 
-  async loadTet() {
-    await this.loadScript('sample-scripts/tet-1.txt');
+  async preLoadScript(repoRelativePath) {
+    const absolutePath = path.resolve(__dirname, '..', repoRelativePath);
+    const content = fs.readFileSync(absolutePath).toString('utf8');
+
+    await this.setLocalStorage('comic-writer.script', content);
   }
 
-  async loadScript(path) {
-    const content = fs.readFileSync(path).toString('utf8');
-    await this.setValue(content);
+  async setLocalStorage(key, value) {
+    await this.page.evaluate(([k, v]) => {
+      localStorage.setItem(k, v);
+    }, [key, JSON.stringify(value)]);
+  }
+
+  async getDurations(measure) {
+    return await this.page.evaluate(measure => {
+      return performance.getEntriesByName(measure)
+        .map(entry => entry.duration);
+    }, measure);
+  }
+
+  async getStats(measureName) {
+    const durations = await this.getDurations(measureName);
+    return perfStats(durations);
   }
 }
