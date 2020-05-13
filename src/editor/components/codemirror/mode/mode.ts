@@ -1,21 +1,14 @@
 import { EditorConfiguration, Mode } from 'codemirror';
-import { ComicWriterModeState } from './types';
+import { State } from './state';
 import token from './token';
 
-export default function create(config: EditorConfiguration): Mode<ComicWriterModeState> {
+export default function create(config: EditorConfiguration): Mode<State> {
   return {
     startState() {
-      return {
-        isInCaptionText: false,
-        isInDialogueText: false,
-        inLettering: false,
-        subjectDone: false,
-        allowsBoldInContent: false,
-        modifierDone: false,
-        inModifier: false,
-        contentDone: false,
-        inContent: false
-      };
+      return new State();
+    },
+    copyState(state: State) {
+      return state.copy();
     },
     indent: () => 0,
     token

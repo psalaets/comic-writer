@@ -1,27 +1,43 @@
 import { StringStream } from 'codemirror';
-import { ComicWriterModeState } from './types';
+import { State } from './state';
 
-// these values become css classes so keep them synced with theme file
+/*
+ * These values become css classes so keep them synced with theme.css file.
+ * For more info, see https://codemirror.net/doc/manual.html#modeapi
+ *
+ * These also show up in the `type` property of CodeMirror tokens.
+ * See cm.getTokenAt(), cm.getLineTokens() and cm.getTokenTypeAt() in
+ * https://codemirror.net/doc/manual.html
+ */
+
+// Token classes. These are applied to individual tokens of a line.
+// CodeMirror adds a 'cm-' prefix to these before putting them in the dom.
 const PAGE = 'page';
 const PANEL = 'panel';
 const METADATA = 'metadata';
 
-const LETTERING_SUBJECT = 'lettering-subject';
-const LETTERING_MODIFIER = 'lettering-modifier';
+export const LETTERING_SUBJECT = 'lettering-subject';
+export const LETTERING_MODIFIER = 'lettering-modifier';
 export const LETTERING_CONTENT = 'lettering-content';
 export const LETTERING_BOLD = 'lettering-bold';
 
+// Line classes. These are applied to entire lines.
+// CM removes the 'line-' prefix before putting them in the dom.
 const LETTERING_LINE = 'line-cm-lettering';
 const SFX_LINE = 'line-cm-sfx';
 const CAPTION_LINE = 'line-cm-caption';
 const DIALOGUE_LINE = 'line-cm-dialogue';
+/*
+ * End of values that become css classes
+ */
+
 
 export default function token(
   stream: StringStream,
-  state: ComicWriterModeState
+  state: State
 ): string | null {
   if (stream.sol()) {
-    resetState(state);
+    state.reset();
 
     if (stream.peek() === '\t') {
       stream.next();
@@ -140,16 +156,6 @@ export default function token(
   // advance stream past stuff that isn't styled, like plain paragraphs
   stream.skipToEnd();
   return null;
-}
-
-function resetState(state: ComicWriterModeState) {
-  state.inLettering = false;
-  state.allowsBoldInContent = false;
-  state.subjectDone = false;
-  state.modifierDone = false;
-  state.inModifier = false;
-  state.contentDone = false;
-  state.inContent = false;
 }
 
 /**

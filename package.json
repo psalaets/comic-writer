@@ -24,6 +24,7 @@
     "build": "npx react-scripts build",
     "test": "npx react-scripts test",
     "perf-test": "CI=1 npm test -- --roots perf  --testMatch \"<rootDir>/perf/*.test.js\" --testTimeout 30000",
+    "test-e2e": "testcafe chrome e2e/*",
     "lintcss": "node ./stylelint-ci.js > ./reports/cssreport.xml",
     "eject": "npx react-scripts eject",
     "plop": "npx plop"
@@ -46,6 +47,7 @@
     "stylelint": "^9.10.1",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-junit-formatter": "^0.2.2",
+    "testcafe": "^1.8.4",
     "typescript": "^3.7.3"
   },
   "homepage": "https://psalaets.gitlab.io/comic-writer",

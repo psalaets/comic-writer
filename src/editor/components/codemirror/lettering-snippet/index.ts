@@ -2,7 +2,20 @@ import * as CodeMirror from 'codemirror';
 import 'codemirror/addon/hint/show-hint';
 import 'codemirror/addon/hint/show-hint.css';
 
-const SUBJECT_PLACEHOLDER = 'subject';
+import { LetteringLine } from './lettering-line';
+
+const SUBJECT_PLACEHOLDER = 'SUBJECT';
+/**
+ * css class applied to the line when lettering snippet is active.
+ *
+ * Keep this synced with theme.css
+ */
+const LETTERING_SNIPPET_CLASS = 'lettering-snippet';
+
+type TabStop = {
+  name: string,
+  activate: () => 'skip' | void;
+};
 
 /**
  * A code-editor style snippet for creating dialogue/caption/sfx.
@@ -15,117 +28,139 @@ export function letteringSnippet(
   getCharacterNames: () => Array<string>
 ) {
   const lineNumber = cm.getCursor().line;
-  let stepIndex = -1;
-  const steps = makeSteps(getCharacterNames);
 
-  const keyMap: CodeMirror.KeyMap = {
-    Tab() {
-      next();
-    },
-    Enter() {
-      exit();
-      return CodeMirror.Pass;
-    },
-    Esc() {
-      exit();
-      return CodeMirror.Pass;
-    },
-    // auto pair parens
-    'Shift-9'(cm) {
-      const cursor = cm.getCursor();
-      cm.replaceRange('()', {
-        line: cursor.line,
-        ch: cursor.ch
-      });
-      cm.setCursor({
-        line: cursor.line,
-        ch: cursor.ch + 1
-      });
-    }
-  };
+  let tabStopIndex = 0;
+  const tabStops = makeTabStops(cm);
+  const keyMap = makeKeyMap(nextStop, previousStop, exitSnippet);
 
-  enter();
-  next();
+  enterSnippet();
+  nextStop();
+  showHint();
 
-  function enter() {
+  function enterSnippet() {
     cm.addKeyMap(keyMap);
     cm.on('cursorActivity', handleCursorActivity);
+    cm.addLineClass(lineNumber, 'text', LETTERING_SNIPPET_CLASS);
+
+    cm.replaceRange(`\t${SUBJECT_PLACEHOLDER}: content`, cm.getCursor());
   }
 
-  function next() {
-    stepIndex += 1;
-
-    const step = steps[stepIndex];
-    if (step) {
-      step(cm);
-    } else {
-      exit();
-    }
-  }
-
-  function exit() {
+  function exitSnippet() {
+    cm.removeLineClass(lineNumber, 'text', LETTERING_SNIPPET_CLASS);
     cm.off('cursorActivity', handleCursorActivity);
     cm.removeKeyMap(keyMap);
   }
 
-  function handleCursorActivity(cm: CodeMirror.Editor) {
-    // Exit if it seems like user is trying to get out of snippet
+  function previousStop() {
+    move(-1);
+  }
 
+  function nextStop() {
+    move(1);
+  }
+
+  function move(delta: number) {
+    tabStopIndex += delta;
+
+    const stop = tabStops[tabStopIndex];
+
+    if (stop) {
+      const result = stop.activate();
+
+      if (result === 'skip') {
+        move(delta);
+      }
+    } else {
+      exitSnippet();
+    }
+  }
+
+  // Exit if it seems like user is trying to get out of snippet
+  function handleCursorActivity(cm: CodeMirror.Editor) {
     // moved to different line
     if (lineNumber !== cm.getCursor().line) {
-      exit();
+      exitSnippet();
     }
 
     // moved to start of line
     if (cm.getCursor().ch === 0) {
-      exit();
+      exitSnippet();
     }
+  }
+
+  function showHint() {
+    cm.showHint({
+      hint: makeHinter(getCharacterNames()),
+      // don't auto select a single suggestion because use could be typing a
+      // new character name
+      completeSingle: false,
+    });
   }
 }
 
-function makeSteps(getCharacterNames: () => Array<string>) {
+function makeTabStops(cm: CodeMirror.Editor): Array<TabStop> {
+  function selectToken(token: CodeMirror.Token, line: number): void {
+    cm.setSelection(
+      { line, ch: token.start },
+      { line, ch: token.end }
+    );
+  }
+
   return [
-    function metadataState(cm: CodeMirror.Editor) {
-      const cursor = cm.getCursor();
-      cm.replaceRange(`\t${SUBJECT_PLACEHOLDER}: content`, cursor);
-
-      const lineText = cm.getLine(cursor.line);
-      const tabIndex = lineText.indexOf('\t');
-      const colonIndex = lineText.indexOf(':');
-
-      cm.setSelection(
-        {
-          line: cursor.line,
-          ch: tabIndex + 1
-        },
-        {
-          line: cursor.line,
-          ch: colonIndex
-        }
-      );
-
-      cm.showHint({
-        hint: makeHinter(getCharacterNames()),
-        // don't auto select a single suggestion because use could be typing a
-        // new character name
-        completeSingle: false,
-      });
+    {
+      name: 'left-sentinel',
+      activate() {
+        cm.operation(() => {
+          cm.execCommand('goLineLeft');
+        });
+      }
     },
-    function contentState(cm: CodeMirror.Editor) {
-      const cursor = cm.getCursor();
-      const lineText = cm.getLine(cursor.line);
-      const lastColonIndex = lineText.lastIndexOf(':');
+    {
+      name: 'subject',
+      activate() {
+        const cursor = cm.getCursor();
+        const line = new LetteringLine(cm.getLineTokens(cursor.line));
+        const subject = line.getSubject();
 
-      cm.setSelection(
-        {
-          line: cursor.line,
-          ch: lastColonIndex + 2
-        },
-        {
-          line: cursor.line,
-          ch: lastColonIndex + 100000
+        if (subject) {
+          selectToken(subject, cursor.line);
         }
-      );
+      }
+    },
+    {
+      name: 'modifier',
+      activate() {
+        const cursor = cm.getCursor();
+        const line = new LetteringLine(cm.getLineTokens(cursor.line));
+        const modifier = line.getModifier();
+
+        if (modifier) {
+          selectToken(modifier, cursor.line);
+        } else {
+          return 'skip';
+        }
+      }
+    },
+    {
+      name: 'content',
+      activate() {
+        const cursor = cm.getCursor();
+        const line = new LetteringLine(cm.getLineTokens(cursor.line));
+        const content = line.getContent();
+
+        if (content) {
+          selectToken(content, cursor.line);
+        }
+      }
+    },
+    {
+      name: 'right-sentinel',
+      activate() {
+        cm.operation(() => {
+          cm.execCommand('goLineRight');
+          cm.execCommand('newlineAndIndent');
+        });
+      }
     }
   ];
 }
@@ -141,8 +176,8 @@ function makeHinter(characterNames: Array<string>) {
       .concat(characterNames)
       .map(suggestion => suggestion.toLocaleUpperCase())
       .filter(suggestion => {
-        return current === SUBJECT_PLACEHOLDER.toLocaleUpperCase()
-          || suggestion.startsWith(current.toLocaleUpperCase());
+        return current === SUBJECT_PLACEHOLDER
+          || suggestion.startsWith(current);
       });
 
     return {
@@ -162,4 +197,53 @@ function makeHinter(characterNames: Array<string>) {
   hinter.supportsSelection = true;
 
   return hinter;
+}
+
+function makeKeyMap(next: () => void, prev: () => void, exit: () => void): CodeMirror.KeyMap {
+  return {
+    Tab() {
+      next();
+    },
+    'Shift-Tab'() {
+      prev();
+    },
+    Enter() {
+      exit();
+      return CodeMirror.Pass;
+    },
+    Esc() {
+      exit();
+      return CodeMirror.Pass;
+    },
+    // auto pair parens
+    'Shift-9'(cm) {
+      const cursor = cm.getCursor();
+      const line = new LetteringLine(cm.getLineTokens(cursor.line));
+
+      const subjectToken = line.getSubject();
+
+      // subject exists but there isn't already a modifier token
+      if (subjectToken && !line.hasModifierMarkersBeforeContent()) {
+        // if cursor between end of subject and colon
+        if (line.isBetweenSubjectAndContent(cursor)) {
+          const afterSubjectToken = line.getAfterSubject();
+
+          const placeholder = afterSubjectToken?.string.startsWith(' ')
+            ? '(MODIFIER)'
+            : ' (MODIFIER)';
+
+          cm.replaceRange(placeholder, {
+            line: cursor.line,
+            ch: cursor.ch
+          });
+
+          next();
+        } else {
+          return CodeMirror.Pass;
+        }
+      } else {
+        return CodeMirror.Pass;
+      }
+    }
+  };
 }

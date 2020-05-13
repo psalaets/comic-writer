@@ -17,8 +17,7 @@ type HandleTuple = {
 };
 
 /**
- * Creates an object that updates the word counts gutter in the CodeMirror
- * Editor.
+ * Creates a "plugin" that shows word counts in the Editor.
  *
  * @param cm CodeMirror Editor
  */
@@ -111,11 +110,13 @@ function hasGutter(lineInfo: any): boolean {
 
 function element(wordCount: WordCount) {
   const span = document.createElement('span');
+  span.classList.add('word-count');
 
   if (wordCount.isSpread) {
     span.classList.add('word-count--page');
   }
 
   span.textContent = String(wordCount.count);
+
   return span;
 }

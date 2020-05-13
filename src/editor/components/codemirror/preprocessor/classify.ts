@@ -3,8 +3,10 @@ import { LineClassification } from './types';
 const PAGE_EXPANSION_PATTERN = /^page *$/i;
 const PAGES_EXPANSION_PATTERN = /^pages *$/i;
 const SPREAD_EXPANSION_PATTERN = /^spread$/i;
+const PANEL_EXPANSION_PATTERN = /^panel/i;
 
-const PANEL_PATTERN = /^panel/i;
+const SINGLE_PANEL_PATTERN = /^panel +\d{1,}$/i;
+
 const SINGLE_PAGE_PATTERN = /^pages? +\d{1,}$/i;
 const PAGE_RANGE_PATTERN = /^pages? +(\d{1,})-(\d{1,})$/i;
 const PARTIAL_PAGE_RANGE_PATTERN = /^pages? \d{1,}-$/i;
@@ -23,14 +25,29 @@ const classifiablePrefixes = ['p', 'P', 's', 'S'];
  */
 export default function createClassifier(cursorLine: number, lineOffset: number) {
   return function classify(line: string, lineNumber: number): LineClassification {
-    if (!classifiablePrefixes.includes(line[0])) {
+    // Early bailout for obvious regular lines to save us from ping ponging
+    // through all the regexes below, only to find out it's a regular line.
+    if (isDefinitelyRegularLine(line)) {
       return regularLine(line);
     }
 
     const cursorOnThisLine = lineNumber + lineOffset === cursorLine;
 
-    if (PANEL_PATTERN.test(line)) {
+    /**
+     * Order matters in here for 2 reasons:
+     *
+     *   - Need to check against more specific patterns first because a more
+     *     general pattern could take all the matches.
+     *   - Matching more likely patterns first means higher chances of matching
+     *     sooner which is good for performance.
+     */
+
+    if (SINGLE_PANEL_PATTERN.test(line)) {
       return panelLine(line);
+    }
+
+    if (PANEL_EXPANSION_PATTERN.test(line)) {
+      return cursorOnThisLine ? regularLine(line) : panelLine(line);
     }
 
     if (SINGLE_PAGE_PATTERN.test(line)) {
@@ -77,6 +94,10 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
 
     return regularLine(line);
   };
+}
+
+function isDefinitelyRegularLine(line: string): boolean {
+  return !classifiablePrefixes.includes(line[0]);
 }
 
 function isValidPageRange(start: number, end: number): boolean {
