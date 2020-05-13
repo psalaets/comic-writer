@@ -61,15 +61,9 @@ export default class CodeMirrorComponent extends Component<Props> {
   }
 
   componentDidUpdate(prevProps: Props) {
-    // initial value
     const valueChanged = prevProps.value !== this.props.value;
 
     const cm = this.getCodeMirrorInstance();
-
-    // end of a "source change round trip"
-    if (valueChanged && cm.getValue()) {
-      perf.end('change-round-trip');
-    }
 
     // set initial value
     if (valueChanged && !cm.getValue()) {
@@ -157,9 +151,6 @@ export default class CodeMirrorComponent extends Component<Props> {
       if (change.origin === 'setValue' || change.origin === 'preprocessing') {
         return;
       }
-
-      // this is the start of a "source change round trip"
-      perf.start('change-round-trip');
 
       const cursor = cm.getCursor();
 
