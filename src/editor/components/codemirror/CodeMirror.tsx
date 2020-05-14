@@ -11,8 +11,6 @@ import './theme.css';
 import { EditorChangeEvent } from '../../types';
 import { PanelCount, WordCount } from '../../../script/types';
 
-import * as perf from '../../../perf';
-
 import { createPreprocessor, LinePreprocessor } from './preprocessor';
 import { MODE, THEME } from './mode';
 import {
@@ -148,12 +146,17 @@ export default class CodeMirrorComponent extends Component<Props> {
     this.cm.setSize('100%', '100%');
 
     this.cm.on('change', (cm, change) => {
+      // This event listener is only for handling user changes, so ignore
+      // changes from initial value being set and from the script preprocessor.
       if (change.origin === 'setValue' || change.origin === 'preprocessing') {
         return;
       }
 
+      // Grab cursor position *before* preprocessing because cursor might need
+      // to be put back to its original position.
       const cursor = cm.getCursor();
 
+      // preprocess script lines
       const oldLines = cm.getValue().split(/\n/);
       const newLines = this.preprocessLines(
         oldLines,
@@ -162,6 +165,7 @@ export default class CodeMirrorComponent extends Component<Props> {
         change.to.line
       );
 
+      // apply changes from preprocessor, if any
       this.getCodeMirrorInstance().operation(() => {
         let replacements = 0;
 
@@ -177,12 +181,13 @@ export default class CodeMirrorComponent extends Component<Props> {
           }
         });
 
-        // replacements may cause cursor to move so put it back
+        // Line replacements may cause cursor to move so put it back
         if (replacements > 0 && !cm.somethingSelected()) {
           cm.setCursor(cursor);
         }
       });
 
+      // Only the preprocessed script lines go to the outside world
       this.props.onChange({
         lines: newLines
       });
