@@ -5,6 +5,7 @@
 
 # testing
 /coverage
+perf/traces
 
 # production
 /build

@@ -28,12 +28,7 @@ export class EditorObject {
 
   async focusLine(line) {
     const lineElement = await this.getLine(line);
-    await lineElement.click({
-      position: {
-        x: 0,
-        y: 0
-      }
-    });
+    await lineElement.click();
 
     return lineElement;
   }
@@ -51,7 +46,7 @@ export class EditorObject {
 
   async type(text, line, character = 0) {
     const lineElement = await this.moveCursorTo(line, character);
-    await lineElement.type(text, {delay: 167});
+    await lineElement.type(text, {delay: 125});
   }
 
   async preLoadBitchPlanet() {
@@ -73,6 +68,13 @@ export class EditorObject {
     await this.page.evaluate(([k, v]) => {
       localStorage.setItem(k, v);
     }, [key, JSON.stringify(value)]);
+  }
+
+  async scrollDownBy(amount) {
+    await this.page.evaluate(y => {
+      document.querySelector('.CodeMirror-scroll')
+        .scrollTo(0, y);
+    }, amount);
   }
 
   async getDurations(measure) {
