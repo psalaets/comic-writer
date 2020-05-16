@@ -12,7 +12,7 @@
     "react-aria-modal": "^3.1.0",
     "react-dom": "^16.9.0",
     "react-redux": "^5.1.1",
-    "react-scripts": "^3.3.0",
+    "react-scripts": "^3.4.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
