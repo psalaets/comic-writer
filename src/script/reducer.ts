@@ -31,49 +31,52 @@ function reducer(state = initialState, action: ScriptActionTypes): ScriptState {
   }
 }
 
-function computeNextState(currentState: ScriptState, lines: LineStream): ScriptState {
-  const preSpread = lines.consumeUntilSpreadStart();
-  const incomingChunks = lines.consumeAllSpreads();
-
-  const currentChunks = currentState.spreads;
-  const nextChunks: Array<RawSpreadChunk> = [];
-
-  for (let i = 0; i < Math.max(currentChunks.length, incomingChunks.length); i++) {
-    const updated = updateChunk(currentChunks[i], incomingChunks[i]);
-
-    if (updated != null) {
-      nextChunks.push(updated);
-    }
-  }
+function computeNextState(current: ScriptState, lines: LineStream): ScriptState {
+  const incomingPreSpread = lines.consumeUntilSpreadStart();
+  const incomingSpreads = lines.consumeAllSpreads();
 
   return {
-    ...currentState,
-    preSpread: updatePreSpread(currentState.preSpread, preSpread),
-    spreads: nextChunks,
+    ...current,
+    preSpread: computeNextPreSpread(current.preSpread, incomingPreSpread),
+    spreads: computeNextSpreads(current.spreads, incomingSpreads),
     source: lines.toString()
   };
 }
 
-function updatePreSpread(oldLines: Array<string>, newLines: Array<string>): Array<string> {
-  return allLinesEqual(oldLines, newLines)
-    ? oldLines
-    : newLines;
+function computeNextPreSpread(current: Array<string>, incoming: Array<string>): Array<string> {
+  return allLinesEqual(current, incoming)
+    ? current
+    : incoming;
 }
 
-function updateChunk(
-  currentChunk: RawSpreadChunk,
-  incomingChunk: RawSpreadChunk
-): RawSpreadChunk | null {
-  if (currentChunk == null) return incomingChunk;
-  if (incomingChunk == null) return null;
+function computeNextSpreads(current: Array<RawSpreadChunk>, incoming: Array<RawSpreadChunk>): Array<RawSpreadChunk> {
+  const nextSpreads: Array<RawSpreadChunk> = [];
 
-  if (currentChunk.spread !== incomingChunk.spread) {
-    return incomingChunk;
+  for (let i = 0; i < Math.max(current.length, incoming.length); i++) {
+    const nextSpread = pickNextSpread(current[i], incoming[i]);
+
+    if (nextSpread != null) {
+      nextSpreads.push(nextSpread);
+    }
   }
 
-  return allLinesEqual(currentChunk.children, incomingChunk.children)
-    ? currentChunk
-    : incomingChunk;
+  return nextSpreads;
+}
+
+function pickNextSpread(
+  current: RawSpreadChunk,
+  incoming: RawSpreadChunk
+): RawSpreadChunk | null {
+  if (current == null) return incoming;
+  if (incoming == null) return null;
+
+  if (current.spread !== incoming.spread) {
+    return incoming;
+  }
+
+  return allLinesEqual(current.children, incoming.children)
+    ? current
+    : incoming;
 }
 
 function allLinesEqual(oldLines: Array<string>, newLines: Array<string>): boolean {
