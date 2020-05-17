@@ -34,11 +34,10 @@ export function createPreprocessor(): LinePreprocessor {
     const changedLines = lines.slice(unchangedClassifications.length);
 
     const changedClassifications = changedLines
-      .map(createClassifier(cursorLine, fromLine));
+      .map(createClassifier(cursorLine, unchangedClassifications.length));
 
-    const allClassifications
-      = lastClassifications
-      = unchangedClassifications.concat(changedClassifications);
+    const allClassifications = unchangedClassifications.concat(changedClassifications);
+    lastClassifications = allClassifications;
 
     perf.end('classify-lines');
     perf.start('number-lines');

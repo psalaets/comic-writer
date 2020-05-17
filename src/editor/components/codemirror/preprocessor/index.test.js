@@ -13,6 +13,18 @@ describe('preprocessLines', () => {
       ]);
     });
 
+    it('page with cursor on the line is not changed', () => {
+      const input = ['Page 1', 'page '];
+
+      const preprocessLines = createPreprocessor();
+      const result = preprocessLines(input, 1, 1, 1);
+
+      expect(result).toEqual([
+        'Page 1',
+        "page ",
+      ]);
+    });
+
     it('adding page at start', () => {
       const input = [
         'page',
