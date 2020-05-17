@@ -11,6 +11,8 @@ import './theme.css';
 import { EditorChangeEvent } from '../../types';
 import { PanelCount, WordCount } from '../../../script/types';
 
+import * as perf from '../../../perf';
+
 import { createPreprocessor, LinePreprocessor } from './preprocessor';
 import { MODE, THEME } from './mode';
 import {
@@ -171,6 +173,8 @@ export default class CodeMirrorComponent extends Component<Props> {
         change.to.line
       );
 
+      perf.start('apply-preprocessing-changes');
+
       // apply changes from preprocessor, if any
       this.getCodeMirrorInstance().operation(() => {
         let replacements = 0;
@@ -192,6 +196,8 @@ export default class CodeMirrorComponent extends Component<Props> {
           cm.setCursor(cursor);
         }
       });
+
+      perf.end('apply-preprocessing-changes');
 
       // Only the preprocessed script lines go to the outside world
       this.emitChange(newLines);
