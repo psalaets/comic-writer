@@ -67,18 +67,17 @@ describe('typing performance', () => {
   test('toggle page at top of script', async () => {
     await page.tracing.start(traceOptions('toggle-page-at-top-of-script.json'));
 
+    // move down a bit to guarantee this happens on a blank line
     await editor.pressEnter(0);
     await editor.pressEnter(1);
 
-    await editor.type('page', 2);
+    await editor.type('page 1', 2);
 
     for (let i = 0; i < 15; i++) {
-      await editor.pressEnter(2);
-      await sleep(125);
-      await editor.pressBackspace(3);
       await sleep(125);
       await editor.pressBackspace(2);
       await sleep(125);
+      await editor.type('1', 2);
     }
 
     await page.tracing.stop();
