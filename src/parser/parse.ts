@@ -1,3 +1,4 @@
+import * as perf from '../perf';
 import * as parts from '../comic-part-types';
 import countWords from './count-words';
 import * as classifiers from './line-classifiers';
@@ -33,7 +34,7 @@ const BLANK_LINE: BlankLine = {
   type: parts.BLANK
 };
 
-export function parseRawSpreadChunk(chunk: RawSpreadChunk): ParsedSpreadChunk {
+export const parseRawSpreadChunk = perf.wrap('parseRawSpreadChunk', function parseRawSpreadChunk(chunk: RawSpreadChunk): ParsedSpreadChunk {
   const spreadLine = chunk.spread;
   const childLines = chunk.children;
 
@@ -44,7 +45,7 @@ export function parseRawSpreadChunk(chunk: RawSpreadChunk): ParsedSpreadChunk {
     spread,
     children
   };
-}
+});
 
 function spreadRollups(spread: Spread, children: Array<SpreadChild>): Spread {
   return children.reduce((spread, child) => {
