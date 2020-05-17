@@ -1,5 +1,8 @@
 import { Editor, LineHandle } from 'codemirror';
+import * as perf from '../../../../perf';
+
 import { WordCount } from '../../../../script/types';
+
 export const ID = 'word-counts';
 
 type HandleTuple = {
@@ -23,7 +26,7 @@ type HandleTuple = {
  */
 export function create(cm: Editor) {
   return {
-    update: createUpdater(cm)
+    update: perf.wrap('update-word-counts', createUpdater(cm))
   };
 }
 
