@@ -60,7 +60,34 @@ describe('typing performance', () => {
 
     await page.tracing.stop();
   });
+
+  // Based on how the parser works right now, I think this is the worst case
+  // edit (aside from pasting an entirely new script). It causes all pages to be
+  // re-numbered which means all pages need to be re-parsed.
+  test('toggle page at top of script', async () => {
+    await page.tracing.start(traceOptions('toggle-page-at-top-of-script.json'));
+
+    await editor.pressEnter(0);
+    await editor.pressEnter(1);
+
+    await editor.type('page', 2);
+
+    for (let i = 0; i < 15; i++) {
+      await editor.pressEnter(2);
+      await sleep(125);
+      await editor.pressBackspace(3);
+      await sleep(125);
+      await editor.pressBackspace(2);
+      await sleep(125);
+    }
+
+    await page.tracing.stop();
+  });
 });
+
+function sleep(millis) {
+  return new Promise(resolve => setTimeout(resolve, millis));
+}
 
 function ensureTraceDirectory() {
   if (!fs.existsSync(traceDirectory())) {

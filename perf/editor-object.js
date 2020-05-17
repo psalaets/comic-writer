@@ -49,6 +49,19 @@ export class EditorObject {
     await lineElement.type(text, {delay: 125});
   }
 
+  async pressEnter(line, character) {
+    await this.press('Enter', line, character);
+  }
+
+  async pressBackspace(line, character) {
+    await this.press('Backspace', line, character);
+  }
+
+  async press(key, line, character = 0) {
+    const lineElement = await this.moveCursorTo(line, character);
+    await lineElement.press(key);
+  }
+
   async preLoadBitchPlanet() {
     await this.preLoadScript('sample-scripts/bitch-planet-3.txt');
   }
