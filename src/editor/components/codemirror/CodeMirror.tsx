@@ -152,12 +152,18 @@ export default class CodeMirrorComponent extends Component<Props> {
         return;
       }
 
+      const oldLines = cm.getValue().split(/\n/);
+
+      if (change.origin === 'undo' || change.origin === 'redo') {
+        this.emitChange(oldLines);
+        return;
+      }
+
       // Grab cursor position *before* preprocessing because cursor might need
       // to be put back to its original position.
       const cursor = cm.getCursor();
 
       // preprocess script lines
-      const oldLines = cm.getValue().split(/\n/);
       const newLines = this.preprocessLines(
         oldLines,
         cursor.line,
@@ -188,13 +194,17 @@ export default class CodeMirrorComponent extends Component<Props> {
       });
 
       // Only the preprocessed script lines go to the outside world
-      this.props.onChange({
-        lines: newLines
-      });
+      this.emitChange(newLines);
     });
 
     this.wordCounts = createWordCounts(this.cm);
     this.panelCounts = createPanelCounts(this.cm);
+  }
+
+  emitChange(lines: Array<string>): void {
+    this.props.onChange({
+      lines
+    });
   }
 
   getCharacterNames(): Array<string> {
