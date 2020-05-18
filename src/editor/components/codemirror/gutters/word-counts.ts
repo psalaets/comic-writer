@@ -5,7 +5,7 @@ import { WordCount } from '../../../../script/types';
 
 export const ID = 'word-counts';
 
-type HandleTuple = {
+type GutterCount = {
   /**
    * The CodeMirror handle to the relevant line.
    *
@@ -31,14 +31,14 @@ export function create(cm: Editor) {
 }
 
 function createUpdater(cm: Editor) {
-  /** Lines (w/metadata) that had word count gutters in the last pass */
-  let existingHandles: Array<HandleTuple> = [];
+  /** Word count gutters from the last pass */
+  let existingCounts: Array<GutterCount> = [];
 
   return function updateWordCounts(wordCounts: Array<WordCount>, prevCounts: Array<WordCount>) {
     cm.operation(() => {
-      /** Lines (w/metadata) that have word count gutters in this pass */
-      const newHandles: Array<HandleTuple> = [];
-      /** One-based line numbers that have been updated on this pass */
+      /** Word count gutters in current pass */
+      const currentCounts: Array<GutterCount> = [];
+      /** Zero-based line numbers that have been updated in current pass */
       const updatedLines = new Set<number>();
 
       const wordCountsByLineNumber = wordCounts.reduce((byLine, wordCount) => {
@@ -48,9 +48,9 @@ function createUpdater(cm: Editor) {
 
       // Look at all lines that had gutters on the last pass, and see if the
       // gutter should be updated, left alone or removed.
-      existingHandles
-        .forEach(tuple => {
-          const lineInfo = cm.lineInfo(tuple.handle);
+      existingCounts
+        .forEach(count => {
+          const lineInfo = cm.lineInfo(count.handle);
 
           // Line was deleted, there's no gutter to care about
           if (!lineInfo) return;
@@ -63,14 +63,14 @@ function createUpdater(cm: Editor) {
             updatedLines.add(wordCount.lineNumber);
 
             // count changed so we actually need to update the gutter
-            if (different(wordCount, tuple.wordCount)) {
-              newHandles.push({
+            if (different(wordCount, count.wordCount)) {
+              currentCounts.push({
                 handle: cm.setGutterMarker(lineInfo.line, ID, element(wordCount)),
                 wordCount
               });
             } else {
               // count didn't change, gutter should remain as-is
-              newHandles.push(tuple);
+              currentCounts.push(count);
             }
           } else { // count should be removed
             if (hasGutter(lineInfo)) {
@@ -87,14 +87,14 @@ function createUpdater(cm: Editor) {
         .filter(wordCount => !updatedLines.has(wordCount.lineNumber))
         // show the count
         .forEach(wordCount => {
-          newHandles.push({
+          currentCounts.push({
             handle: cm.setGutterMarker(wordCount.lineNumber, ID, element(wordCount)),
             wordCount
           });
         });
 
-      // all count on this pass will become the "old counts" for next pass
-      existingHandles = newHandles;
+      // all counts on this pass will become the "old counts" for next pass
+      existingCounts = currentCounts;
     });
   };
 }
