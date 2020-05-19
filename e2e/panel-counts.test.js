@@ -93,3 +93,27 @@ test('panel counts are per page', async t => {
 
   await t.expect(panelCount.textContent).eql('(2 panels)');
 });
+
+test('panel count goes away when its page line is no longer a page', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // move back to top line
+    .pressKey('up')
+    .pressKey('up')
+    // move over to after last char
+    .pressKey('right')
+    .pressKey('right')
+    .pressKey('right')
+    .pressKey('right')
+    .pressKey('right')
+    .pressKey('right')
+    // delete page number which makes that line no longer a page
+    .pressKey('backspace')
+
+  const panelCount = selectors.panelCount(0);
+
+  await t.expect(panelCount.exists).notOk();
+});
