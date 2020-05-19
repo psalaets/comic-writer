@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-
+import debounce from 'lodash/debounce';
 import CodeMirror from 'codemirror';
+
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/addon/scroll/scrollpastend';
 
@@ -154,18 +155,12 @@ export default class CodeMirrorComponent extends Component<Props> {
         return;
       }
 
-      const oldLines = cm.getValue().split(/\n/);
-
-      if (change.origin === 'undo' || change.origin === 'redo') {
-        this.emitChange(oldLines);
-        return;
-      }
-
       // Grab cursor position *before* preprocessing because cursor might need
       // to be put back to its original position.
       const cursor = cm.getCursor();
 
       // preprocess script lines
+      const oldLines = cm.getValue().split(/\n/);
       const newLines = this.preprocessLines(
         oldLines,
         cursor.line,
@@ -173,14 +168,28 @@ export default class CodeMirrorComponent extends Component<Props> {
         change.to.line
       );
 
+      // Even though this doesn't use newLines, this bailout needs to be after
+      // the preprocessor has seen the oldLines because the preprocessor is
+      // stateful. If it doesnt see every change, the next time it runs things
+      // will be weird.
+      if (change.origin === 'undo' || change.origin === 'redo') {
+        this.emitUndoRedoChange(oldLines);
+        return;
+      }
+
       perf.start('apply-preprocessing-changes');
 
       // apply changes from preprocessor, if any
       this.getCodeMirrorInstance().operation(() => {
         let replacements = 0;
 
-        newLines.forEach((newLine, index) => {
+        // Apply changes from the bottom up to make things work nicer with the
+        // weird way we replaceRange many times and debounce undo/redo changes.
+        const length = Math.max(oldLines.length, newLines.length);
+        for (let index = length - 1; index >= 0; index--) {
+          const newLine = newLines[index] || '';
           const oldLine = oldLines[index] || '';
+
           if (newLine !== oldLine) {
             replacements += 1;
 
@@ -189,7 +198,7 @@ export default class CodeMirrorComponent extends Component<Props> {
 
             cm.replaceRange(newLine, from, to, 'preprocessing');
           }
-        });
+        }
 
         // Line replacements may cause cursor to move so put it back
         if (replacements > 0 && !cm.somethingSelected()) {
@@ -206,6 +215,19 @@ export default class CodeMirrorComponent extends Component<Props> {
     this.wordCounts = createWordCounts(this.cm);
     this.panelCounts = createPanelCounts(this.cm);
   }
+
+  /*
+  Since updates are actually an operation containing n updates
+  (1 update per line), a single undo will trigger n change events from CM.
+  So undo and redo changes use this special method to prevent change spam
+  hitting the reducers/selectors.
+
+  Since undo/redo is relatively rare, this isn't 100% vital. If it causes
+  issues later it can probably be removed without too much harm.
+  */
+  emitUndoRedoChange = debounce(lines => {
+    this.emitChange(lines);
+  }, 100);
 
   emitChange(lines: Array<string>): void {
     this.props.onChange({

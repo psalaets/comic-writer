@@ -116,27 +116,3 @@ test('insert page range between existing single pages', async t => {
     ''
   ]);
 });
-
-// This is an random bug I came across when testing something else
-test('delete page number after first load', async t => {
-  await t
-    .typeText(selectors.editorContent(), 'page')
-    .pressKey('enter')
-    .typeText(selectors.editorContent(), 'page')
-    .pressKey('enter')
-    // wait for value to be stored in localstorage
-    .wait(1000)
-
-  await t.eval(() => location.reload(true))
-
-  await t
-    .wait(1000)
-    .click(selectors.editorContent())
-    .pressKey('backspace')
-
-  await t.expect(await editorLines()).eql([
-    'Page 1',
-    'Page ',
-    ''
-  ]);
-});
