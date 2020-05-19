@@ -2,6 +2,7 @@ import { Editor, LineHandle } from 'codemirror';
 import * as perf from '../../../../perf';
 
 import { WordCount } from '../../../../script/types';
+import { LineInfo } from '../types';
 
 export const ID = 'word-counts';
 
@@ -10,7 +11,7 @@ type GutterCount = {
    * The CodeMirror handle to the relevant line.
    *
    * Always use this to look up the line from an Editor. Looking up by line
-   * number seems good but it breaks once the line has moved.
+   * number *seems* good but it breaks once the line has moved.
    */
   handle: LineHandle,
   /**
@@ -32,13 +33,13 @@ export function create(cm: Editor) {
 
 function createUpdater(cm: Editor) {
   /** Word count gutters from the last pass */
-  let existingCounts: Array<GutterCount> = [];
+  let previousCounts: Array<GutterCount> = [];
 
   return function updateWordCounts(wordCounts: Array<WordCount>, prevCounts: Array<WordCount>) {
     cm.operation(() => {
-      /** Word count gutters in current pass */
-      const currentCounts: Array<GutterCount> = [];
-      /** Zero-based line numbers that have been updated in current pass */
+      /** Word count gutters in this pass */
+      const nextCounts: Array<GutterCount> = [];
+      /** Zero-based line numbers that have been updated in this pass */
       const updatedLines = new Set<number>();
 
       const wordCountsByLineNumber = wordCounts.reduce((byLine, wordCount) => {
@@ -48,9 +49,9 @@ function createUpdater(cm: Editor) {
 
       // Look at all lines that had gutters on the last pass, and see if the
       // gutter should be updated, left alone or removed.
-      existingCounts
-        .forEach(count => {
-          const lineInfo = cm.lineInfo(count.handle);
+      previousCounts
+        .forEach(previousCount => {
+          const lineInfo = cm.lineInfo(previousCount.handle) as LineInfo;
 
           // Line was deleted, there's no gutter to care about
           if (!lineInfo) return;
@@ -63,14 +64,14 @@ function createUpdater(cm: Editor) {
             updatedLines.add(wordCount.lineNumber);
 
             // count changed so we actually need to update the gutter
-            if (different(wordCount, count.wordCount)) {
-              currentCounts.push({
-                handle: cm.setGutterMarker(lineInfo.line, ID, element(wordCount)),
+            if (isDifferent(wordCount, previousCount.wordCount)) {
+              nextCounts.push({
+                handle: cm.setGutterMarker(lineInfo.line, ID, makeGutterElement(wordCount)),
                 wordCount
               });
             } else {
               // count didn't change, gutter should remain as-is
-              currentCounts.push(count);
+              nextCounts.push(previousCount);
             }
           } else { // count should be removed
             if (hasGutter(lineInfo)) {
@@ -85,21 +86,20 @@ function createUpdater(cm: Editor) {
         .filter(wordCount => shouldHaveGutter(wordCount))
         // ignore counts that were updated above
         .filter(wordCount => !updatedLines.has(wordCount.lineNumber))
-        // show the count
         .forEach(wordCount => {
-          currentCounts.push({
-            handle: cm.setGutterMarker(wordCount.lineNumber, ID, element(wordCount)),
+          nextCounts.push({
+            handle: cm.setGutterMarker(wordCount.lineNumber, ID, makeGutterElement(wordCount)),
             wordCount
           });
         });
 
       // all counts on this pass will become the "old counts" for next pass
-      existingCounts = currentCounts;
+      previousCounts = nextCounts;
     });
   };
 }
 
-function different(countA: WordCount, countB: WordCount): boolean {
+function isDifferent(countA: WordCount, countB: WordCount): boolean {
   return countA.count !== countB.count || countA.isSpread !== countB.isSpread;
 }
 
@@ -107,11 +107,11 @@ function shouldHaveGutter(wordCount: WordCount): boolean {
   return wordCount != null && wordCount.count > 0;
 }
 
-function hasGutter(lineInfo: any): boolean {
+function hasGutter(lineInfo: LineInfo): boolean {
   return lineInfo.gutterMarkers != null && lineInfo.gutterMarkers[ID] != null;
 }
 
-function element(wordCount: WordCount) {
+function makeGutterElement(wordCount: WordCount) {
   const span = document.createElement('span');
   span.classList.add('word-count');
 
