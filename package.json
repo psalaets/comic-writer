@@ -39,6 +39,7 @@
     "@types/react-dom": "^16.9.4",
     "@types/react-redux": "^7.1.7",
     "fibers": "^4.0.2",
+    "make-dir": "^3.1.0",
     "node-sass": "^4.14.1",
     "plop": "^2.4.0",
     "puppeteer": "^3.0.4",
@@ -48,6 +49,7 @@
     "stylelint-config-standard": "^18.3.0",
     "stylelint-junit-formatter": "^0.2.2",
     "testcafe": "^1.8.4",
+    "tracelib": "^1.0.1",
     "typescript": "^3.7.3"
   },
   "homepage": "https://psalaets.gitlab.io/comic-writer",

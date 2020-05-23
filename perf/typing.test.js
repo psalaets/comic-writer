@@ -1,13 +1,27 @@
-
-const path = require('path');
-const fs = require('fs');
 const puppeteer = require('puppeteer');
+
+const createReporter = require('./reporter').create;
 const EditorObject = require('./editor-object').EditorObject;
 
 describe('typing performance', () => {
   let page, browser, editor;
+  let reporter;
 
-  beforeAll(() => ensureTraceDirectory());
+  beforeAll(() => {
+    reporter = createReporter();
+  });
+
+  afterAll(()=> {
+    console.log('about to finalize');
+    try {
+      reporter.finalize();
+    }
+    catch(e) {
+      console.error(e);
+
+    }
+    console.log('finished finalize');
+  });
 
   beforeEach(async () => {
     browser = await puppeteer.launch({ headless: true });
@@ -33,39 +47,39 @@ describe('typing performance', () => {
     editor = null;
   });
 
-  test('typing top of script', async () => {
-    await page.tracing.start(traceOptions('typing-at-top-of-script.json'));
+  // test('typing top of script', async () => {
+  //   await page.tracing.start(traceOptions(reporter.addTest('typing-at-top-of-script')));
 
-    await editor.type('abc '.repeat(15), 0);
+  //   await editor.type('abc '.repeat(15), 0);
 
-    await page.tracing.stop();
-  });
+  //   await page.tracing.stop();
+  // });
 
-  test('typing lettering words', async () => {
-    await page.tracing.start(traceOptions('typing-in-caption.json'));
+  // test('typing lettering words', async () => {
+  //   await page.tracing.start(traceOptions(reporter.addTest('typing-in-caption')));
 
-    await editor.scrollDownBy(3200);
+  //   await editor.scrollDownBy(3200);
 
-    await editor.type('abc '.repeat(15), 1);
+  //   await editor.type('abc '.repeat(15), 1);
 
-    await page.tracing.stop();
-  });
+  //   await page.tracing.stop();
+  // });
 
-  test('typing panel description words', async () => {
-    await page.tracing.start(traceOptions('typing-in-panel-description.json'));
+  // test('typing panel description words', async () => {
+  //   await page.tracing.start(traceOptions(reporter.addTest('typing-in-panel-description')));
 
-    await editor.scrollDownBy(2900);
+  //   await editor.scrollDownBy(2900);
 
-    await editor.type('abc '.repeat(15), 1);
+  //   await editor.type('abc '.repeat(15), 1);
 
-    await page.tracing.stop();
-  });
+  //   await page.tracing.stop();
+  // });
 
   // Based on how the parser works right now, I think this is the worst case
   // edit (aside from pasting an entirely new script). It causes all pages to be
   // re-numbered which means all pages need to be re-parsed.
   test('toggle page at top of script', async () => {
-    await page.tracing.start(traceOptions('toggle-page-at-top-of-script.json'));
+    await page.tracing.start(traceOptions(reporter.addTest('toggle-page-at-top-of-script')));
 
     // move down a bit to guarantee this happens on a blank line
     await editor.pressEnter(0);
@@ -88,19 +102,9 @@ function sleep(millis) {
   return new Promise(resolve => setTimeout(resolve, millis));
 }
 
-function ensureTraceDirectory() {
-  if (!fs.existsSync(traceDirectory())) {
-    fs.mkdirSync(traceDirectory());
-  }
-}
-
-function traceOptions(traceFile) {
+function traceOptions(tracePath) {
   return {
-    path: path.resolve(traceDirectory(), traceFile),
+    path: tracePath,
     screenshots: false,
   };
-}
-
-function traceDirectory() {
-  return path.resolve(__dirname, 'traces');
 }
