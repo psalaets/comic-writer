@@ -12,15 +12,12 @@ describe('typing performance', () => {
   });
 
   afterAll(()=> {
-    console.log('about to finalize');
     try {
       reporter.finalize();
     }
     catch(e) {
       console.error(e);
-
     }
-    console.log('finished finalize');
   });
 
   beforeEach(async () => {
@@ -47,33 +44,33 @@ describe('typing performance', () => {
     editor = null;
   });
 
-  // test('typing top of script', async () => {
-  //   await page.tracing.start(traceOptions(reporter.addTest('typing-at-top-of-script')));
+  test('typing top of script', async () => {
+    await page.tracing.start(traceOptions(reporter.addTest('typing-at-top-of-script')));
 
-  //   await editor.type('abc '.repeat(15), 0);
+    await editor.type('abc '.repeat(15), 0);
 
-  //   await page.tracing.stop();
-  // });
+    await page.tracing.stop();
+  });
 
-  // test('typing lettering words', async () => {
-  //   await page.tracing.start(traceOptions(reporter.addTest('typing-in-caption')));
+  test('typing lettering words', async () => {
+    await page.tracing.start(traceOptions(reporter.addTest('typing-in-caption')));
 
-  //   await editor.scrollDownBy(3200);
+    await editor.scrollDownBy(3200);
 
-  //   await editor.type('abc '.repeat(15), 1);
+    await editor.type('abc '.repeat(15), 1);
 
-  //   await page.tracing.stop();
-  // });
+    await page.tracing.stop();
+  });
 
-  // test('typing panel description words', async () => {
-  //   await page.tracing.start(traceOptions(reporter.addTest('typing-in-panel-description')));
+  test('typing panel description words', async () => {
+    await page.tracing.start(traceOptions(reporter.addTest('typing-in-panel-description')));
 
-  //   await editor.scrollDownBy(2900);
+    await editor.scrollDownBy(2900);
 
-  //   await editor.type('abc '.repeat(15), 1);
+    await editor.type('abc '.repeat(15), 1);
 
-  //   await page.tracing.stop();
-  // });
+    await page.tracing.stop();
+  });
 
   // Based on how the parser works right now, I think this is the worst case
   // edit (aside from pasting an entirely new script). It causes all pages to be

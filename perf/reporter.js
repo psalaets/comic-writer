@@ -1,5 +1,7 @@
+const calcStats = require('./calc-stats').calcStats;
 const Tracelib = require('tracelib').default;
 const path = require('path');
+const fs = require('fs');
 const mkdirp = require('make-dir');
 
 module.exports.create = create;
@@ -32,13 +34,24 @@ function create() {
       return path.resolve(traceDir, 'trace.json');
     },
     finalize() {
-      const data = require(path.resolve(traceDirs[0], 'trace.json'))
-      const measures = extractUserTimingMeasures(data);
+      for (const traceDir of traceDirs) {
+        const data = require(path.resolve(traceDir, 'trace.json'));
+        const tracelib = new Tracelib(data.traceEvents);
 
-      console.log(measures);
+        const statsByMeasure = extractStatsByMeasure(tracelib);
+        const frameStats = extractFrameStats(tracelib);
+
+        const testStats = {
+          measures: statsByMeasure,
+          frames: frameStats
+        };
+
+        const json = JSON.stringify(testStats, null, 2);
+        fs.writeFileSync(path.resolve(traceDir, 'stats.json'), json);
+      }
 
 
-      // for every test that was added
+
       // extract from its trace.json:
       //   - frame durations
       //   - user timing api measures
@@ -53,13 +66,49 @@ function create() {
 
 /**
  *
- * @param {???} traceData Value parsed out of trace.json
+ * @param {Tracelib} tracelib Tracelib instance
  */
-function extractUserTimingMeasures(traceData) {
-  const tasks = new Tracelib(traceData.traceEvents);
-  return tasks.getMainTrackEvents()
+function extractStatsByMeasure(tracelib) {
+  const durationsByMeasure = extractDurationsByMeasure(tracelib);
+
+  return Object.entries(durationsByMeasure)
+    .map(([measure, durations]) => {
+      return {
+        measure,
+        stats: calcStats(durations)
+      }
+    });
+}
+
+function extractDurationsByMeasure(tracelib) {
+  return tracelib.getMainTrackEvents()
     // just the user timing events
     .filter(event => event.categoriesString === 'blink.user_timing')
     // only events with a duration, which are the performance.measure() events
-    .filter(event => 'duration' in event);
+    .filter(event => 'duration' in event)
+    // group durations by measure name
+    .reduce((byMeasure, event) => {
+      const measure = event.name;
+      byMeasure[measure] = byMeasure[measure] || [];
+      byMeasure[measure].push(event.duration);
+      return byMeasure;
+    }, {});
+}
+
+function extractFrameStats(tracelib) {
+  const times = tracelib.getFPS().times;
+  const durations = [];
+
+  // every 2 times is a single duration
+  for (let i = 0; i < times.length; i += 2) {
+    const start = times[i];
+    const end = times[i + 1];
+
+    // TODO figure out why there are sometimes an odd number of times
+    if (start != null && end != null) {
+      durations.push(end - start);
+    }
+  }
+
+  return calcStats(durations);
 }

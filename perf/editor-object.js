@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const perfStats = require('./stats').perfStats;
 
 export class EditorObject {
   constructor(page) {
@@ -88,17 +87,5 @@ export class EditorObject {
       document.querySelector('.CodeMirror-scroll')
         .scrollTo(0, y);
     }, amount);
-  }
-
-  async getDurations(measure) {
-    return await this.page.evaluate(measure => {
-      return performance.getEntriesByName(measure)
-        .map(entry => entry.duration);
-    }, measure);
-  }
-
-  async getStats(measureName) {
-    const durations = await this.getDurations(measureName);
-    return perfStats(durations);
   }
 }

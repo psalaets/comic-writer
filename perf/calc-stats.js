@@ -1,5 +1,5 @@
-export function perfStats(values) {
-  const stats = {
+module.exports.calcStats = function calcStats(values) {
+  return {
     count: values.length,
     min: Math.min(...values),
     max: Math.max(...values),
@@ -7,8 +7,6 @@ export function perfStats(values) {
     median: median(values),
     // all: values
   };
-
-  return stats;
 }
 
 function median(values) {
