@@ -8,58 +8,68 @@ module.exports.create = create;
 
 function create() {
   const now = new Date();
-  const datetimeStamp = [
-    now.getFullYear(),
-    String(now.getMonth() + 1).padStart(2, '0'),
-    String(now.getDate()).padStart(2, '0'),
-    '-',
-    String(now.getHours()).padStart(2, '0'),
-    String(now.getMinutes()).padStart(2, '0'),
-    String(now.getSeconds()).padStart(2, '0'),
-  ].join('');
-
   const baseDir = path.resolve(__dirname, 'reports');
-  const traceDirs = [];
+  const tests = [];
 
   return {
     initialize() {
 
     },
     addTest(testName) {
-      const traceDir = path.resolve(baseDir, testName, datetimeStamp);
+      const testDir = path.resolve(baseDir, testName);
+      const traceDir = path.resolve(testDir, timestampForPath(now));
       mkdirp.sync(traceDir);
 
-      traceDirs.push(traceDir);
+      tests.push({
+        name: testName,
+        traceDirectory: traceDir,
+        testDirectory: testDir
+      });
 
       return path.resolve(traceDir, 'trace.json');
     },
     finalize() {
-      for (const traceDir of traceDirs) {
-        const data = require(path.resolve(traceDir, 'trace.json'));
+
+
+      for (const test of tests) {
+        const data = require(path.resolve(test.traceDirectory, 'trace.json'));
         const tracelib = new Tracelib(data.traceEvents);
+        const stats = extractStats(tracelib);
 
-        const statsByMeasure = extractStatsByMeasure(tracelib);
-        const frameStats = extractFrameStats(tracelib);
+        const historyPath = path.resolve(test.testDirectory, 'history.json');
+        if (!fs.existsSync(historyPath)) {
+          fs.writeFileSync(historyPath, JSON.stringify([]));
+        }
 
-        const testStats = {
-          measures: statsByMeasure,
-          frames: frameStats
-        };
+        const allHistory = require(historyPath);
 
-        const json = JSON.stringify(testStats, null, 2);
-        fs.writeFileSync(path.resolve(traceDir, 'stats.json'), json);
+        for (const statObj of stats) {
+          const existing = allHistory.find(entry => entry.label === statObj.label);
+
+          if (!existing) {
+            allHistory.push({
+              label: statObj.label,
+              history: [
+                {
+                  ...statObj.stats,
+                  medianDelta: null,
+                  date: timestampForHuman(now)
+                }
+              ]
+            });
+          } else {
+            existing.history.unshift({
+              ...statObj.stats,
+              date: timestampForHuman(now),
+              medianDelta: statObj.stats.median - existing.history[0].median
+            });
+          }
+        }
+
+        fs.writeFileSync(historyPath, JSON.stringify(allHistory, null, 2));
+
+        // create html file here?
       }
-
-
-
-      // extract from its trace.json:
-      //   - frame durations
-      //   - user timing api measures
-      // use perf-stats thing to get count, min, max, mean, median
-      // store that in a stats.json for each test
-      // then combine those into an aggregate-stats.json for each test type (outside of date dirs)
-      // ascii table showing delta?
-      // generate an index.html with a table?
     }
   };
 }
@@ -68,16 +78,21 @@ function create() {
  *
  * @param {Tracelib} tracelib Tracelib instance
  */
-function extractStatsByMeasure(tracelib) {
+function extractStats(tracelib) {
   const durationsByMeasure = extractDurationsByMeasure(tracelib);
+  const frameStats = extractFrameStats(tracelib);
 
   return Object.entries(durationsByMeasure)
     .map(([measure, durations]) => {
       return {
-        measure,
+        label: measure,
         stats: calcStats(durations)
       }
-    });
+    })
+    .concat({
+      label: '_frameDurations',
+      stats: frameStats
+    })
 }
 
 function extractDurationsByMeasure(tracelib) {
@@ -111,4 +126,32 @@ function extractFrameStats(tracelib) {
   }
 
   return calcStats(durations);
+}
+
+function timestampForPath(date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0'),
+    '-',
+    String(date.getHours()).padStart(2, '0'),
+    String(date.getMinutes()).padStart(2, '0'),
+    String(date.getSeconds()).padStart(2, '0'),
+  ].join('');
+}
+
+function timestampForHuman(date) {
+  return [
+    date.getFullYear(),
+    '-',
+    String(date.getMonth() + 1).padStart(2, '0'),
+    '-',
+    String(date.getDate()).padStart(2, '0'),
+    ' ',
+    String(date.getHours()).padStart(2, '0'),
+    ':',
+    String(date.getMinutes()).padStart(2, '0'),
+    ':',
+    String(date.getSeconds()).padStart(2, '0'),
+  ].join('');
 }
