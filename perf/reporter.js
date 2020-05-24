@@ -1,4 +1,6 @@
 const calcStats = require('./calc-stats').calcStats;
+
+const Mustache = require('mustache');
 const Tracelib = require('tracelib').default;
 const path = require('path');
 const fs = require('fs');
@@ -44,31 +46,34 @@ function create() {
         const allHistory = require(historyPath);
 
         for (const statObj of stats) {
-          const existing = allHistory.find(entry => entry.label === statObj.label);
+          let existing = allHistory.find(entry => entry.label === statObj.label);
 
           if (!existing) {
-            allHistory.push({
+            existing = {
               label: statObj.label,
-              history: [
-                {
-                  ...statObj.stats,
-                  medianDelta: null,
-                  date: timestampForHuman(now)
-                }
-              ]
-            });
-          } else {
-            existing.history.unshift({
-              ...statObj.stats,
-              date: timestampForHuman(now),
-              medianDelta: statObj.stats.median - existing.history[0].median
-            });
+              history: []
+            };
+
+            allHistory.push(existing);
           }
+
+          existing.history.unshift({
+            ...statObj.stats,
+            date: timestampForHuman(now)
+          });
         }
 
         fs.writeFileSync(historyPath, JSON.stringify(allHistory, null, 2));
 
-        // create html file here?
+        // create html report
+        const html = Mustache.render(mustacheTemplate(), {
+          testName: test.name,
+          history: allHistory
+            .slice()
+            .sort((a, b) => a.label.localeCompare(b.label))
+        });
+        const pagePath = path.resolve(test.testDirectory, 'index.html');
+        fs.writeFileSync(pagePath, html);
       }
     }
   };
@@ -154,4 +159,9 @@ function timestampForHuman(date) {
     ':',
     String(date.getSeconds()).padStart(2, '0'),
   ].join('');
+}
+
+function mustacheTemplate() {
+  const templatePath = path.resolve(__dirname, 'template.mustache.html');
+  return fs.readFileSync(templatePath, 'utf8');
 }

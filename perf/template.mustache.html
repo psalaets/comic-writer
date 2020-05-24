@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{testName}}</title>
+  <style>
+    .history-table {
+      border-collapse: collapse;
+      border: 1px solid black;
+    }
+
+    .history-table tr:nth-child(even) {
+      background-color: #eeeeee;
+    }
+
+    .history-table td,
+    .history-table th {
+      padding: 1em;
+      border: 1px solid black;
+    }
+
+  </style>
+</head>
+<body>
+  <h1>{{testName}}</h1>
+
+  {{#history}}
+    <h2>{{label}}</h2>
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Count</th>
+          <th>Median</th>
+          <th>Mean</th>
+          <th>Min</th>
+          <th>Max</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#history}}
+          <tr>
+            <td>{{date}}</td>
+            <td>{{count}}</td>
+            <td>{{median}}</td>
+            <td>{{mean}}</td>
+            <td>{{min}}</td>
+            <td>{{max}}</td>
+          </tr>
+        {{/history}}
+      </tbody>
+    </table>
+  {{/history}}
+</body>
+</html>
