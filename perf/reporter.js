@@ -87,6 +87,17 @@ function extractStats(tracelib) {
   const durationsByMeasure = extractDurationsByMeasure(tracelib);
   const frameStats = extractFrameStats(tracelib);
 
+  // one "update cycle" consists of these 3 measures
+  const preprocessLines = durationsByMeasure.preprocessLines;
+  const applyPreprocessingChanges = durationsByMeasure['apply-preprocessing-changes'];
+  const changeSourceThunk = durationsByMeasure.changeSourceThunk;
+
+  durationsByMeasure._updateCycle = sumByIndex(
+    preprocessLines,
+    applyPreprocessingChanges,
+    changeSourceThunk
+  );
+
   return Object.entries(durationsByMeasure)
     .map(([measure, durations]) => {
       return {
@@ -164,4 +175,10 @@ function timestampForHuman(date) {
 function mustacheTemplate() {
   const templatePath = path.resolve(__dirname, 'template.mustache.html');
   return fs.readFileSync(templatePath, 'utf8');
+}
+
+function sumByIndex(array1, array2, array3) {
+  return array1.map((value, index) => {
+    return value + array2[index] + array3[index];
+  });
 }
