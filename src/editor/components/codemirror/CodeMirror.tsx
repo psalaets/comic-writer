@@ -21,7 +21,7 @@ import {
   create as createWordCounts
 } from './gutters/word-counts';
 import { create as createPanelCounts } from './panel-counts';
-import { letteringSnippet } from './lettering-snippet';
+import { create as letteringSnippetCommand } from './lettering-snippet-command';
 import { letteringBoldCommand } from './lettering-bold-command';
 
 type Props = {
@@ -39,12 +39,6 @@ export default class CodeMirrorComponent extends Component<Props> {
   updateWordCounts = createWordCounts();
   updatePanelCounts = createPanelCounts();
   preprocessLines = createPreprocessor();
-
-  constructor(props: Props) {
-    super(props);
-
-    this.getCharacterNames = this.getCharacterNames.bind(this);
-  }
 
   render() {
     const styles = {
@@ -89,7 +83,7 @@ export default class CodeMirrorComponent extends Component<Props> {
   }
 
   componentDidMount() {
-    const getCharacterNames = this.getCharacterNames;
+    const getCharacterNames = () => this.props.characters;
 
     this.cm = CodeMirror(this.getRootElement(), {
       mode: MODE,
@@ -103,17 +97,7 @@ export default class CodeMirrorComponent extends Component<Props> {
       scrollPastEnd: true,
       gutters: [WORD_COUNTS],
       extraKeys: {
-        Tab(cm) {
-          const cursor = cm.getCursor();
-          const line = cm.getLine(cursor.line);
-
-          // they hit tab on a blank line
-          if (line === '') {
-            letteringSnippet(cm, getCharacterNames);
-          } else {
-            return CodeMirror.Pass;
-          }
-        },
+        Tab: letteringSnippetCommand(getCharacterNames),
         'Shift-Tab'() {
           // no-op to prevent the CodeMirror default action: reverse indent
         },
@@ -216,9 +200,5 @@ export default class CodeMirrorComponent extends Component<Props> {
     this.props.onChange({
       lines
     });
-  }
-
-  getCharacterNames(): Array<string> {
-    return this.props.characters;
   }
 }
