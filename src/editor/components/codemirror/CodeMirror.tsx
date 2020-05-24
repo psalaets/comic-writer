@@ -187,9 +187,6 @@ export default class CodeMirrorComponent extends Component<Props> {
       // Only the preprocessed script lines go to the outside world
       this.emitChange(newLines);
     });
-
-    this.wordCounts = createWordCounts(this.cm);
-    this.panelCounts = createPanelCounts(this.cm);
   }
 
   /*
