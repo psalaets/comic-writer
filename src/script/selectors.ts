@@ -37,19 +37,21 @@ export const selectParsedSpreadChunks = wrap('selectParsedSpreadChunks', createA
   rawChunk => parseRawSpreadChunk(rawChunk)
 ));
 
-export const selectPreSpreadNodes = wrap('selectPreSpreadNodes', createSelector(
+export const selectPreSpreadNodes = createSelector(
   selectPreSpreadLines,
-  preSpreadLines => parsePreSpreadLines(preSpreadLines)
-));
+  wrap('preSpreadNodesCombiner', function preSpreadNodesCombiner(preSpreadLines) {
+    return parsePreSpreadLines(preSpreadLines);
+  })
+);
 
 const selectPreSpreadLineCount = createSelector(
   selectPreSpreadLines,
   lines => lines.length
 );
 
-const selectLocatedSpreadChunks = wrap('selectLocatedSpreadChunks', createSelector(
+const selectLocatedSpreadChunks = createSelector(
   [selectPreSpreadLineCount, selectParsedSpreadChunks],
-  (preSpreadLineCount, parsedChunks): Array<LocatedSpreadChunk> => {
+  wrap('locatedSpreadChunksCombiner', function locatedSpreadChunksCombiner(preSpreadLineCount, parsedChunks): Array<LocatedSpreadChunk> {
     let lineNumber = preSpreadLineCount;
     let pageNumber = 1;
 
@@ -82,19 +84,19 @@ const selectLocatedSpreadChunks = wrap('selectLocatedSpreadChunks', createSelect
         children: locatedChildren
       };
     });
-  }
-));
+  })
+);
 
-const selectLocatedSpreads = wrap('selectLocatedSpreads', createSelector(
+const selectLocatedSpreads = createSelector(
   selectLocatedSpreadChunks,
-  locatedChunks => {
+  wrap('locatedSpreadsCombiner', function locatedSpreadsCombiner(locatedChunks) {
     return [...iterators.onlySpreads(locatedChunks)];
-  }
-));
+  })
+);
 
-export const selectSpeakers = wrap('selectSpeakers', createSelector(
+export const selectSpeakers = createSelector(
   selectLocatedSpreads,
-  memoizeResult(spreads => {
+  memoizeResult(wrap('speakersCombiner', function speakersCombiner(spreads) {
     const speakers = new Set<string>();
 
     for (const spread of spreads) {
@@ -104,7 +106,7 @@ export const selectSpeakers = wrap('selectSpeakers', createSelector(
     }
 
     return [...speakers].sort();
-  }, (oldSpeakers, newSpeakers) => {
+  }), (oldSpeakers, newSpeakers) => {
     if (oldSpeakers == null) return false;
     if (oldSpeakers.length !== newSpeakers.length) return false;
 
@@ -116,17 +118,17 @@ export const selectSpeakers = wrap('selectSpeakers', createSelector(
 
     return true;
   })
-));
+);
 
-export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
+export const selectPanelCounts = createSelector(
   selectLocatedSpreads,
-  memoizeResult(spreads => {
+  memoizeResult(wrap('panelCountsCombiner', function panelCountsCombiner(spreads) {
     return spreads
       .map(spread => ({
         lineNumber: spread.lineNumber,
         count: spread.panelCount
       }));
-  }, (oldCounts, newCounts) => {
+  }), (oldCounts, newCounts) => {
     if (oldCounts == null) return newCounts == null;
 
     if (oldCounts.length !== newCounts.length) {
@@ -143,11 +145,11 @@ export const selectPanelCounts = wrap('selectPanelCounts', createSelector(
 
     return true;
   })
-));
+);
 
-export const selectWordCounts = wrap('selectWordCounts', createSelector(
+export const selectWordCounts = createSelector(
   selectLocatedSpreadChunks,
-  memoizeResult(locatedChunks => {
+  memoizeResult(wrap('wordCountsCombiner', function wordCountsCombiner(locatedChunks) {
     const wordCounts: Array<WordCount> = [];
 
     for (const node of iterators.spreadsAndChildren(locatedChunks)) {
@@ -167,7 +169,7 @@ export const selectWordCounts = wrap('selectWordCounts', createSelector(
     }
 
     return wordCounts;
-  }, (oldCounts, newCounts) => {
+  }), (oldCounts, newCounts) => {
     if (oldCounts == null) return newCounts == null;
 
     if (oldCounts.length !== newCounts.length) {
@@ -185,4 +187,4 @@ export const selectWordCounts = wrap('selectWordCounts', createSelector(
 
     return true;
   })
-));
+);
