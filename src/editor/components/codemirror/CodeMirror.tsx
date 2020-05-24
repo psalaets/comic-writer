@@ -14,7 +14,7 @@ import { PanelCount, WordCount } from '../../../script/types';
 
 import * as perf from '../../../perf';
 
-import { createPreprocessor, LinePreprocessor } from './preprocessor';
+import { createPreprocessor } from './preprocessor';
 import { MODE, THEME } from './mode';
 import {
   ID as WORD_COUNTS,
@@ -33,20 +33,12 @@ type Props = {
   onChange: (event: EditorChangeEvent) => void
 }
 
-type PanelCountsPlugin = {
-  update: (counts: Array<PanelCount>) => void;
-}
-
-type WordCountsPlugin = {
-  update: (counts: Array<WordCount>, prev: Array<WordCount>) => void;
-}
-
 export default class CodeMirrorComponent extends Component<Props> {
   rootRef = React.createRef<HTMLDivElement>();
   cm: CodeMirror.Editor | null = null;
-  wordCounts: WordCountsPlugin | null = null;
-  panelCounts: PanelCountsPlugin | null = null;
-  preprocessLines: LinePreprocessor = createPreprocessor();
+  updateWordCounts = createWordCounts();
+  updatePanelCounts = createPanelCounts();
+  preprocessLines = createPreprocessor();
 
   constructor(props: Props) {
     super(props);
@@ -72,11 +64,11 @@ export default class CodeMirrorComponent extends Component<Props> {
     }
 
     if (this.props.panelCounts !== prevProps.panelCounts) {
-      this.updatePanelCounts(this.props.panelCounts);
+      this.updatePanelCounts(cm, this.props.panelCounts);
     }
 
     if (this.props.wordCounts !== prevProps.wordCounts) {
-      this.updateWordCounts(this.props.wordCounts, prevProps.wordCounts);
+      this.updateWordCounts(cm, this.props.wordCounts);
     }
   }
 
@@ -86,22 +78,6 @@ export default class CodeMirrorComponent extends Component<Props> {
     }
 
     return this.cm;
-  }
-
-  updateWordCounts(counts: Array<WordCount>, prev: Array<WordCount>): void {
-    if (this.wordCounts == null) {
-      throw new Error('wordCounts is not initialized yet');
-    }
-
-    this.wordCounts.update(counts, prev);
-  }
-
-  updatePanelCounts(counts: Array<PanelCount>): void {
-    if (this.panelCounts == null) {
-      throw new Error('panelCounts is not initialized yet?');
-    }
-
-    this.panelCounts.update(counts);
   }
 
   getRootElement(): HTMLElement {

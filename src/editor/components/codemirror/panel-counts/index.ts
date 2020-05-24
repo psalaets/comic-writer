@@ -3,6 +3,13 @@ import * as perf from '../../../../perf';
 
 import { PanelCount } from '../../../../script/types';
 
+export interface PanelCountUpdater {
+  (cm: CodeMirror.Editor, counts: Array<PanelCount>): void;
+}
+
+/**
+ * Internal type for tracking existing panel counts.
+ */
 interface LineWidgetCount {
   /**
    * Contains the count that was last rendered for the line.
@@ -27,20 +34,14 @@ interface LineWidgetCount {
 
 /**
  * Creates a "plugin" that shows panel counts in the editor.
- *
- * @param cm CodeMirror Editor
  */
-export function create(cm: Editor) {
-  return {
-    update: perf.wrap('update-panel-counts', createUpdater(cm))
-  };
-}
-
-function createUpdater(cm: Editor) {
+export function create() {
   /** Panel counts from the last pass */
   let previousCounts: Array<LineWidgetCount> = [];
 
-  return function panelCountUpdater(panelCounts: Array<PanelCount>) {
+  return perf.wrap('updatePanelCounts', updatePanelCounts);
+
+  function updatePanelCounts(cm: Editor, panelCounts: Array<PanelCount>) {
     cm.operation(() => {
       /** Panel counts in this pass */
       const nextCounts: Array<LineWidgetCount> = [];

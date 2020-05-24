@@ -6,6 +6,13 @@ import { LineInfo } from '../types';
 
 export const ID = 'word-counts';
 
+export interface WordCountUpdater {
+  (cm: CodeMirror.Editor, counts: Array<WordCount>): void;
+}
+
+/**
+ * Internal type for tracking existing word counts.
+ */
 type GutterCount = {
   /**
    * The CodeMirror handle to the relevant line.
@@ -22,20 +29,14 @@ type GutterCount = {
 
 /**
  * Creates a "plugin" that shows word counts in the Editor.
- *
- * @param cm CodeMirror Editor
  */
-export function create(cm: Editor) {
-  return {
-    update: perf.wrap('update-word-counts', createUpdater(cm))
-  };
-}
-
-function createUpdater(cm: Editor) {
+export function create(): WordCountUpdater {
   /** Word count gutters from the last pass */
   let previousCounts: Array<GutterCount> = [];
 
-  return function updateWordCounts(wordCounts: Array<WordCount>, prevCounts: Array<WordCount>) {
+  return perf.wrap('updateWordCounts', updateWordCounts);
+
+  function updateWordCounts(cm: Editor, wordCounts: Array<WordCount>) {
     cm.operation(() => {
       /** Word count gutters in this pass */
       const nextCounts: Array<GutterCount> = [];
