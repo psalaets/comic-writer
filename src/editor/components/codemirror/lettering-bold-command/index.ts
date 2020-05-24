@@ -1,11 +1,4 @@
 import CodeMirror from 'codemirror';
-import { toggle } from './toggle';
-import { LETTERING_CONTENT } from '../mode/token';
-
-interface TokensByUse {
-  meta: Array<CodeMirror.Token>,
-  content: Array<CodeMirror.Token>
-}
 
 interface Selection {
   anchor: CodeMirror.Position,
@@ -19,48 +12,48 @@ interface Selection {
  * @param cm CodeMirror Editor
  */
 export function letteringBoldCommand(cm: CodeMirror.Editor) {
-  const cursor = cm.getCursor();
-
-  // split up line's tokens by their use: meta vs the actual content
-  const {meta, content} = cm.getLineTokens(cursor.line)
-    .reduce<TokensByUse>((obj, current) => {
-      if (current.type && current.type.includes(LETTERING_CONTENT)) {
-        obj.content.push(current);
-      } else {
-        obj.meta.push(current);
-      }
-
-      return obj;
-    }, {meta: [], content: []});
-
   const selection = normalizeSelection(cm.listSelections()[0]);
-  const result = toggle(content, selection.anchor, selection.head);
+  wrapSelection(cm, selection, '**', '**');
+}
 
-  // re-construct line with toggled content tokens
-  const metaString = meta
-    .map(token => token.string)
-    .join('');
+function wrapSelection(
+  cm: CodeMirror.Editor,
+  selection: Selection,
+  front: string,
+  back: string
+): void {
+  const lineNumber = selection.anchor.line;
+  const originalContent = cm.getLine(lineNumber);
 
-  const newLine = metaString + result.string;
+  const beforeSelected = originalContent.slice(0, selection.anchor.ch);
+  const selected       = originalContent.slice(selection.anchor.ch, selection.head.ch);
+  const afterSelected  = originalContent.slice(selection.head.ch);
 
-  cm.replaceRange(newLine, {
-    line: cursor.line,
-    ch: 0
-  }, {
-    line: cursor.line,
-    ch: 100000
+  const newContent = [
+    beforeSelected,
+    front,
+    selected,
+    back,
+    afterSelected
+  ].join('');
+
+  cm.operation(() => {
+    cm.replaceRange(newContent, {
+      ch: 0,
+      line: lineNumber
+    }, {
+      ch: originalContent.length,
+      line: lineNumber
+    });
+
+    cm.setSelection({
+      ch: selection.anchor.ch + front.length,
+      line: lineNumber
+    }, {
+      ch: selection.head.ch + front.length,
+      line: lineNumber
+    });
   });
-
-  cm.setSelection(
-    {
-      line: cursor.line,
-      ch: result.selectionStart
-    },
-    {
-      line: cursor.line,
-      ch: result.selectionEnd
-    }
-  );
 }
 
 // returns Selection where anchor is never to the right of head
