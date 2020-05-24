@@ -47,7 +47,7 @@ describe('typing performance', () => {
   test('typing top of script', async () => {
     await page.tracing.start(traceOptions(reporter.addTest('typing-at-top-of-script')));
 
-    await editor.type('abc '.repeat(15), 0);
+    await editor.type('abc '.repeat(25), 0);
 
     await page.tracing.stop();
   });
@@ -57,7 +57,7 @@ describe('typing performance', () => {
 
     await editor.scrollDownBy(3200);
 
-    await editor.type('abc '.repeat(15), 1);
+    await editor.type('abc '.repeat(25), 1);
 
     await page.tracing.stop();
   });
@@ -67,7 +67,7 @@ describe('typing performance', () => {
 
     await editor.scrollDownBy(2900);
 
-    await editor.type('abc '.repeat(15), 1);
+    await editor.type('abc '.repeat(25), 1);
 
     await page.tracing.stop();
   });
@@ -84,7 +84,7 @@ describe('typing performance', () => {
 
     await editor.type('page 1', 2);
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 25; i++) {
       await sleep(125);
       await editor.pressBackspace(2);
       await sleep(125);
