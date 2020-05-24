@@ -1,10 +1,10 @@
-import { LineWidget, LineHandle } from 'codemirror';
+import { LineWidget, LineHandle, Position } from 'codemirror';
+
+// Type declarations for things that the CodeMirror typings don't have named
+// types for, yet.
 
 /**
  * The type returned from `cm.lineInfo(line: number | LineHandle)`
- *
- * (CodeMirror typings don't have a named type for this yet so this will have
- * to suffice)
  */
 export interface LineInfo {
   line: number;
@@ -19,4 +19,12 @@ export interface LineInfo {
   wrapClass: string;
   /** Array of line widgets attached to this line. */
   widgets: Array<LineWidget>;
+}
+
+/**
+ * The type returned by `cm.listSelections()`.
+ */
+export interface Selection {
+  anchor: Position,
+  head: Position
 }

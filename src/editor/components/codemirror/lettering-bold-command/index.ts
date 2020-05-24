@@ -1,9 +1,8 @@
 import CodeMirror from 'codemirror';
+import { Selection } from '../types';
+import { wrapSelection } from '../helpers';
 
-interface Selection {
-  anchor: CodeMirror.Position,
-  head: CodeMirror.Position
-}
+const STAR_STAR = '**';
 
 /**
  * CodeMirror command that toggles text in comic lettering to/from bold. No
@@ -13,29 +12,16 @@ interface Selection {
  */
 export function letteringBoldCommand(cm: CodeMirror.Editor) {
   const selection = normalizeSelection(cm.listSelections()[0]);
-  wrapSelection(cm, selection, '**', '**');
-}
+  const lineNumber = cm.getCursor().line;
 
-function wrapSelection(
-  cm: CodeMirror.Editor,
-  selection: Selection,
-  front: string,
-  back: string
-): void {
-  const lineNumber = selection.anchor.line;
   const originalContent = cm.getLine(lineNumber);
-
-  const beforeSelected = originalContent.slice(0, selection.anchor.ch);
-  const selected       = originalContent.slice(selection.anchor.ch, selection.head.ch);
-  const afterSelected  = originalContent.slice(selection.head.ch);
-
-  const newContent = [
-    beforeSelected,
-    front,
-    selected,
-    back,
-    afterSelected
-  ].join('');
+  const newContent = wrapSelection(
+    originalContent,
+    selection.anchor.ch,
+    selection.head.ch,
+    STAR_STAR,
+    STAR_STAR
+  );
 
   cm.operation(() => {
     cm.replaceRange(newContent, {
@@ -47,10 +33,10 @@ function wrapSelection(
     });
 
     cm.setSelection({
-      ch: selection.anchor.ch + front.length,
+      ch: selection.anchor.ch + STAR_STAR.length,
       line: lineNumber
     }, {
-      ch: selection.head.ch + front.length,
+      ch: selection.head.ch + STAR_STAR.length,
       line: lineNumber
     });
   });
