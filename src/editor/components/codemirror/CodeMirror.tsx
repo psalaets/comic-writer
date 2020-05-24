@@ -189,19 +189,29 @@ export default class CodeMirrorComponent extends Component<Props> {
     });
   }
 
-  /*
-  Since updates are actually an operation containing n updates
-  (1 update per line), a single undo will trigger n change events from CM.
-  So undo and redo changes use this special method to prevent change spam
-  hitting the reducers/selectors.
-
-  Since undo/redo is relatively rare, this isn't 100% vital. If it causes
-  issues later it can probably be removed without too much harm.
-  */
+  /**
+   * Emit a change event that happened because of an undo or redo by the user.
+   *
+   * ## More detail
+   *
+   * When applying changes from the script preprocessor, an update from one run
+   * of the preprocessor is actually an operation containing n updates to the
+   * CodeMirror Editor (1 update per line changed by preprocessor).
+   *
+   * Because of that, a single undo will trigger n change events from CM. So
+   * undo and redo change event use this special method so we don't spam the
+   * reducers/selectors with change events.
+   *
+   * Since undo/redo is relatively rare, this isn't 100% vital. If this causes
+   * issues later it can probably be removed without too much harm.
+   */
   emitUndoRedoChange = debounce(lines => {
     this.emitChange(lines);
   }, 100);
 
+  /**
+   * Emit a change event that happened due to an edit by the user.
+   */
   emitChange(lines: Array<string>): void {
     this.props.onChange({
       lines
