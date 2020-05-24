@@ -1,5 +1,6 @@
 import CodeMirror from 'codemirror';
 import { toggle } from './toggle';
+import { LETTERING_CONTENT } from '../mode/token';
 
 interface TokensByUse {
   meta: Array<CodeMirror.Token>,
@@ -23,7 +24,7 @@ export function letteringBoldCommand(cm: CodeMirror.Editor) {
   // split up line's tokens by their use: meta vs the actual content
   const {meta, content} = cm.getLineTokens(cursor.line)
     .reduce<TokensByUse>((obj, current) => {
-      if (current.type && current.type.includes('lettering-content')) {
+      if (current.type && current.type.includes(LETTERING_CONTENT)) {
         obj.content.push(current);
       } else {
         obj.meta.push(current);
