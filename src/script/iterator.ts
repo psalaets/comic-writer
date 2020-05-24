@@ -5,10 +5,7 @@ export function* spreadsAndChildren<NodeType, SpreadType>(
 ) {
   for (const chunk of chunks) {
     yield chunk.spread;
-
-    for (const child of chunk.children) {
-      yield child;
-    }
+    yield* chunk.children;
   }
 }
 
