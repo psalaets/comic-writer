@@ -10,9 +10,9 @@ test('tab enters lettering snippet', async t => {
   const snippet = selectors.activeLetteringSnippet();
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
   await t.expect(snippet.exists).notOk();
@@ -28,9 +28,9 @@ test('escape closes hint popup', async t => {
   const popup = selectors.letteringHintsPopup();
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -47,9 +47,9 @@ test('escape (with no popup) exits lettering snippet', async t => {
   const snippet = selectors.activeLetteringSnippet();
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -69,9 +69,9 @@ test('arrow up (with no popup) exits lettering snippet', async t => {
   const snippet = selectors.activeLetteringSnippet();
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -93,9 +93,9 @@ test('arrow down (with no popup) exits lettering snippet', async t => {
   const snippet = selectors.activeLetteringSnippet();
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // make a line below so there's room to arrow down to
     .pressKey('enter')
@@ -120,9 +120,9 @@ test('moving to start of line (with no popup) exits lettering snippet', async t 
   const snippet = selectors.activeLetteringSnippet();
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -144,9 +144,9 @@ test('shift-tab from subject area (with no popup) exits lettering snippet', asyn
   const snippet = selectors.activeLetteringSnippet();
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -171,9 +171,9 @@ test('shift-tab from subject area (with no popup) exits lettering snippet', asyn
 
 test('hint popup selection wraps when arrowing up from first option', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -191,9 +191,9 @@ test('hint popup selection wraps when arrowing up from first option', async t =>
 
 test('hint popup selection wraps when arrowing down from last option', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -212,9 +212,9 @@ test('hint popup selection wraps when arrowing down from last option', async t =
 
 test('starts with placeholder content', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -234,9 +234,9 @@ test('tabbing beyond content area exits lettering snippet and adds newline', asy
   const snippet = selectors.activeLetteringSnippet();
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -261,9 +261,9 @@ test('tabbing beyond content area exits lettering snippet and adds newline', asy
 
 test('text is selected when tabbing between subject and content', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -290,9 +290,9 @@ test('text is selected when tabbing between subject and content', async t => {
 
 test('text is selected when tabbing between subject, modifier and content', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -307,7 +307,7 @@ test('text is selected when tabbing between subject, modifier and content', asyn
     // start adding modifier text
     .pressKey('space')
     .pressKey('shift+9')
-    .typeText(selectors.editorContent(), 'OFF')
+    .typeText(selectors.editorInput(), 'OFF')
 
   // tab into content area
   await t.pressKey('tab')
@@ -337,9 +337,9 @@ test('text is selected when tabbing between subject, modifier and content', asyn
 
 test('all content tokens are selected when tabbing into content', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -354,7 +354,7 @@ test('all content tokens are selected when tabbing into content', async t => {
   await t.expect(getSelectedText()).eql('content');
 
   // create multiple content tokens
-  await t.typeText(selectors.editorContent(), 'first **second** third')
+  await t.typeText(selectors.editorInput(), 'first **second** third')
 
   // to subject area
   await t.pressKey('shift+tab')
@@ -369,9 +369,9 @@ test('all content tokens are selected when tabbing into content', async t => {
 
 test('typing ( after selecting subject inserts modifier and moves to modifier tab stop', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -397,9 +397,9 @@ test('typing ( after selecting subject inserts modifier and moves to modifier ta
 
 test('typing 1 space then ( after selecting subject inserts modifier and moves to modifier tab stop', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -426,9 +426,9 @@ test('typing 1 space then ( after selecting subject inserts modifier and moves t
 
 test('typing multiple spaces then ( after selecting subject inserts modifier and moves to modifier tab stop', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -456,9 +456,9 @@ test('typing multiple spaces then ( after selecting subject inserts modifier and
 
 test('modifier placeholder is not re-inserted if it is already there', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -478,9 +478,9 @@ test('modifier placeholder is not re-inserted if it is already there', async t =
 
 test('modifier placeholder is not re-inserted if there are empty parens', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -504,9 +504,9 @@ test('modifier placeholder is not re-inserted if there are empty parens', async 
 
 test('modifier placeholder is not re-inserted if there are parens containing only whitespace', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -530,20 +530,20 @@ test('modifier placeholder is not re-inserted if there are parens containing onl
 
 test('auto capitalizes subject and modifier', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     // lowercase subject
-    .typeText(selectors.editorContent(), 'bob')
-    .typeText(selectors.editorContent(), ' ')
+    .typeText(selectors.editorInput(), 'bob')
+    .typeText(selectors.editorInput(), ' ')
     .pressKey('shift+9')
     // lowercase modifier
-    .typeText(selectors.editorContent(), 'off')
+    .typeText(selectors.editorInput(), 'off')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'dialogue content')
+    .typeText(selectors.editorInput(), 'dialogue content')
 
   const lines = await editorLines();
 

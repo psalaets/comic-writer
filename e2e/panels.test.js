@@ -6,9 +6,9 @@ fixture('panels')
 
 test('one panel', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -20,11 +20,11 @@ test('one panel', async t => {
 
 test('two panels', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -37,16 +37,16 @@ test('two panels', async t => {
 
 test('insert panel between existing panels', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
-    .pressKey('enter')
-    .pressKey('up')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     .pressKey('up')
-    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    .pressKey('up')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([

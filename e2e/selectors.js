@@ -17,7 +17,7 @@ export function panelCount(index) {
  *
  * You can type into this element.
  */
-export function editorContent() {
+export function editorInput() {
   return Selector('[contenteditable="true"]');
 }
 
@@ -26,7 +26,7 @@ export function editorContent() {
  *
  * This probably selects multiple elements.
  */
-export function editorLine() {
+export function editorLines() {
   return Selector('.CodeMirror-line');
 }
 

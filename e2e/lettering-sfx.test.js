@@ -8,16 +8,16 @@ fixture('sfx')
 
 test('only using keyboard', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('down')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'deet')
+    .typeText(selectors.editorInput(), 'deet')
 
   const lines = await editorLines();
 
@@ -30,19 +30,19 @@ test('only using keyboard', async t => {
 
 test('with modifier, only using keyboard', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('down')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), ' ')
+    .typeText(selectors.editorInput(), ' ')
     .pressKey('shift+9')
-    .typeText(selectors.editorContent(), 'DOOR')
+    .typeText(selectors.editorInput(), 'DOOR')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'CREAK')
+    .typeText(selectors.editorInput(), 'CREAK')
 
   const lines = await editorLines();
 
@@ -55,16 +55,16 @@ test('with modifier, only using keyboard', async t => {
 
 test('filter down to a single option and select it', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // lettering starts here
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'sfx')
+    .typeText(selectors.editorInput(), 'sfx')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'BLAM')
+    .typeText(selectors.editorInput(), 'BLAM')
 
   const lines = await editorLines();
 
@@ -77,9 +77,9 @@ test('filter down to a single option and select it', async t => {
 
 test('selecting sfx option with arrows and tab', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // lettering starts here
     .pressKey('tab')
@@ -100,9 +100,9 @@ test('selecting sfx option with arrows and tab', async t => {
 
 test('selecting sfx option with mouse', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // lettering starts here
     .pressKey('tab')

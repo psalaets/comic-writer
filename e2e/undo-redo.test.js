@@ -6,7 +6,7 @@ fixture('undo / redo')
 
 test('add text then undo it', async t => {
   await t
-    .typeText(selectors.editorContent(), 'this will be undone')
+    .typeText(selectors.editorInput(), 'this will be undone')
     .pressKey('meta+z')
 
   await t.expect(await editorLines()).eql([
@@ -16,7 +16,7 @@ test('add text then undo it', async t => {
 
 test('delete text then undo it', async t => {
   await t
-    .typeText(selectors.editorContent(), 'text')
+    .typeText(selectors.editorInput(), 'text')
     .pressKey('backspace')
     .pressKey('backspace')
     .pressKey('backspace')
@@ -30,7 +30,7 @@ test('delete text then undo it', async t => {
 
 test('add text, undo, then redo', async t => {
   await t
-    .typeText(selectors.editorContent(), 'this will come back')
+    .typeText(selectors.editorInput(), 'this will come back')
     .pressKey('meta+z')
     .pressKey('shift+meta+z')
 
@@ -41,11 +41,11 @@ test('add text, undo, then redo', async t => {
 
 test('undo 2 edits, then redo them', async t => {
   await t
-    .typeText(selectors.editorContent(), 'first')
+    .typeText(selectors.editorInput(), 'first')
     .pressKey('enter')
     // pause to allow history event to be saved
     .wait(1300)
-    .typeText(selectors.editorContent(), 'second')
+    .typeText(selectors.editorInput(), 'second')
     .pressKey('meta+z')
     .pressKey('meta+z')
     .pressKey('shift+meta+z')
@@ -59,11 +59,11 @@ test('undo 2 edits, then redo them', async t => {
 
 test('extra redos have no effect', async t => {
   await t
-    .typeText(selectors.editorContent(), 'first')
+    .typeText(selectors.editorInput(), 'first')
     .pressKey('enter')
     // pause to allow history event to be saved
     .wait(1300)
-    .typeText(selectors.editorContent(), 'second')
+    .typeText(selectors.editorInput(), 'second')
     // undo one edit
     .pressKey('meta+z')
     // and redo the edit
@@ -81,7 +81,7 @@ test('extra redos have no effect', async t => {
 
 test('redo with no previous undo does nothing', async t => {
   await t
-    .typeText(selectors.editorContent(), 'this is the line')
+    .typeText(selectors.editorInput(), 'this is the line')
     .pressKey('shift+meta+z')
 
   await t.expect(await editorLines()).eql([

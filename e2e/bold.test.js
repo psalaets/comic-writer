@@ -8,15 +8,15 @@ fixture('bold shortcut')
 
 test('lettering with content selected', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'content')
+    .typeText(selectors.editorInput(), 'content')
     .doubleClick('.cm-lettering-content')
     .pressKey('meta+b')
 
@@ -33,15 +33,15 @@ test('lettering with content selected', async t => {
 
 test('lettering with partial content selected', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'content')
+    .typeText(selectors.editorInput(), 'content')
     .pressKey('shift+left')
     .pressKey('shift+left')
     .pressKey('shift+left')
@@ -61,15 +61,15 @@ test('lettering with partial content selected', async t => {
 
 test('lettering with no content selected', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'content')
+    .typeText(selectors.editorInput(), 'content')
     .pressKey('meta+b')
 
   await t.expect(await editorLines()).eql([
@@ -93,9 +93,9 @@ test('lettering with no content selected', async t => {
 
 test('lettering with no content', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
@@ -125,15 +125,15 @@ test('lettering with no content', async t => {
 
 test('lettering with cursor in middle of a word', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'content')
+    .typeText(selectors.editorInput(), 'content')
     .pressKey('left')
     .pressKey('left')
     .pressKey('left')
@@ -160,15 +160,15 @@ test('lettering with cursor in middle of a word', async t => {
 
 test('lettering with repeated uses', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'content')
+    .typeText(selectors.editorInput(), 'content')
     .doubleClick('.cm-lettering-content')
     .pressKey('meta+b')
     .pressKey('meta+b')
@@ -186,15 +186,15 @@ test('lettering with repeated uses', async t => {
 
 test('undoing bold command', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'content')
+    .typeText(selectors.editorInput(), 'content')
     .doubleClick('.cm-lettering-content')
     .pressKey('meta+b')
 
@@ -220,7 +220,7 @@ test('undoing bold command', async t => {
 
 test('paragraph with word selected', async t => {
   await t
-    .typeText(selectors.editorContent(), 'blah')
+    .typeText(selectors.editorInput(), 'blah')
     .pressKey('shift+left')
     .pressKey('shift+left')
     .pressKey('shift+left')
@@ -238,7 +238,7 @@ test('paragraph with word selected', async t => {
 
 test('paragraph with word partially selected', async t => {
   await t
-    .typeText(selectors.editorContent(), 'blah')
+    .typeText(selectors.editorInput(), 'blah')
     .pressKey('shift+left')
     .pressKey('shift+left')
     .pressKey('meta+b')
@@ -254,7 +254,7 @@ test('paragraph with word partially selected', async t => {
 
 test('paragraph with nothing selected', async t => {
   await t
-    .typeText(selectors.editorContent(), 'blah')
+    .typeText(selectors.editorInput(), 'blah')
     .pressKey('meta+b')
 
   const lines = await editorLines();
@@ -276,7 +276,7 @@ test('paragraph with nothing selected', async t => {
 
 test('on an empty line', async t => {
   await t
-    .typeText(selectors.editorContent(), 'blah')
+    .typeText(selectors.editorInput(), 'blah')
     .pressKey('enter')
     .pressKey('meta+b')
 
@@ -300,7 +300,7 @@ test('on an empty line', async t => {
 
 test('cannot bold a page line', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
     .pressKey('up')
     .pressKey('shift+right')
@@ -321,9 +321,9 @@ test('cannot bold a page line', async t => {
 
 test('cannot bold a panel line', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     .pressKey('up')
     .pressKey('shift+right')
@@ -346,9 +346,9 @@ test('cannot bold a panel line', async t => {
 
 test('cannot bold across multiple lines', async t => {
   await t
-    .typeText(selectors.editorContent(), 'one')
+    .typeText(selectors.editorInput(), 'one')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'two')
+    .typeText(selectors.editorInput(), 'two')
     .pressKey('enter')
     .pressKey('up')
     .pressKey('shift+up')
@@ -366,7 +366,7 @@ test('cannot bold across multiple lines', async t => {
 
 test('cannot bold in a metadata line', async t => {
   await t
-    .typeText(selectors.editorContent(), 'key: value')
+    .typeText(selectors.editorInput(), 'key: value')
     .pressKey('meta+b')
 
   const lines = await editorLines();
@@ -378,15 +378,15 @@ test('cannot bold in a metadata line', async t => {
 
 test('cannot bold in lettering meta', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'foo')
+    .typeText(selectors.editorInput(), 'foo')
     // move to the left of the :
     .pressKey('left')
     .pressKey('left')
@@ -411,15 +411,15 @@ test('cannot bold in lettering meta', async t => {
 
 test('cannot bold if part of selection is in lettering meta', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'foo')
+    .typeText(selectors.editorInput(), 'foo')
     // move to the left of the :
     .pressKey('left')
     .pressKey('left')

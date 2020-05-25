@@ -8,15 +8,15 @@ fixture('dialogue')
 
 test('for new speaker, only using keyboard', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'bob')
+    .typeText(selectors.editorInput(), 'bob')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'dialogue content')
+    .typeText(selectors.editorInput(), 'dialogue content')
 
   const lines = await editorLines();
 
@@ -29,18 +29,18 @@ test('for new speaker, only using keyboard', async t => {
 
 test('with modifier for new speaker, only using keyboard', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'bob')
-    .typeText(selectors.editorContent(), ' ')
+    .typeText(selectors.editorInput(), 'bob')
+    .typeText(selectors.editorInput(), ' ')
     .pressKey('shift+9')
-    .typeText(selectors.editorContent(), 'OFF')
+    .typeText(selectors.editorInput(), 'OFF')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'dialogue content')
+    .typeText(selectors.editorInput(), 'dialogue content')
 
   const lines = await editorLines();
 
@@ -53,15 +53,15 @@ test('with modifier for new speaker, only using keyboard', async t => {
 
 test('for existing speaker, only using keyboard', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // first balloon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'bob')
+    .typeText(selectors.editorInput(), 'bob')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'first balloon')
+    .typeText(selectors.editorInput(), 'first balloon')
     .pressKey('enter')
     // second balloon, select bob from popup
     .pressKey('tab')
@@ -69,7 +69,7 @@ test('for existing speaker, only using keyboard', async t => {
     .pressKey('down')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'second balloon')
+    .typeText(selectors.editorInput(), 'second balloon')
 
   const lines = await editorLines();
 
@@ -83,26 +83,26 @@ test('for existing speaker, only using keyboard', async t => {
 
 test('with modifier for existing speaker, only using keyboard', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // first balloon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'bob')
+    .typeText(selectors.editorInput(), 'bob')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'first balloon')
+    .typeText(selectors.editorInput(), 'first balloon')
     .pressKey('enter')
     // second balloon, select bob from popup
     .pressKey('tab')
     .pressKey('down')
     .pressKey('down')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), ' ')
+    .typeText(selectors.editorInput(), ' ')
     .pressKey('shift+9')
-    .typeText(selectors.editorContent(), 'OFF')
+    .typeText(selectors.editorInput(), 'OFF')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'second balloon')
+    .typeText(selectors.editorInput(), 'second balloon')
 
   const lines = await editorLines();
 
@@ -116,21 +116,21 @@ test('with modifier for existing speaker, only using keyboard', async t => {
 
 test('speakers in popup are in abc order', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // first balloon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'zzz')
+    .typeText(selectors.editorInput(), 'zzz')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'first balloon')
+    .typeText(selectors.editorInput(), 'first balloon')
     .pressKey('enter')
     // second balloon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'aaa')
+    .typeText(selectors.editorInput(), 'aaa')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'second balloon')
+    .typeText(selectors.editorInput(), 'second balloon')
     .pressKey('enter')
     // third balloon, need to arrow past aaa to select zzz from popup
     .pressKey('tab')
@@ -139,7 +139,7 @@ test('speakers in popup are in abc order', async t => {
     .pressKey('down')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'third balloon')
+    .typeText(selectors.editorInput(), 'third balloon')
 
   const lines = await editorLines();
 
@@ -154,29 +154,29 @@ test('speakers in popup are in abc order', async t => {
 
 test('speakers in popup are filtered as you type', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // first balloon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'janice')
+    .typeText(selectors.editorInput(), 'janice')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'first balloon')
+    .typeText(selectors.editorInput(), 'first balloon')
     .pressKey('enter')
     // second balloon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'jonathan')
+    .typeText(selectors.editorInput(), 'jonathan')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'second balloon')
+    .typeText(selectors.editorInput(), 'second balloon')
     .pressKey('enter')
     // third balloon, filter so janice option is gone and arrow down once to jon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'jo')
+    .typeText(selectors.editorInput(), 'jo')
     .pressKey('down')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'third balloon')
+    .typeText(selectors.editorInput(), 'third balloon')
 
   const lines = await editorLines();
 
@@ -191,22 +191,22 @@ test('speakers in popup are filtered as you type', async t => {
 
 test('filter down to a single option and select it', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // first balloon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'bob')
+    .typeText(selectors.editorInput(), 'bob')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'first balloon')
+    .typeText(selectors.editorInput(), 'first balloon')
     .pressKey('enter')
     // second balloon
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'bob')
+    .typeText(selectors.editorInput(), 'bob')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'second balloon')
+    .typeText(selectors.editorInput(), 'second balloon')
 
   const lines = await editorLines();
 
@@ -221,13 +221,13 @@ test('filter down to a single option and select it', async t => {
 
 test('selecting character option with arrows and tab', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // create a balloon to get a character name in the hint popup
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'bob')
+    .typeText(selectors.editorInput(), 'bob')
     .pressKey('tab')
     .pressKey('tab')
     // lettering starts here
@@ -250,13 +250,13 @@ test('selecting character option with arrows and tab', async t => {
 
 test('selecting character option with mouse', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // create a balloon to get a character name in the hint popup
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'bob')
+    .typeText(selectors.editorInput(), 'bob')
     .pressKey('tab')
     .pressKey('tab')
     // lettering starts here

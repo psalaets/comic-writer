@@ -5,7 +5,7 @@ import * as selectors from './selectors';
  * Get all lines from the editor.
  */
 export async function editorLines() {
-  const lineElements = selectors.editorLine();
+  const lineElements = selectors.editorLines();
   const count = await lineElements.count;
 
   const lines = [];

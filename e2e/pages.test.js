@@ -6,7 +6,7 @@ fixture('pages')
 
 test('one page', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -17,9 +17,9 @@ test('one page', async t => {
 
 test('two pages', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -31,14 +31,14 @@ test('two pages', async t => {
 
 test('insert page between existing pages', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'page')
-    .pressKey('enter')
-    .pressKey('up')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
     .pressKey('up')
-    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .pressKey('up')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -52,7 +52,7 @@ test('insert page between existing pages', async t => {
 
 test('one page range', async t => {
   await t
-    .typeText(selectors.editorContent(), 'pages')
+    .typeText(selectors.editorInput(), 'pages')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -63,9 +63,9 @@ test('one page range', async t => {
 
 test('two page ranges', async t => {
   await t
-    .typeText(selectors.editorContent(), 'pages')
+    .typeText(selectors.editorInput(), 'pages')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'pages')
+    .typeText(selectors.editorInput(), 'pages')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -77,14 +77,14 @@ test('two page ranges', async t => {
 
 test('insert page range between existing page ranges', async t => {
   await t
-    .typeText(selectors.editorContent(), 'pages')
+    .typeText(selectors.editorInput(), 'pages')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'pages')
-    .pressKey('enter')
-    .pressKey('up')
+    .typeText(selectors.editorInput(), 'pages')
     .pressKey('enter')
     .pressKey('up')
-    .typeText(selectors.editorContent(), 'pages')
+    .pressKey('enter')
+    .pressKey('up')
+    .typeText(selectors.editorInput(), 'pages')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([
@@ -98,14 +98,14 @@ test('insert page range between existing page ranges', async t => {
 
 test('insert page range between existing single pages', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'page')
-    .pressKey('enter')
-    .pressKey('up')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
     .pressKey('up')
-    .typeText(selectors.editorContent(), 'pages')
+    .pressKey('enter')
+    .pressKey('up')
+    .typeText(selectors.editorInput(), 'pages')
     .pressKey('enter')
 
   await t.expect(await editorLines()).eql([

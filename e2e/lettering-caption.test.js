@@ -8,15 +8,15 @@ fixture('caption')
 
 test('only using keyboard', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'caption content')
+    .typeText(selectors.editorInput(), 'caption content')
 
   const lines = await editorLines();
 
@@ -29,18 +29,18 @@ test('only using keyboard', async t => {
 
 test('with modifier, only using keyboard', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), ' ')
+    .typeText(selectors.editorInput(), ' ')
     .pressKey('shift+9')
-    .typeText(selectors.editorContent(), 'BLAH')
+    .typeText(selectors.editorInput(), 'BLAH')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'caption content')
+    .typeText(selectors.editorInput(), 'caption content')
 
   const lines = await editorLines();
 
@@ -53,16 +53,16 @@ test('with modifier, only using keyboard', async t => {
 
 test('filter down to a single option and select it', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // lettering starts here
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'caption')
+    .typeText(selectors.editorInput(), 'caption')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'caption content')
+    .typeText(selectors.editorInput(), 'caption content')
 
   const lines = await editorLines();
 
@@ -75,9 +75,9 @@ test('filter down to a single option and select it', async t => {
 
 test('selecting caption option with arrows and tab', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // lettering starts here
     .pressKey('tab')
@@ -97,9 +97,9 @@ test('selecting caption option with arrows and tab', async t => {
 
 test('selecting caption option with mouse', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // lettering starts here
     .pressKey('tab')

@@ -7,9 +7,9 @@ fixture('bugs')
 // This is an random bug I came across when testing something else
 test('delete page number after first load', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
     // wait for value to be stored in localstorage
     .wait(1000)
@@ -18,7 +18,7 @@ test('delete page number after first load', async t => {
 
   await t
     .wait(1000)
-    .click(selectors.editorContent())
+    .click(selectors.editorInput())
     .pressKey('backspace')
 
   await t.expect(await editorLines()).eql([
@@ -30,15 +30,15 @@ test('delete page number after first load', async t => {
 
 test('any change in page after undoing deletion of page number', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // this is the start of the lettering stuff
     .pressKey('tab')
     .pressKey('enter')
     .pressKey('tab')
-    .typeText(selectors.editorContent(), 'caption content')
+    .typeText(selectors.editorInput(), 'caption content')
     .pressKey('tab')
     // move back to top line
     .pressKey('up')
@@ -59,7 +59,7 @@ test('any change in page after undoing deletion of page number', async t => {
     .pressKey('down')
     .pressKey('down')
     .pressKey('down')
-    .typeText(selectors.editorContent(), 'a')
+    .typeText(selectors.editorInput(), 'a')
 
   await t.expect(await editorLines()).eql([
     'Page 1',

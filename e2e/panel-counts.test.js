@@ -5,7 +5,7 @@ fixture('panel counts')
 
 test('page with no panels yet', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
 
   const panelCount = selectors.panelCount(0);
@@ -16,9 +16,9 @@ test('page with no panels yet', async t => {
 
 test('page with one panel', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
   const panelCount = selectors.panelCount(0);
@@ -28,11 +28,11 @@ test('page with one panel', async t => {
 
 test('page with two panels', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
   const panelCount = selectors.panelCount(0);
@@ -42,11 +42,11 @@ test('page with two panels', async t => {
 
 test('remove one panel from page with two panels', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // delete enough characters to make it no longer a panel
     .pressKey('backspace')
@@ -59,9 +59,9 @@ test('remove one panel from page with two panels', async t => {
 
 test('remove the only panel from page', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // delete enough characters to make it no longer a panel
     .pressKey('backspace')
@@ -76,19 +76,19 @@ test('panel counts are per page', async t => {
   const panelCount = selectors.panelCount(0);
 
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
   await t.expect(panelCount.textContent).eql('(2 panels)');
 
-  await t.typeText(selectors.editorContent(), 'page')
+  await t.typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
     // adding a panel to page 2 doesn't affect page 1's panel count
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
   await t.expect(panelCount.textContent).eql('(2 panels)');
@@ -96,9 +96,9 @@ test('panel counts are per page', async t => {
 
 test('panel count goes away when its page line is no longer a page', async t => {
   await t
-    .typeText(selectors.editorContent(), 'page')
+    .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
-    .typeText(selectors.editorContent(), 'panel')
+    .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
     // move back to top line
     .pressKey('up')
