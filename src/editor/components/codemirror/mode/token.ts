@@ -39,7 +39,7 @@ export default function token(
   state: State
 ): string | null {
   if (stream.sol()) {
-    state.reset();
+    state.resetLineState();
 
     if (stream.peek() === '\t') {
       stream.next();
@@ -47,9 +47,18 @@ export default function token(
       return null;
     }
 
-    if (stream.match(/^pages? \d+(-(\d+)?)?$/i)) return PAGE;
-    if (stream.match(/^panel \d+$/i)) return PANEL;
-    if (stream.match(/^(.+): ?(.+)/)) return METADATA;
+    if (stream.match(/^pages? \d+(-(\d+)?)?$/i)) {
+      state.pagesSeen += 1;
+      return PAGE;
+    }
+
+    if (stream.match(/^panel \d+$/i)) {
+      return PANEL;
+    }
+
+    if (state.pagesSeen === 0 && stream.match(/^(.+): ?(.+)/)) {
+      return METADATA;
+    }
   }
 
   if (state.inLettering) {

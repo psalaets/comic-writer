@@ -356,6 +356,12 @@ describe('mode.token()', () => {
 
       expect(tokens).toMatchSnapshot();
     });
+
+    test('after a page has been seen', () => {
+      const tokens = collectTokens('name: value', {pagesSeen: 1});
+
+      expect(tokens).toMatchSnapshot();
+    });
   });
 
   describe('paragraph', () => {
@@ -385,10 +391,15 @@ describe('mode.token()', () => {
   });
 });
 
-function collectTokens(line) {
+function collectTokens(line, initialState = {}) {
   const tabSize = 4;
   const stream = new CodeMirror.StringStream(line, tabSize);
   const state = startState();
+
+  Object.entries(initialState)
+    .forEach(([key, value]) => {
+      state[key] = value;
+    });
 
   const tokens = [];
 

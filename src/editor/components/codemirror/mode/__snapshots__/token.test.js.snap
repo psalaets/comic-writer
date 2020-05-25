@@ -972,6 +972,19 @@ Array [
 ]
 `;
 
+exports[`mode.token() metadata after a page has been seen 1`] = `
+Array [
+  Object {
+    "end": 11,
+    "start": 0,
+    "string": "name: value",
+    "style": Array [
+      "paragraph",
+    ],
+  },
+]
+`;
+
 exports[`mode.token() metadata full 1`] = `
 Array [
   Object {

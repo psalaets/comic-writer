@@ -8,6 +8,7 @@ export class State {
   inModifier: boolean;
   contentDone: boolean;
   inContent: boolean;
+  pagesSeen: number;
 
   constructor() {
     this.isInCaptionText = false;
@@ -19,6 +20,7 @@ export class State {
     this.inModifier = false;
     this.contentDone = false;
     this.inContent = false;
+    this.pagesSeen = 0;
   }
 
   copy() {
@@ -32,10 +34,11 @@ export class State {
     copied.inModifier          = this.inModifier;
     copied.contentDone         = this.contentDone;
     copied.inContent           = this.inContent;
+    copied.pagesSeen           = this.pagesSeen;
     return copied;
   }
 
-  reset() {
+  resetLineState() {
     this.isInCaptionText = false;
     this.isInDialogueText = false;
     this.inLettering = false;
