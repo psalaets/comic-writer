@@ -92,9 +92,7 @@ function selectionCanBeBolded(cm: Editor, selection: Selection): boolean {
   }
 
   const lineNumber = selection.anchor.line;
-
-  const lineTokens = cm.getLineTokens(selection.head.line);
-  console.table(lineTokens)
+  const lineTokens = cm.getLineTokens(lineNumber);
 
   // just a cursor, no selection
   if (selection.anchor.ch === selection.head.ch) {
@@ -106,7 +104,7 @@ function selectionCanBeBolded(cm: Editor, selection: Selection): boolean {
       return true;
     }
 
-    // handle when cursor is after the lettering colon but there's no content
+    // handle when cursor is in lettering content area but there's no content
     if (isLetteringLine(lineTokens)) {
       const colonIndex = line.indexOf(':');
       if (position === line.length && colonIndex !== -1) {
