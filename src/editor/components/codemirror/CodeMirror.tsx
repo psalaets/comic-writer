@@ -154,7 +154,7 @@ export default class CodeMirrorComponent extends Component<Props> {
             replacements += 1;
 
             const from = { line: index, ch: 0 };
-            const to = { line: index, ch: 10000 };
+            const to = { line: index, ch: oldLine.length };
 
             cm.replaceRange(newLine, from, to, 'preprocessing');
           }
