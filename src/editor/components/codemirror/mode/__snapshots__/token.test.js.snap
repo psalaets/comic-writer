@@ -991,7 +991,9 @@ Array [
     "end": 4,
     "start": 0,
     "string": "name",
-    "style": null,
+    "style": Array [
+      "paragraph",
+    ],
   },
 ]
 `;
@@ -1015,7 +1017,9 @@ Array [
     "end": 5,
     "start": 0,
     "string": "name:",
-    "style": null,
+    "style": Array [
+      "paragraph",
+    ],
   },
 ]
 `;
@@ -1117,7 +1121,9 @@ Array [
     "end": 4,
     "start": 0,
     "string": "page",
-    "style": null,
+    "style": Array [
+      "paragraph",
+    ],
   },
 ]
 `;
@@ -1219,7 +1225,9 @@ Array [
     "end": 5,
     "start": 0,
     "string": "pages",
-    "style": null,
+    "style": Array [
+      "paragraph",
+    ],
   },
 ]
 `;
@@ -1256,7 +1264,9 @@ Array [
     "end": 5,
     "start": 0,
     "string": "panel",
-    "style": null,
+    "style": Array [
+      "paragraph",
+    ],
   },
 ]
 `;
@@ -1267,18 +1277,97 @@ Array [
     "end": 6,
     "start": 0,
     "string": "panel ",
-    "style": null,
+    "style": Array [
+      "paragraph",
+    ],
   },
 ]
 `;
 
-exports[`mode.token() paragraph text 1`] = `
+exports[`mode.token() paragraph bold text 1`] = `
+Array [
+  Object {
+    "end": 18,
+    "start": 0,
+    "string": "**just some bold**",
+    "style": Array [
+      "paragraph",
+      "paragraph-bold",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() paragraph bold text around regular text 1`] = `
+Array [
+  Object {
+    "end": 13,
+    "start": 0,
+    "string": "**bold here**",
+    "style": Array [
+      "paragraph",
+      "paragraph-bold",
+    ],
+  },
+  Object {
+    "end": 27,
+    "start": 13,
+    "string": " regular here ",
+    "style": Array [
+      "paragraph",
+    ],
+  },
+  Object {
+    "end": 40,
+    "start": 27,
+    "string": "**bold here**",
+    "style": Array [
+      "paragraph",
+      "paragraph-bold",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() paragraph regular text 1`] = `
 Array [
   Object {
     "end": 63,
     "start": 0,
     "string": "The first rays of sunrise hit the house. A car waits out front.",
-    "style": null,
+    "style": Array [
+      "paragraph",
+    ],
+  },
+]
+`;
+
+exports[`mode.token() paragraph regular text around bold text 1`] = `
+Array [
+  Object {
+    "end": 13,
+    "start": 0,
+    "string": "regular here ",
+    "style": Array [
+      "paragraph",
+    ],
+  },
+  Object {
+    "end": 26,
+    "start": 13,
+    "string": "**bold here**",
+    "style": Array [
+      "paragraph",
+      "paragraph-bold",
+    ],
+  },
+  Object {
+    "end": 44,
+    "start": 26,
+    "string": " more regular here",
+    "style": Array [
+      "paragraph",
+    ],
   },
 ]
 `;

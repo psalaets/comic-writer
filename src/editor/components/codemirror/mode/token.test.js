@@ -359,8 +359,26 @@ describe('mode.token()', () => {
   });
 
   describe('paragraph', () => {
-    test('text', () => {
+    test('regular text', () => {
       const tokens = collectTokens('The first rays of sunrise hit the house. A car waits out front.');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('bold text', () => {
+      const tokens = collectTokens('**just some bold**');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('regular text around bold text', () => {
+      const tokens = collectTokens('regular here **bold here** more regular here');
+
+      expect(tokens).toMatchSnapshot();
+    });
+
+    test('bold text around regular text', () => {
+      const tokens = collectTokens('**bold here** regular here **bold here**');
 
       expect(tokens).toMatchSnapshot();
     });

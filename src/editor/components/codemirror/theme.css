@@ -38,7 +38,8 @@
   background-color: var(--color-utility-milk);
 }
 
-.cm-s-comic-writer-light .cm-lettering-bold {
+.cm-s-comic-writer-light .cm-lettering-bold,
+.cm-s-comic-writer-light .cm-paragraph-bold {
   font-weight: bold;
   text-decoration: underline;
 }
