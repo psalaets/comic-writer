@@ -30,10 +30,11 @@ export class LetteringLine {
   }
 
   /**
-   * Get the content token, if it exists.
+   * Get all content tokens.
    */
-  getContent(): Token | null {
-    return this._firstWithType(LETTERING_CONTENT);
+  getAllContent(): Array<Token> {
+    return this.tokens
+      .filter(token => token.type && token.type.includes(LETTERING_CONTENT));
   }
 
   /**

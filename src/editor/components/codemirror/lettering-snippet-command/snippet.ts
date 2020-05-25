@@ -99,10 +99,13 @@ export function letteringSnippet(
 }
 
 function makeTabStops(cm: CodeMirror.Editor): Array<TabStop> {
-  function selectToken(token: CodeMirror.Token, line: number): void {
+  function selectTokens(line: number, ...tokens: Array<CodeMirror.Token>): void {
+    const start = Math.min(...tokens.map(token => token.start));
+    const end = Math.max(...tokens.map(token => token.end));
+
     cm.setSelection(
-      { line, ch: token.start },
-      { line, ch: token.end }
+      { line, ch: start },
+      { line, ch: end }
     );
   }
 
@@ -123,7 +126,7 @@ function makeTabStops(cm: CodeMirror.Editor): Array<TabStop> {
         const subject = line.getSubject();
 
         if (subject) {
-          selectToken(subject, cursor.line);
+          selectTokens(cursor.line, subject);
         }
       }
     },
@@ -135,7 +138,7 @@ function makeTabStops(cm: CodeMirror.Editor): Array<TabStop> {
         const modifier = line.getModifier();
 
         if (modifier) {
-          selectToken(modifier, cursor.line);
+          selectTokens(cursor.line, modifier);
         } else {
           return 'skip';
         }
@@ -146,10 +149,10 @@ function makeTabStops(cm: CodeMirror.Editor): Array<TabStop> {
       activate() {
         const cursor = cm.getCursor();
         const line = new LetteringLine(cm.getLineTokens(cursor.line));
-        const content = line.getContent();
+        const contentTokens = line.getAllContent();
 
-        if (content) {
-          selectToken(content, cursor.line);
+        if (contentTokens.length > 0) {
+          selectTokens(cursor.line, ...contentTokens);
         }
       }
     },

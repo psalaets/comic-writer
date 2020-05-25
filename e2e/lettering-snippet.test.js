@@ -335,6 +335,38 @@ test('text is selected when tabbing between subject, modifier and content', asyn
   await t.expect(getSelectedText()).eql('content');
 });
 
+test('all content tokens are selected when tabbing into content', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    // clear hint popup
+    .pressKey('esc')
+
+  await t.expect(getSelectedText()).eql('SUBJECT');
+
+  // tab into content area
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('content');
+
+  // create multiple content tokens
+  await t.typeText(selectors.editorContent(), 'first **second** third')
+
+  // to subject area
+  await t.pressKey('shift+tab')
+
+  await t.expect(getSelectedText()).eql('SUBJECT');
+
+  // finally back into content area - should select all 3 content tokens
+  await t.pressKey('tab')
+
+  await t.expect(getSelectedText()).eql('first **second** third');
+});
+
 test('typing ( after selecting subject inserts modifier and moves to modifier tab stop', async t => {
   await t
     .typeText(selectors.editorContent(), 'page')
