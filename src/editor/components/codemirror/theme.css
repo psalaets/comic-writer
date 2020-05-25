@@ -31,10 +31,6 @@
   color: var(--color-utility-charcoal);
 }
 
-.cm-s-comic-writer-light .cm-lettering-subject {
-  text-transform: uppercase;
-}
-
 /* Style tab stops of lettering snippet */
 .lettering-snippet .cm-lettering-subject,
 .lettering-snippet .cm-lettering-modifier,
