@@ -2,7 +2,7 @@ import * as assert from 'assert';
 
 import * as selectors from './selectors';
 
-fixture('caption')
+fixture('word counts')
   .page('http://localhost:3000');
 
 test('captions have word counts', async t => {
