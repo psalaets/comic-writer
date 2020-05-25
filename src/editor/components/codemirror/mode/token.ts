@@ -15,6 +15,7 @@ import { State } from './state';
 const PAGE = 'page';
 const PANEL = 'panel';
 const METADATA = 'metadata';
+export const PARAGRAPH = 'paragraph';
 
 export const LETTERING_SUBJECT = 'lettering-subject';
 export const LETTERING_MODIFIER = 'lettering-modifier';
@@ -23,7 +24,7 @@ export const LETTERING_BOLD = 'lettering-bold';
 
 // Line classes. These are applied to entire lines.
 // CM removes the 'line-' prefix before putting them in the dom.
-const LETTERING_LINE = 'line-cm-lettering';
+export const LETTERING_LINE = 'line-cm-lettering';
 const SFX_LINE = 'line-cm-sfx';
 const CAPTION_LINE = 'line-cm-caption';
 const DIALOGUE_LINE = 'line-cm-dialogue';
@@ -155,7 +156,7 @@ export default function token(
 
   // advance stream past stuff that isn't styled, like plain paragraphs
   stream.skipToEnd();
-  return null;
+  return PARAGRAPH;
 }
 
 /**

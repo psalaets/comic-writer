@@ -298,3 +298,146 @@ test('on an empty line', async t => {
   ]);
 });
 
+test('cannot bold a page line', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .pressKey('up')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('meta+b')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    ''
+  ]);
+});
+
+test('cannot bold a panel line', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    .pressKey('up')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('shift+right')
+    .pressKey('meta+b')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    ''
+  ]);
+});
+
+test('cannot bold across multiple lines', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'one')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'two')
+    .pressKey('enter')
+    .pressKey('up')
+    .pressKey('shift+up')
+    .pressKey('shift+up')
+    .pressKey('meta+b')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'one',
+    'two',
+    ''
+  ]);
+});
+
+test('cannot bold in a metadata line', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'key: value')
+    .pressKey('meta+b')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'key: value'
+  ]);
+});
+
+test('cannot bold in lettering meta', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'foo')
+    // move to the left of the :
+    .pressKey('left')
+    .pressKey('left')
+    .pressKey('left')
+    .pressKey('left')
+    .pressKey('left')
+    // select some meta tokens
+    .pressKey('shift+left')
+    .pressKey('shift+left')
+    .pressKey('shift+left')
+    // try to bold them
+    .pressKey('meta+b')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION: foo'
+  ]);
+});
+
+test('cannot bold if part of selection is in lettering meta', async t => {
+  await t
+    .typeText(selectors.editorContent(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorContent(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorContent(), 'foo')
+    // move to the left of the :
+    .pressKey('left')
+    .pressKey('left')
+    .pressKey('shift+left')
+    .pressKey('shift+left')
+    .pressKey('shift+left')
+    // select some meta tokens
+    .pressKey('shift+left')
+    .pressKey('shift+left')
+    .pressKey('shift+left')
+    // try to bold them
+    .pressKey('meta+b')
+
+  const lines = await editorLines();
+
+  await t.expect(lines).eql([
+    'Page 1',
+    'Panel 1',
+    '    CAPTION: foo'
+  ]);
+});
