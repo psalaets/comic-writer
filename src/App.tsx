@@ -71,11 +71,11 @@ class App extends Component<{}, AppState> {
       <>
         <div className="c-app">
           <div className="c-app__menu-bar">
-            <ConnectedTopBar
+            {/* <ConnectedTopBar
               onGuideClick={this.activateModal(ModalTypes.formattingGuide)}
               onInsightsClick={this.toggleDrawer}
               drawerOpen={this.state.drawerIsOpen}
-            />
+            /> */}
           </div>
           <div className="c-app__writer">
             <Writer />

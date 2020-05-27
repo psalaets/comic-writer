@@ -1,20 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import store from './store';
-import { actions } from './script';
+import { create as createStore } from './store';
+import { RootStoreContext } from './store/root-store-context';
 
-store.dispatch(actions.loadScript());
+const store = createStore();
 
 ReactDOM.render(
-  <Provider store={store}>
+  <RootStoreContext.Provider value={store}>
     <App />
-  </Provider>,
+  </RootStoreContext.Provider>,
   document.getElementById('root')
 );
 registerServiceWorker();

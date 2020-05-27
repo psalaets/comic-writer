@@ -1,14 +1,14 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
+import {
+  ScriptStore,
+  createStore as createScriptStore
+} from '../script/script-store';
 
-import rootReducer from './root-reducer';
-import { RootState, AppActionTypes } from './types';
+export interface RootStore {
+  script: ScriptStore
+}
 
-import { timer } from '../perf';
-
-const store = createStore(
-  rootReducer,
-  applyMiddleware(timer, thunk as ThunkMiddleware<RootState, AppActionTypes>)
-);
-
-export default store;
+export function create(): RootStore {
+  return {
+    script: createScriptStore()
+  };
+}

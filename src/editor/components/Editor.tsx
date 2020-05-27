@@ -1,38 +1,25 @@
-import React, { Component } from 'react';
+import React, { useCallback } from 'react';
+import { observer } from 'mobx-react';
 
 import { EditorChangeEvent } from '../types';
-import { PanelCount, WordCount } from '../../script/types';
+
+import { useStore } from '../../store/use-store';
 import CodeMirror from './codemirror/CodeMirror';
 
-type Props = {
-  value: string,
-  panelCounts: Array<PanelCount>,
-  wordCounts: Array<WordCount>,
-  characters: Array<string>,
-  onChange: (event: EditorChangeEvent) => void
-}
+export const Editor: React.FC = observer(() => {
+  const { script: scriptStore } = useStore();
+  const onChange = useCallback((event: EditorChangeEvent) => {
+    scriptStore.updateScript(event.lines);
+  }, []);
 
-export default class Editor extends Component<Props> {
-  constructor(props: Props) {
-    super(props);
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  render() {
-    return (
-      <CodeMirror
-        editorWidth={80}
-        value={this.props.value}
-        panelCounts={this.props.panelCounts}
-        wordCounts={this.props.wordCounts}
-        characters={this.props.characters}
-        onChange={this.handleChange}
-      />
-    )
-  }
-
-  handleChange(event: EditorChangeEvent): void {
-    this.props.onChange(event);
-  }
-}
+  return (
+    <CodeMirror
+      editorWidth={80}
+      value={scriptStore.source}
+      panelCounts={scriptStore.panelCounts}
+      wordCounts={scriptStore.wordCounts}
+      characters={scriptStore.speakers}
+      onChange={onChange}
+    />
+  );
+});
