@@ -10,7 +10,7 @@ export const Editor: React.FC = observer(() => {
   const { script: scriptStore } = useStore();
   const onChange = useCallback((event: EditorChangeEvent) => {
     scriptStore.updateScript(event.lines);
-  }, []);
+  }, [scriptStore]);
 
   return (
     <CodeMirror
