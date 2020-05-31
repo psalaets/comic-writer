@@ -1,14 +1,11 @@
-import {
-  ScriptStore,
-  createStore as createScriptStore
-} from '../script/script-store';
+import { store as script } from '../script';
 
 export interface RootStore {
-  script: ScriptStore
+  script: script.ScriptStore
 }
 
 export function create(): RootStore {
   return {
-    script: createScriptStore()
+    script: script.createStore()
   };
 }

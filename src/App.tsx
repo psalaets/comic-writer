@@ -4,10 +4,8 @@ import './App.css';
 import Writer from './components/writer/Writer';
 // import Stats from './components/stats/Stats';
 // import ConnectedStats from './components/stats/ConnectedStats';
-import ConnectedTopBar from './components/top-bar/ConnectedTopBar';
 import Modal from './components/modal/Modal';
 // import Drawer from './components/drawer/Drawer';
-import ModalTypes from './components/modal/ModalTypes'
 
 type AppState = {
   drawerIsOpen: boolean;

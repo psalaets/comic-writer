@@ -1,8 +1,3 @@
-// state shape
-
-export interface EditorState {
-
-}
 
 // component related
 
