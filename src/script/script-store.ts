@@ -1,8 +1,12 @@
+import debounce from 'lodash/debounce';
 import {
   observable,
   computed,
   action,
+  runInAction,
 } from 'mobx';
+
+import localstorage from '../localstorage';
 
 import {
   ComicNode,
@@ -20,6 +24,8 @@ import {
   PanelCount,
   WordCount
 } from './types';
+
+const SCRIPT_STORAGE_KEY = 'comic-writer.script';
 
 export type ScriptStore = ReturnType<typeof createStore>;
 
@@ -145,6 +151,17 @@ export function createStore() {
       this._updateSpreads(this.spreads, incomingSpreads);
     },
 
+    loadScript() {
+      return localstorage.get<string>(SCRIPT_STORAGE_KEY)
+        .then(source => {
+          runInAction(() => {
+            if (source != null) {
+              this._updateSource(source);
+            }
+          });
+        });
+    },
+
     // private helpers
     _updateSource(incoming: string): void {
       if (!this.source) {
@@ -152,7 +169,12 @@ export function createStore() {
       }
 
       this.source = incoming;
+      this._saveScript(incoming);
     },
+
+    _saveScript: debounce((source: string) => {
+      return localstorage.set<string>(SCRIPT_STORAGE_KEY, source);
+    }, 1000),
 
     _updatePreSpread(current: Array<string>, incoming: Array<string>): void {
       this.preSpread = allLinesEqual(current, incoming)
@@ -164,15 +186,22 @@ export function createStore() {
       let changes = 0;
       const nextSpreads: Array<RawSpreadChunk> = [];
 
-      for (let i = 0; i < incoming.length; i++) {
+      const length = Math.max(current.length, incoming.length);
+      for (let i = 0; i < length; i++) {
         const currentSpread = current[i];
         const incomingSpread = incoming[i];
 
+        let nextSpread;
+
         if (deepEquals(currentSpread, incomingSpread)) {
-          nextSpreads.push(currentSpread);
+          nextSpread = currentSpread;
         } else {
-          nextSpreads.push(incomingSpread);
+          nextSpread = incomingSpread;
           changes += 1;
+        }
+
+        if (nextSpread) {
+          nextSpreads.push(nextSpread);
         }
       }
 
@@ -194,7 +223,8 @@ export function createStore() {
     panelCounts: computed.struct,
     wordCounts: computed.struct,
 
-    updateScript: action
+    updateScript: action,
+    loadScript: action,
   });
 
   return store;
@@ -225,10 +255,7 @@ function createMemoizedMapper<InputType, ResultType>(update: (i: InputType) => R
   };
 }
 
-function deepEquals(
-  current: RawSpreadChunk,
-  incoming: RawSpreadChunk
-): boolean {
+function deepEquals(current: RawSpreadChunk, incoming: RawSpreadChunk): boolean {
   if (current == null) return incoming == null;
   if (incoming == null) return current == null;
 
