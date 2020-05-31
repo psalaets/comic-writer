@@ -69,3 +69,47 @@ test('any change in page after undoing deletion of page number', async t => {
   ]);
 });
 
+test('existing panel counts are shown after page reload', async t => {
+  await t
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'panel')
+    .pressKey('enter')
+    .wait(1000);
+
+  await t.eval(() => location.reload(true))
+
+  const panelCount = selectors.panelCount(0);
+
+  await t.expect(panelCount).ok();
+  await t.expect(panelCount.textContent).eql('(1 panel)');
+});
+
+test('existing word counts are shown after page reload', async t => {
+  const pageWordCount = selectors.wordCount(0);
+  const panelWordCount = selectors.wordCount(1);
+  const letteringWordCount = selectors.wordCount(2);
+
+  await t
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'panel')
+    .pressKey('enter')
+    // this is the start of the lettering stuff
+    .pressKey('tab')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorInput(), 'caption content here')
+    .wait(1000)
+
+  await t.eval(() => location.reload(true))
+
+  await t.expect(pageWordCount).ok();
+  await t.expect(pageWordCount.textContent).eql('3');
+
+  await t.expect(panelWordCount).ok();
+  await t.expect(panelWordCount.textContent).eql('3');
+
+  await t.expect(letteringWordCount).ok();
+  await t.expect(letteringWordCount.textContent).eql('3');
+});

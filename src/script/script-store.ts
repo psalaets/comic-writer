@@ -156,7 +156,7 @@ export function createStore() {
         .then(source => {
           runInAction(() => {
             if (source != null) {
-              this._updateSource(source);
+              this.updateScript(source);
             }
           });
         });

@@ -9,7 +9,11 @@ import { Selector } from 'testcafe';
  * @param {number} index - Zero-based panel count number
  */
 export function panelCount(index) {
-  return Selector(`.panel-count`).nth(index);
+  const options = {
+    timeout: 100
+  };
+
+  return Selector(`.panel-count`, options).nth(index);
 }
 
 /**
@@ -59,5 +63,9 @@ export function activeLetteringSnippet() {
  * @param {number} index - Zero-based word count number
  */
 export function wordCount(index) {
-  return Selector('.word-count').nth(index);
+  const options = {
+    timeout: 100
+  };
+
+  return Selector('.word-count', options).nth(index);
 }
