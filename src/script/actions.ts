@@ -60,11 +60,11 @@ export function loadScript(): ThunkResult {
   return function loadScriptThunk(dispatch) {
     dispatch(loadScriptStarted());
 
-    localstorage.get('comic-writer.script')
+    localstorage.get<string>('comic-writer.script')
       // If local storage is null/empty on given key, then do nothing. Otherwise
       // dispatch loadScriptCompleted. I expect this check to be removed once we
       // have n number of scripts. Perhaps a dispatch of an error state?
-      .then((source: string) => source === null ? false : dispatch(loadScriptCompleted(source)));
+      .then(source => source === null ? false : dispatch(loadScriptCompleted(source)));
   };
 }
 
