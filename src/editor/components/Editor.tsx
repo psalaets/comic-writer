@@ -15,7 +15,7 @@ export const Editor: React.FC = observer(() => {
   return (
     <CodeMirror
       editorWidth={80}
-      value={scriptStore.source}
+      value={scriptStore.initialValue}
       panelCounts={scriptStore.panelCounts}
       wordCounts={scriptStore.wordCounts}
       characters={scriptStore.speakers}

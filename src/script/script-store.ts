@@ -1,4 +1,9 @@
-import { observable, computed, action, intercept } from 'mobx';
+import {
+  observable,
+  computed,
+  action,
+  intercept,
+} from 'mobx';
 
 import {
   ComicNode,
@@ -21,6 +26,7 @@ export type ScriptStore = ReturnType<typeof createStore>;
 
 export function createStore() {
   const store = observable({
+    initialValue: '',
     source: '',
     preSpread: [] as Array<string>,
     spreads: [] as Array<RawSpreadChunk>,
@@ -135,12 +141,20 @@ export function createStore() {
       const incomingPreSpread = lines.consumeUntilSpreadStart();
       const incomingSpreads = lines.consumeAllSpreads();
 
-      this.source = lines.toString();
+      this._updateSource(lines.toString());
       this._updatePreSpread(this.preSpread, incomingPreSpread);
       this._updateSpreads(this.spreads, incomingSpreads);
     },
 
     // private helpers
+    _updateSource(incoming: string): void {
+      if (!this.source) {
+        this.initialValue = incoming;
+      }
+
+      this.source = incoming;
+    },
+
     _updatePreSpread(current: Array<string>, incoming: Array<string>): void {
       this.preSpread = allLinesEqual(current, incoming)
         ? current
