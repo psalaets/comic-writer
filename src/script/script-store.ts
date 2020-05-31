@@ -2,7 +2,6 @@ import {
   observable,
   computed,
   action,
-  intercept,
 } from 'mobx';
 
 import {
@@ -196,14 +195,6 @@ export function createStore() {
     wordCounts: computed.struct,
 
     updateScript: action
-  });
-
-  intercept(store, 'source', change => {
-    if (!store.source) {
-      return change;
-    }
-
-    return null;
   });
 
   return store;
