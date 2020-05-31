@@ -115,6 +115,8 @@ export default class CodeMirrorComponent extends Component<Props> {
         return;
       }
 
+      perf.start('change-event');
+
       // Grab cursor position *before* preprocessing because cursor might need
       // to be put back to its original position.
       const cursor = cm.getCursor();
@@ -134,6 +136,8 @@ export default class CodeMirrorComponent extends Component<Props> {
       // will be weird.
       if (change.origin === 'undo' || change.origin === 'redo') {
         this.emitUndoRedoChange(oldLines);
+
+        perf.end('change-event');
         return;
       }
 
@@ -170,6 +174,8 @@ export default class CodeMirrorComponent extends Component<Props> {
 
       // Only the preprocessed script lines go to the outside world
       this.emitChange(newLines);
+
+      perf.end('change-event');
     });
   }
 
