@@ -24,6 +24,7 @@ import {
   PanelCount,
   WordCount
 } from './types';
+import * as deepEquals from './deep-equals';
 
 const SCRIPT_STORAGE_KEY = 'comic-writer.script';
 
@@ -177,7 +178,7 @@ export function createStore() {
     }, 1000),
 
     _updatePreSpread(current: Array<string>, incoming: Array<string>): void {
-      this.preSpread = allLinesEqual(current, incoming)
+      this.preSpread = deepEquals.strings(current, incoming)
         ? current
         : incoming;
     },
@@ -193,7 +194,7 @@ export function createStore() {
 
         let nextSpread;
 
-        if (deepEquals(currentSpread, incomingSpread)) {
+        if (deepEquals.rawSpreadChunk(currentSpread, incomingSpread)) {
           nextSpread = currentSpread;
         } else {
           nextSpread = incomingSpread;
@@ -219,9 +220,15 @@ export function createStore() {
     preSpreadLineCount: computed,
     locatedSpreadChunks: computed,
     locatedSpreads: computed,
-    speakers: computed.struct,
-    panelCounts: computed.struct,
-    wordCounts: computed.struct,
+    speakers: computed({
+      equals: deepEquals.strings
+    }),
+    panelCounts: computed({
+      equals: deepEquals.panelCounts,
+    }),
+    wordCounts: computed({
+      equals: deepEquals.wordCounts
+    }),
 
     updateScript: action,
     loadScript: action,
@@ -253,30 +260,4 @@ function createMemoizedMapper<InputType, ResultType>(update: (i: InputType) => R
 
     return nextResults;
   };
-}
-
-function deepEquals(current: RawSpreadChunk, incoming: RawSpreadChunk): boolean {
-  if (current == null) return incoming == null;
-  if (incoming == null) return current == null;
-
-  if (current.spread !== incoming.spread) {
-    return false;
-  }
-
-  return allLinesEqual(current.children, incoming.children);
-}
-
-function allLinesEqual(oldLines: Array<string>, newLines: Array<string>): boolean {
-  if (oldLines.length !== newLines.length) {
-    return false;
-  }
-
-  // using old school for loop here for speed
-  for (let i = 0; i < oldLines.length; i++) {
-    if (oldLines[i] !== newLines[i]) {
-      return false;
-    }
-  }
-
-  return true;
 }
