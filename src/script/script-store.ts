@@ -212,6 +212,7 @@ export function createStore() {
     }
   }, {
     source: observable,
+    initialValue: observable,
     preSpread: observable.ref,
     spreads: observable.ref,
 
