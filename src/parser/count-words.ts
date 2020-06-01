@@ -14,7 +14,7 @@ function joinText(thing : Joinable): string {
   if (Array.isArray(thing)) {
     return thing.reduce<string>((joined, current) => joined + joinText(current), '');
   } else if (thing && typeof thing === 'object') {
-    return joinText(thing.content);
+    return thing.content;
   } else if (typeof thing === 'string') {
     return thing;
   } else {
