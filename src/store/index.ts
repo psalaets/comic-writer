@@ -1,3 +1,4 @@
+import './configure-mobx';
 import { store as script } from '../script';
 
 export interface RootStore {
