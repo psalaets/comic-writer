@@ -38,8 +38,8 @@ export const parseRawSpreadChunk = perf.wrap('parseRawSpreadChunk', function par
   const spreadLine = chunk.spread;
   const childLines = chunk.children;
 
-  const children = panelRollups(parseSpreadChildren(childLines));
-  const spread = spreadRollups(parseSpread(spreadLine), children);
+  const children = applyPanelRollups(parseSpreadChildren(childLines));
+  const spread = applySpreadRollups(parseSpread(spreadLine), children);
 
   return {
     spread,
@@ -47,16 +47,16 @@ export const parseRawSpreadChunk = perf.wrap('parseRawSpreadChunk', function par
   };
 });
 
-function spreadRollups(spread: Spread, children: Array<SpreadChild>): Spread {
+function applySpreadRollups(spread: Spread, children: Array<SpreadChild>): Spread {
   return children.reduce((spread, child) => {
     if (child.type === parts.PANEL) {
-      spread.panelCount += 1;
-      spread.captionCount += child.captionCount;
-      spread.captionWordCount += child.captionWordCount;
-      spread.dialogueCount += child.dialogueCount;
+      spread.panelCount        += 1;
+      spread.captionCount      += child.captionCount;
+      spread.captionWordCount  += child.captionWordCount;
+      spread.dialogueCount     += child.dialogueCount;
       spread.dialogueWordCount += child.dialogueWordCount;
+      spread.sfxCount          += child.sfxCount;
       spread.speakers.push(...child.speakers);
-      spread.sfxCount += child.sfxCount;
     }
     return spread;
   }, spread);
@@ -75,7 +75,7 @@ function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
     .map(line => parseSpreadChild(line, numbering));
 }
 
-function panelRollups(children: Array<SpreadChild>): Array<SpreadChild> {
+function applyPanelRollups(children: Array<SpreadChild>): Array<SpreadChild> {
   let lastPanel: Panel;
 
   children.forEach(child => {
