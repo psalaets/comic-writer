@@ -9,7 +9,7 @@ import {
 import localstorage from '../localstorage';
 
 import {
-  ComicNode,
+  PreSpread,
   RawSpreadChunk,
   ParsedSpreadChunk,
 } from '../parser/types';
@@ -47,7 +47,7 @@ export function createStore() {
       return this._spreadParser(this.spreads);
     },
 
-    get preSpreadNodes(): Array<ComicNode> {
+    get preSpreadNodes(): Array<PreSpread> {
       return parsePreSpreadLines(this.preSpread);
     },
 

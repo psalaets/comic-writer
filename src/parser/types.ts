@@ -1,14 +1,15 @@
 import * as parts from '../comic-part-types';
 
-/** Anything that can be in a script */
-export type ComicNode = Container | Leaf;
+/**
+ * Nodes that can be in the upper script area before spreads.
+ */
+export type PreSpread = Metadata | Paragraph | BlankLine;
 
 export type SpreadChild = Panel | Leaf;
 
-/** Nodes that contain other nodes */
-type Container = Spread | Panel;
 /** Lettering nodes */
 type Lettering = Dialogue | Caption | Sfx;
+
 /** Nodes that don't contain other nodes */
 type Leaf = Lettering | Metadata | Paragraph | BlankLine;
 

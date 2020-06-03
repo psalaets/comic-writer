@@ -12,7 +12,7 @@ import {
   Sfx,
   LetteringContentChunk,
   BlankLine,
-  ComicNode,
+  PreSpread,
   SpreadChild,
   RawSpreadChunk,
   ParsedSpreadChunk,
@@ -127,11 +127,11 @@ function parseSpreadChild(line: string, numbering: LetteringNumbering): SpreadCh
   return parseParagraph(line);
 }
 
-export function parsePreSpreadLines(lines: Array<string>): Array<ComicNode> {
+export function parsePreSpreadLines(lines: Array<string>): Array<PreSpread> {
   return lines.map(line => parsePreSpreadLine(line));
 }
 
-function parsePreSpreadLine(line: string): ComicNode {
+function parsePreSpreadLine(line: string): PreSpread {
   // scripts are about 1/2 blank lines so this should be first
   if (classifiers.isBlank(line)) return BLANK_LINE;
 
