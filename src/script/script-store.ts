@@ -69,7 +69,8 @@ export function createStore() {
           {
             lineNumber: lineNumber++,
             startPage: pageNumber,
-            endPage: pageNumber + (spread.pageCount - 1)
+            endPage: pageNumber + (spread.pageCount - 1),
+            label: labelSpread(pageNumber, pageNumber + (spread.pageCount - 1))
           },
           spread
         );
@@ -82,7 +83,14 @@ export function createStore() {
             // using Object.assign instead of object spread here because I can't
             // figure out how to get rid of the object spread polyfill and the
             // polyfill is slow
-            return Object.assign({ lineNumber: lineNumber++ }, child);
+            if (child.type === parts.PANEL) {
+              return Object.assign({
+                lineNumber: lineNumber++,
+                label: labelPanel(child.number)
+              }, child);
+            } else {
+              return Object.assign({ lineNumber: lineNumber++ }, child);
+            }
           });
 
         return {
@@ -261,4 +269,14 @@ function createMemoizedMapper<InputType, ResultType>(update: (i: InputType) => R
 
     return nextResults;
   };
+}
+
+function labelSpread(startPage: number, endPage: number): string {
+  return startPage === endPage
+    ? `Page ${startPage}`
+    : `Pages ${startPage}-${endPage}`;
+}
+
+function labelPanel(number: number): string {
+  return `Panel ${number}`;
 }

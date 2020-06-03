@@ -33,8 +33,13 @@ interface SpreadPages {
   endPage: number;
 }
 
-export type LocatedSpread = Spread & SpreadPages & ScriptLocation;
-export type LocatedPanel = Panel & ScriptLocation;
+interface Labelled {
+  /** Human readable label */
+  label: string;
+}
+
+export type LocatedSpread = Spread & SpreadPages & ScriptLocation & Labelled;
+export type LocatedPanel = Panel & ScriptLocation & Labelled;
 export type LocatedDialogue = Dialogue & ScriptLocation;
 export type LocatedCaption = Caption & ScriptLocation;
 export type LocatedSfx = Sfx & ScriptLocation;
