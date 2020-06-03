@@ -5,13 +5,13 @@ import * as parts from '../comic-part-types';
  */
 export type PreSpread = Metadata | Paragraph | BlankLine;
 
-export type SpreadChild = Panel | Leaf;
+/**
+ * Nodes that can be a child of a spread.
+ */
+export type SpreadChild = Panel | Lettering | Paragraph | BlankLine;
 
 /** Lettering nodes */
 type Lettering = Dialogue | Caption | Sfx;
-
-/** Nodes that don't contain other nodes */
-type Leaf = Lettering | Metadata | Paragraph | BlankLine;
 
 export interface Spread {
   // core spread properties
