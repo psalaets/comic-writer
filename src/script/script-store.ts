@@ -10,19 +10,20 @@ import localstorage from '../localstorage';
 
 import {
   PreSpread,
-  RawSpreadChunk,
-  ParsedSpreadChunk,
+  SpreadContent,
+  Spread,
+  SpreadChild,
 } from '../parser/types';
 import { LineStream } from './line-stream';
-import { parsePreSpreadLines, parseRawSpreadChunk } from '../parser';
+import { parsePreSpreadLines, parseSpreadContent } from '../parser';
 import * as iterators from './iterator';
 import * as parts from '../comic-part-types';
 
 import {
-  LocatedSpreadChunk,
   LocatedSpread,
   PanelCount,
-  WordCount
+  WordCount,
+  LocatedSpreadChild
 } from './types';
 import * as deepEquals from './deep-equals';
 
@@ -35,15 +36,15 @@ export function createStore() {
     initialValue: '',
     source: '',
     preSpread: [] as Array<string>,
-    spreads: [] as Array<RawSpreadChunk>,
+    spreads: [] as Array<SpreadContent>,
 
     // private
-    _spreadParser: createMemoizedMapper<RawSpreadChunk, ParsedSpreadChunk>(
-      rawChunk => parseRawSpreadChunk(rawChunk)
+    _spreadParser: createMemoizedMapper<SpreadContent, Spread<SpreadChild>>(
+      rawChunk => parseSpreadContent(rawChunk)
     ),
 
     // computed values
-    get parsedSpreadChunks(): Array<ParsedSpreadChunk> {
+    get parsedSpreads(): Array<Spread<SpreadChild>> {
       return this._spreadParser(this.spreads);
     },
 
@@ -55,53 +56,56 @@ export function createStore() {
       return this.preSpread.length;
     },
 
-    get locatedSpreadChunks(): Array<LocatedSpreadChunk> {
+    get locatedSpreads(): Array<LocatedSpread> {
+      // This function uses Object.assign instead of object spread because the
+      // object spread polyfill is slow and I can't figure out how to disable it
+
       let lineNumber = this.preSpreadLineCount;
       let pageNumber = 1;
 
-      return this.parsedSpreadChunks.map(chunk => {
-        const spread = chunk.spread;
-
-        // using Object.assign instead of object spread here because I can't
-        // figure out how to get rid of the object spread polyfill and the
-        // polyfill is slow
+      return this.parsedSpreads.map(spread => {
+        // create located spread
         const locatedSpread = Object.assign(
           {
             lineNumber: lineNumber++,
             startPage: pageNumber,
             endPage: pageNumber + (spread.pageCount - 1),
-            label: labelSpread(pageNumber, pageNumber + (spread.pageCount - 1))
+            label: labelSpread(pageNumber, pageNumber + (spread.pageCount - 1)),
           },
-          spread
+          spread,
+          {
+            children: [] as Array<LocatedSpreadChild>
+          }
         );
 
         // advance page number to next available page
         pageNumber += spread.pageCount;
 
-        const locatedChildren = chunk.children
+        locatedSpread.children = spread.children
           .map(child => {
-            // using Object.assign instead of object spread here because I can't
-            // figure out how to get rid of the object spread polyfill and the
-            // polyfill is slow
             if (child.type === parts.PANEL) {
-              return Object.assign({
-                lineNumber: lineNumber++,
-                label: labelPanel(child.number)
-              }, child);
+              // create located panel
+              return Object.assign(
+                {
+                  lineNumber: lineNumber++,
+                  label: labelPanel(child.number)
+                },
+                child,
+                {
+                  // create located panel children
+                  children: child.children.map(panelChild => {
+                    return Object.assign({ lineNumber: lineNumber++ }, panelChild);
+                  })
+                }
+              );
             } else {
+              // create located spread children (every child type except panel)
               return Object.assign({ lineNumber: lineNumber++ }, child);
             }
           });
 
-        return {
-          spread: locatedSpread,
-          children: locatedChildren
-        };
+        return locatedSpread;
       });
-    },
-
-    get locatedSpreads(): Array<LocatedSpread> {
-      return [...iterators.onlySpreads(this.locatedSpreadChunks)];
     },
 
     get speakers(): Array<string> {
@@ -127,7 +131,7 @@ export function createStore() {
     get wordCounts(): Array<WordCount> {
       const wordCounts: Array<WordCount> = [];
 
-      for (const node of iterators.spreadsAndChildren(this.locatedSpreadChunks)) {
+      for (const node of iterators.spreadsAndChildren(this.locatedSpreads)) {
         if (node.type === parts.DIALOGUE || node.type === parts.CAPTION) {
           wordCounts.push({
             count: node.wordCount,
@@ -191,9 +195,9 @@ export function createStore() {
         : incoming;
     },
 
-    _updateSpreads(current: Array<RawSpreadChunk>, incoming: Array<RawSpreadChunk>): void {
+    _updateSpreads(current: Array<SpreadContent>, incoming: Array<SpreadContent>): void {
       let changes = 0;
-      const nextSpreads: Array<RawSpreadChunk> = [];
+      const nextSpreads: Array<SpreadContent> = [];
 
       const length = Math.max(current.length, incoming.length);
       for (let i = 0; i < length; i++) {
@@ -202,7 +206,7 @@ export function createStore() {
 
         let nextSpread;
 
-        if (deepEquals.rawSpreadChunk(currentSpread, incomingSpread)) {
+        if (deepEquals.spreadContent(currentSpread, incomingSpread)) {
           nextSpread = currentSpread;
         } else {
           nextSpread = incomingSpread;
@@ -224,10 +228,9 @@ export function createStore() {
     preSpread: observable.ref,
     spreads: observable.ref,
 
-    parsedSpreadChunks: computed,
+    parsedSpreads: computed,
     preSpreadNodes: computed,
     preSpreadLineCount: computed,
-    locatedSpreadChunks: computed,
     locatedSpreads: computed,
     speakers: computed({
       equals: deepEquals.strings

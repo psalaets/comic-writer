@@ -8,17 +8,23 @@ export type PreSpread = Metadata | Paragraph | BlankLine;
 /**
  * Nodes that can be a child of a spread.
  */
-export type SpreadChild = Panel | Lettering | Paragraph | BlankLine;
+export type SpreadChild = Panel<PanelChild> | PanelChild;
+
+/**
+ * Nodes that can be a child of a panel.
+ */
+export type PanelChild = Lettering | Paragraph | BlankLine;
 
 /** Lettering nodes */
 type Lettering = Dialogue | Caption | Sfx;
 
-export interface Spread {
+export interface Spread<ChildType> {
   // core spread properties
   type: typeof parts.SPREAD;
   pageCount: number;
+  children: Array<ChildType>;
 
-  // properties that require looking at the spread's children
+  // properties that are derived from children
   panelCount: number;
   speakers: Array<string>;
   dialogueCount: number;
@@ -28,12 +34,13 @@ export interface Spread {
   captionWordCount: number;
 }
 
-export interface Panel {
+export interface Panel<ChildType> {
   // core panel properties
   type: typeof parts.PANEL;
   number: number;
+  children: Array<ChildType>;
 
-  // properties that require looking at the panel's children
+  // properties that are derived from children
   speakers: Array<string>;
   dialogueCount: number;
   captionCount: number;
@@ -87,37 +94,18 @@ export interface BlankLine {
 }
 
 /**
- * A spread and all of its children.
- *
- * @type SpreadType - Type of the spread value
- * @type ChildType - Type of each spread child
+ * The lines from a script that make up a spread and everything inside it.
  */
-export interface SpreadChunk<SpreadType, ChildType> {
+export interface SpreadContent {
   /**
-   * The spread.
+   * The spread line.
    */
-  spread: SpreadType,
+  spread: string;
   /**
-   * The children of this spread.
+   * The child lines of the spread.
    */
-  children: Array<ChildType>
+  children: Array<string>;
 }
-
-/**
- * A spread chunk where
- *
- * - spread is a string
- * - children are strings
- */
-export type RawSpreadChunk = SpreadChunk<string, string>;
-
-/**
- * A spread chunk where
- *
- * - spread is a Spread
- * - children are SpreadChild
- */
-export type ParsedSpreadChunk = SpreadChunk<Spread, SpreadChild>;
 
 /**
  * Internal parser state.

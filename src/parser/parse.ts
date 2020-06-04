@@ -14,8 +14,8 @@ import {
   BlankLine,
   PreSpread,
   SpreadChild,
-  RawSpreadChunk,
-  ParsedSpreadChunk,
+  PanelChild,
+  SpreadContent,
   LetteringNumbering
 } from './types';
 
@@ -34,32 +34,15 @@ const BLANK_LINE: BlankLine = {
   type: parts.BLANK
 };
 
-export const parseRawSpreadChunk = perf.wrap('parseRawSpreadChunk', function parseRawSpreadChunk(chunk: RawSpreadChunk): ParsedSpreadChunk {
-  const spreadLine = chunk.spread;
-  const childLines = chunk.children;
+export const parseSpreadContent = perf.wrap('parseSpreadContent', parse);
 
-  const children = applyPanelRollups(parseSpreadChildren(childLines));
-  const spread = applySpreadRollups(parseSpread(spreadLine), children);
+function parse(content: SpreadContent): Spread<SpreadChild> {
+  const spreadLine = content.spread;
+  const childLines = content.children;
 
-  return {
-    spread,
-    children
-  };
-});
+  const children = parseSpreadChildren(childLines);
 
-function applySpreadRollups(spread: Spread, children: Array<SpreadChild>): Spread {
-  return children.reduce((spread, child) => {
-    if (child.type === parts.PANEL) {
-      spread.panelCount        += 1;
-      spread.captionCount      += child.captionCount;
-      spread.captionWordCount  += child.captionWordCount;
-      spread.dialogueCount     += child.dialogueCount;
-      spread.dialogueWordCount += child.dialogueWordCount;
-      spread.sfxCount          += child.sfxCount;
-      spread.speakers.push(...child.speakers);
-    }
-    return spread;
-  }, spread);
+  return parseSpread(spreadLine, children);
 }
 
 function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
@@ -71,40 +54,51 @@ function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
     }
   };
 
-  return lines
-    .map(line => parseSpreadChild(line, numbering));
+  const spreadChildren: Array<SpreadChild> = [];
+  let currentPanel: Panel<PanelChild> | null = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const parsed = parseSpreadChild(lines[i], numbering);
+
+    if (parsed.type === parts.PANEL) {
+      currentPanel = parsed;
+      spreadChildren.push(parsed);
+    } else {
+      if (currentPanel) {
+        currentPanel.children.push(parsed);
+      } else {
+        spreadChildren.push(parsed);
+      }
+    }
+  }
+
+  return applyPanelRollups(spreadChildren);
 }
 
 function applyPanelRollups(children: Array<SpreadChild>): Array<SpreadChild> {
-  let lastPanel: Panel;
+  children.forEach(spreadChild => {
+    if (spreadChild.type === parts.PANEL) {
+      const panel = spreadChild;
 
-  children.forEach(child => {
-    switch (child.type) {
-      case parts.PANEL: {
-        lastPanel = child;
-        break;
-      }
-      case parts.CAPTION: {
-        if (lastPanel) {
-          lastPanel.captionCount += 1;
-          lastPanel.captionWordCount += child.wordCount;
+      panel.children.forEach(panelChild => {
+        switch (panelChild.type) {
+          case parts.CAPTION: {
+            panel.captionCount += 1;
+            panel.captionWordCount += panelChild.wordCount;
+            break;
+          }
+          case parts.DIALOGUE: {
+            panel.dialogueCount += 1;
+            panel.dialogueWordCount += panelChild.wordCount;
+            panel.speakers.push(panelChild.speaker);
+            break;
+          }
+          case parts.SFX: {
+            panel.sfxCount += 1;
+            break;
+          }
         }
-        break;
-      }
-      case parts.DIALOGUE: {
-        if (lastPanel) {
-          lastPanel.dialogueCount += 1;
-          lastPanel.dialogueWordCount += child.wordCount;
-          lastPanel.speakers.push(child.speaker);
-        }
-        break;
-      }
-      case parts.SFX: {
-        if (lastPanel) {
-          lastPanel.sfxCount += 1;
-        }
-        break;
-      }
+      });
     }
   });
 
@@ -141,18 +135,19 @@ function parsePreSpreadLine(line: string): PreSpread {
   return parseParagraph(line);
 }
 
-export function parseSpread(line: string): Spread {
+export function parseSpread(line: string, children: Array<SpreadChild>): Spread<SpreadChild> {
   const matchResult = SPREAD_REGEX.exec(line) as Array<string>;
 
   const startPage = Number(matchResult[1]);
   const endPage = matchResult[3] != null ? Number(matchResult[3]) : startPage;
   const pageCount = countPages(startPage, endPage);
 
-  return {
+  return applySpreadRollups({
     type: parts.SPREAD,
     pageCount,
+    children,
 
-    // these start with default values, rollups need to be done later
+    // these start with default values, they're populated when applying rollups
     panelCount: 0,
     speakers: [],
     dialogueCount: 0,
@@ -160,7 +155,22 @@ export function parseSpread(line: string): Spread {
     sfxCount: 0,
     dialogueWordCount: 0,
     captionWordCount: 0
-  };
+  });
+}
+
+function applySpreadRollups(spread: Spread<SpreadChild>): Spread<SpreadChild> {
+  return spread.children.reduce((spread, child) => {
+    if (child.type === parts.PANEL) {
+      spread.panelCount += 1;
+      spread.captionCount += child.captionCount;
+      spread.captionWordCount += child.captionWordCount;
+      spread.dialogueCount += child.dialogueCount;
+      spread.dialogueWordCount += child.dialogueWordCount;
+      spread.sfxCount += child.sfxCount;
+      spread.speakers.push(...child.speakers);
+    }
+    return spread;
+  }, spread);
 }
 
 function countPages(startPage: number, endPage?: number): number {
@@ -175,14 +185,15 @@ function countPages(startPage: number, endPage?: number): number {
   }
 }
 
-export function parsePanel(line: string): Panel {
+export function parsePanel(line: string): Panel<PanelChild> {
   const [, number] = PANEL_REGEX.exec(line) as Array<string>;
 
   return {
     type: parts.PANEL,
     number: Number(number),
 
-    // these start with default values, rollups need to be done later
+    // these start with default values, they'll be populated later
+    children: [],
     speakers: [],
     dialogueCount: 0,
     captionCount: 0,

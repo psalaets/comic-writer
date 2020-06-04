@@ -1,5 +1,5 @@
 import {
-  parseRawSpreadChunk,
+  parseSpreadContent,
   parsePreSpreadLines
 } from './parse';
 
@@ -12,7 +12,7 @@ describe('parse aggregate', () => {
         'Establihsing shot of Manhattan. There is a helicopter hovering above a skyscraper.'
       ];
 
-      const result = parseRawSpreadChunk({
+      const result = parseSpreadContent({
         spread: spreadLine,
         children: childLines
       });
@@ -34,7 +34,7 @@ describe('parse aggregate', () => {
         ''
       ];
 
-      const result = parseRawSpreadChunk({
+      const result = parseSpreadContent({
         spread: spreadLine,
         children: childLines
       });
@@ -67,7 +67,7 @@ describe('parse aggregate', () => {
         '\tCAPTION: Bout damn time.'
       ];
 
-      const result = parseRawSpreadChunk({
+      const result = parseSpreadContent({
         spread: spreadLine,
         children: childLines
       });

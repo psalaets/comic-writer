@@ -1,4 +1,4 @@
-import { RawSpreadChunk } from '../parser/types';
+import { SpreadContent } from '../parser/types';
 import { PanelCount, WordCount } from '../script/types';
 
 /*
@@ -21,7 +21,7 @@ export function strings(a: Array<string>, b: Array<string>): boolean {
   return true;
 }
 
-export function rawSpreadChunk(chunkA: RawSpreadChunk, chunkB: RawSpreadChunk): boolean {
+export function spreadContent(chunkA: SpreadContent, chunkB: SpreadContent): boolean {
   if (chunkA == null) return chunkB == null;
   if (chunkB == null) return chunkA == null;
 

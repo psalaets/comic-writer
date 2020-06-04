@@ -7,7 +7,6 @@ import {
   Metadata,
   Paragraph,
   BlankLine,
-  SpreadChunk
 } from '../parser/types';
 
 export interface PanelCount {
@@ -38,8 +37,18 @@ interface Labelled {
   label: string;
 }
 
-export type LocatedSpread = Spread & SpreadPages & ScriptLocation & Labelled;
-export type LocatedPanel = Panel & ScriptLocation & Labelled;
+export type SpreadLocation = ScriptLocation & SpreadPages & Labelled;
+
+/**
+ * Located node types
+ *
+ * For every node type Foo, a LocatedFoo is a Foo in the context of a comic
+ * script. The comic script context is represented by additional properties such
+ * as line number.
+ */
+
+export type LocatedSpread = Spread<LocatedSpreadChild> & SpreadLocation;
+export type LocatedPanel = Panel<LocatedPanelChild> & ScriptLocation & Labelled;
 export type LocatedDialogue = Dialogue & ScriptLocation;
 export type LocatedCaption = Caption & ScriptLocation;
 export type LocatedSfx = Sfx & ScriptLocation;
@@ -47,18 +56,10 @@ export type LocatedMetadata = Metadata & ScriptLocation;
 export type LocatedParagraph = Paragraph & ScriptLocation;
 export type LocatedBlankLine = BlankLine & ScriptLocation;
 
-export type LocatedSpreadChild = LocatedPanel
-  | LocatedDialogue
+export type LocatedSpreadChild = LocatedPanel | LocatedPanelChild;
+
+export type LocatedPanelChild = LocatedDialogue
   | LocatedCaption
   | LocatedSfx
-  | LocatedMetadata
   | LocatedParagraph
   | LocatedBlankLine;
-
-/**
- * A spread chunk where
- *
- * - spread is a LocatedSpread
- * - children are LocatedSpreadChild
- */
-export type LocatedSpreadChunk = SpreadChunk<LocatedSpread, LocatedSpreadChild>;
