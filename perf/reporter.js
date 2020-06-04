@@ -87,17 +87,6 @@ function extractStats(tracelib) {
   const durationsByMeasure = extractDurationsByMeasure(tracelib);
   const frameStats = extractFrameStats(tracelib);
 
-  // one "update cycle" consists of these 3 measures
-  const preprocessLines = durationsByMeasure.preprocessLines;
-  const applyPreprocessingChanges = durationsByMeasure['apply-preprocessing-changes'];
-  const changeSourceThunk = durationsByMeasure.changeSourceThunk;
-
-  durationsByMeasure._updateCycle = sumByIndex(
-    preprocessLines,
-    applyPreprocessingChanges,
-    changeSourceThunk
-  );
-
   return Object.entries(durationsByMeasure)
     .map(([measure, durations]) => {
       return {
