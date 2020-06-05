@@ -16,7 +16,6 @@ import {
   SpreadChild,
   PanelChild,
   SpreadContent,
-  LetteringNumbering
 } from './types';
 
 import {

@@ -106,10 +106,3 @@ export interface SpreadContent {
    */
   children: Array<string>;
 }
-
-/**
- * Internal parser state.
- */
-export interface LetteringNumbering {
-  nextLetteringNumber(): number;
-}
