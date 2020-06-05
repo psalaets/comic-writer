@@ -69,7 +69,7 @@ function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
   return applyPanelRollups(spreadChildren);
 }
 
-function * letteringNumberer() {
+function* letteringNumberer() {
   let number = 1;
   while (true) {
     yield number++;
