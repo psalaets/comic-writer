@@ -46,13 +46,7 @@ function parse(content: SpreadContent): Spread<SpreadChild> {
 }
 
 function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
-  let letteringNumber = 1;
-
-  const numbering = {
-    nextLetteringNumber(): number {
-      return letteringNumber++;
-    }
-  };
+  const numbering = letteringNumberer();
 
   const spreadChildren: Array<SpreadChild> = [];
   let currentPanel: Panel<PanelChild> | null = null;
@@ -73,6 +67,13 @@ function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
   }
 
   return applyPanelRollups(spreadChildren);
+}
+
+function * letteringNumberer() {
+  let number = 1;
+  while (true) {
+    yield number++;
+  }
 }
 
 function applyPanelRollups(children: Array<SpreadChild>): Array<SpreadChild> {
@@ -105,7 +106,7 @@ function applyPanelRollups(children: Array<SpreadChild>): Array<SpreadChild> {
   return children;
 }
 
-function parseSpreadChild(line: string, numbering: LetteringNumbering): SpreadChild {
+function parseSpreadChild(line: string, numbering: Generator<number>): SpreadChild {
   // scripts are about 1/2 blank lines so this should be first
   if (classifiers.isBlank(line)) return BLANK_LINE;
 
@@ -220,14 +221,14 @@ export function parseParagraph(line: string): Paragraph {
   };
 }
 
-export function parseDialogue(line: string, numbering: LetteringNumbering): Dialogue {
+export function parseDialogue(line: string, numbering: Generator<number>): Dialogue {
   const [, speaker, modifier, content] = DIALOGUE_REGEX.exec(line) as Array<string>;
 
   const parseTree = parseLetteringContent(content);
 
   return {
     type: parts.DIALOGUE,
-    number: numbering.nextLetteringNumber(),
+    number: numbering.next().value,
     speaker,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content: parseTree,
@@ -235,25 +236,25 @@ export function parseDialogue(line: string, numbering: LetteringNumbering): Dial
   };
 }
 
-export function parseCaption(line: string, numbering: LetteringNumbering): Caption {
+export function parseCaption(line: string, numbering: Generator<number>): Caption {
   const [, modifier, content] = CAPTION_REGEX.exec(line) as Array<string>;
   const parseTree = parseLetteringContent(content);
 
   return {
     type: parts.CAPTION,
-    number: numbering.nextLetteringNumber(),
+    number: numbering.next().value,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content: parseTree,
     wordCount: countWords(parseTree)
   };
 }
 
-export function parseSfx(line: string, numbering: LetteringNumbering): Sfx {
+export function parseSfx(line: string, numbering: Generator<number>): Sfx {
   const [, modifier, content] = SFX_REGEX.exec(line) as Array<string>;
 
   return {
     type: parts.SFX,
-    number: numbering.nextLetteringNumber(),
+    number: numbering.next().value,
     modifier: modifier ? modifier.slice(1, -1) : null,
     content,
   };

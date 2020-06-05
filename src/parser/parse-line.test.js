@@ -8,6 +8,13 @@ import {
   parseSfx
 } from './parse';
 
+function* letteringNumbers(start = 1) {
+  let number = start;
+  while (true) {
+    yield number++;
+  }
+}
+
 describe('parse lines', () => {
   describe('parseSpread', () => {
     test('single page', () => {
@@ -172,9 +179,7 @@ describe('parse lines', () => {
 
   describe('parseCaption', () => {
     test('basic', () => {
-      const numbering = {
-        nextLetteringNumber: () => 2
-      };
+      const numbering = letteringNumbers(2);
       const result = parseCaption('\tCAPTION: It was a good idea.', numbering);
 
       expect(result).toEqual({
@@ -190,9 +195,7 @@ describe('parse lines', () => {
     });
 
     test('with bold', () => {
-      const numbering = {
-        nextLetteringNumber: () => 5
-      };
+      const numbering = letteringNumbers(5);
       const result = parseCaption('\tCAPTION: It **was** a good idea.', numbering);
 
       expect(result).toEqual({
@@ -214,9 +217,7 @@ describe('parse lines', () => {
     });
 
     test('with modifier', () => {
-      const numbering = {
-        nextLetteringNumber: () => 2
-      };
+      const numbering = letteringNumbers(2);
       const result = parseCaption('\tCAPTION (PERSON): It was a good idea.', numbering);
 
       expect(result).toEqual({
@@ -232,9 +233,7 @@ describe('parse lines', () => {
     });
 
     test('case insensitive', () => {
-      const numbering = {
-        nextLetteringNumber: () => 2
-      };
+      const numbering = letteringNumbers(2);
       const result = parseCaption('\tcaption: It was a good idea.', numbering);
 
       expect(result).toEqual({
@@ -253,9 +252,7 @@ describe('parse lines', () => {
 
   describe('parseDialogue', () => {
     test('basic', () => {
-      const numbering = {
-        nextLetteringNumber: () => 2
-      };
+      const numbering = letteringNumbers(2);
       const result = parseDialogue('\tBEAU: I thought it was a good idea.', numbering);
 
       expect(result).toEqual({
@@ -272,9 +269,7 @@ describe('parse lines', () => {
     });
 
     test('with bold', () => {
-      const numbering = {
-        nextLetteringNumber: () => 2
-      };
+      const numbering = letteringNumbers(2);
       const result = parseDialogue('\tBEAU: I thought it was a **good** idea.', numbering);
 
       expect(result).toEqual({
@@ -297,9 +292,7 @@ describe('parse lines', () => {
     });
 
     test('with modifier', () => {
-      const numbering = {
-        nextLetteringNumber: () => 2
-      };
+      const numbering = letteringNumbers(2);
       const result = parseDialogue('\tBEAU (OFF): I thought it was a good idea.', numbering);
 
       expect(result).toEqual({
@@ -318,9 +311,7 @@ describe('parse lines', () => {
 
   describe('parseSfx', () => {
     test('basic', () => {
-      const numbering = {
-        nextLetteringNumber: () => 2
-      };
+      const numbering = letteringNumbers(2);
       const result = parseSfx('\tSFX: BLAM', numbering);
 
       expect(result).toEqual({
@@ -332,9 +323,7 @@ describe('parse lines', () => {
     });
 
     test('with modifier', () => {
-      const numbering = {
-        nextLetteringNumber: () => 5
-      };
+      const numbering = letteringNumbers(5);
       const result = parseSfx('\tSFX (GLASS): clink', numbering);
 
       expect(result).toEqual({
@@ -346,9 +335,7 @@ describe('parse lines', () => {
     });
 
     test('case insensitive', () => {
-      const numbering = {
-        nextLetteringNumber: () => 12
-      };
+      const numbering = letteringNumbers(12);
       const result = parseSfx('\tsfx: BLAM', numbering);
 
       expect(result).toEqual({
