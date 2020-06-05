@@ -32,10 +32,18 @@ Array [
 
 exports[`parse aggregate parseRawSpreadChunk basic 1`] = `
 Object {
+  "captionCount": 0,
+  "captionWordCount": 0,
   "children": Array [
     Object {
       "captionCount": 0,
       "captionWordCount": 0,
+      "children": Array [
+        Object {
+          "content": "Establihsing shot of Manhattan. There is a helicopter hovering above a skyscraper.",
+          "type": "paragraph",
+        },
+      ],
       "dialogueCount": 0,
       "dialogueWordCount": 0,
       "number": 1,
@@ -43,89 +51,108 @@ Object {
       "speakers": Array [],
       "type": "panel",
     },
-    Object {
-      "content": "Establihsing shot of Manhattan. There is a helicopter hovering above a skyscraper.",
-      "type": "paragraph",
-    },
   ],
-  "spread": Object {
-    "captionCount": 0,
-    "captionWordCount": 0,
-    "dialogueCount": 0,
-    "dialogueWordCount": 0,
-    "pageCount": 1,
-    "panelCount": 1,
-    "sfxCount": 0,
-    "speakers": Array [],
-    "type": "spread",
-  },
+  "dialogueCount": 0,
+  "dialogueWordCount": 0,
+  "pageCount": 1,
+  "panelCount": 1,
+  "sfxCount": 0,
+  "speakers": Array [],
+  "type": "spread",
 }
 `;
 
 exports[`parse aggregate parseRawSpreadChunk multiple letterings 1`] = `
 Object {
+  "captionCount": 5,
+  "captionWordCount": 24,
   "children": Array [
     Object {
       "captionCount": 0,
       "captionWordCount": 0,
+      "children": Array [
+        Object {
+          "content": "Establihsing shot of NYC. There is a helicopter hovering above a skyscraper.",
+          "type": "paragraph",
+        },
+        Object {
+          "type": "blank",
+        },
+      ],
       "dialogueCount": 0,
       "dialogueWordCount": 0,
       "number": 1,
       "sfxCount": 0,
       "speakers": Array [],
       "type": "panel",
-    },
-    Object {
-      "content": "Establihsing shot of NYC. There is a helicopter hovering above a skyscraper.",
-      "type": "paragraph",
-    },
-    Object {
-      "type": "blank",
     },
     Object {
       "captionCount": 2,
       "captionWordCount": 11,
+      "children": Array [
+        Object {
+          "content": "The character walks down the street. Hands stuffed in pockets.",
+          "type": "paragraph",
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": "They're coming after me. I can feel it.",
+              "type": "text",
+            },
+          ],
+          "modifier": null,
+          "number": 1,
+          "type": "caption",
+          "wordCount": 8,
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": "Am I paranoid?",
+              "type": "text",
+            },
+          ],
+          "modifier": null,
+          "number": 2,
+          "type": "caption",
+          "wordCount": 3,
+        },
+        Object {
+          "type": "blank",
+        },
+      ],
       "dialogueCount": 0,
       "dialogueWordCount": 0,
       "number": 2,
       "sfxCount": 0,
       "speakers": Array [],
       "type": "panel",
-    },
-    Object {
-      "content": "The character walks down the street. Hands stuffed in pockets.",
-      "type": "paragraph",
-    },
-    Object {
-      "content": Array [
-        Object {
-          "content": "They're coming after me. I can feel it.",
-          "type": "text",
-        },
-      ],
-      "modifier": null,
-      "number": 1,
-      "type": "caption",
-      "wordCount": 8,
-    },
-    Object {
-      "content": Array [
-        Object {
-          "content": "Am I paranoid?",
-          "type": "text",
-        },
-      ],
-      "modifier": null,
-      "number": 2,
-      "type": "caption",
-      "wordCount": 3,
-    },
-    Object {
-      "type": "blank",
     },
     Object {
       "captionCount": 1,
       "captionWordCount": 6,
+      "children": Array [
+        Object {
+          "content": "Character looks behind him, thinking he is being followed.",
+          "type": "paragraph",
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": "I like to call it prepared.",
+              "type": "text",
+            },
+          ],
+          "modifier": null,
+          "number": 3,
+          "type": "caption",
+          "wordCount": 6,
+        },
+        Object {
+          "type": "blank",
+        },
+      ],
       "dialogueCount": 0,
       "dialogueWordCount": 0,
       "number": 3,
@@ -134,27 +161,39 @@ Object {
       "type": "panel",
     },
     Object {
-      "content": "Character looks behind him, thinking he is being followed.",
-      "type": "paragraph",
-    },
-    Object {
-      "content": Array [
-        Object {
-          "content": "I like to call it prepared.",
-          "type": "text",
-        },
-      ],
-      "modifier": null,
-      "number": 3,
-      "type": "caption",
-      "wordCount": 6,
-    },
-    Object {
-      "type": "blank",
-    },
-    Object {
       "captionCount": 1,
       "captionWordCount": 4,
+      "children": Array [
+        Object {
+          "content": "Character running frantically.",
+          "type": "paragraph",
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": "Help! Help!",
+              "type": "text",
+            },
+          ],
+          "modifier": null,
+          "number": 4,
+          "speaker": "CHARACTER",
+          "type": "dialogue",
+          "wordCount": 2,
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": "Nobody cares, not here.",
+              "type": "text",
+            },
+          ],
+          "modifier": null,
+          "number": 5,
+          "type": "caption",
+          "wordCount": 4,
+        },
+      ],
       "dialogueCount": 1,
       "dialogueWordCount": 2,
       "number": 4,
@@ -165,37 +204,32 @@ Object {
       "type": "panel",
     },
     Object {
-      "content": "Character running frantically.",
-      "type": "paragraph",
-    },
-    Object {
-      "content": Array [
-        Object {
-          "content": "Help! Help!",
-          "type": "text",
-        },
-      ],
-      "modifier": null,
-      "number": 4,
-      "speaker": "CHARACTER",
-      "type": "dialogue",
-      "wordCount": 2,
-    },
-    Object {
-      "content": Array [
-        Object {
-          "content": "Nobody cares, not here.",
-          "type": "text",
-        },
-      ],
-      "modifier": null,
-      "number": 5,
-      "type": "caption",
-      "wordCount": 4,
-    },
-    Object {
       "captionCount": 1,
       "captionWordCount": 3,
+      "children": Array [
+        Object {
+          "content": "Character is shot in the back.",
+          "type": "paragraph",
+        },
+        Object {
+          "content": "BLAM!",
+          "modifier": null,
+          "number": 6,
+          "type": "sfx",
+        },
+        Object {
+          "content": Array [
+            Object {
+              "content": "Bout damn time.",
+              "type": "text",
+            },
+          ],
+          "modifier": null,
+          "number": 7,
+          "type": "caption",
+          "wordCount": 3,
+        },
+      ],
       "dialogueCount": 0,
       "dialogueWordCount": 0,
       "number": 5,
@@ -203,51 +237,36 @@ Object {
       "speakers": Array [],
       "type": "panel",
     },
-    Object {
-      "content": "Character is shot in the back.",
-      "type": "paragraph",
-    },
-    Object {
-      "content": "BLAM!",
-      "modifier": null,
-      "number": 6,
-      "type": "sfx",
-    },
-    Object {
-      "content": Array [
-        Object {
-          "content": "Bout damn time.",
-          "type": "text",
-        },
-      ],
-      "modifier": null,
-      "number": 7,
-      "type": "caption",
-      "wordCount": 3,
-    },
   ],
-  "spread": Object {
-    "captionCount": 5,
-    "captionWordCount": 24,
-    "dialogueCount": 1,
-    "dialogueWordCount": 2,
-    "pageCount": 1,
-    "panelCount": 5,
-    "sfxCount": 1,
-    "speakers": Array [
-      "CHARACTER",
-    ],
-    "type": "spread",
-  },
+  "dialogueCount": 1,
+  "dialogueWordCount": 2,
+  "pageCount": 1,
+  "panelCount": 5,
+  "sfxCount": 1,
+  "speakers": Array [
+    "CHARACTER",
+  ],
+  "type": "spread",
 }
 `;
 
 exports[`parse aggregate parseRawSpreadChunk multiple panels 1`] = `
 Object {
+  "captionCount": 0,
+  "captionWordCount": 0,
   "children": Array [
     Object {
       "captionCount": 0,
       "captionWordCount": 0,
+      "children": Array [
+        Object {
+          "content": "Establihsing shot of Manhattan. There is a helicopter hovering above a skyscraper.",
+          "type": "paragraph",
+        },
+        Object {
+          "type": "blank",
+        },
+      ],
       "dialogueCount": 0,
       "dialogueWordCount": 0,
       "number": 1,
@@ -256,15 +275,17 @@ Object {
       "type": "panel",
     },
     Object {
-      "content": "Establihsing shot of Manhattan. There is a helicopter hovering above a skyscraper.",
-      "type": "paragraph",
-    },
-    Object {
-      "type": "blank",
-    },
-    Object {
       "captionCount": 0,
       "captionWordCount": 0,
+      "children": Array [
+        Object {
+          "content": "The character walks down the street. Hands stuffed in pockets.",
+          "type": "paragraph",
+        },
+        Object {
+          "type": "blank",
+        },
+      ],
       "dialogueCount": 0,
       "dialogueWordCount": 0,
       "number": 2,
@@ -273,15 +294,17 @@ Object {
       "type": "panel",
     },
     Object {
-      "content": "The character walks down the street. Hands stuffed in pockets.",
-      "type": "paragraph",
-    },
-    Object {
-      "type": "blank",
-    },
-    Object {
       "captionCount": 0,
       "captionWordCount": 0,
+      "children": Array [
+        Object {
+          "content": "Character looks behind him, thinking he is being followed.",
+          "type": "paragraph",
+        },
+        Object {
+          "type": "blank",
+        },
+      ],
       "dialogueCount": 0,
       "dialogueWordCount": 0,
       "number": 3,
@@ -289,24 +312,13 @@ Object {
       "speakers": Array [],
       "type": "panel",
     },
-    Object {
-      "content": "Character looks behind him, thinking he is being followed.",
-      "type": "paragraph",
-    },
-    Object {
-      "type": "blank",
-    },
   ],
-  "spread": Object {
-    "captionCount": 0,
-    "captionWordCount": 0,
-    "dialogueCount": 0,
-    "dialogueWordCount": 0,
-    "pageCount": 1,
-    "panelCount": 3,
-    "sfxCount": 0,
-    "speakers": Array [],
-    "type": "spread",
-  },
+  "dialogueCount": 0,
+  "dialogueWordCount": 0,
+  "pageCount": 1,
+  "panelCount": 3,
+  "sfxCount": 0,
+  "speakers": Array [],
+  "type": "spread",
 }
 `;

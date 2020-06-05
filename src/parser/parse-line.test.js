@@ -11,11 +11,12 @@ import {
 describe('parse lines', () => {
   describe('parseSpread', () => {
     test('single page', () => {
-      const result = parseSpread('Page 2');
+      const result = parseSpread('Page 2', []);
 
       expect(result).toEqual({
         type: 'spread',
         pageCount: 1,
+        children: [],
 
         panelCount: 0,
         speakers: [],
@@ -28,11 +29,12 @@ describe('parse lines', () => {
     });
 
     test('double page', () => {
-      const result = parseSpread('Pages 2-3');
+      const result = parseSpread('Pages 2-3', []);
 
       expect(result).toEqual({
         type: 'spread',
         pageCount: 2,
+        children: [],
 
         panelCount: 0,
         speakers: [],
@@ -45,11 +47,12 @@ describe('parse lines', () => {
     });
 
     test('3+ page range', () => {
-      const result = parseSpread('Pages 3-6');
+      const result = parseSpread('Pages 3-6', []);
 
       expect(result).toEqual({
         type: 'spread',
         pageCount: 4,
+        children: [],
 
         panelCount: 0,
         speakers: [],
@@ -62,11 +65,12 @@ describe('parse lines', () => {
     });
 
     test('partial page range', () => {
-      const result = parseSpread('Pages 2-');
+      const result = parseSpread('Pages 2-', []);
 
       expect(result).toEqual({
         type: 'spread',
         pageCount: 1,
+        children: [],
 
         panelCount: 0,
         speakers: [],
@@ -79,11 +83,12 @@ describe('parse lines', () => {
     });
 
     test('case insensitive', () => {
-      const result = parseSpread('PAGE 1');
+      const result = parseSpread('PAGE 1', []);
 
       expect(result).toEqual({
         type: 'spread',
         pageCount: 1,
+        children: [],
 
         panelCount: 0,
         speakers: [],
@@ -103,6 +108,7 @@ describe('parse lines', () => {
       expect(result).toEqual({
         type: 'panel',
         number: 3,
+        children: [],
 
         speakers: [],
         dialogueCount: 0,
@@ -114,11 +120,12 @@ describe('parse lines', () => {
     });
 
     test('case insensitive', () => {
-      const result = parsePanel('PANEL 3');
+      const result = parsePanel('PANEL 3', []);
 
       expect(result).toEqual({
         type: 'panel',
         number: 3,
+        children: [],
 
         speakers: [],
         dialogueCount: 0,
