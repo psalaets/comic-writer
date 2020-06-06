@@ -1,3 +1,5 @@
+// events from Editor
+
 export interface EditorChangeEvent {
   /** New contents of the editor */
   lines: Array<string>;
@@ -10,7 +12,7 @@ export interface ScrollPosition {
 
 export type EditorScrollEvent = ScrollPosition;
 
-// For populating the Outline component
+// Prop types and events for Outline component
 
 export type SpreadOutlineItem = OutlineItem & {
   panels: Array<OutlineItem>
@@ -19,5 +21,10 @@ export type SpreadOutlineItem = OutlineItem & {
 export interface OutlineItem {
   id: string;
   label: string;
+  lineNumber: number,
   current: boolean;
+}
+
+export interface OutlineItemSelectionEvent {
+  item: OutlineItem;
 }

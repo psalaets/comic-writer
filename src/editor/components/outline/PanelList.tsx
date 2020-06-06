@@ -1,8 +1,9 @@
 import React from 'react';
-import { OutlineItem } from '../../types';
+import { OutlineItem, OutlineItemSelectionEvent } from '../../types';
 
 interface PanelListProps {
   panels: Array<OutlineItem>;
+  onSelection: (event: OutlineItemSelectionEvent) => void;
 }
 
 export const PanelList: React.FC<PanelListProps> = props => {
@@ -10,8 +11,8 @@ export const PanelList: React.FC<PanelListProps> = props => {
     return (
       <PanelItem
         key={panel.id}
-        label={panel.label}
-        current={panel.current}
+        panel={panel}
+        onSelection={props.onSelection}
       />
     );
   });
@@ -24,15 +25,20 @@ export const PanelList: React.FC<PanelListProps> = props => {
 };
 
 interface PanelItemProps {
-  label: string,
-  current: boolean;
+  panel: OutlineItem;
+  onSelection: (event: OutlineItemSelectionEvent) => void;
 }
 
 export const PanelItem: React.FC<PanelItemProps> = props => {
-    return (
-    <li>
-      {props.label}
-      {props.current ? ' <' : null}
+  const onClick = (event: React.MouseEvent) => {
+    props.onSelection({item: props.panel});
+    event.stopPropagation();
+  };
+
+  return (
+    <li onClick={onClick}>
+      {props.panel.label}
+      {props.panel.current ? ' <' : null}
     </li>
   );
 };

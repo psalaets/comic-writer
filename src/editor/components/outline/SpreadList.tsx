@@ -1,9 +1,10 @@
 import React from 'react';
 import { PanelList } from './PanelList';
-import { SpreadOutlineItem } from '../../types';
+import { SpreadOutlineItem, OutlineItemSelectionEvent } from '../../types';
 
 interface SpreadListProps {
   spreads: Array<SpreadOutlineItem>;
+  onSelection: (event: OutlineItemSelectionEvent) => void;
 }
 
 export const SpreadList: React.FC<SpreadListProps> = props => {
@@ -12,6 +13,7 @@ export const SpreadList: React.FC<SpreadListProps> = props => {
       <SpreadItem
         key={spread.id}
         spread={spread}
+        onSelection={props.onSelection}
       />
     );
   });
@@ -25,15 +27,16 @@ export const SpreadList: React.FC<SpreadListProps> = props => {
 
 interface SpreadItemProps {
   spread: SpreadOutlineItem;
+  onSelection: (event: OutlineItemSelectionEvent) => void;
 }
 
 export const SpreadItem: React.FC<SpreadItemProps> = props => {
   const panelList = props.spread.panels.length > 0
-    ? <PanelList panels={props.spread.panels} />
+    ? <PanelList panels={props.spread.panels} onSelection={props.onSelection} />
     : null;
 
   return (
-    <li>
+    <li onClick={() => props.onSelection({item: props.spread})}>
       {props.spread.label}
       {props.spread.current ? ' <' : null}
       {panelList}
