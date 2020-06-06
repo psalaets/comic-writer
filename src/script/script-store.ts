@@ -13,6 +13,7 @@ import {
   SpreadContent,
   Spread,
   SpreadChild,
+  PanelChild,
 } from '../parser/types';
 import { LineStream } from './line-stream';
 import { parsePreSpreadLines, parseSpreadContent } from '../parser';
@@ -23,7 +24,8 @@ import {
   LocatedSpread,
   PanelCount,
   WordCount,
-  LocatedSpreadChild
+  LocatedSpreadChild,
+  LocatedPanelChild
 } from './types';
 import * as deepEquals from './deep-equals';
 
@@ -57,52 +59,14 @@ export function createStore() {
     },
 
     get locatedSpreads(): Array<LocatedSpread> {
-      // This function uses Object.assign instead of object spread because the
-      // object spread polyfill is slow and I can't figure out how to disable it
-
-      let lineNumber = this.preSpreadLineCount;
       let pageNumber = 1;
+      const lineNumberer = createLineNumberer(this.preSpreadLineCount);
 
       return this.parsedSpreads.map(spread => {
-        // create located spread
-        const locatedSpread = Object.assign(
-          {
-            lineNumber: lineNumber++,
-            startPage: pageNumber,
-            endPage: pageNumber + (spread.pageCount - 1),
-            label: labelSpread(pageNumber, pageNumber + (spread.pageCount - 1)),
-          },
-          spread,
-          {
-            children: [] as Array<LocatedSpreadChild>
-          }
-        );
+        const locatedSpread = toLocatedSpread(spread, pageNumber, lineNumberer);
 
         // advance page number to next available page
         pageNumber += spread.pageCount;
-
-        locatedSpread.children = spread.children
-          .map(child => {
-            if (child.type === parts.PANEL) {
-              // create located panel
-              return Object.assign(
-                {
-                  lineNumber: lineNumber++,
-                  label: labelPanel(child.number)
-                },
-                child,
-                {
-                  // create located panel children
-                  children: child.children.map(panelChild => {
-                    return Object.assign({ lineNumber: lineNumber++ }, panelChild);
-                  })
-                }
-              );
-            } else {
-              // create located spread children (every child type except panel)
-              return Object.assign({ lineNumber: lineNumber++ }, child);
-            }
-          });
 
         return locatedSpread;
       });
@@ -274,6 +238,66 @@ function createMemoizedMapper<InputType, ResultType>(update: (i: InputType) => R
   };
 }
 
+function toLocatedSpread(
+  spread: Spread<SpreadChild>,
+  pageNumber: number,
+  lineNumbers: Generator<number>
+): LocatedSpread {
+  // This function uses Object.assign instead of object spread because the
+  // object spread polyfill is slow and I can't figure out how to disable it
+
+  const locatedSpread = Object.assign(
+    {
+      lineNumber: lineNumbers.next().value,
+      startPage: pageNumber,
+      endPage: pageNumber + (spread.pageCount - 1),
+      label: labelSpread(pageNumber, pageNumber + (spread.pageCount - 1)),
+    },
+    spread,
+    {
+      children: [] as Array<LocatedSpreadChild>
+    }
+  );
+
+  for (const child of spread.children) {
+    locatedSpread.children.push(toLocatedSpreadChild(child, lineNumbers));
+  }
+
+  return locatedSpread;
+}
+
+function toLocatedSpreadChild(child: SpreadChild, lineNumbers: Generator<number>): LocatedSpreadChild {
+  // This function uses Object.assign instead of object spread because the
+  // object spread polyfill is slow and I can't figure out how to disable it
+
+  if (child.type === parts.PANEL) {
+    // create located panel
+    const locatedPanel = Object.assign(
+      {
+        lineNumber: lineNumbers.next().value,
+        label: labelPanel(child.number)
+      },
+      child,
+      {
+        children: [] as Array<LocatedPanelChild>
+      }
+    );
+
+    for (const panelChild of child.children) {
+      locatedPanel.children.push(Object.assign({
+        lineNumber: lineNumbers.next().value
+      }, panelChild));
+    }
+
+    return locatedPanel;
+  } else {
+    // create located spread children (every child type except panel)
+    return Object.assign({
+      lineNumber: lineNumbers.next().value
+    }, child);
+  }
+}
+
 function labelSpread(startPage: number, endPage: number): string {
   return startPage === endPage
     ? `Page ${startPage}`
@@ -282,4 +306,11 @@ function labelSpread(startPage: number, endPage: number): string {
 
 function labelPanel(number: number): string {
   return `Panel ${number}`;
+}
+
+function* createLineNumberer(start: number) {
+  let number = start;
+  while (true) {
+    yield number++;
+  }
 }
