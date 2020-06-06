@@ -45,7 +45,7 @@ function parse(content: SpreadContent): Spread<SpreadChild> {
 }
 
 function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
-  const numbering = letteringNumberer();
+  const numbering = createLetteringNumberer();
 
   const spreadChildren: Array<SpreadChild> = [];
   let currentPanel: Panel<PanelChild> | null = null;
@@ -68,7 +68,7 @@ function parseSpreadChildren(lines: Array<string>): Array<SpreadChild> {
   return applyPanelRollups(spreadChildren);
 }
 
-function* letteringNumberer() {
+function* createLetteringNumberer() {
   let number = 1;
   while (true) {
     yield number++;
