@@ -170,10 +170,13 @@ function applySpreadRollups(spread: Spread<SpreadChild>): Spread<SpreadChild> {
         spread.sfxCount          += child.sfxCount;
         spread.speakers.push(...child.speakers);
         break;
-      case parts.DIALOGUE: // falls thru
+      case parts.DIALOGUE:
+        spread.dialogueCount     += 1;
+        spread.dialogueWordCount += child.wordCount;
+        break;
       case parts.CAPTION:
-        spread.captionCount     += 1;
-        spread.captionWordCount += child.wordCount;
+        spread.captionCount      += 1;
+        spread.captionWordCount  += child.wordCount;
         break;
     }
 
