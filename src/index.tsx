@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import { create as createStore } from './store';
+import { createStore } from './store';
 import { RootStoreContext } from './store/root-store-context';
 
 const store = createStore();

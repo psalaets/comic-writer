@@ -9,7 +9,7 @@ import 'codemirror/lib/codemirror.css';
 import './CodeMirror.css';
 import './theme.css';
 
-import { EditorChangeEvent } from '../../types';
+import { EditorChangeEvent, EditorScrollEvent } from '../../types';
 import { PanelCount, WordCount } from '../../../script/types';
 
 import * as perf from '../../../perf';
@@ -30,7 +30,8 @@ type Props = {
   panelCounts: Array<PanelCount>,
   wordCounts: Array<WordCount>,
   characters: Array<string>,
-  onChange: (event: EditorChangeEvent) => void
+  onChange: (event: EditorChangeEvent) => void,
+  onScroll: (event: EditorScrollEvent) => void,
 }
 
 export default class CodeMirrorComponent extends Component<Props> {
@@ -92,7 +93,6 @@ export default class CodeMirrorComponent extends Component<Props> {
       inputStyle: 'contenteditable',
       placeholder: 'Adventure starts here...',
       lineWrapping: true,
-      cursorScrollMargin: 100, // Not *exactly* sure why this value works.
       scrollbarStyle: "null",
       scrollPastEnd: true,
       gutters: [WORD_COUNTS],
@@ -176,6 +176,14 @@ export default class CodeMirrorComponent extends Component<Props> {
       this.emitChange(newLines);
 
       perf.end('change-event');
+    });
+
+    this.cm.on('scroll', cm => {
+      const scrollInfo = cm.getScrollInfo();
+
+      this.props.onScroll({
+        topLine: cm.lineAtHeight(scrollInfo.top, 'local')
+      });
     });
   }
 

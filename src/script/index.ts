@@ -1,5 +1,1 @@
-import * as store from './script-store';
-
-export {
-  store
-};
+export * from './script-store';

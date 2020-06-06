@@ -1,12 +1,18 @@
 import './configure-mobx';
-import { store as script } from '../script';
+import { computed } from 'mobx';
+import { createStore as createScriptStore, ScriptStore } from '../script';
+import { createStore as createEditorStore, EditorStore } from '../editor';
 
 export interface RootStore {
-  script: script.ScriptStore
+  script: ScriptStore;
+  editor: EditorStore;
 }
 
-export function create(): RootStore {
+export function createStore(): RootStore {
+  const scriptStore = createScriptStore();
+
   return {
-    script: script.createStore()
+    script: scriptStore,
+    editor: createEditorStore(scriptStore),
   };
 }
