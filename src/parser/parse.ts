@@ -160,15 +160,23 @@ export function parseSpread(line: string, children: Array<SpreadChild>): Spread<
 
 function applySpreadRollups(spread: Spread<SpreadChild>): Spread<SpreadChild> {
   return spread.children.reduce((spread, child) => {
-    if (child.type === parts.PANEL) {
-      spread.panelCount += 1;
-      spread.captionCount += child.captionCount;
-      spread.captionWordCount += child.captionWordCount;
-      spread.dialogueCount += child.dialogueCount;
-      spread.dialogueWordCount += child.dialogueWordCount;
-      spread.sfxCount += child.sfxCount;
-      spread.speakers.push(...child.speakers);
+    switch (child.type) {
+      case parts.PANEL:
+        spread.panelCount        += 1;
+        spread.captionCount      += child.captionCount;
+        spread.captionWordCount  += child.captionWordCount;
+        spread.dialogueCount     += child.dialogueCount;
+        spread.dialogueWordCount += child.dialogueWordCount;
+        spread.sfxCount          += child.sfxCount;
+        spread.speakers.push(...child.speakers);
+        break;
+      case parts.DIALOGUE: // falls thru
+      case parts.CAPTION:
+        spread.captionCount     += 1;
+        spread.captionWordCount += child.wordCount;
+        break;
     }
+
     return spread;
   }, spread);
 }

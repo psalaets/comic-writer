@@ -153,13 +153,32 @@ test('panel word count is sum of its lettering spoken word counts', async t => {
   await t.expect(panelCount.textContent).eql('5');
 });
 
-test('page word count is sum of its panel word counts', async t => {
+test('page word count is sum of its own lettering and its panel word counts', async t => {
   const pageCount = selectors.wordCount(0);
 
   await t
     .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
+    // caption directly in page
+    .pressKey('tab')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorInput(), 'one two three') // 3 spoken words
+    .pressKey('enter')
+    // balloon directly in page
+    .pressKey('tab')
+    .typeText(selectors.editorInput(), 'bob')
+    .pressKey('tab')
+    .typeText(selectors.editorInput(), 'blah') // 1 spoken word
+    .pressKey('enter')
     .typeText(selectors.editorInput(), 'panel')
+    .pressKey('enter')
+    // sfx directly in page
+    .pressKey('tab')
+    .pressKey('down')
+    .pressKey('enter')
+    .pressKey('tab')
+    .typeText(selectors.editorInput(), 'ka pow') // 0 spoken words
     .pressKey('enter')
     // caption
     .pressKey('tab')
@@ -190,7 +209,7 @@ test('page word count is sum of its panel word counts', async t => {
     .typeText(selectors.editorInput(), 'another caption') // 2 spoken words
     .pressKey('enter')
 
-  await t.expect(pageCount.textContent).eql('7');
+  await t.expect(pageCount.textContent).eql('11');
 });
 
 test('other panels do not affect a panel\'s word count', async t => {
