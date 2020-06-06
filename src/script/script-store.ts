@@ -13,7 +13,6 @@ import {
   SpreadContent,
   Spread,
   SpreadChild,
-  PanelChild,
 } from '../parser/types';
 import { LineStream } from './line-stream';
 import { parsePreSpreadLines, parseSpreadContent } from '../parser';
@@ -61,9 +60,13 @@ export function createStore() {
     get locatedSpreads(): Array<LocatedSpread> {
       let pageNumber = 1;
       const lineNumberer = createLineNumberer(this.preSpreadLineCount);
+      const nodeIds = createNodeIds();
+
+      // Because this is a 2-way generator, we need to "start" it
+      nodeIds.next();
 
       return this.parsedSpreads.map(spread => {
-        const locatedSpread = toLocatedSpread(spread, pageNumber, lineNumberer);
+        const locatedSpread = toLocatedSpread(spread, pageNumber, lineNumberer, nodeIds);
 
         // advance page number to next available page
         pageNumber += spread.pageCount;
@@ -241,13 +244,15 @@ function createMemoizedMapper<InputType, ResultType>(update: (i: InputType) => R
 function toLocatedSpread(
   spread: Spread<SpreadChild>,
   pageNumber: number,
-  lineNumbers: Generator<number>
+  lineNumbers: Generator<number>,
+  nodeIds: Generator<string, any, parts.COMIC_NODE>
 ): LocatedSpread {
   // This function uses Object.assign instead of object spread because the
   // object spread polyfill is slow and I can't figure out how to disable it
 
   const locatedSpread = Object.assign(
     {
+      id: nodeIds.next(spread.type).value,
       lineNumber: lineNumbers.next().value,
       startPage: pageNumber,
       endPage: pageNumber + (spread.pageCount - 1),
@@ -260,13 +265,17 @@ function toLocatedSpread(
   );
 
   for (const child of spread.children) {
-    locatedSpread.children.push(toLocatedSpreadChild(child, lineNumbers));
+    locatedSpread.children.push(toLocatedSpreadChild(child, lineNumbers, nodeIds));
   }
 
   return locatedSpread;
 }
 
-function toLocatedSpreadChild(child: SpreadChild, lineNumbers: Generator<number>): LocatedSpreadChild {
+function toLocatedSpreadChild(
+  child: SpreadChild,
+  lineNumbers: Generator<number>,
+  nodeIds: Generator<string, any, parts.COMIC_NODE>
+): LocatedSpreadChild {
   // This function uses Object.assign instead of object spread because the
   // object spread polyfill is slow and I can't figure out how to disable it
 
@@ -274,6 +283,7 @@ function toLocatedSpreadChild(child: SpreadChild, lineNumbers: Generator<number>
     // create located panel
     const locatedPanel = Object.assign(
       {
+        id: nodeIds.next(child.type).value,
         lineNumber: lineNumbers.next().value,
         label: labelPanel(child.number)
       },
@@ -285,6 +295,7 @@ function toLocatedSpreadChild(child: SpreadChild, lineNumbers: Generator<number>
 
     for (const panelChild of child.children) {
       locatedPanel.children.push(Object.assign({
+        id: nodeIds.next(panelChild.type).value,
         lineNumber: lineNumbers.next().value
       }, panelChild));
     }
@@ -293,6 +304,7 @@ function toLocatedSpreadChild(child: SpreadChild, lineNumbers: Generator<number>
   } else {
     // create located spread children (every child type except panel)
     return Object.assign({
+      id: nodeIds.next(child.type).value,
       lineNumber: lineNumbers.next().value
     }, child);
   }
@@ -312,5 +324,36 @@ function* createLineNumberer(start: number) {
   let number = start;
   while (true) {
     yield number++;
+  }
+}
+
+function* createNodeIds(): Generator<string, any, parts.COMIC_NODE> {
+  const generators: Record<parts.COMIC_NODE, Generator<number>> = {
+    [parts.BLANK]    : createIdGenerator(),
+    [parts.CAPTION]  : createIdGenerator(),
+    [parts.DIALOGUE] : createIdGenerator(),
+    [parts.METADATA] : createIdGenerator(),
+    [parts.PANEL]    : createIdGenerator(),
+    [parts.PARAGRAPH]: createIdGenerator(),
+    [parts.SFX]      : createIdGenerator(),
+    [parts.SPREAD]   : createIdGenerator(),
+  };
+
+  let nextType: parts.COMIC_NODE | null = null;
+
+  while (true) {
+    if (nextType) {
+      const gen: Generator<number> = generators[nextType];
+      nextType = yield `${nextType}-${gen.next().value}`;
+    } else {
+      nextType = yield 'dummy';
+    }
+  }
+}
+
+function* createIdGenerator() {
+  let id = 1;
+  while (true) {
+    yield id++;
   }
 }
