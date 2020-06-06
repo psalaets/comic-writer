@@ -25,9 +25,14 @@ import { create as createPanelCounts } from './panel-counts';
 import { create as letteringSnippetCommand } from './lettering-snippet-command';
 import { letteringBoldCommand } from './lettering-bold-command';
 
+// The line this many pixels below viewport top is considered the "current" line
+const TARGET_LINE_SCROLL_OFFSET = 90;
+
 type Props = {
   value: string,
   editorWidth: number,
+  /** When this changes, editor scrolls to the line */
+  targetLine: number,
   panelCounts: Array<PanelCount>,
   wordCounts: Array<WordCount>,
   characters: Array<string>,
@@ -57,6 +62,12 @@ export default class CodeMirrorComponent extends Component<Props> {
     // set initial value
     if (valueChanged && !cm.getValue()) {
       cm.setValue(this.props.value);
+    }
+
+    if (this.props.targetLine !== prevProps.targetLine && this.props.targetLine != null) {
+      // scroll so target line is near the top
+      const coords = cm.charCoords({ line: this.props.targetLine, ch: 0 }, 'local');
+      cm.scrollTo(null, coords.bottom - TARGET_LINE_SCROLL_OFFSET);
     }
 
     if (this.props.panelCounts !== prevProps.panelCounts) {
@@ -188,7 +199,7 @@ export default class CodeMirrorComponent extends Component<Props> {
     const scrollInfo = cm.getScrollInfo();
 
     this.props.onScroll({
-      topLine: cm.lineAtHeight(scrollInfo.top, 'local')
+      topLine: cm.lineAtHeight(scrollInfo.top + TARGET_LINE_SCROLL_OFFSET, 'local')
     });
   }, 100);
 
