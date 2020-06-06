@@ -4,7 +4,7 @@ import {
   computed,
 } from 'mobx';
 
-import { ScrollPosition } from './types';
+import { ScrollPosition, SpreadOutlineItem } from './types';
 import { ScriptStore } from '../script';
 import { LocatedSpread, LocatedPanel } from '../script/types';
 import * as parts from '../comic-part-types';
@@ -15,6 +15,28 @@ export function createStore(scriptStore: ScriptStore) {
   const store = observable({
     scroll: {
       topLine: 0
+    },
+
+    get outlineItems(): Array<SpreadOutlineItem> {
+      return scriptStore.locatedSpreads
+        .map(spread => {
+          const panels = spread.children
+            .filter((child): child is LocatedPanel => child.type === parts.PANEL)
+            .map(panel => {
+              return {
+                id: panel.id,
+                label: panel.label,
+                current: panel.id === this.currentItemId
+              };
+            });
+
+          return {
+            id: spread.id,
+            label: spread.label,
+            current: spread.id === this.currentItemId,
+            panels
+          };
+        });
     },
 
     get currentSpread(): LocatedSpread | null {
@@ -30,6 +52,12 @@ export function createStore(scriptStore: ScriptStore) {
       }
 
       return currentSpread;
+    },
+
+    get currentItemId(): string | null {
+      if (this.currentPanelId) return this.currentPanelId;
+      if (this.currentSpreadId) return this.currentSpreadId;
+      return null;
     },
 
     get currentSpreadId(): string | null {
@@ -61,7 +89,9 @@ export function createStore(scriptStore: ScriptStore) {
   }, {
     scroll: observable,
 
+    outlineItems: computed,
     currentSpread: computed,
+    currentItemId: computed,
     currentPanelId: computed,
     currentSpreadId: computed,
 

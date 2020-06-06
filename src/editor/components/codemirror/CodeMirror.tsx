@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import debounce from 'lodash/debounce';
+import throttle from 'lodash/throttle';
 import CodeMirror from 'codemirror';
 
 import 'codemirror/addon/display/placeholder';
@@ -179,13 +180,17 @@ export default class CodeMirrorComponent extends Component<Props> {
     });
 
     this.cm.on('scroll', cm => {
-      const scrollInfo = cm.getScrollInfo();
-
-      this.props.onScroll({
-        topLine: cm.lineAtHeight(scrollInfo.top, 'local')
-      });
+      this.emitScroll(cm);
     });
   }
+
+  emitScroll = throttle((cm: CodeMirror.Editor) => {
+    const scrollInfo = cm.getScrollInfo();
+
+    this.props.onScroll({
+      topLine: cm.lineAtHeight(scrollInfo.top, 'local')
+    });
+  }, 100);
 
   /**
    * Emit a change event that happened because of an undo or redo by the user.
