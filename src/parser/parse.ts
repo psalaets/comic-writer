@@ -80,21 +80,36 @@ function applyPanelRollups(children: Array<SpreadChild>): Array<SpreadChild> {
     if (spreadChild.type === parts.PANEL) {
       const panel = spreadChild;
 
+      let letteringsSeen = 0;
+
       panel.children.forEach(panelChild => {
         switch (panelChild.type) {
+          case parts.PARAGRAPH: {
+            if (letteringsSeen === 0) {
+              if (panel.description == null) {
+                panel.description = panelChild.content;
+              } else {
+                panel.description += ' ' + panelChild.content;
+              }
+            }
+            break;
+          }
           case parts.CAPTION: {
             panel.captionCount += 1;
             panel.captionWordCount += panelChild.wordCount;
+            letteringsSeen += 1;
             break;
           }
           case parts.DIALOGUE: {
             panel.dialogueCount += 1;
             panel.dialogueWordCount += panelChild.wordCount;
             panel.speakers.push(panelChild.speaker);
+            letteringsSeen += 1;
             break;
           }
           case parts.SFX: {
             panel.sfxCount += 1;
+            letteringsSeen += 1;
             break;
           }
         }
@@ -211,6 +226,7 @@ export function parsePanel(line: string): Panel<PanelChild> {
     sfxCount: 0,
     dialogueWordCount: 0,
     captionWordCount: 0,
+    description: null
   };
 }
 

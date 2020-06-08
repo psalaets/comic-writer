@@ -47,6 +47,7 @@ export interface Panel<ChildType> {
   sfxCount: number;
   dialogueWordCount: number;
   captionWordCount: number;
+  description: string | null;
 }
 
 export interface Paragraph {

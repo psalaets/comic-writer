@@ -14,15 +14,20 @@ export type EditorScrollEvent = ScrollPosition;
 
 // Prop types and events for Outline component
 
-export type SpreadOutlineItem = OutlineItem & {
-  panels: Array<OutlineItem>
-};
-
 export interface OutlineItem {
   id: string;
-  label: string;
-  lineNumber: number,
+  lineNumber: number;
   current: boolean;
+}
+
+export interface SpreadOutlineItem extends OutlineItem {
+  label: string;
+  panels: Array<PanelOutlineItem>;
+};
+
+export interface PanelOutlineItem extends OutlineItem {
+  panelNumber: number;
+  description: string | null;
 }
 
 export interface OutlineItemSelectionEvent {

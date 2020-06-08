@@ -36,6 +36,7 @@
 .c-outline__panel-list-item {
   padding: .1em .5em;
   padding-left: 2em;
+  white-space: nowrap;
 }
 
 /* Modifier */

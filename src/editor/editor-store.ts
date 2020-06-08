@@ -27,9 +27,10 @@ export function createStore(scriptStore: ScriptStore) {
             .map(panel => {
               return {
                 id: panel.id,
-                label: panel.label,
+                panelNumber: panel.number,
                 lineNumber: panel.lineNumber,
-                current: panel.id === this.currentItemId
+                current: panel.id === this.currentItemId,
+                description: panel.description
               };
             });
 
