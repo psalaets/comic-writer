@@ -4,6 +4,7 @@ import { useStore } from '../../../store/use-store';
 import { SpreadList } from './SpreadList';
 import { SpreadOutlineItem, OutlineItemSelectionEvent } from '../../types';
 
+import './Outline.css'
 interface Props {
   spreads: Array<SpreadOutlineItem>;
   onSelection: (event: OutlineItemSelectionEvent) => void;

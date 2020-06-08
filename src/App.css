@@ -14,18 +14,6 @@
 /* Element */
 /******************************************************************************/
 .c-app__writer {
-  flex: 1 1 calc(100vh - 2.25em);
+  flex: 1 1 100vh;
   position: relative;
-}
-
-.c-app__footer {
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  width: 100%;
-}
-
-.c-app__menu-bar {
-  flex: 0 0 auto;
-  z-index: 1;
 }

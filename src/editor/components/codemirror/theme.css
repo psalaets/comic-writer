@@ -45,8 +45,7 @@
 }
 
 /* Gutters */
-.word-counts { /* 1 */
-  border-right: 2px solid var(--color-utility-alabaster);
+.word-counts {
   width: 2em;
 }
 

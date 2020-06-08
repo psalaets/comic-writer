@@ -68,24 +68,8 @@ class App extends Component<{}, AppState> {
     return (
       <>
         <div className="c-app">
-          <div className="c-app__menu-bar">
-            {/* <ConnectedTopBar
-              onGuideClick={this.activateModal(ModalTypes.formattingGuide)}
-              onInsightsClick={this.toggleDrawer}
-              drawerOpen={this.state.drawerIsOpen}
-            /> */}
-          </div>
           <div className="c-app__writer">
             <Writer />
-          </div>
-          <div className="c-app__footer">
-            {/* <Drawer title="Insights" isOpen={this.state.drawerIsOpen} propagateHeight={true}>
-              <Stats>
-                <ConnectedStats.PageCount/>
-                <ConnectedStats.DialougeLength/>
-                <ConnectedStats.PageHistogram/>
-              </Stats>
-            </Drawer> */}
           </div>
         </div>
         {this.renderModal()}

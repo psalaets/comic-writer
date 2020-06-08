@@ -18,7 +18,7 @@ export const PanelList: React.FC<PanelListProps> = props => {
   });
 
   return (
-    <ol>
+    <ol className="c-outline__panel-list">
       {panelItems}
     </ol>
   );
@@ -36,9 +36,14 @@ export const PanelItem: React.FC<PanelItemProps> = props => {
   };
 
   return (
-    <li onClick={onClick}>
+    <li
+      onClick={onClick}
+      className={`
+        c-outline__panel-list-item
+        ${props.panel.current ? 'c-outline__panel-list-item--current' : ''}
+      `}
+    >
       {props.panel.label}
-      {props.panel.current ? ' <' : null}
     </li>
   );
 };

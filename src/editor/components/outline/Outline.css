@@ -1,0 +1,47 @@
+/******************************************************************************/
+/* Outline                                                                    */
+/******************************************************************************/
+
+/* Block */
+/******************************************************************************/
+.c-outline {
+  overflow-y: scroll;
+  padding: 1em;
+  width: 13em;
+}
+
+/* Element */
+/******************************************************************************/
+.c-outline__spread-list > * + * {
+  margin-top: 1em;
+}
+
+.c-outline__spread-list {
+  list-style: none;
+  margin-top: 0;
+  padding: 0;
+}
+
+.c-outline__spread-list-item {
+  padding: 0 1em;
+}
+
+.c-outline__panel-list {
+  list-style: none;
+  margin-top: 0;
+  padding: 0;
+}
+
+.c-outline__panel-list-item {
+  padding: .155em .5em;
+  padding-left: 2em;
+}
+
+/* Modifier */
+/******************************************************************************/
+.c-outline__spread-item--current,
+.c-outline__panel-list-item--current {
+  background-color: var(--color-primary-cool);
+  border-radius: 100px;
+  color: var(--color-utility-pure);
+}

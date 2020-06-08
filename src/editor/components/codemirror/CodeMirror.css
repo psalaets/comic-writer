@@ -17,20 +17,18 @@
 /* Block */
 /******************************************************************************/
 .c-codemirror {
-  background-color: var(--color-utility-pure);
-  border-left: 2px solid var(--color-utility-milk);
-  border-right: 2px solid var(--color-utility-milk);
   height: 100%;
-  margin-left: auto;
   margin-right: auto;
   padding-left: 1.5ex; /* 2 */
-  padding-right: 3ex; /* 2 */
   width: 100%;
   z-index: 0; /* 6 */
 }
 
 /* Misc */
 /******************************************************************************/
+.CodeMirror {
+  font-family: sans-serif;
+}
 .CodeMirror-placeholder[class] { /* 1 */
   color: var(--color-utility-dove);
 }
