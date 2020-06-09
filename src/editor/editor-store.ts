@@ -4,6 +4,7 @@ import {
   computed,
 } from 'mobx';
 
+import { NO_TARGET_LINE } from './constants';
 import { ScrollPosition, SpreadOutlineItem, OutlineItem } from './types';
 import { ScriptStore } from '../script';
 import { LocatedSpread, LocatedPanel } from '../script/types';
@@ -17,7 +18,7 @@ export function createStore(scriptStore: ScriptStore) {
       topLine: 0
     },
 
-    targetLine: 0,
+    targetLine: NO_TARGET_LINE,
 
     get outlineItems(): Array<SpreadOutlineItem> {
       return scriptStore.locatedSpreads
@@ -90,6 +91,7 @@ export function createStore(scriptStore: ScriptStore) {
 
     updateScroll(scrollWindow: ScrollPosition): void {
       this.scroll.topLine = scrollWindow.topLine;
+      this.targetLine = NO_TARGET_LINE;
     },
     selectOutlineItem(item: OutlineItem): void {
       this.targetLine = item.lineNumber;
