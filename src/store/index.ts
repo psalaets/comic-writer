@@ -1,5 +1,5 @@
 import './configure-mobx';
-import { computed } from 'mobx';
+// import { computed } from 'mobx';
 import { createStore as createScriptStore, ScriptStore } from '../script';
 import { createStore as createEditorStore, EditorStore } from '../editor';
 

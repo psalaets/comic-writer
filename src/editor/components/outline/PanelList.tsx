@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { PanelOutlineItem, OutlineItemSelectionEvent } from '../../types';
 
 interface PanelListProps {
@@ -34,9 +34,20 @@ export const PanelItem: React.FC<PanelItemProps> = props => {
     props.onSelection({item: props.panel});
     event.stopPropagation();
   };
+  const panelItemRef = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    props.panel.current &&
+    panelItemRef &&
+    panelItemRef.current!.scrollIntoView({
+      block: 'center',
+      behavior: 'smooth'
+    })
+  })
+
 
   return (
     <li
+      ref={panelItemRef}
       onClick={onClick}
       className={`
         c-outline__panel-list-item

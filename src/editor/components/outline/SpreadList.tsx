@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { PanelList } from './PanelList';
 import { SpreadOutlineItem, OutlineItemSelectionEvent } from '../../types';
 
@@ -32,8 +32,19 @@ export const SpreadItem: React.FC<SpreadItemProps> = props => {
       panels={props.spread.panels}
       onSelection={props.onSelection}/>
 
+  const spreadItemRef = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    props.spread.current &&
+    spreadItemRef &&
+    spreadItemRef.current!.scrollIntoView({
+      block: 'center',
+      behavior: 'smooth'
+    })
+  })
+
   return (
     <li
+      ref={spreadItemRef}
       onClick={() => props.onSelection({item: props.spread})}
       className=""
     >
