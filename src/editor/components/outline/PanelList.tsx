@@ -43,8 +43,9 @@ export const PanelItem: React.FC<PanelItemProps> = props => {
         ${props.panel.current ? 'c-outline__panel-list-item--current' : ''}
       `}
     >
-      {props.panel.panelNumber}
-      {': '}
+      <span className="c-outline__panel-list-item-number">
+        {props.panel.panelNumber}.
+      </span>
       {props.panel.description || '(no description)'}
     </li>
   );

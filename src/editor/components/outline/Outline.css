@@ -6,25 +6,31 @@
 /******************************************************************************/
 .c-outline {
   overflow-y: scroll;
-  padding: 1em;
-  width: 13em;
+  overflow-x: hidden;
+  padding: .5em;
+  max-width: 20em;
   user-select: none;
+  font-size: .8em;
 }
 
 /* Element */
 /******************************************************************************/
-.c-outline__spread-list > * + * {
-  margin-top: .25em;
-}
-
 .c-outline__spread-list {
   list-style: none;
   margin-top: 0;
   padding: 0;
 }
 
+.c-outline__spread-list > * + * {
+  margin-top: 1em;
+}
+
 .c-outline__spread-list-item {
-  padding: .1em 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: .1em;
+  font-weight: bold;
+  color: var(--color-primary-cool);
 }
 
 .c-outline__panel-list {
@@ -33,10 +39,24 @@
   padding: 0;
 }
 
+.c-outline__panel-list > * + * {
+  margin-top: .25em;
+}
+
 .c-outline__panel-list-item {
-  padding: .1em .5em;
-  padding-left: 2em;
+  position: relative;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: .1em;
   white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.c-outline__panel-list-item-number {
+  font-weight: bold;
+  margin-right: .25em;
 }
 
 /* Modifier */
@@ -46,4 +66,5 @@
   background-color: var(--color-primary-cool);
   border-radius: 100px;
   color: var(--color-utility-pure);
+  background-image: none;
 }
