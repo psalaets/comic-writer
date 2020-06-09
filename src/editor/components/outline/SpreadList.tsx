@@ -38,7 +38,7 @@ export const SpreadItem: React.FC<SpreadItemProps> = props => {
     spreadItemRef &&
     spreadItemRef.current!.scrollIntoView({
       block: 'center',
-      behavior: 'smooth'
+      // behavior: 'smooth'
     })
   })
 

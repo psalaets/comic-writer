@@ -40,7 +40,7 @@ export const PanelItem: React.FC<PanelItemProps> = props => {
     panelItemRef &&
     panelItemRef.current!.scrollIntoView({
       block: 'center',
-      behavior: 'smooth'
+      // behavior: 'smooth'
     })
   })
 
