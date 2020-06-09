@@ -108,6 +108,7 @@ export default class CodeMirrorComponent extends Component<Props> {
       lineWrapping: true,
       scrollbarStyle: "null",
       scrollPastEnd: true,
+      tabSize: 8,
       gutters: [WORD_COUNTS],
       extraKeys: {
         Tab: letteringSnippetCommand(getCharacterNames),
