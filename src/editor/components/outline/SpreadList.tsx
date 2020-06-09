@@ -32,11 +32,11 @@ export const SpreadItem: React.FC<SpreadItemProps> = props => {
       panels={props.spread.panels}
       onSelection={props.onSelection}/>
 
-  const spreadItemRef = useRef<HTMLLIElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     props.spread.current &&
-    spreadItemRef &&
-    spreadItemRef.current!.scrollIntoView({
+    divRef &&
+    divRef.current!.scrollIntoView({
       block: 'center',
       // behavior: 'smooth'
     })
@@ -44,14 +44,14 @@ export const SpreadItem: React.FC<SpreadItemProps> = props => {
 
   return (
     <li
-      ref={spreadItemRef}
       onClick={() => props.onSelection({item: props.spread})}
-      className=""
     >
-      <div className={`
-        c-outline__spread-list-item
-        ${props.spread.current ? 'c-outline__spread-item--current' : ''}
+      <div
+        className={`
+          c-outline__spread-list-item
+          ${props.spread.current ? 'c-outline__spread-item--current' : ''}
         `}
+        ref={divRef}
       >
         {props.spread.label}
       </div>
