@@ -32,7 +32,7 @@
   padding-top: .1em;
   font-weight: bold;
   color: var(--color-primary-cool);
-  transition: background-color .1s;
+  transition: background-color .1s, color .1s;
   transition-delay: .1s;
 }
 
@@ -56,7 +56,7 @@
   overflow-x: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  transition: background-color .1s;
+  transition: background-color .1s, color .1s;
   transition-delay: .1s;
 }
 
