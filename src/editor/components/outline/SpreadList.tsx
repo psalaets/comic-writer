@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { PanelList } from './PanelList';
 import { SpreadOutlineItem, OutlineItemSelectionEvent } from '../../types';
+import { useNeedsScrollCallback } from './use-intersection-observer';
 
 interface SpreadListProps {
   spreads: Array<SpreadOutlineItem>;
@@ -32,15 +33,20 @@ export const SpreadItem: React.FC<SpreadItemProps> = props => {
       panels={props.spread.panels}
       onSelection={props.onSelection}/>
 
-  const divRef = useRef<HTMLDivElement>(null);
+  const needsScroll = useRef(false);
+
+  const divRef = useNeedsScrollCallback<HTMLDivElement>(
+    needs => needsScroll.current = needs
+  );
+
   useEffect(() => {
-    props.spread.current &&
-    divRef &&
-    divRef.current!.scrollIntoView({
-      block: 'center',
-      // behavior: 'smooth'
-    })
-  })
+    if (props.spread.current && needsScroll.current) {
+      divRef.current!.scrollIntoView({
+        block: 'center',
+        behavior: 'smooth'
+      });
+    }
+  }, [props.spread, divRef]);
 
   return (
     <li

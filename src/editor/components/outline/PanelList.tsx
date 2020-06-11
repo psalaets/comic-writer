@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { PanelOutlineItem, OutlineItemSelectionEvent } from '../../types';
+import { useNeedsScrollCallback } from './use-intersection-observer';
 
 interface PanelListProps {
   panels: Array<PanelOutlineItem>;
@@ -34,20 +35,25 @@ export const PanelItem: React.FC<PanelItemProps> = props => {
     props.onSelection({item: props.panel});
     event.stopPropagation();
   };
-  const panelItemRef = useRef<HTMLLIElement>(null);
-  useEffect(() => {
-    props.panel.current &&
-    panelItemRef &&
-    panelItemRef.current!.scrollIntoView({
-      block: 'center',
-      // behavior: 'smooth'
-    })
-  })
 
+  const needsScroll = useRef(false);
+
+  const ref = useNeedsScrollCallback<HTMLLIElement>(
+    needs => needsScroll.current = needs
+  );
+
+  useEffect(() => {
+    if (props.panel.current && needsScroll.current) {
+      ref.current!.scrollIntoView({
+        block: 'center',
+        behavior: 'smooth'
+      });
+    }
+  }, [props.panel, ref]);
 
   return (
     <li
-      ref={panelItemRef}
+      ref={ref}
       onClick={onClick}
       className={`
         c-outline__panel-list-item
