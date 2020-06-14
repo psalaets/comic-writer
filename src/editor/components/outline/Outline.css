@@ -6,6 +6,7 @@
 /******************************************************************************/
 .c-outline {
   overflow-y: scroll;
+  scroll-snap-type: y mandatory;
   overflow-x: hidden;
   padding-left: .5em;
   padding-right: .5em;
@@ -33,6 +34,7 @@
   position: sticky;
   top: 0;
   background-color: white;
+  scroll-snap-align: start;
 }
 
 .c-outline__panel-list {
