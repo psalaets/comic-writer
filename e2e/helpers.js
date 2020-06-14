@@ -23,3 +23,8 @@ export async function editorLines() {
 export const getSelectedText = ClientFunction(() => {
   return window.getSelection().toString();
 });
+
+const LETTERING_INDENT = ' '.repeat(8);
+export function lettering(lineAfterIndent) {
+  return `${LETTERING_INDENT}${lineAfterIndent}`;
+}

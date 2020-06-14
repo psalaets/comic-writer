@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import * as selectors from './selectors';
-import { editorLines, getSelectedText } from './helpers';
+import { editorLines, getSelectedText, lettering } from './helpers';
 
 fixture('bold shortcut')
   .page('http://localhost:3000');
@@ -25,7 +25,7 @@ test('lettering with content selected', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: **content**'
+    lettering('CAPTION: **content**')
   ]);
 
   await t.expect(getSelectedText()).eql('content');
@@ -53,7 +53,7 @@ test('lettering with partial content selected', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: cont**ent**'
+    lettering('CAPTION: cont**ent**')
   ]);
 
   await t.expect(getSelectedText()).eql('ent');
@@ -75,7 +75,7 @@ test('lettering with no content selected', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: content****'
+    lettering('CAPTION: content****')
   ]);
 
   // hacky way to check that cursor was between the star pairs
@@ -87,7 +87,7 @@ test('lettering with no content selected', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: conten**'
+    lettering('CAPTION: conten**')
   ]);
 });
 
@@ -107,7 +107,7 @@ test('lettering with no content', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: ****'
+    lettering('CAPTION: ****')
   ]);
 
   // hacky way to check that cursor was between the star pairs
@@ -119,7 +119,7 @@ test('lettering with no content', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION:**'
+    lettering('CAPTION:**')
   ]);
 });
 
@@ -142,7 +142,7 @@ test('lettering with cursor in middle of a word', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: cont****ent'
+    lettering('CAPTION: cont****ent')
   ]);
 
   // hacky way to check that cursor was between the star pairs
@@ -154,7 +154,7 @@ test('lettering with cursor in middle of a word', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: con**ent'
+    lettering('CAPTION: con**ent')
   ]);
 });
 
@@ -178,7 +178,7 @@ test('lettering with repeated uses', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: ****content****'
+    lettering('CAPTION: ****content****')
   ]);
 
   await t.expect(getSelectedText()).eql('content');
@@ -201,7 +201,7 @@ test('undoing bold command', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: **content**'
+    lettering('CAPTION: **content**')
   ]);
 
   await t.expect(getSelectedText()).eql('content');
@@ -212,7 +212,7 @@ test('undoing bold command', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: content'
+    lettering('CAPTION: content')
   ]);
 
   await t.expect(getSelectedText()).eql('content');
@@ -405,7 +405,7 @@ test('cannot bold in lettering meta', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: foo'
+    lettering('CAPTION: foo')
   ]);
 });
 
@@ -438,6 +438,6 @@ test('cannot bold if part of selection is in lettering meta', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: foo'
+    lettering('CAPTION: foo')
   ]);
 });

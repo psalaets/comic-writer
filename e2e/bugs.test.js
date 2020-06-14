@@ -1,5 +1,5 @@
 import * as selectors from './selectors';
-import { editorLines } from './helpers';
+import { editorLines, lettering } from './helpers';
 
 fixture('bugs')
   .page('http://localhost:3000');
@@ -64,7 +64,7 @@ test('any change in page after undoing deletion of page number', async t => {
   await t.expect(await editorLines()).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: caption content',
+    lettering('CAPTION: caption content'),
     'a'
   ]);
 });

@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import * as selectors from './selectors';
-import { editorLines, getSelectedText } from './helpers';
+import { editorLines, getSelectedText, lettering } from './helpers';
 
 fixture('caption')
   .page('http://localhost:3000');
@@ -23,7 +23,7 @@ test('only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: caption content'
+    lettering('CAPTION: caption content')
   ]);
 });
 
@@ -47,7 +47,7 @@ test('with modifier, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION (BLAH): caption content'
+    lettering('CAPTION (BLAH): caption content')
   ]);
 });
 
@@ -69,7 +69,7 @@ test('filter down to a single option and select it', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: caption content'
+    lettering('CAPTION: caption content')
   ]);
 });
 
@@ -88,7 +88,7 @@ test('selecting caption option with arrows and tab', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: content'
+    lettering('CAPTION: content')
   ]);
 
   await t.expect(getSelectedText()).eql('');
@@ -111,7 +111,7 @@ test('selecting caption option with mouse', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: content'
+    lettering('CAPTION: content')
   ]);
 
   await t.expect(getSelectedText()).eql('');

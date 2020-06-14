@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import * as selectors from './selectors';
-import { editorLines, getSelectedText } from './helpers';
+import { editorLines, getSelectedText, lettering } from './helpers';
 
 fixture('dialogue')
   .page('http://localhost:3000');
@@ -23,7 +23,7 @@ test('for new speaker, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    BOB: dialogue content'
+    lettering('BOB: dialogue content')
   ]);
 });
 
@@ -47,7 +47,7 @@ test('with modifier for new speaker, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    BOB (OFF): dialogue content'
+    lettering('BOB (OFF): dialogue content')
   ]);
 });
 
@@ -76,8 +76,8 @@ test('for existing speaker, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    BOB: first balloon',
-    '    BOB: second balloon',
+    lettering('BOB: first balloon'),
+    lettering('BOB: second balloon'),
   ]);
 });
 
@@ -109,8 +109,8 @@ test('with modifier for existing speaker, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    BOB: first balloon',
-    '    BOB (OFF): second balloon',
+    lettering('BOB: first balloon'),
+    lettering('BOB (OFF): second balloon'),
   ]);
 });
 
@@ -146,9 +146,9 @@ test('speakers in popup are in abc order', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    ZZZ: first balloon',
-    '    AAA: second balloon',
-    '    ZZZ: third balloon',
+    lettering('ZZZ: first balloon'),
+    lettering('AAA: second balloon'),
+    lettering('ZZZ: third balloon'),
   ]);
 });
 
@@ -183,9 +183,9 @@ test('speakers in popup are filtered as you type', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    JANICE: first balloon',
-    '    JONATHAN: second balloon',
-    '    JONATHAN: third balloon',
+    lettering('JANICE: first balloon'),
+    lettering('JONATHAN: second balloon'),
+    lettering('JONATHAN: third balloon'),
   ]);
 });
 
@@ -213,8 +213,8 @@ test('filter down to a single option and select it', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    BOB: first balloon',
-    '    BOB: second balloon',
+    lettering('BOB: first balloon'),
+    lettering('BOB: second balloon'),
   ]);
 });
 
@@ -241,8 +241,8 @@ test('selecting character option with arrows and tab', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    BOB: content',
-    '    BOB: content'
+    lettering('BOB: content'),
+    lettering('BOB: content')
   ]);
 
   await t.expect(getSelectedText()).eql('');
@@ -269,8 +269,8 @@ test('selecting character option with mouse', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    BOB: content',
-    '    BOB: content'
+    lettering('BOB: content'),
+    lettering('BOB: content')
   ]);
 
   await t.expect(getSelectedText()).eql('');

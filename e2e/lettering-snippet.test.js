@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import * as selectors from './selectors';
-import { editorLines, getSelectedText } from './helpers';
+import { editorLines, getSelectedText, lettering } from './helpers';
 
 fixture('lettering snippet common behavior')
   .page('http://localhost:3000');
@@ -165,7 +165,7 @@ test('shift-tab from subject area (with no popup) exits lettering snippet', asyn
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SUBJECT: content'
+    lettering('SUBJECT: content')
   ]);
 });
 
@@ -185,7 +185,7 @@ test('hint popup selection wraps when arrowing up from first option', async t =>
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SFX: content'
+    lettering('SFX: content')
   ]);
 });
 
@@ -206,7 +206,7 @@ test('hint popup selection wraps when arrowing down from last option', async t =
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: content'
+    lettering('CAPTION: content')
   ]);
 });
 
@@ -224,7 +224,7 @@ test('starts with placeholder content', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SUBJECT: content'
+    lettering('SUBJECT: content')
   ]);
 
   await t.expect(getSelectedText()).eql('SUBJECT');
@@ -254,7 +254,7 @@ test('tabbing beyond content area exits lettering snippet and adds newline', asy
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION: content',
+    lettering('CAPTION: content'),
     ''
   ]);
 });
@@ -386,7 +386,7 @@ test('typing ( after selecting subject inserts modifier and moves to modifier ta
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION (MODIFIER): content'
+    lettering('CAPTION (MODIFIER): content')
   ]);
 
   // if we're in modifier tab stop, next tab goes into content area
@@ -415,7 +415,7 @@ test('typing 1 space then ( after selecting subject inserts modifier and moves t
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION (MODIFIER): content'
+    lettering('CAPTION (MODIFIER): content')
   ]);
 
   // if we're in modifier tab stop, next tab goes into content area
@@ -445,7 +445,7 @@ test('typing multiple spaces then ( after selecting subject inserts modifier and
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION  (MODIFIER): content'
+    lettering('CAPTION  (MODIFIER): content')
   ]);
 
   // if we're in modifier tab stop, next tab goes into content area
@@ -472,7 +472,7 @@ test('modifier placeholder is not re-inserted if it is already there', async t =
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION ((): content'
+    lettering('CAPTION ((): content')
   ]);
 });
 
@@ -498,7 +498,7 @@ test('modifier placeholder is not re-inserted if there are empty parens', async 
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION ((): content'
+    lettering('CAPTION ((): content')
   ]);
 });
 
@@ -524,7 +524,7 @@ test('modifier placeholder is not re-inserted if there are parens containing onl
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    CAPTION ( (): content'
+    lettering('CAPTION ( (): content')
   ]);
 });
 
@@ -550,6 +550,6 @@ test('auto capitalizes subject and modifier', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    BOB (OFF): dialogue content'
+    lettering('BOB (OFF): dialogue content')
   ]);
 });

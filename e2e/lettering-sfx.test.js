@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 
 import * as selectors from './selectors';
-import { editorLines, getSelectedText } from './helpers';
+import { editorLines, getSelectedText, lettering } from './helpers';
 
 fixture('sfx')
   .page('http://localhost:3000');
@@ -24,7 +24,7 @@ test('only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SFX: deet'
+    lettering('SFX: deet')
   ]);
 });
 
@@ -49,7 +49,7 @@ test('with modifier, only using keyboard', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SFX (DOOR): CREAK'
+    lettering('SFX (DOOR): CREAK')
   ]);
 });
 
@@ -71,7 +71,7 @@ test('filter down to a single option and select it', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SFX: BLAM'
+    lettering('SFX: BLAM')
   ]);
 });
 
@@ -91,7 +91,7 @@ test('selecting sfx option with arrows and tab', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SFX: content'
+    lettering('SFX: content')
   ]);
 
   await t.expect(getSelectedText()).eql('');
@@ -114,7 +114,7 @@ test('selecting sfx option with mouse', async t => {
   await t.expect(lines).eql([
     'Page 1',
     'Panel 1',
-    '    SFX: content'
+    lettering('SFX: content')
   ]);
 
   await t.expect(getSelectedText()).eql('');
