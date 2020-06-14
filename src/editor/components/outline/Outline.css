@@ -11,6 +11,7 @@
   max-width: 20em;
   user-select: none;
   font-size: .8em;
+  border-right: 1px solid var(--color-utility-milk);
 }
 
 /* Element */
@@ -26,15 +27,10 @@
 }
 
 .c-outline__spread-list-item {
-  border-radius: 100px;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: .1em;
   font-weight: bold;
   color: var(--color-primary-cool);
-  transition: background-color .1s, color .1s;
-  transition-delay: .1s;
 }
+
 
 .c-outline__panel-list {
   list-style: none;
@@ -47,29 +43,41 @@
 }
 
 .c-outline__panel-list-item {
-  border-radius: 100px;
-  position: relative;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: .1em;
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  transition: background-color .1s, color .1s;
-  transition-delay: .1s;
 }
 
 .c-outline__panel-list-item-number {
-  font-weight: bold;
   margin-right: .25em;
+  font-weight: bold;
+}
+
+.c-outline__spread-list-item,
+.c-outline__panel-list-item {
+  border-radius: 100px;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: .1em;
+  transition: background-color .1s, color .1s;
+  cursor: pointer;
+}
+
+.c-outline__spread-list-item:hover,
+.c-outline__panel-list-item:hover {
+  background-color: var(--color-utility-milk);
 }
 
 /* Modifier */
 /******************************************************************************/
 .c-outline__spread-item--current,
-.c-outline__panel-list-item--current {
+.c-outline__panel-list-item--current,
+.c-outline__spread-item--current:hover,
+.c-outline__panel-list-item--current:hover {
   background-color: var(--color-primary-cool);
   color: var(--color-utility-pure);
   background-image: none;
+  cursor: default;
+  text-decoration: none;
 }
