@@ -113,3 +113,12 @@ test('existing word counts are shown after page reload', async t => {
   await t.expect(letteringWordCount).ok();
   await t.expect(letteringWordCount.textContent).eql('3');
 });
+
+test('hyphen after page number leaves cursor in wrong spot', async t => {
+  await t
+    .typeText(selectors.editorInput(), 'pages 1-2')
+
+  await t.expect(await editorLines()).eql([
+    'Pages 1-2'
+  ]);
+});

@@ -159,7 +159,7 @@ export default class CodeMirrorComponent extends Component<Props> {
 
       // apply changes from preprocessor, if any
       this.getCodeMirrorInstance().operation(() => {
-        let replacements = 0;
+        let cursorLineLengthDelta = 0;
 
         // Apply changes from the bottom up to make things work nicer with the
         // weird way we replaceRange many times and debounce undo/redo changes.
@@ -169,18 +169,23 @@ export default class CodeMirrorComponent extends Component<Props> {
           const oldLine = oldLines[index] || '';
 
           if (newLine !== oldLine) {
-            replacements += 1;
-
             const from = { line: index, ch: 0 };
             const to = { line: index, ch: oldLine.length };
 
             cm.replaceRange(newLine, from, to, 'preprocessing');
+
+            if (index === cursor.line) {
+              cursorLineLengthDelta = newLine.length - oldLine.length;
+            }
           }
         }
 
         // Line replacements may cause cursor to move so put it back
-        if (replacements > 0 && !cm.somethingSelected()) {
-          cm.setCursor(cursor);
+        if (!cm.somethingSelected()) {
+          cm.setCursor({
+            line: cursor.line,
+            ch: cursor.ch + Math.max(cursorLineLengthDelta, 0)
+          });
         }
       });
 
