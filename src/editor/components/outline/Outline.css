@@ -7,7 +7,8 @@
 .c-outline {
   overflow-y: scroll;
   overflow-x: hidden;
-  padding: .5em;
+  padding-left: .5em;
+  padding-right: .5em;
   max-width: 20em;
   user-select: none;
   font-size: .8em;
@@ -29,8 +30,10 @@
 .c-outline__spread-list-item {
   font-weight: bold;
   color: var(--color-primary-cool);
+  position: sticky;
+  top: 0;
+  background-color: white;
 }
-
 
 .c-outline__panel-list {
   list-style: none;
