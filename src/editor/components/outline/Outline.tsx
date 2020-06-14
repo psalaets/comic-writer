@@ -12,7 +12,10 @@ interface Props {
 
 export const Outline: React.FC<Props> = props => {
   return (
-    <nav className="c-outline">
+    <nav className={`
+      c-outline
+      ${false ? 'c-outline--scroll-snap' : ''}
+    `}>
       <SpreadList
         spreads={props.spreads}
         onSelection={props.onSelection}

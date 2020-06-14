@@ -17,7 +17,6 @@
   padding-left: .5em;
   padding-right: .5em;
   user-select: none;
-  scroll-snap-type: y mandatory; /* 3 */
   /* cosmetics */
   scrollbar-color: var(--color-utility-pure) var(--color-utility-milk); /* 1 */
   scrollbar-width: thick; /* 1 */
@@ -53,9 +52,9 @@
 }
 
 .c-outline__spread-list-item {
-  position: sticky; /* 3 */
+  position: sticky;
   scroll-snap-align: start; /* 3 */
-  top: 0; /* 3 */
+  top: 0;
   /* cosmetics */
   background-color: white;
   color: var(--color-primary-cool);
@@ -104,6 +103,14 @@
 
 /* Modifier */
 /******************************************************************************/
+.c-outline--scroll-snap { /* 3 */
+  scroll-snap-type: y mandatory;
+}
+
+.c-outline--scroll-snap .c-outline__spread-list-item { /* 3 */
+  scroll-snap-align: start;
+}
+
 .c-outline__spread-item--current,
 .c-outline__panel-list-item--current,
 .c-outline__spread-item--current:hover,
