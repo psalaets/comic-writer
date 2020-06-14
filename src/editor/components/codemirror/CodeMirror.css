@@ -3,15 +3,15 @@
 /******************************************************************************/
 /*
  * 1. The superflurous attribute selector is here to out-specify a codemirror
- *    selector.The codemirror selector is `.CodeMirror-wrap pre` (011) and this
+ *    selector. The codemirror selector is `.CodeMirror-wrap pre` (011) and this
  *    is 020
  * 2. the width in "X's" on each side.
- * 3. Each Line of code.
- * 4. Wraps the text in each line's gutter value.
- * 5. Turning off "focus" outline for the editor.
+ * 3. Wraps the text in each line's gutter value.
+ * 4. Turning off "focus" outline for the editor.
  *    TODO: What's the right way to make this a11y without it looking like total
  *          shit?
- * 6. Resetting z-index to creat a new stacking context for this Component.
+ * 5. Resetting z-index to create a new stacking context for this Component.
+ * 6. Panel Count line widget
 */
 
 /* Block */
@@ -21,7 +21,7 @@
   margin-right: auto;
   padding-left: 1.5ex; /* 2 */
   width: 100%;
-  z-index: 0; /* 6 */
+  z-index: 0; /* 5 */
 }
 
 /* Misc */
@@ -29,29 +29,20 @@
 .CodeMirror {
   font-family: sans-serif;
 }
+
 .CodeMirror-placeholder[class] { /* 1 */
   color: var(--color-utility-dove);
 }
 
-.CodeMirror-line[class] {} /* 3 */
-
-.CodeMirror-gutter-elt { /* 4 */
+.CodeMirror-gutter-elt { /* 3 */
   align-items: flex-start;
-  bottom: 0;
   display: flex;
-  top: 0;
 }
 
-.CodeMirror-gutter-wrapper {
-  bottom: 0;
-  top: 0;
-}
-
-.CodeMirror *:focus { /* 5 */
+.CodeMirror *:focus { /* 4 */
   outline: none;
 }
 
-/* panel count line widget */
-.panel-count {
+.panel-count { /* 6 */
   color: var(--color-utility-dove);
 }

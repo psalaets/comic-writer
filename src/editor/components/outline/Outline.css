@@ -1,19 +1,43 @@
 /******************************************************************************/
 /* Outline                                                                    */
 /******************************************************************************/
+/*
+ * 1. Firefox Scrollbars
+ * 2. Webkit Scrollbars
+ * 3. Scroll Snapping
+ */
 
 /* Block */
 /******************************************************************************/
 .c-outline {
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  font-size: .8em;
+  max-width: 20em;
   overflow-x: hidden;
+  overflow-y: scroll;
   padding-left: .5em;
   padding-right: .5em;
-  max-width: 20em;
   user-select: none;
-  font-size: .8em;
-  border-right: 1px solid var(--color-utility-milk);
+  scroll-snap-type: y mandatory; /* 3 */
+  /* cosmetics */
+  scrollbar-color: var(--color-utility-pure) var(--color-utility-milk); /* 1 */
+  scrollbar-width: thick; /* 1 */
+}
+
+.c-outline::-webkit-scrollbar { /* 2 */
+  /* cosmetics */
+  width: 7px;
+}
+
+.c-outline::-webkit-scrollbar-track { /* 2 */
+  /* cosmetics */
+  background: var(--color-utility-milk);
+}
+
+.c-outline::-webkit-scrollbar-thumb { /* 2 */
+  /* cosmetics */
+  background-color: var(--color-utility-pure);
+  border-radius: 2px;
+  border: 1px solid var(--color-utility-milk);
 }
 
 /* Element */
@@ -29,12 +53,13 @@
 }
 
 .c-outline__spread-list-item {
-  font-weight: bold;
-  color: var(--color-primary-cool);
-  position: sticky;
-  top: 0;
+  position: sticky; /* 3 */
+  scroll-snap-align: start; /* 3 */
+  top: 0; /* 3 */
+  /* cosmetics */
   background-color: white;
-  scroll-snap-align: start;
+  color: var(--color-primary-cool);
+  font-weight: bold;
 }
 
 .c-outline__panel-list {
@@ -48,29 +73,32 @@
 }
 
 .c-outline__panel-list-item {
-  white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   width: 100%;
 }
 
 .c-outline__panel-list-item-number {
   margin-right: .25em;
+  /* cosmetics */
   font-weight: bold;
 }
 
 .c-outline__spread-list-item,
 .c-outline__panel-list-item {
-  border-radius: 100px;
+  cursor: pointer;
   padding-left: 1em;
   padding-right: 1em;
   padding-top: .1em;
+  /* cosmetics */
+  border-radius: 100px;
   transition: background-color .1s, color .1s;
-  cursor: pointer;
 }
 
 .c-outline__spread-list-item:hover,
 .c-outline__panel-list-item:hover {
+  /* cosmetics */
   background-color: var(--color-utility-milk);
 }
 
@@ -80,9 +108,9 @@
 .c-outline__panel-list-item--current,
 .c-outline__spread-item--current:hover,
 .c-outline__panel-list-item--current:hover {
-  background-color: var(--color-primary-cool);
-  color: var(--color-utility-pure);
-  background-image: none;
   cursor: default;
-  text-decoration: none;
+  /* cosmetics */
+  background-color: var(--color-primary-cool);
+  background-image: none;
+  color: var(--color-utility-pure);
 }
