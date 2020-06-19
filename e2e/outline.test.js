@@ -1,0 +1,79 @@
+import * as selectors from './selectors';
+import { editorLines } from './helpers';
+
+fixture('outline')
+  .page('http://localhost:3000');
+
+test('each page gets an item in the outline', async t => {
+  await t
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+
+  const firstPageItem = selectors.outlineSpreadItem(0);
+  const secondPageItem = selectors.outlineSpreadItem(1);
+
+  await t.expect(firstPageItem.exists).ok();
+  await t.expect(firstPageItem.textContent).eql('Page 1');
+
+  await t.expect(secondPageItem.exists).ok();
+  await t.expect(secondPageItem.textContent).eql('Page 2');
+});
+
+test('each panel gets an item in the outline', async t => {
+  await t
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'panel')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'panel')
+    .pressKey('enter')
+
+  const firstPanelItem = selectors.outlinePanelItem(0);
+  const secondPanelItem = selectors.outlinePanelItem(1);
+
+  await t.expect(firstPanelItem.exists).ok();
+  await t.expect(firstPanelItem.textContent).eql('1.(no description)');
+
+  await t.expect(secondPanelItem.exists).ok();
+  await t.expect(secondPanelItem.textContent).eql('2.(no description)');
+});
+
+test('panel description is shown in outline, if panel has one', async t => {
+  await t
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'panel')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'It is a dark and stormy night.')
+    .pressKey('enter')
+
+  const panelItem = selectors.outlinePanelItem(0);
+
+  await t.expect(panelItem.exists).ok();
+  await t.expect(panelItem.textContent).eql('1.It is a dark and stormy night.');
+});
+
+test('only paragraphs before lettering are considered the panel description', async t => {
+  await t
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'panel')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'before')
+    .pressKey('enter')
+    // lettering starts here
+    .pressKey('tab')
+    .typeText(selectors.editorInput(), 'bob')
+    .pressKey('tab')
+    .typeText(selectors.editorInput(), 'blah blah blah')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'after')
+
+  const panelItem = selectors.outlinePanelItem(0);
+
+  await t.expect(panelItem.exists).ok();
+  await t.expect(panelItem.textContent).eql('1.before');
+});
+

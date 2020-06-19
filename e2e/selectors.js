@@ -69,3 +69,11 @@ export function wordCount(index) {
 
   return Selector('.word-count', options).nth(index);
 }
+
+export function outlineSpreadItem(index) {
+  return Selector('.c-outline__spread-list-item').nth(index);
+}
+
+export function outlinePanelItem(index) {
+  return Selector('.c-outline__panel-list-item').nth(index);
+}
