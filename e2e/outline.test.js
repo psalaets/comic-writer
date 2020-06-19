@@ -1,5 +1,5 @@
 import * as selectors from './selectors';
-import { editorLines } from './helpers';
+import { preloadBitchPlanetScript } from './helpers';
 
 fixture('outline')
   .page('http://localhost:3000');
@@ -77,3 +77,20 @@ test('only paragraphs before lettering are considered the panel description', as
   await t.expect(panelItem.textContent).eql('1.before');
 });
 
+test('clicking page in outline scrolls editor to that page', async t => {
+  await preloadBitchPlanetScript();
+  await t.eval(() => location.reload(true));
+
+  const spreadItem = selectors.outlineSpreadItem(4);
+
+  await t.click(spreadItem);
+
+  // clicked item becomes current
+  const currentSpreadItem = spreadItem.withAttribute('class', /c-outline__spread-item--current/);
+
+  await t.expect(currentSpreadItem.exists).ok();
+  await t.expect(currentSpreadItem.textContent).eql('Page 5');
+
+  // editor was scrolled
+  await t.expect(selectors.pageLine('Page 5').exists).ok();
+});

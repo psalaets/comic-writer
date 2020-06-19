@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { ClientFunction } from 'testcafe';
 import * as selectors from './selectors';
 
@@ -27,4 +29,30 @@ export const getSelectedText = ClientFunction(() => {
 const LETTERING_INDENT = ' '.repeat(8);
 export function lettering(lineAfterIndent) {
   return `${LETTERING_INDENT}${lineAfterIndent}`;
+}
+
+export async function preloadBitchPlanetScript() {
+  const script = await loadScriptContent('bitch-planet-3.txt');
+  await setLocalStorageScript(script);
+}
+
+function loadScriptContent(filename) {
+  return new Promise((resolve, reject) => {
+    const absolutePath = path.resolve(__dirname, '../sample-scripts', filename);
+    fs.readFile(absolutePath, (err, buffer) => {
+      return err
+        ? reject(err)
+        : resolve(buffer.toString('utf8'));
+    });
+  });
+}
+
+async function setLocalStorageScript(script) {
+  await ClientFunction(() => {
+    localStorage.setItem('comic-writer.script', json);
+  }, {
+    dependencies: {
+      json: JSON.stringify(script)
+    }
+  })();
 }

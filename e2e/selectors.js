@@ -77,3 +77,7 @@ export function outlineSpreadItem(index) {
 export function outlinePanelItem(index) {
   return Selector('.c-outline__panel-list-item').nth(index);
 }
+
+export function pageLine(text) {
+  return Selector('.cm-page').withExactText(text);
+}
