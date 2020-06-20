@@ -1,5 +1,5 @@
 import * as selectors from './selectors';
-import { editorLines, lettering } from './helpers';
+import { editorLines, lettering, reloadPage } from './helpers';
 
 fixture('bugs')
   .page('http://localhost:3000');
@@ -14,7 +14,7 @@ test('delete page number after first load', async t => {
     // wait for value to be stored in localstorage
     .wait(1000)
 
-  await t.eval(() => location.reload(true))
+  await reloadPage();
 
   await t
     .wait(1000)
@@ -77,7 +77,7 @@ test('existing panel counts are shown after page reload', async t => {
     .pressKey('enter')
     .wait(1000);
 
-  await t.eval(() => location.reload(true))
+  await reloadPage();
 
   const panelCount = selectors.panelCount(0);
 
@@ -102,7 +102,7 @@ test('existing word counts are shown after page reload', async t => {
     .typeText(selectors.editorInput(), 'caption content here')
     .wait(1000)
 
-  await t.eval(() => location.reload(true))
+  await reloadPage();
 
   await t.expect(pageWordCount).ok();
   await t.expect(pageWordCount.textContent).eql('3');
