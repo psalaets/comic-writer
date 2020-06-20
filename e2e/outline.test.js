@@ -30,8 +30,8 @@ test('each panel gets an item in the outline', async t => {
     .typeText(selectors.editorInput(), 'panel')
     .pressKey('enter')
 
-  const firstPanelItem = selectors.outlinePanelItem(0);
-  const secondPanelItem = selectors.outlinePanelItem(1);
+  const firstPanelItem = selectors.outlinePanelItem(0, 0);
+  const secondPanelItem = selectors.outlinePanelItem(0, 1);
 
   await t.expect(firstPanelItem.exists).ok();
   await t.expect(firstPanelItem.textContent).eql('1.(no description)');
@@ -49,7 +49,7 @@ test('panel description is shown in outline, if panel has one', async t => {
     .typeText(selectors.editorInput(), 'It is a dark and stormy night.')
     .pressKey('enter')
 
-  const panelItem = selectors.outlinePanelItem(0);
+  const panelItem = selectors.outlinePanelItem(0, 0);
 
   await t.expect(panelItem.exists).ok();
   await t.expect(panelItem.textContent).eql('1.It is a dark and stormy night.');
@@ -71,7 +71,7 @@ test('only paragraphs before lettering are considered the panel description', as
     .pressKey('enter')
     .typeText(selectors.editorInput(), 'after')
 
-  const panelItem = selectors.outlinePanelItem(0);
+  const panelItem = selectors.outlinePanelItem(0, 0);
 
   await t.expect(panelItem.exists).ok();
   await t.expect(panelItem.textContent).eql('1.before');
@@ -79,7 +79,6 @@ test('only paragraphs before lettering are considered the panel description', as
 
 test('clicking page in outline scrolls editor to that page', async t => {
   await preloadBitchPlanetScript();
-  await t.eval(() => location.reload(true));
 
   const spreadItem = selectors.outlineSpreadItem(4);
 
@@ -91,6 +90,23 @@ test('clicking page in outline scrolls editor to that page', async t => {
   await t.expect(currentSpreadItem.exists).ok();
   await t.expect(currentSpreadItem.textContent).eql('Page 5');
 
-  // editor was scrolled
+  // editor was scrolled to show page
   await t.expect(selectors.pageLine('Page 5').exists).ok();
+});
+
+test('clicking panel in outline scrolls editor to that panel', async t => {
+  await preloadBitchPlanetScript();
+
+  const panelItem = selectors.outlinePanelItem(3, 2);
+
+  await t.click(panelItem);
+
+  // clicked item becomes current
+  const currentPanelItem = panelItem.withAttribute('class', /c-outline__panel-list-item--current/);
+
+  await t.expect(currentPanelItem.exists).ok();
+  await t.expect(currentPanelItem.textContent).eql('3.Grandma, looks up at Penny while she stirs.');
+
+  // editor was scrolled to show panel
+  await t.expect(selectors.paragraphLine('Grandma, looks up at Penny while she stirs.').exists).ok();
 });

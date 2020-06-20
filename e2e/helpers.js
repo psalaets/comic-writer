@@ -34,6 +34,7 @@ export function lettering(lineAfterIndent) {
 export async function preloadBitchPlanetScript() {
   const script = await loadScriptContent('bitch-planet-3.txt');
   await setLocalStorageScript(script);
+  await reloadPage();
 }
 
 function loadScriptContent(filename) {
@@ -55,4 +56,8 @@ async function setLocalStorageScript(script) {
       json: JSON.stringify(script)
     }
   })();
+}
+
+export async function reloadPage() {
+  return await ClientFunction(() => location.reload(true))();
 }

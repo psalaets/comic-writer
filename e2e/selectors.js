@@ -74,10 +74,17 @@ export function outlineSpreadItem(index) {
   return Selector('.c-outline__spread-list-item').nth(index);
 }
 
-export function outlinePanelItem(index) {
-  return Selector('.c-outline__panel-list-item').nth(index);
+export function outlinePanelItem(spreadIndex, panelIndex) {
+  return Selector('.c-outline__panel-list')
+    .nth(spreadIndex)
+    .find('.c-outline__panel-list-item')
+    .nth(panelIndex);
 }
 
 export function pageLine(text) {
   return Selector('.cm-page').withExactText(text);
+}
+
+export function paragraphLine(text) {
+  return Selector('.cm-paragraph').withExactText(text);
 }
