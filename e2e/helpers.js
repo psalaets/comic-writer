@@ -61,3 +61,15 @@ async function setLocalStorageScript(script) {
 export async function reloadPage() {
   return await ClientFunction(() => location.reload(true))();
 }
+
+export async function scrollEditorBy(yDelta) {
+  return await ClientFunction(() => {
+    document.querySelector('.CodeMirror-scroll').scrollBy({
+      top: yDelta
+    });
+  }, {
+    dependencies: {
+      yDelta
+    }
+  })();
+}

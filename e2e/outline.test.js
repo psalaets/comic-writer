@@ -1,4 +1,5 @@
 import * as selectors from './selectors';
+import * as helpers from './helpers';
 import { preloadBitchPlanetScript } from './helpers';
 
 fixture('outline')
@@ -109,4 +110,23 @@ test('clicking panel in outline scrolls editor to that panel', async t => {
 
   // editor was scrolled to show panel
   await t.expect(selectors.paragraphLine('Grandma, looks up at Penny while she stirs.').exists).ok();
+});
+
+// this was a bug from an earlier version of the outline
+test('click an item, scroll editor away, click same item again puts editor back on the item', async t => {
+  await preloadBitchPlanetScript();
+
+  const spreadItem = selectors.outlineSpreadItem(1);
+
+  await t.click(spreadItem);
+
+  // page visible after clicking page item
+  await t.expect(selectors.pageLine('Page 2').exists).ok();
+
+  await helpers.scrollEditorBy(2000);
+
+  await t.click(spreadItem);
+
+  // page visible after clicking page item again
+  await t.expect(selectors.pageLine('Page 2').exists).ok();
 });
