@@ -130,3 +130,49 @@ test('click an item, scroll editor away, click same item again puts editor back 
   // page visible after clicking page item again
   await t.expect(selectors.pageLine('Page 2').exists).ok();
 });
+
+test('current item changes as editor scrolls through pages and panels', async t => {
+  await preloadBitchPlanetScript();
+
+  let currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
+  let currentSpreadItem = selectors.allOutlineSpreadItems().withAttribute('class', /c-outline__spread-item--current/);
+
+  const startingItem = selectors.outlinePanelItem(0, 1);
+  await t.click(startingItem);
+
+  // panel 1.2 is current
+  await t.expect(currentPanelItem.exists).ok();
+  await t.expect(currentPanelItem.textContent).contains('2.Inset detail: pop out a panel of just her eyes.');
+
+  await helpers.scrollEditorBy(300);
+
+  // page 2 is current
+  await t.expect(currentPanelItem.exists).notOk();
+  await t.expect(currentSpreadItem.exists).ok();
+  await t.expect(currentSpreadItem.textContent).eql('Page 2');
+
+  await helpers.scrollEditorBy(300);
+
+  // panel 2.1 is current
+  await t.expect(currentSpreadItem.exists).notOk();
+  await t.expect(currentPanelItem.exists).ok();
+  await t.expect(currentPanelItem.textContent).contains('1.One screen. Some kind of static line indicating it is coming on-line.');
+
+  await helpers.scrollEditorBy(300);
+
+  // panel 2.2 is current
+  await t.expect(currentPanelItem.exists).ok();
+  await t.expect(currentPanelItem.textContent).contains('2.FATHER DAVIDSON pops up on the screen.');
+
+  await helpers.scrollEditorBy(100);
+
+  // panel 2.3 is current
+  await t.expect(currentPanelItem.exists).ok();
+  await t.expect(currentPanelItem.textContent).contains('3.Glasses on now, he puffs his cheeks out as he reads her list of offenses.');
+
+  await helpers.scrollEditorBy(300);
+
+  // panel 2.4 is current
+  await t.expect(currentPanelItem.exists).ok();
+  await t.expect(currentPanelItem.textContent).contains('4.Father Davidson looks at camera/Penny.');
+});

@@ -71,7 +71,7 @@ export function wordCount(index) {
 }
 
 export function outlineSpreadItem(index) {
-  return Selector('.c-outline__spread-list-item').nth(index);
+  return allOutlineSpreadItems().nth(index);
 }
 
 export function outlinePanelItem(spreadIndex, panelIndex) {
@@ -79,6 +79,14 @@ export function outlinePanelItem(spreadIndex, panelIndex) {
     .nth(spreadIndex)
     .find('.c-outline__panel-list-item')
     .nth(panelIndex);
+}
+
+export function allOutlineSpreadItems() {
+  return Selector('.c-outline__spread-list-item');
+}
+
+export function allOutlinePanelItems() {
+  return Selector('.c-outline__panel-list-item');
 }
 
 export function pageLine(text) {
