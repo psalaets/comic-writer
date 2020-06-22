@@ -134,8 +134,8 @@ test('click an item, scroll editor away, click same item again puts editor back 
 test('current item changes as editor scrolls through pages and panels', async t => {
   await preloadBitchPlanetScript();
 
-  let currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
-  let currentSpreadItem = selectors.allOutlineSpreadItems().withAttribute('class', /c-outline__spread-item--current/);
+  const currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
+  const currentSpreadItem = selectors.allOutlineSpreadItems().withAttribute('class', /c-outline__spread-item--current/);
 
   const startingItem = selectors.outlinePanelItem(0, 1);
   await t.click(startingItem);
@@ -176,3 +176,92 @@ test('current item changes as editor scrolls through pages and panels', async t 
   await t.expect(currentPanelItem.exists).ok();
   await t.expect(currentPanelItem.textContent).contains('4.Father Davidson looks at camera/Penny.');
 });
+
+test('scrolling editor to bottom moves outline to bottom', async t => {
+  await preloadBitchPlanetScript();
+
+  // scroll down to the bottom
+  repeat(11, async () => await helpers.scrollEditorBy(3000));
+
+  // check current item
+  const currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
+  await t.expect(currentPanelItem.exists).ok();
+  await t.expect(currentPanelItem.textContent).contains('It flops back down right where it was.  She grins huge.');
+
+  // check that outline is at bottom
+  const bottomPage = selectors.outlineSpreadItemByText('Page 24');
+  const isVisible = await helpers.isItemVisibleInOutline(bottomPage);
+  await t.expect(isVisible).ok();
+});
+
+// similar to the "scroll to bottom" test except this uses keyboard
+test('jumping editor to bottom moves outline to bottom', async t => {
+  await preloadBitchPlanetScript();
+
+  await t
+    .click(selectors.editorInput())
+    .pressKey('meta+down')
+    // let outline catch up to editor's jump to bottom
+    .wait(1000)
+
+  // check current item
+  const currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
+  await t.expect(currentPanelItem.exists).ok();
+  await t.expect(currentPanelItem.textContent).contains('Penny\'s face. Grinning. She wins.');
+
+  // check that outline is at bottom
+  const bottomPage = selectors.outlineSpreadItemByText('Page 24');
+  const isVisible = await helpers.isItemVisibleInOutline(bottomPage);
+  await t.expect(isVisible).ok();
+});
+
+test('scrolling editor to top moves outline to top', async t => {
+  await preloadBitchPlanetScript();
+
+  await t
+    .click(selectors.editorInput())
+    .pressKey('meta+down')
+
+  // scroll back up incrementally because CM doesn't seem to detect when it
+  // scrolls too much at once
+  repeat(11, async () => await helpers.scrollEditorBy(-3000));
+
+  // let outline catch up to editor's scroll
+  await t.wait(2500)
+
+  // const currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
+  // await t.expect(currentPanelItem.exists).ok();
+  // await t.expect(currentPanelItem.textContent).contains('It flops back down right where it was.  She grins huge.');
+
+  // check that outline is at top
+  const topPage = selectors.outlineSpreadItemByText('Page 1');
+  const isVisible = await helpers.isItemVisibleInOutline(topPage);
+  await t.expect(isVisible).ok();
+});
+
+// similar to the "scroll to top" test except this uses keyboard
+test('jumping editor to top moves outline to top', async t => {
+  await preloadBitchPlanetScript();
+
+  await t
+    .click(selectors.editorInput())
+    .pressKey('meta+down')
+    .pressKey('meta+up')
+    // let outline catch up to editor's jump to top
+    .wait(1000)
+
+  // const currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
+  // await t.expect(currentPanelItem.exists).ok();
+  // await t.expect(currentPanelItem.textContent).contains('It flops back down right where it was.  She grins huge.');
+
+  // check that outline is at top
+  const topPage = selectors.outlineSpreadItemByText('Page 1');
+  const isVisible = await helpers.isItemVisibleInOutline(topPage);
+  await t.expect(isVisible).ok();
+});
+
+function repeat(times, fn) {
+  for (let i = 0; i < times; i++) {
+    fn();
+  }
+}

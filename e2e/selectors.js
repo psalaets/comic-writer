@@ -74,6 +74,10 @@ export function outlineSpreadItem(index) {
   return allOutlineSpreadItems().nth(index);
 }
 
+export function outlineSpreadItemByText(text) {
+  return allOutlineSpreadItems().withExactText(text);
+}
+
 export function outlinePanelItem(spreadIndex, panelIndex) {
   return Selector('.c-outline__panel-list')
     .nth(spreadIndex)

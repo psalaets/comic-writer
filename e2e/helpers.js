@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
+
 import { ClientFunction } from 'testcafe';
+import { Selector } from 'testcafe';
 import * as selectors from './selectors';
 
 /**
@@ -64,12 +66,26 @@ export async function reloadPage() {
 
 export async function scrollEditorBy(yDelta) {
   return await ClientFunction(() => {
-    document.querySelector('.CodeMirror-scroll').scrollBy({
-      top: yDelta
-    });
+    document.querySelector('.CodeMirror-scroll').scrollBy(0, yDelta);
   }, {
     dependencies: {
       yDelta
     }
   })();
+}
+
+export async function isItemVisibleInOutline(itemSelector) {
+  const outlineState = await Selector('.c-outline')();
+  const {
+    top: outlineTop,
+    bottom: outlineBottom
+  } = outlineState.boundingClientRect;
+
+  const itemState = await itemSelector();
+  const {
+    top: itemTop,
+    bottom: itemBottom
+  } = itemState.boundingClientRect;
+
+  return itemBottom <= outlineBottom && itemTop >= outlineTop;
 }
