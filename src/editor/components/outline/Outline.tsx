@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../store/use-store';
-import { SpreadList, SpreadItem } from './SpreadList';
+import { SpreadList } from './SpreadList';
 import { SpreadOutlineItem, OutlineItemSelectionEvent } from '../../types';
 
 import './Outline.css'
