@@ -12,8 +12,8 @@ test('each page gets an item in the outline', async t => {
     .typeText(selectors.editorInput(), 'page')
     .pressKey('enter')
 
-  const firstPageItem = selectors.outlineSpreadItem(0);
-  const secondPageItem = selectors.outlineSpreadItem(1);
+  const firstPageItem = selectors.outlineSpreadItem(1);
+  const secondPageItem = selectors.outlineSpreadItem(2);
 
   await t.expect(firstPageItem.exists).ok();
   await t.expect(firstPageItem.textContent).eql('Page 1');
@@ -81,7 +81,7 @@ test('only paragraphs before lettering are considered the panel description', as
 test('clicking page in outline scrolls editor to that page', async t => {
   await preloadBitchPlanetScript();
 
-  const spreadItem = selectors.outlineSpreadItem(4);
+  const spreadItem = selectors.outlineSpreadItem(5);
 
   await t.click(spreadItem);
 
@@ -116,7 +116,7 @@ test('clicking panel in outline scrolls editor to that panel', async t => {
 test('click an item, scroll editor away, click same item again puts editor back on the item', async t => {
   await preloadBitchPlanetScript();
 
-  const spreadItem = selectors.outlineSpreadItem(1);
+  const spreadItem = selectors.outlineSpreadItem(2);
 
   await t.click(spreadItem);
 

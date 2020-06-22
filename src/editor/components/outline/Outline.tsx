@@ -1,12 +1,13 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../store/use-store';
-import { SpreadList } from './SpreadList';
+import { SpreadList, SpreadItem } from './SpreadList';
 import { SpreadOutlineItem, OutlineItemSelectionEvent } from '../../types';
 
 import './Outline.css'
 interface Props {
   spreads: Array<SpreadOutlineItem>;
+  top: SpreadOutlineItem;
   onSelection: (event: OutlineItemSelectionEvent) => void;
 }
 
@@ -16,6 +17,10 @@ export const Outline: React.FC<Props> = props => {
       c-outline
       ${false ? 'c-outline--scroll-snap' : ''}
     `}>
+      <SpreadItem
+        spread={props.top}
+        onSelection={props.onSelection}
+      />
       <SpreadList
         spreads={props.spreads}
         onSelection={props.onSelection}
@@ -34,6 +39,7 @@ export const WiredOutline: React.FC = observer(() => {
   return (
     <Outline
       spreads={editor.outlineItems}
+      top={editor.topOutlineItem}
       onSelection={onSelection}
     />
   );

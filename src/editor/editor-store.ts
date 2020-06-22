@@ -5,7 +5,7 @@ import {
 } from 'mobx';
 
 import { NO_TARGET_LINE } from './constants';
-import { ScrollPosition, SpreadOutlineItem, OutlineItem } from './types';
+import { ScrollPosition, SpreadOutlineItem, PanelOutlineItem, OutlineItem } from './types';
 import { ScriptStore } from '../script';
 import { LocatedSpread, LocatedPanel } from '../script/types';
 import * as parts from '../comic-part-types';
@@ -43,6 +43,16 @@ export function createStore(scriptStore: ScriptStore) {
             panels
           };
         });
+    },
+
+    get topOutlineItem(): SpreadOutlineItem {
+      return {
+        id: 'top',
+        label: 'Top',
+        lineNumber: 0,
+        current: this.currentItemId == null,
+        panels: [] as Array<PanelOutlineItem>
+      };
     },
 
     get currentSpread(): LocatedSpread | null {
