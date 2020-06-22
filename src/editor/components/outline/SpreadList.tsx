@@ -11,7 +11,8 @@ interface SpreadListProps {
 
 export const SpreadList: React.FC<SpreadListProps> = props => {
   const spreadItems = props.spreads.map(spread =>
-      <SpreadItem key={spread.id}
+      <SpreadItem
+        key={spread.id}
         spread={spread}
         onSelection={props.onSelection}
       />);
@@ -19,6 +20,7 @@ export const SpreadList: React.FC<SpreadListProps> = props => {
   return (
     <ol className="c-outline__spread-list">
       <SpreadItem
+        key="top"
         spread={props.top}
         onSelection={props.onSelection}
       />
