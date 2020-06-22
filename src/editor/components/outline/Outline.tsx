@@ -17,12 +17,9 @@ export const Outline: React.FC<Props> = props => {
       c-outline
       ${false ? 'c-outline--scroll-snap' : ''}
     `}>
-      <SpreadItem
-        spread={props.top}
-        onSelection={props.onSelection}
-      />
       <SpreadList
         spreads={props.spreads}
+        top={props.top}
         onSelection={props.onSelection}
       />
     </nav>

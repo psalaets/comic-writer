@@ -5,6 +5,7 @@ import { useNeedsScrollCallback } from './use-intersection-observer';
 
 interface SpreadListProps {
   spreads: Array<SpreadOutlineItem>;
+  top: SpreadOutlineItem;
   onSelection: (event: OutlineItemSelectionEvent) => void;
 }
 
@@ -17,6 +18,10 @@ export const SpreadList: React.FC<SpreadListProps> = props => {
 
   return (
     <ol className="c-outline__spread-list">
+      <SpreadItem
+        spread={props.top}
+        onSelection={props.onSelection}
+      />
       {spreadItems}
     </ol>
   );
