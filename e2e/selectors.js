@@ -79,10 +79,10 @@ export function outlineSpreadItemByText(text) {
 }
 
 export function outlinePanelItem(indices) {
-  const {spreadIndex, panelIndex} = indices;
+  const {panelListIndex, panelIndex} = indices;
 
   return Selector('.c-outline__panel-list')
-    .nth(spreadIndex)
+    .nth(panelListIndex)
     .find('.c-outline__panel-list-item')
     .nth(panelIndex);
 }

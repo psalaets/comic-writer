@@ -32,11 +32,11 @@ test('each panel gets an item in the outline', async t => {
     .pressKey('enter')
 
   const firstPanelItem = selectors.outlinePanelItem({
-    spreadIndex: 0,
+    panelListIndex: 0,
     panelIndex: 0
   });
   const secondPanelItem = selectors.outlinePanelItem({
-    spreadIndex: 0,
+    panelListIndex: 0,
     panelIndex: 1
   });
 
@@ -57,7 +57,7 @@ test('panel description is shown in outline, if panel has one', async t => {
     .pressKey('enter')
 
   const panelItem = selectors.outlinePanelItem({
-    spreadIndex: 0,
+    panelListIndex: 0,
     panelIndex: 0
   });
 
@@ -82,7 +82,7 @@ test('only paragraphs before lettering are considered the panel description', as
     .typeText(selectors.editorInput(), 'after')
 
   const panelItem = selectors.outlinePanelItem({
-    spreadIndex: 0,
+    panelListIndex: 0,
     panelIndex: 0
   });
 
@@ -110,15 +110,15 @@ test('clicking page in outline scrolls editor to that page', async t => {
 test('clicking panel in outline scrolls editor to that panel', async t => {
   await preloadBitchPlanetScript();
 
-  const panelItem = selectors.outlinePanelItem({
-    spreadIndex: 3,
+  const page4Panel3 = selectors.outlinePanelItem({
+    panelListIndex: 3,
     panelIndex: 2
   });
 
-  await t.click(panelItem);
+  await t.click(page4Panel3);
 
   // clicked item becomes current
-  const currentPanelItem = selectors.currentPanelItem(panelItem);
+  const currentPanelItem = selectors.currentPanelItem(page4Panel3);
 
   await t.expect(currentPanelItem.exists).ok();
   await t.expect(currentPanelItem.textContent).eql('3.Grandma, looks up at Penny while she stirs.');
@@ -153,7 +153,7 @@ test('current item changes as editor scrolls through pages and panels', async t 
   const currentSpreadItem = selectors.currentSpreadItem(selectors.allOutlineSpreadItems());
 
   const startingItem = selectors.outlinePanelItem({
-    spreadIndex: 0,
+    panelListIndex: 0,
     panelIndex: 1
   });
   await t.click(startingItem);
@@ -282,7 +282,7 @@ test('clicking item near edge of viewport auto scrolls to get current item near 
   await preloadBitchPlanetScript();
 
   const page4Panel4 = selectors.outlinePanelItem({
-    spreadIndex: 4,
+    panelListIndex: 3,
     panelIndex: 3
   });
 
@@ -306,15 +306,15 @@ test('current item near edge of viewport auto scrolls to get current item near m
   await preloadBitchPlanetScript();
 
   const page4Panel3 = selectors.outlinePanelItem({
-    spreadIndex: 4,
+    panelListIndex: 3,
     panelIndex: 2
   });
 
   await t.click(page4Panel3);
 
-  await helpers.scrollEditorBy(50);
+  await helpers.scrollEditorBy(200);
 
-  // let outline catch up to editor's jump to top
+  // let outline catch up to editor
   await t.wait(1000)
 
   // check that page 6 is now visible
