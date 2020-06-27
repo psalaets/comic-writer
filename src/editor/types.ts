@@ -33,3 +33,7 @@ export interface PanelOutlineItem extends OutlineItem {
 export interface OutlineItemSelectionEvent {
   item: OutlineItem;
 }
+
+export interface CenteringRequestEvent {
+  element: HTMLElement;
+}

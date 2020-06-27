@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { PanelList } from './PanelList';
-import { SpreadOutlineItem, OutlineItemSelectionEvent } from '../../types';
+import { SpreadOutlineItem, OutlineItemSelectionEvent, CenteringRequestEvent } from '../../types';
 import { useNeedsScrollCallback } from './use-intersection-observer';
 
 interface SpreadListProps {
   spreads: Array<SpreadOutlineItem>;
   top: SpreadOutlineItem;
   onSelection: (event: OutlineItemSelectionEvent) => void;
+  onCenteringRequest: (event: CenteringRequestEvent) => void;
 }
 
 export const SpreadList: React.FC<SpreadListProps> = props => {
@@ -15,6 +16,7 @@ export const SpreadList: React.FC<SpreadListProps> = props => {
         key={spread.id}
         spread={spread}
         onSelection={props.onSelection}
+        onCenteringRequest={props.onCenteringRequest}
       />);
 
   return (
@@ -23,6 +25,7 @@ export const SpreadList: React.FC<SpreadListProps> = props => {
         key="top"
         spread={props.top}
         onSelection={props.onSelection}
+        onCenteringRequest={props.onCenteringRequest}
       />
       {spreadItems}
     </ol>
@@ -32,13 +35,18 @@ export const SpreadList: React.FC<SpreadListProps> = props => {
 interface SpreadItemProps {
   spread: SpreadOutlineItem;
   onSelection: (event: OutlineItemSelectionEvent) => void;
+  onCenteringRequest: (event: CenteringRequestEvent) => void;
 }
 
 export const SpreadItem: React.FC<SpreadItemProps> = props => {
+  const { spread, onCenteringRequest } = props;
+
   const panelList = props.spread.panels.length > 0 &&
     <PanelList
       panels={props.spread.panels}
-      onSelection={props.onSelection}/>
+      onSelection={props.onSelection}
+      onCenteringRequest={props.onCenteringRequest}
+    />
 
   const needsScroll = useRef(false);
 
@@ -47,13 +55,12 @@ export const SpreadItem: React.FC<SpreadItemProps> = props => {
   );
 
   useEffect(() => {
-    if (props.spread.current && needsScroll.current) {
-      divRef.current!.scrollIntoView({
-        block: 'center',
-        behavior: 'smooth'
+    if (spread.current && needsScroll.current) {
+      onCenteringRequest({
+        element: divRef.current!
       });
     }
-  }, [props.spread, divRef]);
+  }, [spread, onCenteringRequest, divRef]);
 
   return (
     <li

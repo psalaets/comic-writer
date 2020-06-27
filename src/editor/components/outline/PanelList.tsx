@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { PanelOutlineItem, OutlineItemSelectionEvent } from '../../types';
+import { PanelOutlineItem, OutlineItemSelectionEvent, CenteringRequestEvent } from '../../types';
 import { useNeedsScrollCallback } from './use-intersection-observer';
 
 interface PanelListProps {
   panels: Array<PanelOutlineItem>;
   onSelection: (event: OutlineItemSelectionEvent) => void;
+  onCenteringRequest: (event: CenteringRequestEvent) => void;
 }
 
 export const PanelList: React.FC<PanelListProps> = props => {
@@ -14,6 +15,7 @@ export const PanelList: React.FC<PanelListProps> = props => {
         key={panel.id}
         panel={panel}
         onSelection={props.onSelection}
+        onCenteringRequest={props.onCenteringRequest}
       />
     );
   });
@@ -28,9 +30,12 @@ export const PanelList: React.FC<PanelListProps> = props => {
 interface PanelItemProps {
   panel: PanelOutlineItem;
   onSelection: (event: OutlineItemSelectionEvent) => void;
+  onCenteringRequest: (event: CenteringRequestEvent) => void;
 }
 
 export const PanelItem: React.FC<PanelItemProps> = props => {
+  const {panel, onCenteringRequest} = props;
+
   const onClick = (event: React.MouseEvent) => {
     props.onSelection({item: props.panel});
     event.stopPropagation();
@@ -43,13 +48,12 @@ export const PanelItem: React.FC<PanelItemProps> = props => {
   );
 
   useEffect(() => {
-    if (props.panel.current && needsScroll.current) {
-      ref.current!.scrollIntoView({
-        block: 'center',
-        behavior: 'smooth'
+    if (panel.current && needsScroll.current) {
+      onCenteringRequest({
+        element: ref.current!
       });
     }
-  }, [props.panel, ref]);
+  }, [panel, onCenteringRequest, ref]);
 
   return (
     <li

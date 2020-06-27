@@ -2,9 +2,14 @@ import React, { useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../store/use-store';
 import { SpreadList } from './SpreadList';
-import { SpreadOutlineItem, OutlineItemSelectionEvent } from '../../types';
+import {
+  SpreadOutlineItem,
+  OutlineItemSelectionEvent,
+  CenteringRequestEvent
+} from '../../types';
 
-import './Outline.css'
+import './Outline.css';
+
 interface Props {
   spreads: Array<SpreadOutlineItem>;
   top: SpreadOutlineItem;
@@ -12,6 +17,14 @@ interface Props {
 }
 
 export const Outline: React.FC<Props> = props => {
+  const handleCenteringRequest = (event: CenteringRequestEvent) => {
+    event.element.scrollIntoView({
+      block: 'center',
+      inline: 'center',
+      behavior: 'smooth'
+    })
+  }
+
   return (
     <nav className={`
       c-outline
@@ -21,6 +34,7 @@ export const Outline: React.FC<Props> = props => {
         spreads={props.spreads}
         top={props.top}
         onSelection={props.onSelection}
+        onCenteringRequest={handleCenteringRequest}
       />
     </nav>
   );
