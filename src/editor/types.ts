@@ -34,6 +34,10 @@ export interface OutlineItemSelectionEvent {
   item: OutlineItem;
 }
 
+/**
+ * Fired by outline items when they need to be centered in the outline.
+ */
 export interface CenteringRequestEvent {
+  /** The element to be centered */
   element: HTMLElement;
 }

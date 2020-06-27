@@ -17,6 +17,8 @@
   padding-left: .5em;
   padding-right: .5em;
   user-select: none;
+
+  scroll-behavior: smooth;
   /* cosmetics */
   scrollbar-color: var(--color-utility-pure) var(--color-utility-milk); /* 1 */
   scrollbar-width: thick; /* 1 */

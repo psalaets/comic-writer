@@ -201,6 +201,9 @@ test('scrolling editor to bottom moves outline to bottom', async t => {
   // scroll down to the bottom
   await repeat(11, async () => await helpers.scrollEditorBy(3000));
 
+  // let outline catch up to editor's jump to bottom
+  await t.wait(1000)
+
   // check current item
   const currentPanelItem = selectors.currentPanelItem(selectors.allOutlinePanelItems());
   await t.expect(currentPanelItem.exists).ok();

@@ -17,19 +17,30 @@ interface Props {
 }
 
 export const Outline: React.FC<Props> = props => {
+  const navRef = React.createRef<HTMLElement>();
+
   const handleCenteringRequest = (event: CenteringRequestEvent) => {
-    event.element.scrollIntoView({
-      block: 'center',
-      inline: 'center',
-      behavior: 'smooth'
-    })
-  }
+    const elementBounds = event.element.getBoundingClientRect();
+    const elementCenter = elementBounds.top + (elementBounds.height / 2);
+
+    const nav = navRef.current!;
+
+    const outlineBounds = nav.getBoundingClientRect();
+    const outlineCenter = outlineBounds.top + (outlineBounds.height / 2);
+
+    nav.scrollBy({
+      top: elementCenter - outlineCenter
+    });
+  };
 
   return (
-    <nav className={`
-      c-outline
-      ${false ? 'c-outline--scroll-snap' : ''}
-    `}>
+    <nav
+      ref={navRef}
+      className={`
+        c-outline
+        ${false ? 'c-outline--scroll-snap' : ''}
+      `}
+    >
       <SpreadList
         spreads={props.spreads}
         top={props.top}
