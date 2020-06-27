@@ -260,6 +260,50 @@ test('jumping editor to top moves outline to top', async t => {
   await t.expect(isVisible).ok();
 });
 
+test('clicking item near edge of viewport auto scrolls to get current item near middle of viewport', async t => {
+  await preloadBitchPlanetScript();
+
+  const page4Panel4 = selectors.outlinePanelItem(4, 3);
+
+  await t.click(page4Panel4);
+
+  // let outline catch up
+  await t.wait(1000)
+
+  // Page 6 is now visible because outline auto-scrolled
+  const page6 = selectors.outlineSpreadItemByText('Page 6');
+  const isVisible = await helpers.isItemVisibleInOutline(page6);
+  await t.expect(isVisible).ok();
+
+  // Top is no longer visible because outline auto-scrolled
+  const topPage = selectors.outlineSpreadItemByText('Top');
+  const topVisible = await helpers.isItemVisibleInOutline(topPage);
+  await t.expect(topVisible).notOk();
+});
+
+test('current item near edge of viewport auto scrolls to get current item near middle of viewport', async t => {
+  await preloadBitchPlanetScript();
+
+  const page4Panel3 = selectors.outlinePanelItem(4, 2);
+
+  await t.click(page4Panel3);
+
+  await helpers.scrollEditorBy(50);
+
+  // let outline catch up to editor's jump to top
+  await t.wait(1000)
+
+  // check that page 6 is now visible
+  const page6 = selectors.outlineSpreadItemByText('Page 6');
+  const isVisible = await helpers.isItemVisibleInOutline(page6);
+  await t.expect(isVisible).ok();
+
+  // Top is no longer visible because outline auto-scrolled
+  const topPage = selectors.outlineSpreadItemByText('Top');
+  const topVisible = await helpers.isItemVisibleInOutline(topPage);
+  await t.expect(topVisible).notOk();
+});
+
 async function repeat(times, fn) {
   for (let i = 0; i < times; i++) {
     await fn();
