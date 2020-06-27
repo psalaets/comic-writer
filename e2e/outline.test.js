@@ -181,7 +181,7 @@ test('scrolling editor to bottom moves outline to bottom', async t => {
   await preloadBitchPlanetScript();
 
   // scroll down to the bottom
-  repeat(11, async () => await helpers.scrollEditorBy(3000));
+  await repeat(11, async () => await helpers.scrollEditorBy(3000));
 
   // check current item
   const currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
@@ -224,14 +224,14 @@ test('scrolling editor to top moves outline to top', async t => {
 
   // scroll back up incrementally because CM doesn't seem to detect when it
   // scrolls too much at once
-  repeat(11, async () => await helpers.scrollEditorBy(-3000));
+  await repeat(11, async () => await helpers.scrollEditorBy(-3000));
 
   // let outline catch up to editor's scroll
   await t.wait(2500)
 
-  // const currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
-  // await t.expect(currentPanelItem.exists).ok();
-  // await t.expect(currentPanelItem.textContent).contains('It flops back down right where it was.  She grins huge.');
+  const currentSpreadItem = selectors.allOutlineSpreadItems().withAttribute('class', /c-outline__spread-item--current/);
+  await t.expect(currentSpreadItem.exists).ok();
+  await t.expect(currentSpreadItem.textContent).contains('Top');
 
   // check that outline is at top
   const topPage = selectors.outlineSpreadItemByText('Page 1');
@@ -250,9 +250,9 @@ test('jumping editor to top moves outline to top', async t => {
     // let outline catch up to editor's jump to top
     .wait(1000)
 
-  // const currentPanelItem = selectors.allOutlinePanelItems().withAttribute('class', /c-outline__panel-list-item--current/);
-  // await t.expect(currentPanelItem.exists).ok();
-  // await t.expect(currentPanelItem.textContent).contains('It flops back down right where it was.  She grins huge.');
+  const currentSpreadItem = selectors.allOutlineSpreadItems().withAttribute('class', /c-outline__spread-item--current/);
+  await t.expect(currentSpreadItem.exists).ok();
+  await t.expect(currentSpreadItem.textContent).contains('Top');
 
   // check that outline is at top
   const topPage = selectors.outlineSpreadItemByText('Page 1');
@@ -260,8 +260,8 @@ test('jumping editor to top moves outline to top', async t => {
   await t.expect(isVisible).ok();
 });
 
-function repeat(times, fn) {
+async function repeat(times, fn) {
   for (let i = 0; i < times; i++) {
-    fn();
+    await fn();
   }
 }
