@@ -87,6 +87,14 @@ export function outlinePanelItem(indices) {
     .nth(panelIndex);
 }
 
+export function currentPanelItem(selector) {
+  return selector.filter('.c-outline__panel-list-item--current');
+}
+
+export function currentSpreadItem(selector) {
+  return selector.filter('.c-outline__spread-item--current');
+}
+
 export function allOutlineSpreadItems() {
   return Selector('.c-outline__spread-list-item');
 }
