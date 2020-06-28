@@ -137,12 +137,12 @@ export default class CodeMirrorComponent extends Component<Props> {
 
       // preprocess script lines
       const oldLines = cm.getValue().split(/\n/);
-      const newLines = this.preprocessLines(
-        oldLines,
-        cursor.line,
-        change.from.line,
-        change.to.line
-      );
+      const newLines = this.preprocessLines({
+        lines: oldLines,
+        cursorLine: cursor.line,
+        fromLine: change.from.line,
+        toLine: change.to.line
+      });
 
       // Even though this doesn't use newLines, this bailout needs to be after
       // the preprocessor has seen the oldLines because the preprocessor is

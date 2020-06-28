@@ -4,8 +4,19 @@ import autoNumber from './auto-number';
 import { capitalizeLetteringMetadata } from './capitalize-lettering-metadata';
 import { LineClassification } from './types';
 
+interface PreprocessorInput {
+  /** Lines of the script */
+  lines: Array<string>;
+  /** What line number the cursor is on */
+  cursorLine: number;
+  /** Line number of first line in the script that has a change */
+  fromLine: number;
+  /** Line number of last line in the script that has a change */
+  toLine: number;
+}
+
 export interface LinePreprocessor {
-  (lines: Array<string>, cursorLine: number, fromLine: number, toLine: number): Array<string>;
+  (input: PreprocessorInput): Array<string>;
 }
 
 export function createPreprocessor(): LinePreprocessor {
@@ -15,18 +26,14 @@ export function createPreprocessor(): LinePreprocessor {
 
   /**
    * Performs auto-numbering and keyword expansion on the script source.
-   *
-   * @param lines Lines of the script
-   * @param cursorLine What line number the cursor is on
-   * @param fromLine Line number of first line in the script that has a change
-   * @param toLine Line number of last line in the script that has a change
    */
-  function preprocess(
-    lines: Array<string>,
-    cursorLine: number,
-    fromLine: number,
-    toLine: number
-  ): Array<string> {
+  function preprocess(input: PreprocessorInput): Array<string> {
+    const {
+      lines,
+      cursorLine,
+      fromLine,
+      toLine
+    } = input;
 
     perf.start('classify-lines');
 
