@@ -1,4 +1,4 @@
-import { LineClassification } from './types';
+import { LineClassification, PARTIAL_PAGE_RANGE_LINE } from './types';
 
 const PAGE_EXPANSION_PATTERN = /^page *$/i;
 const PAGES_EXPANSION_PATTERN = /^pages *$/i;
@@ -15,6 +15,13 @@ const PARTIAL_PAGE_RANGE_PATTERN = /^pages? \d{1,}-$/i;
 // works because we know what the regexes look like (above).
 const classifiablePrefixes = ['p', 'P', 's', 'S'];
 
+// These classification types are stateless so we can use one instance of each
+const PANEL_LINE        : LineClassification = { type: 'panel' };
+const SINGLE_PAGE_LINE  : LineClassification = { type: 'single-page' };
+const REGULAR_LINE      : LineClassification = { type: 'regular' };
+const PARTIAL_PAGE_RANGE: LineClassification = { type: 'partial-page-range' };
+const INVALID_PAGE_RANGE: LineClassification = { type: 'invalid-page-range' };
+
 /**
  * Create a line classifier for purposes of pre-processing the script.
  *
@@ -28,7 +35,7 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
     // Early bailout for obvious regular lines to save us from ping ponging
     // through all the regexes below, only to find out it's a regular line.
     if (isDefinitelyRegularLine(line)) {
-      return regularLine();
+      return REGULAR_LINE;
     }
 
     const cursorOnThisLine = lineNumber + lineOffset === cursorLine;
@@ -43,23 +50,23 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
      */
 
     if (SINGLE_PANEL_PATTERN.test(line)) {
-      return panelLine();
+      return PANEL_LINE;
     }
 
     if (PANEL_EXPANSION_PATTERN.test(line)) {
-      return cursorOnThisLine ? regularLine() : panelLine();
+      return cursorOnThisLine ? REGULAR_LINE : PANEL_LINE;
     }
 
     if (SINGLE_PAGE_PATTERN.test(line)) {
-      return singlePageLine();
+      return SINGLE_PAGE_LINE;
     }
 
     if (PAGE_EXPANSION_PATTERN.test(line)) {
-      return cursorOnThisLine ? regularLine() : singlePageLine();
+      return cursorOnThisLine ? REGULAR_LINE : SINGLE_PAGE_LINE;
     }
 
     if (PAGES_EXPANSION_PATTERN.test(line)) {
-      return cursorOnThisLine ? regularLine() : multiPageLine(2);
+      return cursorOnThisLine ? REGULAR_LINE : multiPageLine(2);
     }
 
     const pageRange = line.match(PAGE_RANGE_PATTERN);
@@ -73,26 +80,26 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
 
       // invalid but user is still editing the line
       if (cursorOnThisLine) {
-        return invalidPageRangeLine()
+        return INVALID_PAGE_RANGE;
       }
 
       // invalid and cursor is gone, change the line to something usable
       return isInvertedPageRange(start, end)
         ? multiPageLine(2)
-        : singlePageLine();
+        : SINGLE_PAGE_LINE;
     }
 
     if (PARTIAL_PAGE_RANGE_PATTERN.test(line)) {
       return cursorOnThisLine
-        ? partialPageRangeLine()
-        : singlePageLine();
+        ? PARTIAL_PAGE_RANGE
+        : SINGLE_PAGE_LINE;
     }
 
     if (SPREAD_EXPANSION_PATTERN.test(line)) {
-      return cursorOnThisLine ? regularLine() : multiPageLine(2);
+      return cursorOnThisLine ? REGULAR_LINE : multiPageLine(2);
     }
 
-    return regularLine();
+    return REGULAR_LINE;
   };
 }
 
@@ -108,42 +115,9 @@ function isInvertedPageRange(start: number, end: number): boolean {
   return start > end;
 }
 
-function regularLine(): LineClassification {
-  return {
-    type: 'regular'
-  };
-}
-
-function singlePageLine(): LineClassification {
-  return {
-    type: 'single-page',
-    count: 1
-  };
-}
-
 function multiPageLine(count: number): LineClassification {
   return {
     type: 'multi-page',
     count
-  };
-}
-
-// startPage and a dash but no endPage
-function partialPageRangeLine(): LineClassification {
-  return {
-    type: 'partial-page-range'
-  };
-}
-
-// startPage >= endPage
-function invalidPageRangeLine(): LineClassification {
-  return {
-    type: 'invalid-page-range'
-  };
-}
-
-function panelLine(): LineClassification {
-  return {
-    type: 'panel'
   };
 }

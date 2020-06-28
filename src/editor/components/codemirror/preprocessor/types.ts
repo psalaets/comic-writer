@@ -10,8 +10,7 @@ interface Regular {
 }
 
 interface SinglePage {
-  type: typeof SINGLE_PAGE_LINE,
-  count: 1
+  type: typeof SINGLE_PAGE_LINE
 }
 
 interface MultiPage {

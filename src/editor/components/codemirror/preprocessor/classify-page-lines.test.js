@@ -62,12 +62,12 @@ function cursorOnSameLineTestCases(lineNumber) {
     ['pages', lineNumber, { type: 'regular' }],
     ['page  ', lineNumber, { type: 'regular' }],
     ['pages  ', lineNumber, { type: 'regular' }],
-    ['page 2', lineNumber, { type: 'single-page', count: 1 }],
-    ['page 20', lineNumber, { type: 'single-page', count: 1 }],
-    ['pages 2', lineNumber, { type: 'single-page', count: 1 }],
-    ['pages 20', lineNumber, { type: 'single-page', count: 1 }],
-    ['page  2', lineNumber, { type: 'single-page', count: 1 }],
-    ['page   20', lineNumber, { type: 'single-page', count: 1 }],
+    ['page 2', lineNumber, { type: 'single-page' }],
+    ['page 20', lineNumber, { type: 'single-page' }],
+    ['pages 2', lineNumber, { type: 'single-page' }],
+    ['pages 20', lineNumber, { type: 'single-page' }],
+    ['page  2', lineNumber, { type: 'single-page' }],
+    ['page   20', lineNumber, { type: 'single-page' }],
     ['page 1-2', lineNumber, { type: 'multi-page', count: 2 }],
     ['pages 1-2', lineNumber, { type: 'multi-page', count: 2 }],
     ['page  2-5', lineNumber, { type: 'multi-page', count: 4 }],
@@ -92,17 +92,17 @@ function cursorOnSameLineTestCases(lineNumber) {
 
 function cursorOnDifferentLineTestCases(lineNumber) {
   return [
-    ['page', lineNumber, { type: 'single-page', count: 1 }],
+    ['page', lineNumber, { type: 'single-page' }],
     ['pages', lineNumber, { type: 'multi-page', count: 2 }],
-    ['page  ', lineNumber, { type: 'single-page', count: 1 }],
+    ['page  ', lineNumber, { type: 'single-page' }],
     ['pages  ', lineNumber, { type: 'multi-page', count: 2 }],
 
-    ['page 2', lineNumber, { type: 'single-page', count: 1 }],
-    ['page 20', lineNumber, { type: 'single-page', count: 1 }],
-    ['pages 2', lineNumber, { type: 'single-page', count: 1 }],
-    ['pages 20', lineNumber, { type: 'single-page', count: 1 }],
-    ['page  2', lineNumber, { type: 'single-page', count: 1 }],
-    ['page   20', lineNumber, { type: 'single-page', count: 1 }],
+    ['page 2', lineNumber, { type: 'single-page' }],
+    ['page 20', lineNumber, { type: 'single-page' }],
+    ['pages 2', lineNumber, { type: 'single-page' }],
+    ['pages 20', lineNumber, { type: 'single-page' }],
+    ['page  2', lineNumber, { type: 'single-page' }],
+    ['page   20', lineNumber, { type: 'single-page' }],
 
     ['page 1-2', lineNumber, { type: 'multi-page', count: 2 }],
     ['pages 1-2', lineNumber, { type: 'multi-page', count: 2 }],
@@ -114,13 +114,13 @@ function cursorOnDifferentLineTestCases(lineNumber) {
     // invalid range with cursor gone becomes a 2 pager
     ['pages 22-10', lineNumber, { type: 'multi-page', count: 2 }],
     // same to same range is a 1 pager
-    ['pages 5-5', lineNumber, { type: 'single-page', count: 1 }],
+    ['pages 5-5', lineNumber, { type: 'single-page' }],
 
     // partial range with cursor gone, counts as a single page
-    ['page 2-', lineNumber, { type: 'single-page', count: 1 }],
-    ['pages 2-', lineNumber, { type: 'single-page', count: 1 }],
-    ['page 20-', lineNumber, { type: 'single-page', count: 1 }],
-    ['pages 20-', lineNumber, { type: 'single-page', count: 1 }],
+    ['page 2-', lineNumber, { type: 'single-page' }],
+    ['pages 2-', lineNumber, { type: 'single-page' }],
+    ['page 20-', lineNumber, { type: 'single-page' }],
+    ['pages 20-', lineNumber, { type: 'single-page' }],
 
     // this keyword expands when cursor has left
     ['spread', lineNumber, { type: 'multi-page', count: 2 }],
