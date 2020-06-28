@@ -1,17 +1,17 @@
 import * as perf from '../../../../perf';
 import createClassifier from './classify';
-import autoNumber from './auto-number';
+import createAutoNumberer from './auto-number';
 import { capitalizeLetteringMetadata } from './capitalize-lettering-metadata';
 import { LineClassification } from './types';
 
 interface PreprocessorInput {
   /** Lines of the script */
   lines: Array<string>;
-  /** What line number the cursor is on */
+  /** What line (zero based) the cursor is on, after the change */
   cursorLine: number;
-  /** Line number of first line in the script that has a change */
+  /** Zero-based line number of first line in the script that has a change */
   fromLine: number;
-  /** Line number of last line in the script that has a change */
+  /** Zero-based line number of last line in the script that has a change */
   toLine: number;
 }
 
@@ -49,8 +49,8 @@ export function createPreprocessor(): LinePreprocessor {
     perf.end('classify-lines');
     perf.start('number-lines');
 
-    const numberedLines = allClassifications
-      .map(autoNumber());
+    const numberedLines = lines
+      .map(createAutoNumberer(allClassifications));
 
     perf.end('number-lines');
     perf.start('allcaps-lettering-metadata');

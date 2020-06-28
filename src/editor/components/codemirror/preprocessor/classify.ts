@@ -28,7 +28,7 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
     // Early bailout for obvious regular lines to save us from ping ponging
     // through all the regexes below, only to find out it's a regular line.
     if (isDefinitelyRegularLine(line)) {
-      return regularLine(line);
+      return regularLine();
     }
 
     const cursorOnThisLine = lineNumber + lineOffset === cursorLine;
@@ -43,23 +43,23 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
      */
 
     if (SINGLE_PANEL_PATTERN.test(line)) {
-      return panelLine(line);
+      return panelLine();
     }
 
     if (PANEL_EXPANSION_PATTERN.test(line)) {
-      return cursorOnThisLine ? regularLine(line) : panelLine(line);
+      return cursorOnThisLine ? regularLine() : panelLine();
     }
 
     if (SINGLE_PAGE_PATTERN.test(line)) {
-      return singlePageLine(line);
+      return singlePageLine();
     }
 
     if (PAGE_EXPANSION_PATTERN.test(line)) {
-      return cursorOnThisLine ? regularLine(line) : singlePageLine(line);
+      return cursorOnThisLine ? regularLine() : singlePageLine();
     }
 
     if (PAGES_EXPANSION_PATTERN.test(line)) {
-      return cursorOnThisLine ? regularLine(line) : multiPageLine(line, 2);
+      return cursorOnThisLine ? regularLine() : multiPageLine(2);
     }
 
     const pageRange = line.match(PAGE_RANGE_PATTERN);
@@ -68,31 +68,31 @@ export default function createClassifier(cursorLine: number, lineOffset: number)
       const end = parseInt(pageRange[2], 10);
 
       if (isValidPageRange(start, end)) {
-        return multiPageLine(line, 1 + end - start);
+        return multiPageLine(1 + end - start);
       }
 
       // invalid but user is still editing the line
       if (cursorOnThisLine) {
-        return invalidPageRangeLine(line)
+        return invalidPageRangeLine()
       }
 
       // invalid and cursor is gone, change the line to something usable
       return isInvertedPageRange(start, end)
-        ? multiPageLine(line, 2)
-        : singlePageLine(line);
+        ? multiPageLine(2)
+        : singlePageLine();
     }
 
     if (PARTIAL_PAGE_RANGE_PATTERN.test(line)) {
       return cursorOnThisLine
-        ? partialPageRangeLine(line)
-        : singlePageLine(line);
+        ? partialPageRangeLine()
+        : singlePageLine();
     }
 
     if (SPREAD_EXPANSION_PATTERN.test(line)) {
-      return cursorOnThisLine ? regularLine(line) : multiPageLine(line, 2);
+      return cursorOnThisLine ? regularLine() : multiPageLine(2);
     }
 
-    return regularLine(line);
+    return regularLine();
   };
 }
 
@@ -108,48 +108,42 @@ function isInvertedPageRange(start: number, end: number): boolean {
   return start > end;
 }
 
-function regularLine(line: string): LineClassification {
+function regularLine(): LineClassification {
   return {
-    type: 'regular',
-    line
+    type: 'regular'
   };
 }
 
-function singlePageLine(line: string): LineClassification {
+function singlePageLine(): LineClassification {
   return {
     type: 'single-page',
-    count: 1,
-    line
+    count: 1
   };
 }
 
-function multiPageLine(line: string, count: number): LineClassification {
+function multiPageLine(count: number): LineClassification {
   return {
     type: 'multi-page',
-    count,
-    line
+    count
   };
 }
 
 // startPage and a dash but no endPage
-function partialPageRangeLine(line: string): LineClassification {
+function partialPageRangeLine(): LineClassification {
   return {
-    type: 'partial-page-range',
-    line
+    type: 'partial-page-range'
   };
 }
 
 // startPage >= endPage
-function invalidPageRangeLine(line: string): LineClassification {
+function invalidPageRangeLine(): LineClassification {
   return {
-    type: 'invalid-page-range',
-    line
+    type: 'invalid-page-range'
   };
 }
 
-function panelLine(line: string): LineClassification {
+function panelLine(): LineClassification {
   return {
-    type: 'panel',
-    line
+    type: 'panel'
   };
 }

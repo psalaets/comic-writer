@@ -8,10 +8,10 @@ describe('classify', () => {
     });
 
     [
-      ['panel', 3, { type: 'regular', line: 'panel' }],
-      ['panel 4', 3, { type: 'panel', line: 'panel 4' }],
-      ['panel', 2, { type: 'panel', line: 'panel' }],
-      ['panel 4', 2, { type: 'panel', line: 'panel 4' }],
+      ['panel', 3, { type: 'regular' }],
+      ['panel 4', 3, { type: 'panel' }],
+      ['panel', 2, { type: 'panel' }],
+      ['panel 4', 2, { type: 'panel' }],
     ]
       .forEach(([line, lineNumber, expected]) => {
         test(`line: "${line}"`, () => {
