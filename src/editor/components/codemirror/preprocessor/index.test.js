@@ -618,4 +618,108 @@ describe('preprocessLines', () => {
       ]);
     })
   });
+
+  it('insert lettering with lowercase subject and followed by 2 newlines', () => {
+    let lines = [
+      'page',
+      'panel',
+      '\tsubject (OFF): blah blah'
+    ];
+
+    const preprocessLines = createPreprocessor();
+
+    lines = preprocessLines({
+      lines: lines,
+      cursorLine: 2,
+      fromLine: 0,
+      toLine: 0
+    });
+
+    expect(lines).toEqual([
+      'Page 1',
+      'Panel 1',
+      '\tsubject (OFF): blah blah'
+    ]);
+
+    lines = preprocessLines({
+      lines: lines.concat(''),
+      cursorLine: 3,
+      fromLine: 2,
+      toLine: 2
+    });
+
+    expect(lines).toEqual([
+      'Page 1',
+      'Panel 1',
+      '\tSUBJECT (OFF): blah blah',
+      ''
+    ]);
+
+    lines = preprocessLines({
+      lines: lines.concat(''),
+      cursorLine: 4,
+      fromLine: 3,
+      toLine: 3
+    });
+
+    expect(lines).toEqual([
+      'Page 1',
+      'Panel 1',
+      '\tSUBJECT (OFF): blah blah',
+      '',
+      ''
+    ]);
+  });
+
+  it('insert lettering with lowercase modifier and followed by 2 newlines', () => {
+    let lines = [
+      'page',
+      'panel',
+      '\tSUBJECT (off): blah blah'
+    ];
+
+    const preprocessLines = createPreprocessor();
+
+    lines = preprocessLines({
+      lines: lines,
+      cursorLine: 2,
+      fromLine: 0,
+      toLine: 0
+    });
+
+    expect(lines).toEqual([
+      'Page 1',
+      'Panel 1',
+      '\tSUBJECT (off): blah blah'
+    ]);
+
+    lines = preprocessLines({
+      lines: lines.concat(''),
+      cursorLine: 3,
+      fromLine: 2,
+      toLine: 2
+    });
+
+    expect(lines).toEqual([
+      'Page 1',
+      'Panel 1',
+      '\tSUBJECT (OFF): blah blah',
+      ''
+    ]);
+
+    lines = preprocessLines({
+      lines: lines.concat(''),
+      cursorLine: 4,
+      fromLine: 3,
+      toLine: 3
+    });
+
+    expect(lines).toEqual([
+      'Page 1',
+      'Panel 1',
+      '\tSUBJECT (OFF): blah blah',
+      '',
+      ''
+    ]);
+  });
 });
