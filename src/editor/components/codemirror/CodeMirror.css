@@ -13,16 +13,23 @@
  * 5. Resetting z-index to create a new stacking context for this Component.
  * 6. Panel Count line widget
  * 7. Controls right hand side margin of editor
+ * 8. Need to use padding here, because margin is being controled by codemirror.
+ *    Might need to find a fix for this later. but now we have full width
+ *    scroll
 */
 
 /* Block */
 /******************************************************************************/
 .c-codemirror {
   height: 100%;
-  margin-right: auto;
   padding-left: 1.5ex; /* 2 */
   width: 100%;
   z-index: 0; /* 5 */
+}
+
+.CodeMirror-sizer {
+  margin-right: 15%; /* 7 */
+  padding-left: 15%; /* 8 */
 }
 
 /* Misc */
@@ -46,4 +53,26 @@
 
 .panel-count { /* 6 */
   color: var(--color-utility-dove);
+}
+/* Scrollbar */
+/******************************************************************************/
+
+.CodeMirror-simplescroll-horizontal div,
+.CodeMirror-simplescroll-vertical div {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 2px;
+}
+
+.CodeMirror-simplescroll-horizontal,
+.CodeMirror-simplescroll-vertical {
+  background: #eee;
+}
+
+.CodeMirror-simplescroll-horizontal {
+  height: 7px;
+}
+
+.CodeMirror-simplescroll-vertical {
+  width: 7px;
 }

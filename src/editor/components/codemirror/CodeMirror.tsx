@@ -5,8 +5,10 @@ import CodeMirror from 'codemirror';
 
 import 'codemirror/addon/display/placeholder';
 import 'codemirror/addon/scroll/scrollpastend';
+import 'codemirror/addon/scroll/simplescrollbars';
 
 import 'codemirror/lib/codemirror.css';
+import 'codemirror/addon/scroll/simplescrollbars.css'
 import './CodeMirror.css';
 import './theme.css';
 
@@ -102,8 +104,8 @@ export default class CodeMirrorComponent extends Component<Props> {
       inputStyle: 'contenteditable',
       placeholder: 'Adventure starts here...',
       lineWrapping: true,
-      scrollbarStyle: "null",
       scrollPastEnd: true,
+      scrollbarStyle: 'simple',
       tabSize: 8,
       gutters: [WORD_COUNTS],
       extraKeys: {
