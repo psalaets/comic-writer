@@ -1,4 +1,4 @@
-import { LineClassification, PARTIAL_PAGE_RANGE_LINE } from './types';
+import { LineClassification } from './types';
 
 const PAGE_EXPANSION_PATTERN = /^page *$/i;
 const PAGES_EXPANSION_PATTERN = /^pages *$/i;
