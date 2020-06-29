@@ -116,6 +116,7 @@ describe('parse lines', () => {
         type: 'panel',
         number: 3,
         children: [],
+        description: null,
 
         speakers: [],
         dialogueCount: 0,
@@ -133,6 +134,7 @@ describe('parse lines', () => {
         type: 'panel',
         number: 3,
         children: [],
+        description: null,
 
         speakers: [],
         dialogueCount: 0,

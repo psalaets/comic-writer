@@ -7,11 +7,13 @@ import {
   PANEL_LINE
 } from './types';
 
-export default function createAutoNumber() {
+export default function createAutoNumber(classifications: Array<LineClassification>) {
   let pagesInComic = 0;
   let panelsInPage = 0;
 
-  return function autoNumber(lineClass: LineClassification): string {
+  return function autoNumber(line: string, index: number): string {
+    const lineClass = classifications[index];
+
     switch (lineClass.type) {
       case SINGLE_PAGE_LINE:
         pagesInComic += 1;
@@ -27,13 +29,13 @@ export default function createAutoNumber() {
 
           return `Pages ${startPage}-${pagesInComic}`;
         } else {
-          return lineClass.line;
+          return line;
         }
       case INVALID_PAGE_RANGE_LINE:
         pagesInComic += 2;
         panelsInPage = 0;
 
-        return lineClass.line;
+        return line;
       case PARTIAL_PAGE_RANGE_LINE:
         pagesInComic += 1;
         panelsInPage = 0;
@@ -44,7 +46,7 @@ export default function createAutoNumber() {
 
         return `Panel ${panelsInPage}`;
       default:
-        return lineClass.line;
+        return line;
     }
   };
 }

@@ -58,71 +58,71 @@ describe('classify', () => {
 
 function cursorOnSameLineTestCases(lineNumber) {
   return [
-    ['page', lineNumber, { type: 'regular', line: 'page' }],
-    ['pages', lineNumber, { type: 'regular', line: 'pages' }],
-    ['page  ', lineNumber, { type: 'regular', line: 'page  ' }],
-    ['pages  ', lineNumber, { type: 'regular', line: 'pages  ' }],
-    ['page 2', lineNumber, { type: 'single-page', count: 1, line: 'page 2' }],
-    ['page 20', lineNumber, { type: 'single-page', count: 1, line: 'page 20' }],
-    ['pages 2', lineNumber, { type: 'single-page', count: 1, line: 'pages 2' }],
-    ['pages 20', lineNumber, { type: 'single-page', count: 1, line: 'pages 20' }],
-    ['page  2', lineNumber, { type: 'single-page', count: 1, line: 'page  2' }],
-    ['page   20', lineNumber, { type: 'single-page', count: 1, line: 'page   20' }],
-    ['page 1-2', lineNumber, { type: 'multi-page', count: 2, line: 'page 1-2' }],
-    ['pages 1-2', lineNumber, { type: 'multi-page', count: 2, line: 'pages 1-2' }],
-    ['page  2-5', lineNumber, { type: 'multi-page', count: 4, line: 'page  2-5' }],
-    ['pages  2-5', lineNumber, { type: 'multi-page', count: 4, line: 'pages  2-5' }],
-    ['page 20-22', lineNumber, { type: 'multi-page', count: 3, line: 'page 20-22' }],
-    ['pages 20-22', lineNumber, { type: 'multi-page', count: 3, line: 'pages 20-22' }],
+    ['page', lineNumber, { type: 'regular' }],
+    ['pages', lineNumber, { type: 'regular' }],
+    ['page  ', lineNumber, { type: 'regular' }],
+    ['pages  ', lineNumber, { type: 'regular' }],
+    ['page 2', lineNumber, { type: 'single-page' }],
+    ['page 20', lineNumber, { type: 'single-page' }],
+    ['pages 2', lineNumber, { type: 'single-page' }],
+    ['pages 20', lineNumber, { type: 'single-page' }],
+    ['page  2', lineNumber, { type: 'single-page' }],
+    ['page   20', lineNumber, { type: 'single-page' }],
+    ['page 1-2', lineNumber, { type: 'multi-page', count: 2 }],
+    ['pages 1-2', lineNumber, { type: 'multi-page', count: 2 }],
+    ['page  2-5', lineNumber, { type: 'multi-page', count: 4 }],
+    ['pages  2-5', lineNumber, { type: 'multi-page', count: 4 }],
+    ['page 20-22', lineNumber, { type: 'multi-page', count: 3 }],
+    ['pages 20-22', lineNumber, { type: 'multi-page', count: 3 }],
 
     // invalid range cases
-    ['pages 22-10', lineNumber, { type: 'invalid-page-range', line: 'pages 22-10' }],
-    ['pages 5-5', lineNumber, { type: 'invalid-page-range', line: 'pages 5-5' }],
+    ['pages 22-10', lineNumber, { type: 'invalid-page-range' }],
+    ['pages 5-5', lineNumber, { type: 'invalid-page-range' }],
 
     // partial range cases
-    ['page 2-', lineNumber, { type: 'partial-page-range', line: 'page 2-' }],
-    ['pages 2-', lineNumber, { type: 'partial-page-range', line: 'pages 2-' }],
-    ['page 20-', lineNumber, { type: 'partial-page-range', line: 'page 20-' }],
-    ['pages 20-', lineNumber, { type: 'partial-page-range', line: 'pages 20-' }],
+    ['page 2-', lineNumber, { type: 'partial-page-range' }],
+    ['pages 2-', lineNumber, { type: 'partial-page-range' }],
+    ['page 20-', lineNumber, { type: 'partial-page-range' }],
+    ['pages 20-', lineNumber, { type: 'partial-page-range' }],
 
     // spread keyword hasn't expanded because cursor is still on the line
-    ['spread', lineNumber, { type: 'regular', line: 'spread' }],
+    ['spread', lineNumber, { type: 'regular' }],
   ];
 }
 
 function cursorOnDifferentLineTestCases(lineNumber) {
   return [
-    ['page', lineNumber, { type: 'single-page', count: 1, line: 'page' }],
-    ['pages', lineNumber, { type: 'multi-page', count: 2, line: 'pages' }],
-    ['page  ', lineNumber, { type: 'single-page', count: 1, line: 'page  ' }],
-    ['pages  ', lineNumber, { type: 'multi-page', count: 2, line: 'pages  ' }],
+    ['page', lineNumber, { type: 'single-page' }],
+    ['pages', lineNumber, { type: 'multi-page', count: 2 }],
+    ['page  ', lineNumber, { type: 'single-page' }],
+    ['pages  ', lineNumber, { type: 'multi-page', count: 2 }],
 
-    ['page 2', lineNumber, { type: 'single-page', count: 1, line: 'page 2' }],
-    ['page 20', lineNumber, { type: 'single-page', count: 1, line: 'page 20' }],
-    ['pages 2', lineNumber, { type: 'single-page', count: 1, line: 'pages 2' }],
-    ['pages 20', lineNumber, { type: 'single-page', count: 1, line: 'pages 20' }],
-    ['page  2', lineNumber, { type: 'single-page', count: 1, line: 'page  2' }],
-    ['page   20', lineNumber, { type: 'single-page', count: 1, line: 'page   20' }],
+    ['page 2', lineNumber, { type: 'single-page' }],
+    ['page 20', lineNumber, { type: 'single-page' }],
+    ['pages 2', lineNumber, { type: 'single-page' }],
+    ['pages 20', lineNumber, { type: 'single-page' }],
+    ['page  2', lineNumber, { type: 'single-page' }],
+    ['page   20', lineNumber, { type: 'single-page' }],
 
-    ['page 1-2', lineNumber, { type: 'multi-page', count: 2, line: 'page 1-2' }],
-    ['pages 1-2', lineNumber, { type: 'multi-page', count: 2, line: 'pages 1-2' }],
-    ['page  2-5', lineNumber, { type: 'multi-page', count: 4, line: 'page  2-5' }],
-    ['pages  2-5', lineNumber, { type: 'multi-page', count: 4, line: 'pages  2-5' }],
-    ['page 20-22', lineNumber, { type: 'multi-page', count: 3, line: 'page 20-22' }],
-    ['pages 20-22', lineNumber, { type: 'multi-page', count: 3, line: 'pages 20-22' }],
+    ['page 1-2', lineNumber, { type: 'multi-page', count: 2 }],
+    ['pages 1-2', lineNumber, { type: 'multi-page', count: 2 }],
+    ['page  2-5', lineNumber, { type: 'multi-page', count: 4 }],
+    ['pages  2-5', lineNumber, { type: 'multi-page', count: 4 }],
+    ['page 20-22', lineNumber, { type: 'multi-page', count: 3 }],
+    ['pages 20-22', lineNumber, { type: 'multi-page', count: 3 }],
 
     // invalid range with cursor gone becomes a 2 pager
-    ['pages 22-10', lineNumber, { type: 'multi-page', count: 2, line: 'pages 22-10' }],
+    ['pages 22-10', lineNumber, { type: 'multi-page', count: 2 }],
     // same to same range is a 1 pager
-    ['pages 5-5', lineNumber, { type: 'single-page', count: 1, line: 'pages 5-5' }],
+    ['pages 5-5', lineNumber, { type: 'single-page' }],
 
     // partial range with cursor gone, counts as a single page
-    ['page 2-', lineNumber, { type: 'single-page', count: 1, line: 'page 2-' }],
-    ['pages 2-', lineNumber, { type: 'single-page', count: 1, line: 'pages 2-' }],
-    ['page 20-', lineNumber, { type: 'single-page', count: 1, line: 'page 20-' }],
-    ['pages 20-', lineNumber, { type: 'single-page', count: 1, line: 'pages 20-' }],
+    ['page 2-', lineNumber, { type: 'single-page' }],
+    ['pages 2-', lineNumber, { type: 'single-page' }],
+    ['page 20-', lineNumber, { type: 'single-page' }],
+    ['pages 20-', lineNumber, { type: 'single-page' }],
 
     // this keyword expands when cursor has left
-    ['spread', lineNumber, { type: 'multi-page', count: 2, line: 'spread' }],
+    ['spread', lineNumber, { type: 'multi-page', count: 2 }],
   ];
 }

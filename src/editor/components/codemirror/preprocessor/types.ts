@@ -6,35 +6,28 @@ export const INVALID_PAGE_RANGE_LINE = 'invalid-page-range';
 export const PANEL_LINE = 'panel';
 
 interface Regular {
-  type: typeof REGULAR_LINE,
-  line: string
+  type: typeof REGULAR_LINE
 }
 
 interface SinglePage {
-  type: typeof SINGLE_PAGE_LINE,
-  count: 1,
-  line: string
+  type: typeof SINGLE_PAGE_LINE
 }
 
 interface MultiPage {
   type: typeof MULTI_PAGE_LINE,
-  count: number,
-  line: string
+  count: number
 }
 
 interface PartialPageRange {
-  type: typeof PARTIAL_PAGE_RANGE_LINE,
-  line: string
+  type: typeof PARTIAL_PAGE_RANGE_LINE
 }
 
 interface InvalidPageRange {
-  type: typeof INVALID_PAGE_RANGE_LINE,
-  line: string
+  type: typeof INVALID_PAGE_RANGE_LINE
 }
 
 interface Panel {
-  type: typeof PANEL_LINE,
-  line: string
+  type: typeof PANEL_LINE
 }
 
 export type LineClassification = Regular

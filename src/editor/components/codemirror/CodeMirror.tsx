@@ -18,6 +18,7 @@ import { PanelCount, WordCount } from '../../../script/types';
 import * as perf from '../../../perf';
 
 import { createPreprocessor } from './preprocessor';
+import { capitalizeLetteringMetadata } from './preprocessor/capitalize-lettering-metadata';
 import { MODE, THEME } from './mode';
 import {
   ID as WORD_COUNTS,
@@ -120,6 +121,17 @@ export default class CodeMirrorComponent extends Component<Props> {
 
     this.cm.setSize('100%', '100%');
 
+    this.cm.on('beforeChange', (cm, change) => {
+      // change is from an updateable paste
+      if (change.origin === 'paste' && change.update) {
+        // it could have lettering with lowercase metadata, all caps it
+        const newText = change.text
+          .map(line => capitalizeLetteringMetadata(line));
+
+        change.update(change.from, change.to, newText);
+      }
+    });
+
     this.cm.on('change', (cm, change) => {
       // This event listener is only for handling user changes, so ignore
       // changes from initial value being set and from the script preprocessor.
@@ -135,12 +147,12 @@ export default class CodeMirrorComponent extends Component<Props> {
 
       // preprocess script lines
       const oldLines = cm.getValue().split(/\n/);
-      const newLines = this.preprocessLines(
-        oldLines,
-        cursor.line,
-        change.from.line,
-        change.to.line
-      );
+      const newLines = this.preprocessLines({
+        lines: oldLines,
+        cursorLine: cursor.line,
+        fromLine: change.from.line,
+        toLine: change.to.line
+      });
 
       // Even though this doesn't use newLines, this bailout needs to be after
       // the preprocessor has seen the oldLines because the preprocessor is

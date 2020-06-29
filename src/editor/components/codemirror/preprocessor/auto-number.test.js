@@ -2,13 +2,19 @@ import createAutoNumber from './auto-number';
 
 describe('auto number', () => {
   it('single page', () => {
-    const autoNumber = createAutoNumber();
+    const classifications = [
+      { type: 'single-page' },
+      { type: 'regular' },
+      { type: 'single-page', },
+      { type: 'regular' },
+    ];
+    const autoNumber = createAutoNumber(classifications);
 
     const result = [
-      { type: 'single-page'},
-      { type: 'regular', line: 'blah' },
-      { type: 'single-page', },
-      { type: 'regular', line: 'foo' },
+      'page',
+      'blah',
+      'page',
+      'foo'
     ]
       .map(autoNumber);
 
@@ -21,13 +27,19 @@ describe('auto number', () => {
   });
 
   it('2 page spread', () => {
-    const autoNumber = createAutoNumber();
+    const classifications = [
+      { type: 'multi-page', count: 2 },
+      { type: 'regular' },
+      { type: 'multi-page', count: 2 },
+      { type: 'regular' },
+    ];
+    const autoNumber = createAutoNumber(classifications);
 
     const result = [
-      { type: 'multi-page', count: 2 },
-      { type: 'regular', line: 'blah' },
-      { type: 'multi-page', count: 2 },
-      { type: 'regular', line: 'foo' },
+      'page 1-2',
+      'blah',
+      'page 3-4',
+      'foo'
     ]
       .map(autoNumber);
 
@@ -40,13 +52,19 @@ describe('auto number', () => {
   });
 
   it('big multi page', () => {
-    const autoNumber = createAutoNumber();
+    const classifications = [
+      { type: 'multi-page', count: 3 },
+      { type: 'regular' },
+      { type: 'multi-page', count: 4 },
+      { type: 'regular' },
+    ];
+    const autoNumber = createAutoNumber(classifications);
 
     const result = [
-      { type: 'multi-page', count: 3 },
-      { type: 'regular', line: 'blah' },
-      { type: 'multi-page', count: 4 },
-      { type: 'regular', line: 'foo' },
+      'page 1-3',
+      'blah',
+      'page 4-7',
+      'foo',
     ]
       .map(autoNumber);
 
@@ -59,16 +77,25 @@ describe('auto number', () => {
   });
 
   it('all page types together', () => {
-    const autoNumber = createAutoNumber();
-
-    const result = [
+    const classifications = [
       { type: 'single-page' },
-      { type: 'regular', line: 'blah' },
+      { type: 'regular' },
       { type: 'partial-page-range' },
       { type: 'multi-page', count: 2 },
-      { type: 'regular', line: 'foo' },
+      { type: 'regular' },
       { type: 'multi-page', count: 4 },
-      { type: 'regular', line: 'bar' },
+      { type: 'regular' },
+    ];
+    const autoNumber = createAutoNumber(classifications);
+
+    const result = [
+      'page 1',
+      'blah',
+      'page 2-',
+      'page 3-4',
+      'foo',
+      'page 5-8',
+      'bar'
     ]
       .map(autoNumber);
 
@@ -84,13 +111,19 @@ describe('auto number', () => {
   });
 
   it('partial page range', () => {
-    const autoNumber = createAutoNumber();
+    const classifications = [
+      { type: 'partial-page-range' },
+      { type: 'regular' },
+      { type: 'partial-page-range' },
+      { type: 'regular' },
+    ];
+    const autoNumber = createAutoNumber(classifications);
 
     const result = [
-      { type: 'partial-page-range' },
-      { type: 'regular', line: 'blah' },
-      { type: 'partial-page-range' },
-      { type: 'regular', line: 'foo' },
+      'page 1-',
+      'blah',
+      'page 2-',
+      'foo'
     ]
       .map(autoNumber);
 
@@ -103,18 +136,24 @@ describe('auto number', () => {
   });
 
   it('multi page with count < 1 is output as-is', () => {
-    const autoNumber = createAutoNumber();
+    const classifications = [
+      { type: 'multi-page', count: 0 },
+      { type: 'regular' },
+      { type: 'multi-page', count: -1 },
+      { type: 'regular' },
+    ];
+    const autoNumber = createAutoNumber(classifications);
 
     const result = [
-      { type: 'multi-page', count: 0, line: 'Pages 2-1' },
-      { type: 'regular', line: 'blah' },
-      { type: 'multi-page', count: -1, line: 'Pages 2-1' },
-      { type: 'regular', line: 'foo' },
+      'Pages 2-2',
+      'blah',
+      'Pages 2-1',
+      'foo'
     ]
       .map(autoNumber);
 
     expect(result).toEqual([
-      'Pages 2-1',
+      'Pages 2-2',
       'blah',
       'Pages 2-1',
       'foo'
@@ -122,13 +161,19 @@ describe('auto number', () => {
   });
 
   it('single panel', () => {
-    const autoNumber = createAutoNumber();
+    const classifications = [
+      { type: 'panel' },
+      { type: 'regular' },
+      { type: 'panel' },
+      { type: 'regular' },
+    ];
+    const autoNumber = createAutoNumber(classifications);
 
     const result = [
-      { type: 'panel' },
-      { type: 'regular', line: 'blah' },
-      { type: 'panel' },
-      { type: 'regular', line: 'foo' },
+      'panel',
+      'blah',
+      'panel',
+      'foo'
     ]
       .map(autoNumber);
 
