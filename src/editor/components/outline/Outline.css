@@ -12,6 +12,7 @@
 .c-outline {
   font-size: .8em;
   max-width: 20em;
+  min-width: 20em;
   overflow-x: hidden;
   overflow-y: scroll;
   padding-left: .5em;
