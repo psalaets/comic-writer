@@ -31,7 +31,6 @@ const TARGET_LINE_SCROLL_OFFSET = 90;
 
 type Props = {
   value: string,
-  editorWidth: number,
   /** When this changes, editor scrolls to the line */
   targetLine: number,
   panelCounts: Array<PanelCount>,
@@ -49,10 +48,7 @@ export default class CodeMirrorComponent extends Component<Props> {
   preprocessLines = createPreprocessor();
 
   render() {
-    const styles = {
-      maxWidth: `${this.props.editorWidth + 2}ex`,
-    }
-    return <div className="c-codemirror" style={styles} ref={this.rootRef} />;
+    return <div className="c-codemirror" ref={this.rootRef} />;
   }
 
   componentDidUpdate(prevProps: Props) {
