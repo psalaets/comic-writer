@@ -5,7 +5,7 @@ import {
 } from 'mobx';
 
 import { NO_TARGET_LINE } from './constants';
-import { ScrollPosition, SpreadOutlineItem, PanelOutlineItem, OutlineItem } from './types';
+import { ScrollPosition, SpreadOutlineItem, PanelOutlineItem } from './types';
 import { ScriptStore } from '../script';
 import { LocatedSpread, LocatedPanel } from '../script/types';
 import * as parts from '../comic-part-types';
@@ -20,38 +20,42 @@ export function createStore(scriptStore: ScriptStore) {
 
     targetLine: NO_TARGET_LINE,
 
-    get outlineItems(): Array<SpreadOutlineItem> {
-      return scriptStore.locatedSpreads
-        .map(spread => {
-          const panels = spread.children
-            .filter((child): child is LocatedPanel => child.type === parts.PANEL)
-            .map(panel => {
-              return {
-                id: panel.id,
-                panelNumber: panel.number,
-                lineNumber: panel.lineNumber,
-                current: panel.id === this.currentItemId,
-                description: panel.description
-              };
-            });
+    get outlineItems(): Array<SpreadOutlineItem | PanelOutlineItem> {
+      const items: Array<SpreadOutlineItem | PanelOutlineItem> = [];
 
-          return {
-            id: spread.id,
-            label: spread.label,
-            lineNumber: spread.lineNumber,
-            current: spread.id === this.currentItemId,
-            panels
-          };
+      for (const spread of scriptStore.locatedSpreads) {
+        items.push({
+          id: spread.id,
+          type: 'spread',
+          label: spread.label,
+          lineNumber: spread.lineNumber,
+          current: spread.id === this.currentItemId
         });
+
+        const panels = spread.children
+          .filter((child): child is LocatedPanel => child.type === parts.PANEL);
+        for (const panel of panels) {
+          items.push({
+            id: panel.id,
+            type: 'panel',
+            panelNumber: panel.number,
+            lineNumber: panel.lineNumber,
+            current: panel.id === this.currentItemId,
+            description: panel.description
+          });
+        }
+      }
+
+      return items;
     },
 
     get topOutlineItem(): SpreadOutlineItem {
       return {
         id: 'top',
+        type: 'spread',
         label: 'Top',
         lineNumber: 0,
-        current: this.currentItemId == null,
-        panels: [] as Array<PanelOutlineItem>
+        current: this.currentItemId == null
       };
     },
 
@@ -103,8 +107,8 @@ export function createStore(scriptStore: ScriptStore) {
       this.scroll.topLine = scrollWindow.topLine;
       this.targetLine = NO_TARGET_LINE;
     },
-    selectOutlineItem(item: OutlineItem): void {
-      this.targetLine = item.lineNumber;
+    selectOutlineItem(lineNumber: number): void {
+      this.targetLine = lineNumber;
     }
   }, {
     scroll: observable,

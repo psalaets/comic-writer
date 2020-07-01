@@ -16,22 +16,25 @@ export type EditorScrollEvent = ScrollPosition;
 
 export interface OutlineItem {
   id: string;
+  type: string;
   lineNumber: number;
   current: boolean;
 }
 
 export interface SpreadOutlineItem extends OutlineItem {
+  type: 'spread';
   label: string;
-  panels: Array<PanelOutlineItem>;
 };
 
 export interface PanelOutlineItem extends OutlineItem {
+  type: 'panel';
   panelNumber: number;
   description: string | null;
 }
 
 export interface OutlineItemSelectionEvent {
-  item: OutlineItem;
+  /** Zero-based line number of the selected item */
+  lineNumber: number;
 }
 
 /**
