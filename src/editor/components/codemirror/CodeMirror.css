@@ -53,6 +53,7 @@
 
 .panel-count { /* 6 */
   color: var(--color-utility-dove);
+  user-select: none;
 }
 /* Scrollbar */
 /******************************************************************************/
