@@ -2,6 +2,8 @@ import React, { useRef, useEffect } from 'react';
 import { OutlineItemSelectionEvent, CenteringRequestEvent } from '../../types';
 import { useNeedsScrollCallback } from './use-intersection-observer';
 
+import './OutlineItem.css'
+
 interface Props {
   id: string;
   /** Zero-based line number that this item corresponds to */
@@ -40,8 +42,8 @@ export const OutlineItem: React.FC<Props> = props => {
       onClick={onClick}
       ref={ref}
       className={`
-        c-outline__item
-        ${current ? 'c-outline__item--current' : ''}
+        c-outline-item
+        ${current ? 'c-outline-item--current' : ''}
       `}
     >
       {props.children}

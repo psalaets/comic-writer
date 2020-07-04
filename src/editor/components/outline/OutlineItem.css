@@ -1,0 +1,43 @@
+/******************************************************************************/
+/* Outline Item                                                               */
+/******************************************************************************/
+/*
+ * 1.
+ */
+
+/* Block */
+/******************************************************************************/
+.c-outline-item {
+  margin-top: .5em;
+  cursor: pointer;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  /* cosmetics */
+  border-radius: 100px;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: .1em;
+  background-color: var(--color-utility-pure);
+  transition: background-color .1s, color .1s;
+}
+
+.c-outline-item:hover {
+  /* cosmetics */
+  background-color: var(--color-utility-milk);
+}
+
+/* Element */
+/******************************************************************************/
+
+/* Modifier */
+/******************************************************************************/
+.c-outline-item--current,
+.c-outline-item--current:hover {
+  cursor: default;
+  /* cosmetics */
+  background-color: var(--color-primary-cool);
+  background-image: none;
+  color: var(--color-utility-pure);
+}

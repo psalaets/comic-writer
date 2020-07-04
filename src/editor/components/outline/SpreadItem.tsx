@@ -2,6 +2,8 @@ import React from 'react';
 import { OutlineItemSelectionEvent, CenteringRequestEvent } from '../../types';
 import { OutlineItem } from './OutlineItem';
 
+import './SpreadItem.css'
+
 interface Props {
   id: string;
   lineNumber: number;
@@ -20,7 +22,12 @@ export const SpreadItem: React.FC<Props> = React.memo(props => {
       onSelection={props.onSelection}
       onCenteringRequest={props.onCenteringRequest}
     >
-      {props.label}
+      <span className={`
+        c-spread-item
+        ${props.current ? 'c-spread-item--current' : ''}
+      `}>
+        {props.label}
+      </span>
     </OutlineItem>
   );
 });

@@ -48,77 +48,8 @@
   padding: 0;
 }
 
-.c-outline__spread-list > * + * {
-  margin-top: 1em;
-}
-
-.c-outline__spread-list-item {
-  position: sticky;
-  scroll-snap-align: start; /* 3 */
-  top: 0;
-  /* cosmetics */
-  background-color: white;
-  color: var(--color-primary-cool);
-  font-weight: bold;
-}
-
-.c-outline__panel-list {
-  list-style: none;
-  margin-top: 0;
-  padding: 0;
-}
-
-.c-outline__panel-list > * + * {
-  margin-top: .25em;
-}
-
-.c-outline__item {
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
-}
-
-.c-outline__panel-list-item-number {
-  margin-right: .25em;
-  /* cosmetics */
-  font-weight: bold;
-}
-
-.c-outline__spread-list-item,
-.c-outline__panel-list-item {
-  cursor: pointer;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: .1em;
-  /* cosmetics */
-  border-radius: 100px;
-  transition: background-color .1s, color .1s;
-}
-
-.c-outline__spread-list-item:hover,
-.c-outline__panel-list-item:hover {
-  /* cosmetics */
-  background-color: var(--color-utility-milk);
-}
-
 /* Modifier */
 /******************************************************************************/
 .c-outline--scroll-snap { /* 3 */
   scroll-snap-type: y mandatory;
-}
-
-.c-outline--scroll-snap .c-outline__spread-list-item { /* 3 */
-  scroll-snap-align: start;
-}
-
-.c-outline__spread-item--current,
-.c-outline__panel-list-item--current,
-.c-outline__spread-item--current:hover,
-.c-outline__panel-list-item--current:hover {
-  cursor: default;
-  /* cosmetics */
-  background-color: var(--color-primary-cool);
-  background-image: none;
-  color: var(--color-utility-pure);
 }

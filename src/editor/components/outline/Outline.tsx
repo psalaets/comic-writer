@@ -44,7 +44,7 @@ export const Outline: React.FC<Props> = props => {
         ${false ? 'c-outline--scroll-snap' : ''}
       `}
     >
-      <ol>
+      <ol className="c-outline__spread-list">
         <SpreadItem
           key={props.top.id}
           id={props.top.id}

@@ -2,6 +2,8 @@ import React from 'react';
 import { OutlineItemSelectionEvent, CenteringRequestEvent } from '../../types';
 import { OutlineItem } from './OutlineItem';
 
+import './PanelItem.css'
+
 interface Props {
   id: string;
   lineNumber: number;
@@ -21,7 +23,7 @@ export const PanelItem: React.FC<Props> = React.memo(props => {
       onSelection={props.onSelection}
       onCenteringRequest={props.onCenteringRequest}
     >
-      <span className="c-outline__panel-list-item-number">
+      <span className="c-panel-item__number">
         {props.panelNumber}.
       </span>
       {props.description || '(no description)'}
