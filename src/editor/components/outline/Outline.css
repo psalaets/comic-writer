@@ -11,14 +11,12 @@
 /******************************************************************************/
 .c-outline {
   font-size: .8em;
-  max-width: 20em;
-  min-width: 20em;
+  flex: 0 0 20em;
   overflow-x: hidden;
   overflow-y: scroll;
   padding-left: .5em;
   padding-right: .5em;
   user-select: none;
-
   scroll-behavior: smooth;
   /* cosmetics */
   scrollbar-color: var(--color-utility-pure) var(--color-utility-milk); /* 1 */

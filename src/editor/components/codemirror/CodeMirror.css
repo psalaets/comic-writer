@@ -23,7 +23,7 @@
 .c-codemirror {
   height: 100%;
   padding-left: 1.5ex; /* 2 */
-  width: 100%;
+  flex: 1 1 0;
   z-index: 0; /* 5 */
 }
 
