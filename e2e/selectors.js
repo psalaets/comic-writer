@@ -70,37 +70,18 @@ export function wordCount(index) {
   return Selector('.word-count', options).nth(index);
 }
 
-export function outlineSpreadItem(index) {
-  return allOutlineSpreadItems().nth(index);
+export function outlineItem(text) {
+  return allOutlineItems()
+    .withText(text)
+    .nth(0);
 }
 
-export function outlineSpreadItemByText(text) {
-  return allOutlineSpreadItems().withExactText(text);
+export function currentOutlineItem() {
+  return allOutlineItems().filter('.c-outline-item--current');
 }
 
-export function outlinePanelItem(indices) {
-  const {panelListIndex, panelIndex} = indices;
-
-  return Selector('.c-outline__panel-list')
-    .nth(panelListIndex)
-    .find('.c-outline__panel-list-item')
-    .nth(panelIndex);
-}
-
-export function currentPanelItem(selector) {
-  return selector.filter('.c-outline__panel-list-item--current');
-}
-
-export function currentSpreadItem(selector) {
-  return selector.filter('.c-outline__spread-item--current');
-}
-
-export function allOutlineSpreadItems() {
-  return Selector('.c-outline__spread-list-item');
-}
-
-export function allOutlinePanelItems() {
-  return Selector('.c-outline__panel-list-item');
+export function allOutlineItems() {
+  return Selector('.c-outline-item');
 }
 
 export function pageLine(text) {
