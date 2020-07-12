@@ -39,6 +39,12 @@ export async function preloadBitchPlanetScript() {
   await reloadPage();
 }
 
+export async function preloadEvenSpacingScript() {
+  const script = await loadScriptContent('even-spacing.txt');
+  await setLocalStorageScript(script);
+  await reloadPage();
+}
+
 function loadScriptContent(filename) {
   return new Promise((resolve, reject) => {
     const absolutePath = path.resolve(__dirname, '../sample-scripts', filename);
@@ -88,4 +94,19 @@ export async function isItemVisibleInOutline(itemSelector) {
   } = itemState.boundingClientRect;
 
   return itemBottom <= outlineBottom && itemTop >= outlineTop;
+}
+
+// Useful for sanity checking window size in the test env
+// https://testcafe-discuss.devexpress.com/t/setting-the-browser-window-size-on-mac-os-x/170/6
+export async function getSizeInfo() {
+  return await ClientFunction(() => {
+    return {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      outerWidth: window.outerWidth,
+      outerHeight: window.outerHeight,
+      availableWidth: screen.availWidth,
+      availableHeight: screen.availHeight
+    };
+  });
 }
