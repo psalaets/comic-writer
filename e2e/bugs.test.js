@@ -134,3 +134,17 @@ test('panel and number with text after it is not a panel', async t => {
 
   await t.expect(shouldNotExist.exists).notOk();
 });
+
+test('extra text after panel number should be preserved after enter is pressed', async t => {
+  await t
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'panel 1 blah')
+    .pressKey('enter')
+
+  await t.expect(await editorLines()).eql([
+    'Page 1',
+    'Panel 1 blah',
+    ''
+  ]);
+});

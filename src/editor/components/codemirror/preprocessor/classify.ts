@@ -3,7 +3,7 @@ import { LineClassification } from './types';
 const PAGE_EXPANSION_PATTERN = /^page *$/i;
 const PAGES_EXPANSION_PATTERN = /^pages *$/i;
 const SPREAD_EXPANSION_PATTERN = /^spread$/i;
-const PANEL_EXPANSION_PATTERN = /^panel/i;
+const PANEL_EXPANSION_PATTERN = /^panel$/i;
 
 const SINGLE_PANEL_PATTERN = /^panel +\d{1,}$/i;
 
