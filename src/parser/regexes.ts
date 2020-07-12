@@ -13,7 +13,7 @@ export const SPREAD_REGEX = /^pages? (\d+)(-(\d+)?)?/i;
  * Has 1 capture group
  * - Panel number
  */
-export const PANEL_REGEX = /^panel (\d+)/i;
+export const PANEL_REGEX = /^panel (\d+)$/i;
 /**
  * Matches a caption line.
  *

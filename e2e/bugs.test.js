@@ -122,3 +122,15 @@ test('hyphen after page number leaves cursor in wrong spot', async t => {
     'Pages 1-2'
   ]);
 });
+
+test('panel and number with text after it is not a panel', async t => {
+  await t
+    .typeText(selectors.editorInput(), 'page')
+    .pressKey('enter')
+    .typeText(selectors.editorInput(), 'panel 1 blah')
+
+  // outline should not contain any panels
+  const shouldNotExist = selectors.outlineItem('1.');
+
+  await t.expect(shouldNotExist.exists).notOk();
+});
