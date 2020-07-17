@@ -8,7 +8,6 @@
 /* Block */
 /******************************************************************************/
 .c-outline-item {
-  margin-top: .5em;
   cursor: pointer;
   overflow-x: hidden;
   text-overflow: ellipsis;
@@ -18,7 +17,8 @@
   border-radius: 100px;
   padding-left: 1em;
   padding-right: 1em;
-  padding-top: .1em;
+  padding-top: .3em;
+  padding-bottom: .2em;
   background-color: var(--color-utility-pure);
   transition: background-color .1s, color .1s;
 }
